@@ -110,6 +110,19 @@ No painel, aba **Ajustes**:
 
 O recibo do mês em PDF fica em Financeiro (dentista) e nos detalhes de cada dentista (painel).
 
+## Pacientes da Dra. Thalia
+No painel, aba **Pacientes** (só a Dra. Thalia vê):
+- **Cadastro** do paciente: nome, telefone, CPF, nascimento, e-mail, endereço e observações de saúde.
+- **Consultas** de 15 em 15 minutos. O horário fica ocupado na agenda dos dentistas (sem nenhum dado do paciente). Botões de lembrete no WhatsApp, realizada, faltou, remarcar e cancelar.
+- **Evolução:** o que foi feito em cada consulta, com data.
+- **Documentos:** prontuário, orçamento, radiografias e outros arquivos (foto ou PDF), num armazenamento privado. O plano gratuito do Supabase guarda cerca de 1 GB; fotos grandes são reduzidas automaticamente.
+- As consultas aparecem na Agenda (em verde) e em "Pacientes de hoje", no Resumo.
+
+Dados de saúde são sensíveis (LGPD): mantenha a senha do painel só com a Dra. Thalia. Para o prontuário digital substituir o papel com validade legal, confira as regras do CRO (normalmente exigem assinatura com certificado digital).
+
+## Preços
+Em Ajustes → Valores: valor da hora (até o limite de horas avulsas), períodos (manhã, tarde, noite) e diária. Acima do limite, o dentista reserva um período ou a diária; intervalos que cruzam períodos aparecem com o botão "Falar com a Dra. Thalia".
+
 ## Fotos e perguntas frequentes
 No painel, aba **Site**: envie fotos do consultório (aparecem na galeria da página inicial) e escreva as perguntas frequentes.
 

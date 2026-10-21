@@ -776,15 +776,17 @@ label.sw small{color:var(--muted);font-size:.84rem}
 .val-edit .hint{grid-column:1/-1;margin:0}
 .val-edit:has(.hint:empty) .hint{display:none}
 /* Pix */
-.pixbox{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:16px}
-.pixbox.sm{gap:14px;padding:12px}
-.pix-qr svg{display:block;border-radius:10px;background:#fff;width:176px;height:176px;max-width:40vw;height:auto;aspect-ratio:1}
+.pixbox{display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;gap:14px;background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:18px 16px}
+.pixbox .dr-actions{justify-content:center}
+.pixbox.sm{grid-template-columns:auto minmax(0,1fr);justify-items:start;text-align:left;gap:14px;padding:12px}
+.pix-qr svg{display:block;border-radius:10px;background:#fff;width:184px;max-width:60vw;height:auto;aspect-ratio:1}
 .pixbox.sm .pix-qr svg{width:150px}
-.pix-tx{display:grid;gap:6px;min-width:0}
-.pix-v{font:600 1.5rem var(--font-display);color:var(--accent)}
-.pix-tx small{color:var(--muted);font-size:.85rem;line-height:1.45}
+.pix-tx{display:grid;gap:6px;min-width:0;justify-items:center}
+.pixbox.sm .pix-tx{justify-items:start}
+.pix-v{font:600 1.6rem var(--font-display);color:var(--accent)}
+.pix-tx small{color:var(--muted);font-size:.85rem;line-height:1.45;max-width:340px}
 .pix-fb:empty{display:none}
-@media (max-width:520px){.pixbox{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}.pix-qr svg{max-width:60vw}.pix-tx .dr-actions{justify-content:center}}
+@media (max-width:520px){.pixbox.sm{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}.pixbox.sm .pix-tx{justify-items:center}}
 /* Avaliações */
 .aval{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
 .aval-m{display:grid;justify-items:center;gap:4px;padding-right:22px;border-right:1px solid var(--line)}
@@ -813,6 +815,7 @@ label.sw small{color:var(--muted);font-size:.84rem}
 .acesso-box .dr-actions{margin-top:4px}
 button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4232f)!important;color:#fff!important}
 .side.off{display:none!important}
+.app-body.solo{grid-template-columns:minmax(0,1fr)!important}
 .wait-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:34px 28px;display:grid;gap:12px;justify-items:start;max-width:640px}
 .wait-card h2{margin:0;font-size:clamp(1.5rem,4vw,2rem)}
 .wait-card p{margin:0;color:var(--muted)}
@@ -832,7 +835,7 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
 .more-al>summary::-webkit-details-marker{display:none}
 .more-al[open]>summary{border-bottom:1px solid var(--line);margin-bottom:10px}
 .more-al>.stack{padding-bottom:12px}
-.more-btn,.more-sheet{display:none}
+.side .more-btn,.side .more-sheet{display:none}
 @media (max-width:820px){
   #view-admin .side>[data-tab="mural"],#view-admin .side>[data-tab="site"],#view-admin .side>[data-tab="ajustes"],
   #view-dent .side>[data-ctab="consultorio"],#view-dent .side>[data-ctab="perfil"]{display:none}
@@ -875,6 +878,73 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
   .map{height:220px}
   .site-foot .fcols>div:nth-child(2),.site-foot .fcols>div:nth-child(4){display:none}
 }
+
+/* ---------- v6: login, períodos, dentistas, pacientes ---------- */
+.pw{position:relative;display:block}
+.pw input{width:100%;padding-right:46px}
+.pw-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;border:0;background:transparent;color:var(--muted);display:grid;place-items:center;border-radius:10px;cursor:pointer}
+.pw-eye svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pw-eye:hover{color:var(--accent);background:var(--soft)}
+.per-chips{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 12px}
+.per-chips>p{width:100%;margin:0 0 2px;font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.per-chips button{display:grid;gap:1px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:8px 12px;font:500 .9rem var(--font-body);color:var(--ink);cursor:pointer}
+.per-chips button small{font-size:.75rem;color:var(--muted);font-weight:400}
+.per-chips button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.per-chips button:disabled{opacity:.45;cursor:not-allowed}
+.per-aviso{margin-top:10px}
+.row-acts{display:inline-flex;gap:4px}
+.row-acts .icon-btn{width:34px;height:34px}
+.row-acts svg.i{width:17px;height:17px}
+td.acts-col{text-align:right;white-space:nowrap}
+.ajrow[data-row="per"]{grid-template-columns:repeat(3,minmax(0,1fr)) auto}
+.form2.w-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ev.paciente{background:#eef4f1;color:#1f5e44;border-color:#8fbca6;border-style:solid}
+.ev.paciente.realizada{opacity:.7}
+.ev.paciente b{font-weight:600}
+.ficha{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:980px){.ficha{grid-template-columns:minmax(0,1fr)}}
+.ficha .stack{display:grid;gap:20px}
+.ficha-head h2{margin-top:4px}
+.cons-row{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:10px}
+.cons-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.cons-top span:first-child{display:grid;gap:2px}
+.cons-top small{color:var(--muted);font-size:.85rem}
+.cons-acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.cons-acts a.ghost{text-decoration:none}
+#pf-cons{display:grid;gap:8px}
+.timeline{display:grid;gap:0;margin-top:6px}
+.tl-item{display:grid;grid-template-columns:62px minmax(0,1fr);gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+.tl-date{display:grid;justify-items:center;align-content:start;background:var(--gold-soft);border-radius:12px;padding:6px 4px;color:var(--accent)}
+.tl-date b{font:600 1rem var(--font-display)}
+.tl-date small{font-size:.7rem;color:var(--muted)}
+.tl-body{display:grid;gap:4px;justify-items:start}
+.tl-body p{margin:0;white-space:pre-wrap}
+.tl-body small{color:var(--muted);font-size:.8rem}
+.obs-saude{margin-top:10px;background:#fff7e8;border:1px solid #f0dcae;border-radius:12px;padding:10px 12px}
+.obs-saude span{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#8a6a1f;font-weight:600}
+.obs-saude p{margin:4px 0 0;white-space:pre-wrap}
+.doc-up{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.doc-up label:first-child{flex:1;min-width:160px}
+.doc-grp{display:grid;gap:6px;margin-top:10px}
+.doc-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.doc-ic{font:600 .66rem var(--font-body);letter-spacing:.06em;background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:8px 6px}
+.doc-row .txt{display:grid;min-width:0}
+.doc-row .txt b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.doc-row .txt small{color:var(--muted);font-size:.78rem}
+.doc-row .acts{display:flex;gap:4px;align-items:center}
+.chip-b{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font:500 .85rem var(--font-body);cursor:pointer;color:var(--ink)}
+.chip-b:hover{border-color:var(--accent)}
+.ocup{display:flex;flex-wrap:wrap;gap:6px}
+.ocup .eyebrow{width:100%;margin:0}
+.ocup .oc{font-size:.8rem;background:var(--soft);border-radius:999px;padding:4px 10px;color:var(--muted)}
+.ocup .oc.hit{background:var(--busy-soft,#fde3e3);color:var(--busy,#b4232f)}
+.ocup .msg{width:100%}
+@media (max-width:820px){
+  #view-admin .side>[data-tab="financeiro"]{display:none}
+  .ficha .stack{gap:14px}
+  .form2.w-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 </head>
 <body>
@@ -998,7 +1068,7 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
       </div></section>
 
       <section class="sec loc" id="local" aria-label="Localização"><div class="in"><div class="loc-grid">
-        <div class="map"><iframe id="gmap" title="Mapa: Rua Juiz de Fora, Centro, Ipatinga/MG" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <div class="map"><iframe id="gmap" title="Mapa: Rua Juiz de Fora, 52, Galeria Êxito, Centro, Ipatinga/MG" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
         <div class="loc-info">
           <p class="eyebrow">Localização</p>
           <h2>No Centro de Ipatinga</h2>
@@ -1122,6 +1192,7 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
     <form id="login-form" novalidate>
       <label>E-mail<input id="f-user" type="email" inputmode="email" autocomplete="username" autocapitalize="off" spellcheck="false" required></label>
       <label>Senha<input id="f-pass" type="password" autocomplete="current-password" required></label>
+      <label class="check"><input type="checkbox" data-lembrar checked><span>Lembrar de mim neste aparelho</span></label>
       <button class="primary" id="login-btn" type="submit">Entrar</button>
       <button class="link" type="button" id="admin-forgot" style="justify-self:start">Esqueci minha senha</button>
     </form>
@@ -1138,6 +1209,7 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
     <form id="dl-login" novalidate>
       <label>E-mail<input id="dl-email" type="email" autocomplete="email" inputmode="email"></label>
       <label>Senha<input id="dl-pass" type="password" autocomplete="current-password"></label>
+      <label class="check"><input type="checkbox" data-lembrar checked><span>Lembrar de mim neste aparelho</span></label>
       <button class="primary" type="submit">Entrar</button>
       <button class="link" type="button" id="dl-forgot" style="justify-self:start">Esqueci minha senha</button>
     </form>
@@ -1189,12 +1261,13 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
       <button type="button" data-tab="resumo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l5-6 4 3 7-8"/><path d="M4 20.500h16"/></svg>Resumo<span class="badge" id="due-badge" hidden>0</span></button>
       <button type="button" data-tab="dentistas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Dentistas</button>
       <button type="button" data-tab="agenda"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 9.500h17M8 3v4M16 3v4"/></svg>Agenda</button>
+      <button type="button" data-tab="pacientes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8M16 4.8a3 3 0 010 6M18 14.4c1.4.6 2.4 2 2.8 4.6"/></svg>Pacientes</button>
       <button type="button" data-tab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
       <button type="button" data-tab="mural"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.500 9a4 4 0 010 6M19 6.500a7.500 7.500 0 010 11"/></svg>Mural<span class="badge" id="mural-badge" hidden>0</span></button>
       <button type="button" data-tab="site"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8"/></svg>Site</button>
       <button type="button" data-tab="ajustes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3.500v2.200M12 18.300v2.200M3.500 12h2.200M18.300 12h2.200M6 6l1.600 1.600M16.400 16.400L18 18M6 18l1.600-1.600M16.400 7.600L18 6"/></svg>Ajustes</button>
       <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
-      <div class="more-sheet" hidden><button type="button" data-tab="mural">Mural</button><button type="button" data-tab="site">Site</button><button type="button" data-tab="ajustes">Ajustes</button><a href="#">Ver site</a><button type="button" data-logout>Sair</button></div>
+      <div class="more-sheet" hidden><button type="button" data-tab="financeiro">Financeiro</button><button type="button" data-tab="mural">Mural</button><button type="button" data-tab="site">Site</button><button type="button" data-tab="ajustes">Ajustes</button><a href="#">Ver site</a><button type="button" data-logout>Sair</button></div>
       <div class="side-foot">
         <a href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5.500H4.500V6H10"/></svg>Ver site</a>
         <button type="button" data-logout><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4.500h4.500v15H14M10 8l-4 4 4 4M6 12h9"/></svg>Sair</button>
@@ -1216,6 +1289,7 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
           <div class="card"><div class="card-head"><h3>Financeiro do mês</h3><button class="link" type="button" data-tab="financeiro">Ver detalhes</button></div><div class="kv" id="r-fin"></div></div>
           <div class="card"><div class="card-head"><h3>Próximas reservas</h3><button class="link" type="button" data-tab="agenda">Ver agenda</button></div><div class="mini" id="r-next"></div></div>
           <div class="card"><div class="card-head"><h3>Dentistas recentes</h3><button class="link" type="button" data-tab="dentistas">Ver todos</button></div><div class="mini" id="r-dent"></div></div>
+          <div class="card" id="r-pac"></div>
           <div class="card" id="r-aval"></div>
         </div>
       </section>
@@ -1229,7 +1303,7 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
         <div class="stack" id="d-pend"></div>
         <div class="card">
           <div class="tbl-wrap"><table class="tbl">
-            <thead><tr><th>Nome</th><th class="hide-sm">CRO</th><th class="hide-sm">WhatsApp</th><th class="num">Reservas</th><th class="num hide-sm">Horas</th><th>Última</th><th class="hide-sm">Próxima</th></tr></thead>
+            <thead><tr><th>Nome</th><th class="hide-sm">CRO</th><th class="hide-sm">WhatsApp</th><th class="num">Reservas</th><th class="num hide-sm">Horas</th><th>Última</th><th class="hide-sm">Próxima</th><th class="acts-col"><span class="sr">Ações</span></th></tr></thead>
             <tbody id="d-body"></tbody>
           </table></div>
           <div class="empty" id="d-empty" hidden></div>
@@ -1241,7 +1315,7 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
         <div class="page-head">
           <h2>Agenda</h2>
           <div class="tb">
-            <button class="ghost sm" id="a-block" type="button">Bloquear horários</button><button class="primary sm" id="a-new" type="button">+ Nova reserva</button>
+            <button class="ghost sm" id="a-block" type="button">Bloquear horários</button><button class="ghost sm" id="a-cons" type="button">+ Consulta</button><button class="primary sm" id="a-new" type="button">+ Nova reserva</button>
             <div class="tb" id="a-nav">
               <button class="ghost sm" id="a-today" type="button">Hoje</button>
               <button class="icon-btn" id="a-prev" type="button" aria-label="Anterior">‹</button>
@@ -1263,6 +1337,19 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
       </section>
 
       <!-- FINANCEIRO -->
+      <section id="t-pacientes" class="tab" hidden aria-label="Pacientes">
+        <div id="p-lista" style="display:grid;gap:20px">
+          <div class="page-head"><div><p class="eyebrow" id="p-count"></p><h2>Pacientes</h2></div>
+            <div class="tb"><div class="search"><input id="p-q" type="search" placeholder="Buscar por nome, telefone ou CPF" aria-label="Buscar paciente"></div><button class="primary sm" type="button" data-pa="novo">+ Novo paciente</button></div></div>
+          <div class="grid2">
+            <div class="card"><div class="card-head"><h3>Consultas de hoje</h3><button class="link" type="button" data-pa="agendar">+ Agendar consulta</button></div><div class="mini" id="p-hoje"></div></div>
+            <div class="card"><div class="card-head"><h3>Próximas consultas</h3></div><div class="mini" id="p-prox"></div></div>
+          </div>
+          <div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Paciente</th><th class="hide-sm">Telefone</th><th>Próxima consulta</th><th class="hide-sm">Última evolução</th></tr></thead><tbody id="p-body"></tbody></table></div><div class="empty" id="p-empty" hidden></div></div>
+        </div>
+        <div id="p-ficha" hidden style="display:grid;gap:20px"></div>
+      </section>
+
       <section id="t-financeiro" class="tab" hidden aria-label="Financeiro">
         <div class="page-head">
           <h2>Financeiro</h2>
@@ -1573,15 +1660,15 @@ button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4
 const CFG = {
   nome: 'Consultório Odontológico',
   dentista: 'Dra. Thalia Santiago',
-  endereco: 'Rua Juiz de Fora, Centro',
+  endereco: 'Rua Juiz de Fora, 52, Galeria Êxito, sala 208, Centro',
   cidade: 'Ipatinga/MG',
-  mapa: 'Rua Juiz de Fora, Centro, Ipatinga - MG',   // texto usado na busca do Google Maps
-  telefone: '(31) 8582-5564',
+  mapa: 'Rua Juiz de Fora, 52, Centro, Ipatinga - MG',   // texto usado na busca do Google Maps
+  telefone: '(31) 99574-5413',
   abre: 8,                      // primeira hora disponível (08:00)
-  fecha: 18,                    // o consultório encerra às 18:00
+  fecha: 22,                    // o consultório encerra às 18:00
   diasAbertos: [1,2,3,4,5,6],   // 0=dom ... 6=sáb
   mesesAFrente: 3,
-  whatsapp: '553185825564',     // número que recebe a confirmação (DDI 55 + DDD 31 + número)
+  whatsapp: '5531995745413',     // número que recebe a confirmação (DDI 55 + DDD 31 + número)
   valorHora: null,             // valor cobrado por hora (ex.: 80). null = ainda não definido
   instagram: 'https://www.instagram.com/dra.thaliasantiago/',
   instagramUser: '@dra.thaliasantiago',
@@ -1589,6 +1676,9 @@ const CFG = {
     porDia: {},                // porHora: [{ de: 18, ate: 20, valor: 100 }] = das 18h às 20h R$ 100/h
     porHora: []
   },
+  limiteHoras: 3,               // acima disso, a reserva é por período
+  periodos: [{ de: 8, ate: 13, valor: 180 }, { de: 13, ate: 18, valor: 180 }, { de: 18, ate: 22, valor: 180 }],
+  diaria: { de: 8, ate: 18, valor: 350 },
   prazoCancelamentoH: 24,      // até quantas horas antes o dentista pode cancelar pelo site
   pix: '',                     // chave Pix exibida na área do dentista
   pacotes: [],                 // ex.: [{ horas: 10, valor: 700 }, { horas: 20, valor: 1300 }]
@@ -1664,6 +1754,9 @@ function localAdapter() {
     async block() { throw new Error('Configure o Supabase'); },
     async rpc() { throw new Error('Configure o Supabase'); },
     async uploadFile() { throw new Error('Configure o Supabase'); },
+    async insertRow() { throw new Error('Configure o Supabase'); },
+    async updateRow() { throw new Error('Configure o Supabase'); },
+    async deleteRow() { throw new Error('Configure o Supabase'); },
     async removeFile() { throw new Error('Configure o Supabase'); },
     async signedUrl() { return null; }
   };
@@ -2046,7 +2139,7 @@ function miniDent(d) {
 }
 
 /* Abas */
-const TABS = [['resumo', 'Resumo'], ['dentistas', 'Dentistas'], ['agenda', 'Agenda'], ['financeiro', 'Financeiro'], ['mural', 'Mural'], ['site', 'Site'], ['ajustes', 'Ajustes']];
+const TABS = [['resumo', 'Resumo'], ['dentistas', 'Dentistas'], ['agenda', 'Agenda'], ['pacientes', 'Pacientes'], ['financeiro', 'Financeiro'], ['mural', 'Mural'], ['site', 'Site'], ['ajustes', 'Ajustes']];
 function setTab(t) {
   S.tab = t; try { sessionStorage.setItem('aba', t); } catch (_) {}
   closeDrawer(); renderAdmin();
@@ -2066,7 +2159,7 @@ function renderAdmin() {
   badge.hidden = !due.length; badge.textContent = due.length;
   const ab = Object.values(S.cols.problemas || {}).filter(p => p.status !== 'resolvido').length;
   $('mural-badge').hidden = !ab; $('mural-badge').textContent = ab;
-  ({ resumo: renderResumo, dentistas: renderDentistas, agenda: renderAgenda, financeiro: renderFinanceiro, mural: renderMural, site: renderSite, ajustes: renderAjustes })[S.tab]();
+  ({ resumo: renderResumo, dentistas: renderDentistas, agenda: renderAgenda, financeiro: renderFinanceiro, mural: renderMural, site: renderSite, ajustes: renderAjustes, pacientes: renderPacientes })[S.tab]();
   renderDrawer();
 }
 
@@ -2087,6 +2180,7 @@ function renderDue() {
 function renderResumo() {
   $('r-app').innerHTML = pendHtml() + appTipHtml('a');
   $('r-aval').innerHTML = avaliacoesHtml();
+  $('r-pac').innerHTML = pacHojeHtml();
   const all = S.cache.all, now = new Date(), t = iso(now), ym = t.slice(0, 7);
   $('r-date').textContent = `${DIAS_LONGOS[now.getDay()]}, ${now.getDate()} de ${MESES[now.getMonth()]} de ${now.getFullYear()}`;
   const hoje = all.filter(x => isActive(x) && x.b.date === t);
@@ -2142,7 +2236,7 @@ function renderDentistas() {
     <td class="num">${d.reservas}</td>
     <td class="num hide-sm">${d.horas}h</td>
     <td>${d.ultima ? br(d.ultima.b.date) : 'Sem reservas'}</td>
-    <td class="hide-sm">${d.proxima ? `${br(d.proxima.b.date).slice(0, 5)} · ${hh(d.proxima.b.from)}` : '—'}</td></tr>`).join('');
+    <td class="hide-sm">${d.proxima ? `${br(d.proxima.b.date).slice(0, 5)} · ${hh(d.proxima.b.from)}` : '—'}</td><td class="acts-col">${dentAcoes(d)}</td></tr>`).join('');
   const em = $('d-empty');
   em.hidden = !!list.length;
   if (!list.length) em.innerHTML = all.length ? `<span>Nenhum dentista encontrado para “${esc(q)}”.</span>` : `<svg viewBox="0 0 24 24" aria-hidden="true">${ICON.tooth}</svg><span>Os dentistas aparecem aqui assim que fizerem a primeira reserva, com todo o histórico.</span>`;
@@ -2179,6 +2273,11 @@ function renderCal() {
     [...all.filter(x => isActive(x) && x.b.date === s), ...(S.cache.blocks || []).filter(x => x.b.date === s)].forEach(({ b, st }) => {
       count++;
       h += `<button type="button" class="ev ${b.origem === 'bloqueio' ? 'bloqueio' : st}" data-bk="${esc(b.id)}" style="top:${(b.from - CFG.abre) * ROW + 2}px;height:${(b.to - b.from) * ROW - 4}px" aria-label="${esc(b.nome)}, ${hh(b.from)} às ${hh(b.to)}"><small>${hh(b.from)} – ${hh(b.to)}</small><b>${esc(b.nome)}</b></button>`;
+    });
+    consultasDoDia(s).forEach(c => {
+      count++;
+      const a = tmin(c.inicio) / 60, z = tmin(c.fim) / 60, pn = (PAC()[c.paciente_id] || {}).nome || 'Paciente';
+      h += `<button type="button" class="ev paciente ${esc(c.status)}" data-cons="${esc(c.id)}" style="top:${(a - CFG.abre) * ROW + 1}px;height:${Math.max(24, (z - a) * ROW - 2)}px" aria-label="Consulta de ${esc(pn)}, ${hm(c.inicio)} às ${hm(c.fim)}"><small>${hm(c.inicio)} – ${hm(c.fim)} · paciente</small><b>${esc(pn)}</b></button>`;
     });
     h += '</div>';
   });
@@ -2393,7 +2492,10 @@ function logout() {
   closeDrawer();
   try { history.replaceState(null, '', location.pathname); } catch (_) {}
   S.step = 'welcome';
-  if (SB) appForget().finally(() => SB.auth.signOut().finally(() => syncAuth(null))); else { S.isAdmin = false; route(); }
+  // Recarrega a página ao sair: nenhum dado de paciente fica guardado na tela deste aparelho.
+  ['p-ficha', 'p-body', 'p-hoje', 'p-prox', 'r-pac', 'a-grid', 'dr-body'].forEach(id => { const el = $(id); if (el) el.innerHTML = ''; });
+  S.pac = null; S.fichaDe = null; ['pacientes', 'consultas', 'evolucoes', 'paciente_docs'].forEach(n => { S.cols[n] = {}; });
+  if (SB) appForget().finally(() => SB.auth.signOut().finally(() => { try { location.replace(location.pathname); } catch (_) { syncAuth(null); } })); else { S.isAdmin = false; route(); }
 }
 
 /* ---------- Supabase: banco de dados e login ---------- */
@@ -2405,7 +2507,8 @@ function sbAdapter(sb) {
     problemas: { dentKey: 'dentist_id', desc: 'descricao', criadoEm: 'criado_em', resolvidoEm: 'resolvido_em' },
     espera: { dentKey: 'dentist_id', from: 'h_from', to: 'h_to', criadoEm: 'criado_em' },
     avisos: { criadoEm: 'criado_em' },
-    faq: { criadoEm: 'criado_em' }
+    faq: { criadoEm: 'criado_em' },
+    pacientes: {}, consultas: {}, evolucoes: {}, paciente_docs: {}
   };
   const toDb = (map, o) => { const r = {}; for (const [k, v] of Object.entries(o)) { if (k === 'id' || v === undefined) continue; r[map[k] || k] = v; } return r; };
   const fromDb = (map, row) => { const inv = {}; for (const [k, v] of Object.entries(map)) inv[v] = k; const r = {}; for (const [k, v] of Object.entries(row)) r[inv[k] || k] = v; return r; };
@@ -2456,6 +2559,9 @@ function sbAdapter(sb) {
     async remove(n, id) { ok(await sb.from(n).delete().eq('id', id)); refresh(); },
     async block(date, from, to, motivo) { ok(await sb.rpc('bloquear', { p_date: date, p_from: from, p_to: to, p_motivo: motivo })); refresh(); },
     async rpc(n, a) { return ok(await sb.rpc(n, a || {})); },
+    async insertRow(n, row) { ok(await sb.from(n).insert(row)); refresh(); },
+    async updateRow(n, id, row) { ok(await sb.from(n).update(row).eq('id', id)); refresh(); },
+    async deleteRow(n, id) { ok(await sb.from(n).delete().eq('id', id)); refresh(); },
     async uploadFile(bucket, path, blob, type) { ok(await sb.storage.from(bucket).upload(path, blob, { contentType: type, upsert: false })); },
     async removeFile(bucket, path) { ok(await sb.storage.from(bucket).remove([path])); refresh(); },
     async signedUrl(bucket, path) { const d = ok(await sb.storage.from(bucket).createSignedUrl(path, 3600)); return d && d.signedUrl; }
@@ -2471,6 +2577,8 @@ function errText(e, fallback) {
     TELEFONE_INVALIDO: 'Informe um telefone com DDD.',
     EMAIL_INVALIDO: 'Confira o e-mail informado.',
     DADOS_INVALIDOS: 'Dados inválidos. Tente de novo.',
+    FORA_DO_PERIODO: 'Acima de 3 horas, a reserva é por período (manhã, tarde, noite ou diária). Para outro intervalo, fale com a Dra. Thalia.',
+    CONSULTA_CONFLITO: 'Esse horário cruza com outra consulta.',
     PAGAMENTO_PENDENTE: 'Há pagamento em atraso. Regularize com a Dra. Thalia (em Financeiro você encontra o Pix) para fazer novas reservas.',
     LOGIN_NECESSARIO: 'Para reservar, entre na sua conta de dentista.',
     DENTISTA_NAO_ENCONTRADO: 'Dentista não encontrado.',
@@ -2696,7 +2804,7 @@ function renderDent() {
   if (!CTABS.some(t => t[0] === S.ctab)) S.ctab = 'inicio';
   const stD = statusDent(me());
   if (stD !== 'liberado') { S.cc = { all: [], mine: [] }; renderDWait(stD); renderCDrawer(); return; }
-  if (!$('c-wait').hidden) { $('c-wait').hidden = true; S.waitH = null; document.querySelector('#view-dent .side').classList.remove('off'); }
+  if (!$('c-wait').hidden) { $('c-wait').hidden = true; S.waitH = null; document.querySelector('#view-dent .side').classList.remove('off'); document.querySelector('#view-dent .app-body').classList.remove('solo'); }
   const all = live(); S.cc = { all, mine: all.filter(x => keyOfB(x.b) === S.dent) };
   document.querySelectorAll('#view-dent .side [data-ctab]').forEach(b => b.setAttribute('aria-current', b.dataset.ctab === S.ctab ? 'page' : 'false')); markMore();
   CTABS.forEach(([k]) => { $('c-' + k).hidden = k !== S.ctab; });
@@ -2912,6 +3020,10 @@ function renderCNova() {
     b.addEventListener('click', () => cnHour(h));
     hb.appendChild(b);
   }
+  let pr = $('cn-per'); if (!pr) { pr = document.createElement('div'); pr.id = 'cn-per'; pr.className = 'per-chips'; hb.before(pr); }
+  const ops = c.date ? opcoesPeriodo().filter(o => o.de >= CFG.abre && o.ate <= CFG.fecha) : [];
+  pr.innerHTML = ops.length ? '<p>Reservar período</p>' + ops.map(o => { let livre = true; for (let x = o.de; x < o.ate; x++) if (isBusy(c.date, x) || isPast(c.date, x)) livre = false; return `<button type="button" data-per="${o.de}|${o.ate}"${livre ? '' : ' disabled'} class="${c.start === o.de && c.end === o.ate - 1 ? 'on' : ''}">${o.nome}<small>${o.de}h às ${o.ate}h · ${BRL(o.v)}</small></button>`; }).join('') : '';
+  pr.querySelectorAll('[data-per]').forEach(btn => btn.addEventListener('click', () => { const [a, z] = btn.dataset.per.split('|').map(Number); Object.assign(c, { start: a, end: z - 1, want: null }); $('cn-fb').innerHTML = ''; renderCNova(); }));
   renderCNOpts();
 }
 function cnHour(h) {
@@ -2944,7 +3056,9 @@ function renderCNOpts() {
   }).join('') : '';
   const n = ds.filter(x => x.ok).length;
   $('cn-confirm').textContent = c.weeks > 1 ? `Confirmar ${plural(n, 'reserva', 'reservas')}` : 'Confirmar reserva';
-  $('cn-confirm').disabled = !n || S.busy;
+  let pa = $('cn-peraviso'); if (!pa) { pa = document.createElement('div'); pa.id = 'cn-peraviso'; $('cn-sum').after(pa); }
+  pa.innerHTML = periodoAviso(c.start, c.end + 1);
+  $('cn-confirm').disabled = !n || S.busy || !!pa.innerHTML;
 }
 async function cnConfirm() {
   const c = S.cn, d0 = me() || {};
@@ -3243,13 +3357,16 @@ function priceHour(date, h) {
   if (p.porDia && p.porDia[dow] != null) return p.porDia[dow];
   return CFG.valorHora;
 }
-function priceOf(b) { if (b.valor != null && b.valor !== '') return Number(b.valor); let t = 0; for (let h = b.from; h < b.to; h++) { const v = priceHour(b.date, h); if (v == null) return null; t += v; } return t; }
+function priceOf(b) { if (b.valor != null && b.valor !== '') return Number(b.valor); if (usaPeriodo(b.from, b.to)) return precoPeriodos(b.from, b.to); let t = 0; for (let h = b.from; h < b.to; h++) { const v = priceHour(b.date, h); if (v == null) return null; t += v; } return t; }
 function sumPrice(arr) { let t = 0; for (const x of arr) { const v = priceOf(x.b); if (v == null) return null; t += v; } return t; }
 const temPreco = () => CFG.valorHora != null || Object.keys((CFG.precos || {}).porDia || {}).length > 0 || ((CFG.precos || {}).porHora || []).length > 0;
 function precoTexto() {
   if (!temPreco()) return 'A definir';
   const extra = Object.keys((CFG.precos || {}).porDia || {}).length || ((CFG.precos || {}).porHora || []).length;
-  return CFG.valorHora != null ? `${BRL(CFG.valorHora)} por hora${extra ? ' (varia por dia ou horário)' : ''}` : 'Varia por dia ou horário';
+  let t = CFG.valorHora != null ? `${BRL(CFG.valorHora)} por hora${extra ? ' (varia por dia ou horário)' : ''}` : 'Varia por dia ou horário';
+  const P = CFG.periodos || [];
+  if (P.length) { const v = [...new Set(P.map(p => Number(p.valor)))]; t += ` · acima de ${CFG.limiteHoras || 3}h, período ${v.map(BRL).join(' / ')}`; if (CFG.diaria) t += ` ou diária ${BRL(Number(CFG.diaria.valor))}`; }
+  return t;
 }
 
 /* Arquivos para baixar */
@@ -3524,6 +3641,8 @@ function newBookingForm() {
   return f;
 }
 $('a-block').addEventListener('click', () => openForm('Bloqueio', blockForm));
+$('a-cons').addEventListener('click', () => openForm('Consulta', consForm(null)));
+$('p-q').addEventListener('input', () => renderPacientes());
 $('a-new').addEventListener('click', () => openForm('Nova reserva', newBookingForm));
 
 /* Planilha do mês (CSV, abre no Excel e no Google Planilhas) */
@@ -4039,6 +4158,9 @@ function applyCfg(c) {
   CFG.checklist = Array.isArray(c.checklist) && c.checklist.length ? c.checklist : CFG_PADRAO.checklist;
   CFG.espaco = c.espaco && typeof c.espaco === 'object' ? { ...CFG_PADRAO.espaco, ...c.espaco } : CFG_PADRAO.espaco;
   CFG.limiteAtrasoDias = c.limiteAtrasoDias == null ? null : c.limiteAtrasoDias;
+  if (Number.isInteger(c.limiteHoras)) CFG.limiteHoras = c.limiteHoras;
+  if (Array.isArray(c.periodos)) CFG.periodos = c.periodos.map(p => ({ de: +p.de, ate: +p.ate, valor: +p.valor })).sort((a, b) => a.de - b.de);
+  if ('diaria' in c) CFG.diaria = c.diaria ? { de: +c.diaria.de, ate: +c.diaria.ate, valor: +c.diaria.valor } : null;
   try { fillInfo(); } catch (_) {}
 }
 
@@ -4155,13 +4277,13 @@ function acessoActions(d) {
   const msg = { pendente: 'Cadastro aguardando liberação. Até liberar, não consegue reservar.', liberado: 'Acesso liberado: pode reservar pela área do dentista.', bloqueado: 'Acesso bloqueado: não consegue reservar. Reservas já marcadas continuam na agenda.' }[s];
   const bt = s === 'liberado' ? btnHtml('Bloquear acesso', `data-acesso="${id}|bloqueado"`, 'danger')
     : btnHtml('Liberar acesso', `data-acesso="${id}|liberado"`, 'primary') + (s === 'pendente' ? btnHtml('Bloquear', `data-acesso="${id}|bloqueado"`, 'ghost') : '');
-  return `<div class="block acesso-box"><h4>Acesso à área do dentista</h4><p class="hint">${msg}</p><div class="dr-actions">${bt}</div></div>`;
+  return `<div class="block acesso-box"><h4>Acesso à área do dentista</h4><p class="hint">${msg}</p><div class="dr-actions">${bt}</div><div class="dr-actions">${btnHtml('Editar dados', `data-dedit="${id}"`, 'ghost')}${btnHtml('Excluir dentista', `data-ddel="${id}"`, 'danger')}</div></div>`;
 }
 // Tela de espera para conta pendente ou bloqueada.
 function renderDWait(st) {
   CTABS.forEach(([k]) => { $('c-' + k).hidden = true; });
   const w = $('c-wait'); w.hidden = false;
-  document.querySelector('#view-dent .side').classList.add('off');
+  document.querySelector('#view-dent .side').classList.add('off'); document.querySelector('#view-dent .app-body').classList.add('solo');
   $('c-crumb').textContent = st === 'bloqueado' ? 'Acesso bloqueado' : 'Aguardando liberação';
   $('c-who').textContent = myName(); $('c-av').textContent = initials(myName());
   const wa = `https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(st === 'bloqueado' ? `Olá Dra. Thalia, aqui é ${myName()}. Meu acesso ao site do consultório está bloqueado. Pode me ajudar?` : `Olá Dra. Thalia, aqui é ${myName()}. Acabei de criar minha conta no site do consultório e aguardo a liberação.`)}`;
@@ -4218,6 +4340,11 @@ function ajBuild() {
       <div class="ajdays">${DIAS_ORD.map(d => `<label>${DIAS[d]}<input data-vdia="${d}" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(((c.precos || {}).porDia || {})[d] ?? '')}"></label>`).join('')}</div></div>
     <div class="ajsec"><b>Preço por horário</b><small>Ex.: das 18h às 20h, R$ 100 por hora. Vale em todos os dias e tem prioridade sobre os outros preços.</small>
       <div class="ajrows" id="vf-faixas">${((c.precos || {}).porHora || []).map(ajRowFaixa).join('')}</div><button type="button" class="link" data-aj="addfaixa">+ Adicionar faixa de horário</button></div>
+    <div class="ajsec"><b>Períodos e diária</b><small>Acima do limite de horas avulsas, a reserva é por período ou diária. Intervalos que cruzam períodos ficam para combinar com você.</small>
+      <label class="w-sm">Horas avulsas até<input id="vf-lim" type="number" min="1" max="12" step="1" value="${esc(c.limiteHoras ?? 3)}"></label>
+      <div class="ajrows" id="vf-pers">${(c.periodos || []).map(ajRowPer).join('')}</div><button type="button" class="link" data-aj6="addper">+ Adicionar período</button>
+      <label class="check"><input type="checkbox" id="vf-dia"${c.diaria ? ' checked' : ''}><span>Oferecer diária</span></label>
+      <div class="form2 w-3"><label>Diária das<select id="vf-dde">${hourOpts(0, 23, (c.diaria || {}).de ?? 8)}</select></label><label>até<select id="vf-date">${hourOpts(1, 24, (c.diaria || {}).ate ?? 18)}</select></label><label>Valor (R$)<input id="vf-dval" type="number" min="0" step="0.01" inputmode="decimal" value="${esc((c.diaria || {}).valor ?? '')}"></label></div></div>
     <div class="ajsec"><b>Pacotes de horas</b><small>Aparecem para os dentistas em Financeiro, com o valor por hora calculado.</small>
       <div class="ajrows" id="vf-pacs">${(c.pacotes || []).map(ajRowPac).join('')}</div><button type="button" class="link" data-aj="addpac">+ Adicionar pacote</button></div>
     <p class="hint">Novas reservas usam os valores atuais. As já marcadas mantêm o valor de quando foram feitas (você pode ajustar uma reserva específica nos detalhes dela, na Agenda).</p>
@@ -4351,7 +4478,8 @@ document.addEventListener('submit', e => {
     const porDia = {}; for (const i of f.querySelectorAll('[data-vdia]')) { const v = numOrNull(i.value); if (v != null) { if (!(v >= 0)) return bad('Confira os preços por dia.'); porDia[i.dataset.vdia] = v; } }
     const porHora = []; for (const r of f.querySelectorAll('[data-row="faixa"]')) { const de = +r.querySelector('[data-k="de"]').value, ate = +r.querySelector('[data-k="ate"]').value, v = numOrNull(r.querySelector('[data-k="valor"]').value); if (v == null) continue; if (!(ate > de) || !(v >= 0)) return bad('Em cada faixa, o “até” precisa ser depois do “das” e o valor precisa estar preenchido.'); porHora.push({ de, ate, valor: v }); }
     const pacotes = []; for (const r of f.querySelectorAll('[data-row="pac"]')) { const h = numOrNull(r.querySelector('[data-k="horas"]').value), v = numOrNull(r.querySelector('[data-k="valor"]').value); if (h == null && v == null) continue; if (!(h > 0) || !(v >= 0)) return bad('Confira as horas e o valor de cada pacote.'); pacotes.push({ horas: h, valor: v }); }
-    return ajSave(f, { valorHora: hora, precos: { porDia, porHora }, pacotes }, 'Valores salvos. Novas reservas já usam os valores atualizados.');
+    const pp = periodosDoForm(f); if (pp.erro) return bad(pp.erro);
+    return ajSave(f, { valorHora: hora, precos: { porDia, porHora }, pacotes, limiteHoras: pp.lim, periodos: pp.periodos, diaria: pp.diaria }, 'Valores salvos. Novas reservas já usam os valores atualizados.');
   }
   if (f.id === 'ff') {
     const dias = [...f.querySelectorAll('[data-fdia]:checked')].map(i => +i.dataset.fdia), abre = +$('ff-abre').value, fecha = +$('ff-fecha').value;
@@ -4380,9 +4508,382 @@ document.addEventListener('click', e => {
 }, true);
 function markMore() {
   const a = document.querySelector('#view-admin .more-btn'), d = document.querySelector('#view-dent .more-btn');
-  if (a) a.setAttribute('aria-current', ['mural', 'site', 'ajustes'].includes(S.tab) ? 'page' : 'false');
+  if (a) a.setAttribute('aria-current', ['financeiro', 'mural', 'site', 'ajustes'].includes(S.tab) ? 'page' : 'false');
   if (d) d.setAttribute('aria-current', ['consultorio', 'perfil'].includes(S.ctab) ? 'page' : 'false');
 }
+/* ---------- v6: preços por período, login, dentistas, pacientes ---------- */
+
+/* Preço por período: acima do limite de horas avulsas vale o período (ou a diária). */
+const usaPeriodo = (h1, h2) => (h2 - h1) > (CFG.limiteHoras || 3) && (CFG.periodos || []).length > 0;
+function precoPeriodos(h1, h2) {
+  const P = CFG.periodos || [], D = CFG.diaria;
+  for (const p of P) if (h1 >= p.de && h2 <= p.ate) return Number(p.valor);
+  let acc = 0, cur = h1;
+  if (D && h1 === D.de && h2 >= D.ate) { acc = Number(D.valor); cur = D.ate; }
+  while (cur < h2) { const p = P.find(x => x.de === cur && x.ate <= h2); if (!p) return null; acc += Number(p.valor); cur = p.ate; }
+  return acc;
+}
+const NOMES_PER = { 8: 'Manhã', 13: 'Tarde', 18: 'Noite' };
+function opcoesPeriodo() {
+  const P = (CFG.periodos || []).slice().sort((a, b) => a.de - b.de), D = CFG.diaria, out = [];
+  P.forEach(p => out.push({ de: p.de, ate: p.ate, nome: NOMES_PER[p.de] || 'Período', v: Number(p.valor) }));
+  if (D) {
+    out.push({ de: D.de, ate: D.ate, nome: 'Diária', v: Number(D.valor) });
+    const fim = P.filter(p => p.de >= D.ate).sort((a, b) => a.de - b.de);
+    let cur = D.ate, v = Number(D.valor);
+    for (const p of fim) { if (p.de !== cur) break; cur = p.ate; v += Number(p.valor); out.push({ de: D.de, ate: cur, nome: 'Dia todo', v }); }
+  }
+  return out;
+}
+function periodoAviso(h1, h2) {
+  if (!usaPeriodo(h1, h2) || precoPeriodos(h1, h2) != null) return '';
+  const ops = opcoesPeriodo().map(o => `${o.nome.toLowerCase()} (${o.de}h às ${o.ate}h)`).join(', ');
+  const wa = `https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Olá Dra. Thalia, aqui é ${typeof myName === 'function' ? myName() : ''}. Gostaria de reservar o consultório das ${h1}h às ${h2}h. Podemos combinar?`)}`;
+  return `<div class="notice gold per-aviso"><p><b>Acima de ${CFG.limiteHoras || 3} horas, a reserva é por período:</b> ${ops}. Para outro intervalo, combine com a Dra. Thalia.</p><div class="acts"><a class="wa-sm" target="_blank" rel="noopener" href="${wa}">Falar com a Dra. Thalia</a></div></div>`;
+}
+
+/* Login: lembrar de mim e mostrar a senha */
+const sessaoStorage = {
+  lembrar() { try { return localStorage.getItem('lembrar') !== '0'; } catch (_) { return true; } },
+  getItem(k) { try { return localStorage.getItem(k) ?? sessionStorage.getItem(k); } catch (_) { return null; } },
+  setItem(k, v) { try { if (sessaoStorage.lembrar()) { localStorage.setItem(k, v); sessionStorage.removeItem(k); } else { sessionStorage.setItem(k, v); localStorage.removeItem(k); } } catch (_) {} },
+  removeItem(k) { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch (_) {} }
+};
+function setLembrar(v) { try { localStorage.setItem('lembrar', v ? '1' : '0'); } catch (_) {} }
+const EYE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 6.1A9.7 9.7 0 0112 6c6 0 9.5 6 9.5 6a17 17 0 01-3.3 3.9M6.6 7.6C4 9.4 2.5 12 2.5 12S6 18.5 12 18.5c1.6 0 3-.4 4.2-1M9.9 10a3 3 0 004.2 4.2"/></svg>';
+function senhasComOlho() {
+  document.querySelectorAll('input[type="password"]:not([data-olho])').forEach(inp => {
+    inp.dataset.olho = '1';
+    const w = document.createElement('span'); w.className = 'pw';
+    inp.parentNode.insertBefore(w, inp); w.appendChild(inp);
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'pw-eye'; b.setAttribute('aria-label', 'Mostrar senha'); b.innerHTML = EYE;
+    b.addEventListener('click', () => { const on = inp.type === 'password'; inp.type = on ? 'text' : 'password'; b.innerHTML = on ? EYE_OFF : EYE; b.setAttribute('aria-label', on ? 'Ocultar senha' : 'Mostrar senha'); inp.focus(); });
+    w.appendChild(b);
+  });
+}
+document.addEventListener('change', e => { if (e.target.matches && e.target.matches('[data-lembrar]')) { document.querySelectorAll('[data-lembrar]').forEach(x => { x.checked = e.target.checked; }); setLembrar(e.target.checked); } });
+
+/* Dentistas: editar e excluir (administradora) */
+function dentEditForm(id) {
+  return () => {
+    const d = (S.cols.dentists || {})[id] || {};
+    const f = document.createElement('form'); f.noValidate = true; f.style.cssText = 'display:grid;gap:16px';
+    f.innerHTML = `<div class="dr-title"><span class="avatar">${esc(initials(d.nome || ''))}</span><div><h3>Editar dentista</h3><span class="hint">Os dados aparecem para você e na área dele</span></div></div>
+      <label>Nome completo<input id="de-nome" value="${esc(d.nome || '')}"></label>
+      <div class="form2"><label>CRO<input id="de-cro" value="${esc(d.cro || '')}"></label><label>WhatsApp<input id="de-tel" inputmode="tel" value="${esc(d.tel || '')}"></label></div>
+      <div class="form2"><label>E-mail de contato<input id="de-email" type="email" value="${esc(d.email || '')}"></label><label>Especialidade<input id="de-esp" value="${esc(d.especialidade || '')}"></label></div>
+      <p class="hint">O e-mail de login da conta não muda por aqui.</p>
+      <div id="de-fb" role="status"></div><div class="dr-actions"><button class="primary" type="submit">Salvar</button></div>`;
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const nome = f.querySelector('#de-nome').value.trim(), tel = f.querySelector('#de-tel').value.trim();
+      if (nome.length < 3) return msgIn(f.querySelector('#de-fb'), 'err', 'Informe o nome completo.');
+      if (tel.replace(/\D/g, '').length < 10) return msgIn(f.querySelector('#de-fb'), 'err', 'Informe o WhatsApp com DDD.');
+      try {
+        await S.store.patch('dentists', id, { nome, cro: f.querySelector('#de-cro').value.trim() || null, tel, email: f.querySelector('#de-email').value.trim() || null, especialidade: f.querySelector('#de-esp').value.trim() || null });
+        msgIn(f.querySelector('#de-fb'), 'ok', 'Dados salvos.');
+      } catch (err) { msgIn(f.querySelector('#de-fb'), 'err', errText(err)); }
+    });
+    return f;
+  };
+}
+async function excluirDentista(id, btn) {
+  if (!btn.classList.contains('sure')) { btn.classList.add('sure'); btn.dataset.l = btn.innerHTML; btn.textContent = 'Confirmar exclusão'; setTimeout(() => { if (btn.isConnected && btn.classList.contains('sure')) { btn.classList.remove('sure'); btn.innerHTML = btn.dataset.l; } }, 4000); return; }
+  btn.disabled = true;
+  try { await S.store.rpc('excluir_dentista', { p_id: id }); delete (S.cols.dentists || {})[id]; closeDrawer(); S.store.refresh(); render(); }
+  catch (err) { btn.disabled = false; btn.textContent = errText(err); }
+}
+document.addEventListener('click', e => {
+  const ed = e.target.closest && e.target.closest('[data-dedit]'), dl = e.target.closest && e.target.closest('[data-ddel]');
+  if (!ed && !dl) return;
+  e.preventDefault(); e.stopPropagation();
+  if (ed) openForm('Dentista', dentEditForm(ed.dataset.dedit)); else excluirDentista(dl.dataset.ddel, dl);
+}, true);
+const ICO_EDIT = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
+const ICO_DEL = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/></svg>';
+const dentAcoes = d => d && d.doc ? `<span class="row-acts"><button type="button" class="icon-btn" data-dedit="${esc(d.doc.id)}" aria-label="Editar ${esc(d.nome)}" title="Editar">${ICO_EDIT}</button><button type="button" class="icon-btn" data-ddel="${esc(d.doc.id)}" aria-label="Excluir ${esc(d.nome)}" title="Excluir">${ICO_DEL}</button></span>` : '';
+
+/* ---------- Pacientes da Dra. Thalia ---------- */
+const tmin = t => { const [h, m] = String(t || '0:0').split(':').map(Number); return h * 60 + (m || 0); };
+const hm = t => String(t || '').slice(0, 5);
+const PAC = () => S.cols.pacientes || {};
+const consultasDe = pid => Object.values(S.cols.consultas || {}).filter(c => c.paciente_id === pid);
+const consultasDoDia = d => Object.values(S.cols.consultas || {}).filter(c => c.data === d && c.status !== 'cancelada').sort((a, b) => tmin(a.inicio) - tmin(b.inicio));
+const ST_CONS = { agendada: ['Agendada', 'agendado'], realizada: ['Realizada', 'pago'], faltou: ['Faltou', 'cancelado'], cancelada: ['Cancelada', 'cancelado'] };
+const consInicio = c => new Date(`${c.data}T${hm(c.inicio)}:00`);
+const quandoC = c => { const d = new Date(c.data + 'T12:00'); return `${DIAS_LONGOS[d.getDay()]}, ${br(c.data)}`; };
+const idade = n => { if (!n) return ''; const b = new Date(n + 'T12:00'), t = new Date(); let a = t.getFullYear() - b.getFullYear(); if (t.getMonth() < b.getMonth() || (t.getMonth() === b.getMonth() && t.getDate() < b.getDate())) a--; return a >= 0 && a < 130 ? `${a} anos` : ''; };
+const uuid4 = () => (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, ch => { const r = Math.random() * 16 | 0; return (ch === 'x' ? r : (r & 3 | 8)).toString(16); }));
+const kb = n => n > 1048576 ? `${(n / 1048576).toFixed(1).replace('.', ',')} MB` : `${Math.max(1, Math.round(n / 1024))} KB`;
+const TIPOS_DOC = [['prontuario', 'Prontuário'], ['orcamento', 'Orçamento'], ['radiografia', 'Radiografias'], ['outro', 'Outros documentos']];
+function waPaciente(p, c) {
+  const n = String(p.telefone || '').replace(/\D/g, ''); if (n.length < 10) return '';
+  const intl = n.length <= 11 ? '55' + n : n;
+  const txt = c ? `Olá, ${firstName(p.nome)}! Aqui é a ${CFG.dentista}. Passando para lembrar da sua consulta ${c.data === iso(new Date()) ? 'hoje' : quandoC(c)} às ${hm(c.inicio)}, no consultório: ${CFG.endereco}, ${CFG.cidade}. Pode confirmar?` : `Olá, ${firstName(p.nome)}! Aqui é a ${CFG.dentista}.`;
+  return `https://wa.me/${intl}?text=${encodeURIComponent(txt)}`;
+}
+function consRow(c, comNome) {
+  const p = PAC()[c.paciente_id] || {}, d = new Date(c.data + 'T12:00'), st = ST_CONS[c.status] || ST_CONS.agendada;
+  return `<button type="button" class="mini-row" data-pac="${esc(c.paciente_id)}"><span class="date"><b>${d.getDate()}</b><small>${MESES[d.getMonth()].slice(0, 3)}</small></span><span class="txt"><b>${comNome ? esc(p.nome || 'Paciente') : `${hm(c.inicio)} – ${hm(c.fim)}`}</b><span>${comNome ? `${DIAS[d.getDay()]} · ${hm(c.inicio)} – ${hm(c.fim)}` : DIAS_LONGOS[d.getDay()]}</span></span><span class="end"><span class="tag ${st[1]}">${st[0]}</span></span></button>`;
+}
+function renderPacientes() {
+  const lista = $('p-lista'), ficha = $('p-ficha');
+  if (S.pac && !PAC()[S.pac]) S.pac = null;
+  lista.hidden = !!S.pac; ficha.hidden = !S.pac;
+  if (S.pac) return renderFicha(S.pac);
+  const all = Object.values(PAC()), q = ($('p-q').value || '').trim().toLowerCase(), qd = q.replace(/\D/g, '');
+  $('p-count').textContent = plural(all.length, 'paciente', 'pacientes');
+  const hoje = iso(new Date()), now = new Date();
+  $('p-hoje').innerHTML = consultasDoDia(hoje).map(c => consRow(c, true)).join('') || emptyBox('Nenhuma consulta hoje.');
+  const prox = Object.values(S.cols.consultas || {}).filter(c => c.status === 'agendada' && c.data > hoje).sort((a, b) => consInicio(a) - consInicio(b)).slice(0, 5);
+  $('p-prox').innerHTML = prox.map(c => consRow(c, true)).join('') || emptyBox('Nenhuma consulta marcada para os próximos dias.');
+  const rows = all.filter(p => !q || p.nome.toLowerCase().includes(q) || (qd && (String(p.telefone || '').replace(/\D/g, '').includes(qd) || String(p.cpf || '').replace(/\D/g, '').includes(qd))))
+    .map(p => {
+      const cs = consultasDe(p.id), nx = cs.filter(c => c.status === 'agendada' && consInicio(c) >= now).sort((a, b) => consInicio(a) - consInicio(b))[0];
+      const ev = Object.values(S.cols.evolucoes || {}).filter(e => e.paciente_id === p.id).sort((a, b) => String(b.data).localeCompare(String(a.data)))[0];
+      return { p, nx, ev };
+    }).sort((a, b) => a.p.nome.localeCompare(b.p.nome, 'pt-BR'));
+  $('p-body').innerHTML = rows.map(({ p, nx, ev }) => `<tr data-pac="${esc(p.id)}" tabindex="0"><td><span class="who2"><span class="avatar">${esc(initials(p.nome))}</span><b>${esc(p.nome)}</b></span></td><td class="hide-sm">${esc(p.telefone || '—')}</td><td>${nx ? `${br(nx.data).slice(0, 5)} · ${hm(nx.inicio)}` : '—'}</td><td class="hide-sm">${ev ? br(ev.data) : '—'}</td></tr>`).join('');
+  const em = $('p-empty'); em.hidden = !!rows.length;
+  if (!rows.length) em.innerHTML = all.length ? `<span>Nenhum paciente encontrado para “${esc(q)}”.</span>` : `<svg viewBox="0 0 24 24" aria-hidden="true">${ICON.tooth}</svg><span>Cadastre seus pacientes para marcar consultas, guardar documentos e registrar a evolução.</span>`;
+}
+function fichaSkeleton() {
+  return `<div class="page-head ficha-head"><div><button type="button" class="link" data-pa="voltar">‹ Todos os pacientes</button><h2 id="pf-nome"></h2><p class="hint" id="pf-sub"></p></div>
+      <div class="tb"><a class="wa-sm" id="pf-wa" target="_blank" rel="noopener">WhatsApp</a><button type="button" class="ghost sm" data-pa="editar">Editar dados</button></div></div>
+    <div class="ficha">
+      <div class="stack">
+        <div class="card"><div class="card-head"><h3>Consultas</h3><button type="button" class="primary sm" data-pa="agendar">+ Agendar consulta</button></div><div class="mini" id="pf-cons"></div></div>
+        <div class="card" id="pf-evo-card"><div class="card-head"><h3>Evolução</h3></div>
+          <form id="pf-evo-form" class="ajf" novalidate>
+            <div class="form2"><label>Data<input type="date" id="pe-data"></label><label>Consulta (opcional)<select id="pe-cons"></select></label></div>
+            <label>O que foi feito<textarea id="pe-texto" rows="3" placeholder="Ex.: restauração em resina no dente 36. Retorno em 15 dias."></textarea></label>
+            <div class="aj-fb" role="status"></div><div class="nav end"><button class="primary sm" type="submit">Registrar evolução</button></div>
+          </form>
+          <div class="timeline" id="pf-evo"></div></div>
+      </div>
+      <div class="stack">
+        <div class="card"><div class="card-head"><h3>Dados do paciente</h3></div><div class="kv" id="pf-dados"></div><div id="pf-obs"></div></div>
+        <div class="card"><div class="card-head"><h3>Documentos</h3><span class="hint" id="pf-uso"></span></div>
+          <div class="doc-up"><label>Tipo<select id="pd-tipo">${TIPOS_DOC.map(([v, l]) => `<option value="${v}">${l === 'Radiografias' ? 'Radiografia' : l === 'Outros documentos' ? 'Outro documento' : l}</option>`).join('')}</select></label>
+            <label class="upload"><input type="file" id="pd-file" accept="image/*,application/pdf" multiple><span>Anexar arquivos</span></label></div>
+          <p class="hint">Fotos e PDFs. Fotos grandes são reduzidas automaticamente. Só você tem acesso.</p>
+          <div class="aj-fb" id="pd-fb" role="status"></div><div id="pf-docs"></div></div>
+        <div class="dr-actions"><button type="button" class="danger" data-pa="excluir">Excluir paciente</button></div>
+      </div>
+    </div>`;
+}
+function renderFicha(pid) {
+  const el = $('p-ficha'), p = PAC()[pid];
+  if (S.fichaDe !== pid) { el.innerHTML = fichaSkeleton(); S.fichaDe = pid; S.fichaSig = null; $('pe-data').value = iso(new Date()); }
+  const cs = consultasDe(pid).sort((a, b) => consInicio(b) - consInicio(a));
+  const evs = Object.values(S.cols.evolucoes || {}).filter(e => e.paciente_id === pid).sort((a, b) => String(b.data).localeCompare(String(a.data)) || String(b.criado_em).localeCompare(String(a.criado_em)));
+  const docs = Object.values(S.cols.paciente_docs || {}).filter(d => d.paciente_id === pid);
+  const sig = JSON.stringify([p, cs, evs, docs]);
+  if (sig === S.fichaSig) return; S.fichaSig = sig;
+  $('pf-nome').textContent = p.nome;
+  $('pf-sub').textContent = [idade(p.nascimento), p.telefone, cs.length ? plural(cs.filter(c => c.status === 'realizada').length, 'consulta realizada', 'consultas realizadas') : 'Sem consultas'].filter(Boolean).join(' · ');
+  const wa = waPaciente(p); const wl = $('pf-wa'); wl.hidden = !wa; if (wa) wl.href = wa;
+  $('pf-dados').innerHTML = kvHtml([['Telefone', p.telefone || '—'], ['CPF', p.cpf || '—'], ['Nascimento', p.nascimento ? `${br(p.nascimento)}${idade(p.nascimento) ? ' (' + idade(p.nascimento) + ')' : ''}` : '—'], ['E-mail', p.email || '—'], ['Endereço', p.endereco || '—']])
+;
+  $('pf-obs').innerHTML = p.observacoes ? `<div class="obs-saude"><span>Saúde e observações</span><p>${esc(p.observacoes)}</p></div>` : '';
+  const now = new Date();
+  $('pf-cons').innerHTML = cs.length ? cs.map(c => {
+    const st = ST_CONS[c.status] || ST_CONS.agendada, fut = consInicio(c) >= now, wac = waPaciente(p, c);
+    const acts = c.status === 'agendada'
+      ? `${fut && wac ? `<a class="ghost sm" target="_blank" rel="noopener" href="${wac}">Lembrete no WhatsApp</a>` : ''}<button type="button" class="ghost sm" data-cst="${esc(c.id)}|realizada">Realizada</button><button type="button" class="ghost sm" data-cst="${esc(c.id)}|faltou">Faltou</button><button type="button" class="ghost sm" data-cedit="${esc(c.id)}">Remarcar</button><button type="button" class="link" data-cst="${esc(c.id)}|cancelada">Cancelar</button>`
+      : c.status === 'realizada' ? `<button type="button" class="ghost sm" data-cevo="${esc(c.id)}">Registrar evolução</button>` : `<button type="button" class="link" data-cst="${esc(c.id)}|agendada">Reabrir</button>`;
+    return `<div class="cons-row"><div class="cons-top"><span><b>${quandoC(c)}</b><small>${hm(c.inicio)} às ${hm(c.fim)}${c.observacao ? ' · ' + esc(c.observacao) : ''}</small></span><span class="tag ${st[1]}">${st[0]}</span></div><div class="cons-acts">${acts}</div></div>`;
+  }).join('') : emptyBox('Nenhuma consulta ainda.');
+  const sel = $('pe-cons'), cur = sel.value;
+  sel.innerHTML = '<option value="">Sem consulta vinculada</option>' + cs.filter(c => c.status !== 'cancelada').map(c => `<option value="${esc(c.id)}">${br(c.data)} · ${hm(c.inicio)}</option>`).join('');
+  if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
+  $('pf-evo').innerHTML = evs.length ? evs.map(e => { const c = e.consulta_id && (S.cols.consultas || {})[e.consulta_id]; return `<div class="tl-item"><div class="tl-date"><b>${br(e.data).slice(0, 5)}</b><small>${e.data.slice(0, 4)}</small></div><div class="tl-body"><p>${esc(e.texto)}</p><small>${c ? `Consulta de ${br(c.data)} às ${hm(c.inicio)}` : 'Registro avulso'}</small><button type="button" class="link" data-evdel="${esc(e.id)}">Excluir</button></div></div>`; }).join('') : emptyBox('Registre aqui o que foi feito em cada consulta.');
+  const tot = Object.values(S.cols.paciente_docs || {}).reduce((n, d) => n + (Number(d.tamanho) || 0), 0);
+  $('pf-uso').textContent = `${kb(tot)} usados de cerca de 1 GB`;
+  $('pf-docs').innerHTML = docs.length ? TIPOS_DOC.map(([t, l]) => { const ds = docs.filter(d => d.tipo === t).sort((a, b) => String(b.criado_em).localeCompare(String(a.criado_em))); return ds.length ? `<div class="doc-grp"><p class="eyebrow">${l}</p>${ds.map(d => `<div class="doc-row"><span class="doc-ic">${/\.pdf$/i.test(d.nome) ? 'PDF' : 'IMG'}</span><span class="txt"><b>${esc(d.nome)}</b><small>${d.criado_em ? br(String(d.criado_em).slice(0, 10)) : ''}${d.tamanho ? ' · ' + kb(d.tamanho) : ''}</small></span><span class="acts"><button type="button" class="ghost sm" data-dopen="${esc(d.id)}">Abrir</button><button type="button" class="icon-btn" data-docdel="${esc(d.id)}" aria-label="Excluir ${esc(d.nome)}">${ICO_DEL}</button></span></div>`).join('')}</div>` : ''; }).join('') : emptyBox('Nenhum documento anexado.');
+}
+// Formulário do paciente (novo ou editar)
+function pacForm(pid) {
+  return () => {
+    const p = (pid && PAC()[pid]) || {};
+    const f = document.createElement('form'); f.noValidate = true; f.style.cssText = 'display:grid;gap:14px';
+    f.innerHTML = `<div class="dr-title"><span class="avatar">${p.nome ? esc(initials(p.nome)) : '+'}</span><div><h3>${pid ? 'Editar paciente' : 'Novo paciente'}</h3><span class="hint">Só você vê esses dados</span></div></div>
+      <label>Nome completo<input id="pp-nome" value="${esc(p.nome || '')}" autocomplete="off"></label>
+      <div class="form2"><label>Telefone (WhatsApp)<input id="pp-tel" inputmode="tel" value="${esc(p.telefone || '')}" placeholder="(31) 90000-0000"></label><label>CPF<input id="pp-cpf" inputmode="numeric" value="${esc(p.cpf || '')}"></label></div>
+      <div class="form2"><label>Nascimento<input id="pp-nasc" type="date" value="${esc(p.nascimento || '')}"></label><label>E-mail<input id="pp-email" type="email" value="${esc(p.email || '')}"></label></div>
+      <label>Endereço<input id="pp-end" value="${esc(p.endereco || '')}"></label>
+      <label>Saúde e observações<textarea id="pp-obs" rows="3" placeholder="Alergias, medicamentos, condições de saúde, convênio…">${esc(p.observacoes || '')}</textarea></label>
+      <div id="pp-fb" role="status"></div><div class="dr-actions"><button class="primary" type="submit">${pid ? 'Salvar' : 'Cadastrar paciente'}</button></div>`;
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const v = id => f.querySelector(id).value.trim() || null, nome = f.querySelector('#pp-nome').value.trim();
+      if (nome.length < 2) return msgIn(f.querySelector('#pp-fb'), 'err', 'Informe o nome do paciente.');
+      const row = { nome, telefone: v('#pp-tel'), cpf: v('#pp-cpf'), nascimento: v('#pp-nasc'), email: v('#pp-email'), endereco: v('#pp-end'), observacoes: v('#pp-obs') };
+      f.querySelector('[type=submit]').disabled = true;
+      try {
+        if (pid) { await S.store.updateRow('pacientes', pid, row); Object.assign(PAC()[pid], row); msgIn(f.querySelector('#pp-fb'), 'ok', 'Dados salvos.'); S.fichaSig = null; render(); }
+        else { const id = uuid4(); await S.store.insertRow('pacientes', { id, ...row }); S.cols.pacientes = Object.assign(PAC(), { [id]: { id, ...row, criado_em: new Date().toISOString() } }); S.pac = id; closeDrawer(); render(); }
+      } catch (err) { msgIn(f.querySelector('#pp-fb'), 'err', errText(err)); }
+      finally { f.querySelector('[type=submit]').disabled = false; }
+    });
+    return f;
+  };
+}
+// Formulário de consulta (agendar ou remarcar), de 15 em 15 minutos
+const minOpts = (a, z, sel) => { let o = ''; for (let m = a; m <= z; m += 15) { const t = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`; o += `<option value="${t}"${t === sel ? ' selected' : ''}>${t}</option>`; } return o; };
+function ocupadosDoDia(d, semCons) {
+  const out = [];
+  live().filter(x => x.b.date === d && isActive(x)).forEach(x => out.push({ a: x.b.from * 60, z: x.b.to * 60, t: x.b.origem === 'bloqueio' ? 'Bloqueado' : 'Dentista' }));
+  consultasDoDia(d).filter(c => c.id !== semCons).forEach(c => out.push({ a: tmin(c.inicio), z: tmin(c.fim), t: (PAC()[c.paciente_id] || {}).nome || 'Paciente' }));
+  return out.sort((x, y) => x.a - y.a);
+}
+function consForm(pid, cid) {
+  return () => {
+    const c = (cid && (S.cols.consultas || {})[cid]) || null;
+    const f = document.createElement('form'); f.noValidate = true; f.style.cssText = 'display:grid;gap:14px';
+    const pacs = Object.values(PAC()).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+    const A = CFG.abre * 60, Z = CFG.fecha * 60, d0 = c ? c.data : iso(new Date());
+    f.innerHTML = `<div class="dr-title"><span class="avatar">${IC.cal || '+'}</span><div><h3>${c ? 'Remarcar consulta' : 'Agendar consulta'}</h3><span class="hint">O horário fica ocupado na agenda dos dentistas</span></div></div>
+      ${pid ? `<p><b>${esc((PAC()[pid] || {}).nome || '')}</b></p>` : `<label>Paciente<select id="cf-pac"><option value="">Escolha o paciente</option>${pacs.map(p => `<option value="${esc(p.id)}">${esc(p.nome)}</option>`).join('')}</select></label>
+      <p class="hint">Paciente novo? <button type="button" class="link" data-pa="novo">Cadastre primeiro</button>.</p>`}
+      <label>Data<input type="date" id="cf-data" value="${d0}"></label>
+      <div class="form2"><label>Início<select id="cf-ini">${minOpts(A, Z - 15, c ? hm(c.inicio) : '')}</select></label><label>Fim<select id="cf-fim">${minOpts(A + 15, Z, c ? hm(c.fim) : '')}</select></label></div>
+      <div class="chips2" id="cf-dur">${[30, 45, 60, 90].map(m => `<button type="button" class="chip-b" data-dur="${m}">${m < 60 ? m + ' min' : m === 60 ? '1 hora' : '1h30'}</button>`).join('')}</div>
+      <label>Observação (opcional)<input id="cf-obs" value="${esc((c && c.observacao) || '')}" placeholder="Ex.: avaliação, limpeza, retorno"></label>
+      <div class="ocup" id="cf-ocup"></div>
+      <div id="cf-fb" role="status"></div><div class="dr-actions"><button class="primary" type="submit">${c ? 'Salvar novo horário' : 'Agendar'}</button></div>`;
+    const ini = f.querySelector('#cf-ini'), fim = f.querySelector('#cf-fim'), data = f.querySelector('#cf-data');
+    if (!c) { const nowM = new Date().getHours() * 60 + 60; const st = Math.min(Z - 30, Math.max(A, Math.ceil(nowM / 15) * 15)); ini.value = `${pad(Math.floor(st / 60))}:${pad(st % 60)}`; fim.value = `${pad(Math.floor((st + 30) / 60))}:${pad((st + 30) % 60)}`; }
+    const ocup = () => {
+      const o = ocupadosDoDia(data.value, cid), a = tmin(ini.value), z = tmin(fim.value);
+      const choque = o.find(x => x.a < z && x.z > a);
+      f.querySelector('#cf-ocup').innerHTML = (o.length ? `<p class="eyebrow">Ocupado neste dia</p>${o.map(x => `<span class="oc${x.a < z && x.z > a ? ' hit' : ''}">${pad(Math.floor(x.a / 60))}:${pad(x.a % 60)}–${pad(Math.floor(x.z / 60))}:${pad(x.z % 60)} · ${esc(x.t)}</span>`).join('')}` : '<p class="hint">Dia livre.</p>')
+        + (choque ? `<p class="msg err">Esse horário cruza com ${esc(choque.t)}. Escolha outro.</p>` : '');
+      f.querySelector('[type=submit]').disabled = !!choque || z <= a;
+    };
+    f.addEventListener('change', ocup);
+    f.addEventListener('click', e => { const b = e.target.closest('[data-dur]'); if (!b) return; const z = tmin(ini.value) + +b.dataset.dur; if (z <= Z) fim.value = `${pad(Math.floor(z / 60))}:${pad(z % 60)}`; ocup(); });
+    ocup();
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const p = pid || (f.querySelector('#cf-pac') || {}).value;
+      if (!p) return msgIn(f.querySelector('#cf-fb'), 'err', 'Escolha o paciente.');
+      if (!data.value) return msgIn(f.querySelector('#cf-fb'), 'err', 'Escolha a data.');
+      if (tmin(fim.value) <= tmin(ini.value)) return msgIn(f.querySelector('#cf-fb'), 'err', 'O fim precisa ser depois do início.');
+      const row = { paciente_id: p, data: data.value, inicio: ini.value, fim: fim.value, observacao: f.querySelector('#cf-obs').value.trim() || null, status: 'agendada' };
+      f.querySelector('[type=submit]').disabled = true;
+      try {
+        if (c) await S.store.updateRow('consultas', c.id, row); else await S.store.insertRow('consultas', { id: uuid4(), ...row });
+        msgIn(f.querySelector('#cf-fb'), 'ok', c ? 'Consulta remarcada.' : 'Consulta agendada.');
+        setTimeout(() => { closeDrawer(); S.pac = p; S.fichaSig = null; if (S.tab !== 'pacientes') setTab('pacientes'); else render(); }, 700);
+      } catch (err) { msgIn(f.querySelector('#cf-fb'), 'err', errText(err)); f.querySelector('[type=submit]').disabled = false; }
+    });
+    return f;
+  };
+}
+// Reduz fotos grandes antes de enviar (radiografias e documentos fotografados).
+async function reduzirImagem(file) {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size < 1200000) return file;
+  try {
+    const img = await createImageBitmap(file), k = Math.min(1, 2400 / Math.max(img.width, img.height));
+    const cv = document.createElement('canvas'); cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+    cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+    const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.85));
+    return blob && blob.size < file.size ? new File([blob], file.name.replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' }) : file;
+  } catch (_) { return file; }
+}
+document.addEventListener('change', async e => {
+  if (e.target.id !== 'pd-file' || !S.pac) return;
+  const files = [...e.target.files], fb = $('pd-fb'), tipo = $('pd-tipo').value, pid = S.pac;
+  e.target.value = '';
+  let ok = 0;
+  for (const f0 of files) {
+    if (!/^image\/|application\/pdf/.test(f0.type)) { msgIn(fb, 'err', `${f0.name}: envie foto ou PDF.`); continue; }
+    msgIn(fb, 'ok', `Enviando ${f0.name}…`);
+    const f = await reduzirImagem(f0);
+    if (f.size > 20 * 1048576) { msgIn(fb, 'err', `${f0.name} passa de 20 MB.`); continue; }
+    const slug = f.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w.\-]+/g, '-').slice(-80);
+    const path = `${pid}/${Date.now()}-${slug}`;
+    try { await S.store.uploadFile('pacientes', path, f, f.type); await S.store.insertRow('paciente_docs', { id: uuid4(), paciente_id: pid, tipo, nome: f.name, path, tamanho: f.size }); ok++; }
+    catch (err) { msgIn(fb, 'err', `${f0.name}: ${errText(err, 'não foi possível enviar.')}`); }
+  }
+  if (ok) msgIn(fb, 'ok', ok === 1 ? 'Arquivo anexado.' : `${ok} arquivos anexados.`);
+});
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'pf-evo-form') return;
+  e.preventDefault();
+  const f = e.target, fb = f.querySelector('.aj-fb'), texto = $('pe-texto').value.trim();
+  if (!texto) return msgIn(fb, 'err', 'Escreva o que foi feito.');
+  try {
+    await S.store.insertRow('evolucoes', { id: uuid4(), paciente_id: S.pac, consulta_id: $('pe-cons').value || null, data: $('pe-data').value || iso(new Date()), texto });
+    $('pe-texto').value = ''; msgIn(fb, 'ok', 'Evolução registrada.');
+  } catch (err) { msgIn(fb, 'err', errText(err)); }
+});
+async function twoStep(btn, label, fn) {
+  if (!btn.classList.contains('sure')) { btn.classList.add('sure'); btn.dataset.l = btn.innerHTML; btn.textContent = label; setTimeout(() => { if (btn.isConnected && btn.classList.contains('sure')) { btn.classList.remove('sure'); btn.innerHTML = btn.dataset.l; } }, 4000); return; }
+  btn.disabled = true; try { await fn(); } catch (err) { btn.disabled = false; btn.textContent = errText(err); }
+}
+document.addEventListener('click', async e => {
+  if (!e.target.closest || $('view-admin').hidden) return;
+  const pa = e.target.closest('[data-pa]'), pac = e.target.closest('[data-pac]'), cons = e.target.closest('[data-cons]');
+  const cst = e.target.closest('[data-cst]'), ced = e.target.closest('[data-cedit]'), cev = e.target.closest('[data-cevo]');
+  const evd = e.target.closest('[data-evdel]'), dop = e.target.closest('[data-dopen]'), ddl = e.target.closest('[data-docdel]');
+  if (!(pa || pac || cons || cst || ced || cev || evd || dop || ddl)) return;
+  e.preventDefault(); e.stopPropagation();
+  if (pac || cons) { const id = pac ? pac.dataset.pac : ((S.cols.consultas || {})[cons.dataset.cons] || {}).paciente_id; if (!id) return; S.pac = id; S.fichaDe = null; closeDrawer(); if (S.tab !== 'pacientes') setTab('pacientes'); else render(); try { window.scrollTo({ top: 0 }); } catch (_) {} return; }
+  if (pa) {
+    const a = pa.dataset.pa;
+    if (a === 'voltar') { S.pac = null; S.fichaDe = null; render(); return; }
+    if (a === 'novo') { openForm('Paciente', pacForm(null)); return; }
+    if (a === 'editar') { openForm('Paciente', pacForm(S.pac)); return; }
+    if (a === 'agendar') { openForm('Consulta', consForm(S.tab === 'pacientes' ? S.pac : null)); return; }
+    if (a === 'excluir') {
+      const pid = S.pac, nome = (PAC()[pid] || {}).nome || '';
+      return twoStep(pa, `Confirmar: excluir ${nome} e todos os documentos`, async () => {
+        for (const d of Object.values(S.cols.paciente_docs || {}).filter(x => x.paciente_id === pid)) { try { await S.store.removeFile('pacientes', d.path); } catch (_) {} }
+        await S.store.deleteRow('pacientes', pid); delete PAC()[pid]; S.pac = null; S.fichaDe = null; render();
+      });
+    }
+    return;
+  }
+  if (cst) { const [id, st] = cst.dataset.cst.split('|'); const go = async () => { await S.store.updateRow('consultas', id, { status: st }); (S.cols.consultas || {})[id] && ((S.cols.consultas)[id].status = st); S.fichaSig = null; render(); }; return st === 'cancelada' ? twoStep(cst, 'Confirmar cancelamento', go) : go().catch(err => { cst.textContent = errText(err); }); }
+  if (ced) { const c = (S.cols.consultas || {})[ced.dataset.cedit]; if (c) openForm('Consulta', consForm(c.paciente_id, c.id)); return; }
+  if (cev) { $('pe-cons').value = cev.dataset.cevo; const c = (S.cols.consultas || {})[cev.dataset.cevo]; if (c) $('pe-data').value = c.data; $('pf-evo-card').scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => $('pe-texto').focus(), 300); return; }
+  if (evd) return twoStep(evd, 'Confirmar exclusão', async () => { await S.store.deleteRow('evolucoes', evd.dataset.evdel); delete (S.cols.evolucoes || {})[evd.dataset.evdel]; S.fichaSig = null; render(); });
+  if (dop) { const d = (S.cols.paciente_docs || {})[dop.dataset.dopen]; if (!d) return; const w = window.open('', '_blank'); try { const u = await S.store.signedUrl('pacientes', d.path); if (w) w.location = u; else location.href = u; } catch (_) { if (w) w.close(); dop.textContent = 'Erro ao abrir'; } return; }
+  if (ddl) { const d = (S.cols.paciente_docs || {})[ddl.dataset.docdel]; if (!d) return; return twoStep(ddl, 'Excluir?', async () => { try { await S.store.removeFile('pacientes', d.path); } catch (_) {} await S.store.deleteRow('paciente_docs', d.id); delete S.cols.paciente_docs[d.id]; S.fichaSig = null; render(); }); }
+}, true);
+// Resumo: consultas de hoje
+function pacHojeHtml() {
+  const cs = consultasDoDia(iso(new Date()));
+  return `<div class="card-head"><h3>Pacientes de hoje</h3><button class="link" type="button" data-tab="pacientes">Ver pacientes</button></div>` + (cs.length ? `<div class="mini">${cs.map(c => consRow(c, true)).join('')}</div>` : `<p class="hint">Nenhuma consulta hoje. <button type="button" class="link" data-pa="agendar">Agendar consulta</button></p>`);
+}
+
+function ajRowPer(r) {
+  r = r || { de: 8, ate: 13, valor: '' };
+  return `<div class="ajrow" data-row="per"><label>Das<select data-k="de">${hourOpts(0, 23, +r.de)}</select></label><label>Até<select data-k="ate">${hourOpts(1, 24, +r.ate)}</select></label><label>Valor (R$)<input data-k="valor" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(r.valor)}"></label><button type="button" class="icon-btn" data-aj="del" aria-label="Remover">×</button></div>`;
+}
+function periodosDoForm(f) {
+  const lim = parseInt(f.querySelector('#vf-lim').value, 10);
+  if (!(lim >= 1 && lim <= 12)) return { erro: 'Confira o limite de horas avulsas (1 a 12).' };
+  const periodos = [];
+  for (const r of f.querySelectorAll('[data-row="per"]')) {
+    const de = +r.querySelector('[data-k="de"]').value, ate = +r.querySelector('[data-k="ate"]').value, v = numOrNull(r.querySelector('[data-k="valor"]').value);
+    if (v == null) continue;
+    if (!(ate > de) || !(v >= 0)) return { erro: 'Em cada período, o “até” precisa ser depois do “das” e o valor precisa estar preenchido.' };
+    periodos.push({ de, ate, valor: v });
+  }
+  let diaria = null;
+  if (f.querySelector('#vf-dia').checked) {
+    const de = +f.querySelector('#vf-dde').value, ate = +f.querySelector('#vf-date').value, v = numOrNull(f.querySelector('#vf-dval').value);
+    if (!(ate > de) || !(v >= 0)) return { erro: 'Confira o horário e o valor da diária.' };
+    diaria = { de, ate, valor: v };
+  }
+  return { lim, periodos: periodos.sort((a, b) => a.de - b.de), diaria };
+}
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-aj6="addper"]'); if (b) { e.preventDefault(); $('vf-pers').insertAdjacentHTML('beforeend', ajRowPer()); } });
+
 /* ---------- Rotas e render ---------- */
 function route() {
   const h = location.hash, wantAdmin = h === '#admin', wantDent = h === '#dentista';
@@ -4425,11 +4926,12 @@ setInterval(render, 60000); // atualiza status e horas que passaram
 
 /* ---------- Inicialização ---------- */
 (async function init() {
+  senhasComOlho();
   try { S.tab = sessionStorage.getItem('aba') || 'resumo'; S.ctab = sessionStorage.getItem('cab') || 'inicio'; } catch (_) {}
   if ('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('sw.js').catch(() => {});
   const wire = st => {
     st.watch((sl, bk) => { S.slots = sl; S.bookings = bk; render(); });
-    ['dentists', 'avisos', 'problemas', 'espera', 'faq'].forEach(n => st.watchCol(n, (o, quiet) => {
+    ['dentists', 'avisos', 'problemas', 'espera', 'faq', 'pacientes', 'consultas', 'evolucoes', 'paciente_docs'].forEach(n => st.watchCol(n, (o, quiet) => {
       S.cols[n] = o;
       if (n === 'faq') S.faq = Object.values(o).sort((a, b) => (a.ordem || 0) - (b.ordem || 0) || String(a.criadoEm).localeCompare(String(b.criadoEm)));
       if (n === 'dentists') { S.phoneUid = {}; Object.values(o).forEach(d => { const k = dkey(d.tel); if (k) S.phoneUid[k] = d.id; }); }
@@ -4447,7 +4949,8 @@ setInterval(render, 60000); // atualiza status e horas que passaram
       : 'Não foi possível conectar ao sistema de reservas. Verifique sua internet e recarregue a página.';
     route(); return;
   }
-  SB = window.supabase.createClient(C.supabaseUrl.replace(/\/$/, ''), C.supabaseAnonKey);
+  document.querySelectorAll('[data-lembrar]').forEach(x => { x.checked = sessaoStorage.lembrar(); });
+  SB = window.supabase.createClient(C.supabaseUrl.replace(/\/$/, ''), C.supabaseAnonKey, { auth: { storage: sessaoStorage, persistSession: true, autoRefreshToken: true } });
   S.localMode = false;
   S.store = sbAdapter(SB); wire(S.store);
   route();
