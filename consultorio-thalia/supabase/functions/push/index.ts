@@ -1,5 +1,6 @@
 // Função "push" do Supabase: entrega as notificações nos celulares (Web Push), sem custo.
-// Quem chama é o próprio banco de dados (gatilhos e lembretes). Não precisa de nenhuma configuração aqui.
+// Quem chama é o próprio banco de dados (gatilhos e lembretes). Também entrega a agenda para o Google Agenda.
+// Não precisa de nenhuma configuração aqui.
 // Como publicar: Supabase > Edge Functions > Deploy a new function > Via Editor > nome "push" > cole este arquivo > Deploy.
 // Depois, nos detalhes da função, desligue "Enforce JWT verification" (ou "Verify JWT") e salve.
 
@@ -73,9 +74,29 @@ export async function encrypt(p256dh, authSecret, text, test) {
 
 const json = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: { ...CORS, 'Content-Type': 'application/json' } });
 
+// Agenda do consultório para o Google Agenda: GET ...?agenda=<link secreto gerado no painel>.
+async function agenda(token) {
+  const base = Deno.env.get('SUPABASE_URL');
+  const keys = [Deno.env.get('SUPABASE_ANON_KEY'), Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')].filter(Boolean);
+  for (const key of keys) {
+    const headers = { apikey: key, 'Content-Type': 'application/json' };
+    if (!key.startsWith('sb_')) headers.Authorization = `Bearer ${key}`;
+    const r = await fetch(`${base}/rest/v1/rpc/agenda_ics`, { method: 'POST', headers, body: JSON.stringify({ p_token: token }) });
+    if (r.status === 401 || r.status === 403) continue;
+    if (!r.ok) break;
+    const ics = await r.json();
+    return new Response(ics, { headers: { ...CORS, 'Content-Type': 'text/calendar; charset=utf-8', 'Cache-Control': 'max-age=900' } });
+  }
+  return new Response('Agenda não encontrada. Gere um novo link no painel.', { status: 404, headers: { ...CORS, 'Content-Type': 'text/plain; charset=utf-8' } });
+}
+
 export async function handler(req) {
   if (req.method === 'OPTIONS') return new Response(null, { headers: CORS });
-  if (req.method !== 'POST') return json({ ok: true, funcao: 'push' });
+  if (req.method === 'GET') {
+    const tk = new URL(req.url).searchParams.get('agenda');
+    if (tk && /^[a-f0-9]{20,80}$/.test(tk)) return agenda(tk);
+  }
+  if (req.method !== 'POST') return json({ ok: true, funcao: 'push', versao: 2 });
   let data;
   try { data = await req.json(); } catch (_) { return json({ erro: 'json' }, 400); }
   const v = data && data.vapid, subs = Array.isArray(data && data.subs) ? data.subs.slice(0, 500) : [];
