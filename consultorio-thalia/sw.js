@@ -1,7 +1,7 @@
 // App do consultório: abre mesmo com a internet instável e mostra as notificações no celular.
-const CACHE = 'thalia-v2';
+const CACHE = 'thalia-v3';
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', 'assets/logo-vinho.webp', 'assets/logo-dourado.webp', 'assets/icon-192.png'])).catch(() => {}));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', 'assets/logo-vinho.webp?v=7', 'assets/logo-dourado.webp?v=7', 'assets/icon-192.png?v=7'])).catch(() => {}));
   self.skipWaiting();
 });
 self.addEventListener('activate', e => e.waitUntil(
@@ -19,8 +19,8 @@ self.addEventListener('push', e => {
   const title = d.title || 'Consultório Thalia Santiago';
   e.waitUntil(self.registration.showNotification(title, {
     body: d.body || '',
-    icon: 'assets/icon-192.png',
-    badge: 'assets/badge-96.png',
+    icon: 'assets/icon-192.png?v=7',
+    badge: 'assets/badge-96.png?v=7',
     tag: d.tag || undefined,
     renotify: !!d.tag,
     data: { url: d.url || './' },

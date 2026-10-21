@@ -11,18 +11,18 @@
 <meta property="og:site_name" content="Consultório Thalia Santiago">
 <meta property="og:title" content="Consultório Thalia Santiago · Aluguel por hora em Ipatinga">
 <meta property="og:description" content="Reserve por hora o consultório odontológico no Centro de Ipatinga. Veja os horários livres e confirme em poucos passos.">
-<meta property="og:url" content="https://cots-consultorio-thalia.vercel.app/">
-<meta property="og:image" content="https://cots-consultorio-thalia.vercel.app/assets/og.png">
+<meta property="og:url" content="https://dra-thalia-santiago.vercel.app/">
+<meta property="og:image" content="https://dra-thalia-santiago.vercel.app/assets/og.png?v=7">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest?v=7">
+<link rel="apple-touch-icon" href="assets/icon-180.png?v=7">
 <meta name="apple-mobile-web-app-title" content="Thalia Santiago">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="icon" href="assets/icone.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-64.png?v=7" type="image/png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
 <style>
 /* Clean e branco: barra superior com logo, hero em duas colunas (texto + horários livres), faixa de informações, passos do agendamento em folha única. Vinho e dourado só em detalhes. */
@@ -946,6 +946,74 @@ td.acts-col{text-align:right;white-space:nowrap}
 }
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:760px){.site-foot .fcols>div:nth-child(4){display:block}}
+
+/* ---------- v7: termos de uso e planos mensais ---------- */
+.termos-txt{max-height:min(46vh,420px);overflow:auto;background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:.9rem;line-height:1.55;width:100%;box-sizing:border-box;-webkit-overflow-scrolling:touch}
+.termos-txt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.termos-txt h4{font:600 1rem var(--font-display);margin:0 0 4px;color:var(--accent)}
+.termos-txt h5{font:600 .95rem var(--font-body);margin:14px 0 4px;color:var(--ink)}
+.termos-txt p{margin:0 0 8px;color:var(--ink)}
+.termos-txt .t-sub{color:var(--muted);font-size:.85rem;margin-bottom:10px}
+.termos-txt .t-fim{text-align:center;color:var(--muted);font-size:.78rem;margin:14px 0 0}
+.termos-txt .t-note{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}
+.termos-txt.sm{max-height:340px;margin-top:10px}
+.termos-txt ins,.t-note ins{background:#e3f1e5;color:#1d5c2c;text-decoration:none;border-radius:4px;padding:0 2px}
+.termos-txt del,.t-note del{background:var(--busy-soft,#f8e1e3);color:var(--busy,#b4232f);border-radius:4px;padding:0 2px}
+.t-hint{font-size:.82rem;color:var(--muted)}
+.t-hint.ok{color:var(--ok,#1f8a4c)}
+.reg-termos{display:grid;gap:8px}
+.reg-termos>b{font-weight:600}
+.reg-termos .termos-txt{max-height:240px}
+#dr-submit:disabled{opacity:.55;cursor:not-allowed}
+.termos-gate{max-width:760px;width:100%;box-sizing:border-box}
+.termos-gate .termos-txt{max-height:min(50vh,460px)}
+.tmodal{position:fixed;inset:0;z-index:80;background:rgba(30,10,16,.55);display:grid;place-items:center;padding:16px}
+.tmodal[hidden]{display:none}
+.tm-in{background:var(--surface,#fff);border-radius:20px;max-width:720px;width:100%;max-height:calc(100vh - 32px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:12px;padding:18px;box-sizing:border-box}
+.tm-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tm-head b{font:600 1.15rem var(--font-display)}
+.tm-in .termos-txt{max-height:none}
+.tm-in .hint{margin:0}
+body.tm-open{overflow:hidden}
+.flink[data-termos]{font:inherit}
+.tv-list{display:grid;gap:8px}
+.tv{border:1px solid var(--line);border-radius:14px;padding:0 14px;background:var(--surface)}
+.tv>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;cursor:pointer}
+.tv>summary::-webkit-details-marker{display:none}
+.tv-h{display:grid;gap:2px;min-width:0}
+.tv-h small{color:var(--muted);font-size:.8rem}
+.tv[open]{padding-bottom:12px}
+.tag.credito{background:var(--gold-soft);color:var(--gold)}
+.tag.plano{background:var(--accent-soft);color:var(--accent)}
+.pl-list{display:grid;gap:8px}
+.pl-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--soft);border-radius:14px;padding:10px 12px}
+.pl-row .txt{display:grid;min-width:0}
+.pl-row .txt small{color:var(--muted);font-size:.82rem}
+.pl-row .acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.pl-ic{width:36px;height:36px;border-radius:12px;background:var(--gold-soft);color:var(--accent);display:grid;place-items:center;font:600 1rem var(--font-display)}
+@media (max-width:560px){.pl-row{grid-template-columns:auto minmax(0,1fr)}.pl-row .acts{grid-column:1/-1;justify-content:flex-start}}
+#cn-plano{display:grid;gap:12px}
+.pl-form{border:1px dashed var(--line);border-radius:16px;padding:0 14px}
+.pl-form>summary{cursor:pointer;padding:13px 0;font-weight:500;color:var(--accent);list-style:none}
+.pl-form>summary::-webkit-details-marker{display:none}
+.pl-form>summary::before{content:"+ "}
+.pl-form[open]>summary::before{content:"– "}
+.pl-grid{display:grid;gap:14px;padding:4px 0 16px}
+.pl-precos{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px}
+.pl-precos div{background:var(--gold-soft);border-radius:14px;padding:10px 12px;display:grid;gap:2px}
+.pl-precos b{font:600 1.2rem var(--font-display);color:var(--accent)}
+.pl-precos span{font-size:.85rem}
+.pl-precos small{color:var(--muted);font-size:.78rem}
+.pl-datas{display:flex;flex-wrap:wrap;gap:8px}
+.pl-datas:empty{display:none}
+.pl-datas span{display:grid;justify-items:center;min-width:58px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--surface)}
+.pl-datas span b{font-size:.92rem}
+.pl-datas span small{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.pl-datas span.busy{background:var(--busy-soft,#f8e1e3);border-color:transparent}
+.pl-datas span.busy small{color:var(--busy,#b4232f)}
+.hint.warn{color:var(--busy,#b4232f)}
+.pl-box{display:grid;gap:10px;background:var(--soft);border-radius:14px;padding:12px 14px}
+.pl-box .hint{margin:0}
 </style>
 </head>
 <body>
@@ -964,7 +1032,7 @@ td.acts-col{text-align:right;white-space:nowrap}
   </div></div>
 
   <header class="top"><div class="in top-in">
-    <a class="logo" href="#" aria-label="Início"><img src="assets/logo-vinho.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254"></a>
+    <a class="logo" href="#" aria-label="Início"><img src="assets/logo-vinho.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413"></a>
     <nav class="mainnav">
       <a class="t" href="#como">Como funciona</a>
       <a class="t" href="#sobre">O consultório</a>
@@ -1040,7 +1108,7 @@ td.acts-col{text-align:right;white-space:nowrap}
         <div class="in about-grid">
           <div class="brandpanel">
             <span class="ring" style="width:420px;height:420px" aria-hidden="true"></span><span class="ring" style="width:560px;height:560px" aria-hidden="true"></span>
-            <img src="assets/logo-dourado.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254">
+            <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413">
             <div class="sig"><span data-fill="dentista"></span><span>Cirurgiã-dentista responsável</span></div>
           </div>
           <div class="about-text">
@@ -1222,11 +1290,13 @@ td.acts-col{text-align:right;white-space:nowrap}
       <label><span>Especialidade <em>(opcional)</em></span><input id="dr-esp" placeholder="Ex.: Ortodontia"></label>
       <label>Crie uma senha (mínimo 8 caracteres)<input id="dr-pass" type="password" autocomplete="new-password"></label>
       <label>Confirme a senha<input id="dr-pass2" type="password" autocomplete="new-password"></label>
-      <div style="display:grid;gap:10px">
-        <details class="rd"><summary>Ler as regras de uso do consultório</summary><ol class="rules" id="dr-rules"></ol></details>
-        <label class="check"><input type="checkbox" id="dr-accept"><span>Li e aceito as regras de uso do consultório</span></label>
+      <div class="reg-termos">
+        <b>Termos e condições de uso</b>
+        <div class="termos-txt" id="dr-termos" tabindex="0" aria-label="Texto dos termos de uso"></div>
+        <small class="t-hint" id="dr-termos-hint">Role o texto até o final para liberar o aceite.</small>
+        <label class="check"><input type="checkbox" id="dr-accept" disabled><span>Li e concordo com os termos e condições de uso</span></label>
       </div>
-      <button class="primary" type="submit" id="dr-submit">Criar conta</button>
+      <button class="primary" type="submit" id="dr-submit" disabled>Criar conta</button>
     </form>
     <form id="dl-new" novalidate hidden>
       <label>Nova senha (mínimo 8 caracteres)<input id="dn-pass" type="password" autocomplete="new-password"></label>
@@ -1240,19 +1310,21 @@ td.acts-col{text-align:right;white-space:nowrap}
   <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto ampliada"><button type="button" class="lb-x" id="lb-x" aria-label="Fechar">×</button><button type="button" class="lb-p" id="lb-p" aria-label="Foto anterior">‹</button><img id="lb-img" alt="Foto do consultório"><button type="button" class="lb-n" id="lb-n" aria-label="Próxima foto">›</button></div>
   <footer class="site-foot"><div class="in">
     <div class="fcols">
-      <div><img src="assets/logo-dourado.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254"><p>Aluguel por hora de consultório odontológico no Centro de Ipatinga/MG.</p></div>
+      <div><img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413"><p>Aluguel por hora de consultório odontológico no Centro de Ipatinga/MG.</p></div>
       <div><h4>Consultório</h4><ul><li data-fill="end"></li><li data-fill="cidade"></li><li data-fill="hor"></li></ul></div>
       <div><h4>Contato</h4><ul><li data-fill="tel"></li><li><a data-href="wa" target="_blank" rel="noopener">WhatsApp</a></li><li><a data-href="ig" target="_blank" rel="noopener">Instagram <span data-fill="igu"></span></a></li><li data-fill="dentista"></li></ul></div>
-      <div><h4>Acesso</h4><ul><li><button type="button" class="flink" data-start>Agendar horário</button></li><li><a href="#dentista">Área do dentista</a></li><li><a href="#admin">Administrador</a></li></ul></div>
+      <div><h4>Acesso</h4><ul><li><button type="button" class="flink" data-start>Agendar horário</button></li><li><a href="#dentista">Área do dentista</a></li><li><a href="#admin">Administrador</a></li><li><button type="button" class="flink" data-termos>Termos de uso</button></li></ul></div>
     </div>
     <div class="fbase"><span>© <span data-fill="ano"></span> Consultório Odontológico Thalia Santiago</span><span><span data-fill="end"></span> · <span data-fill="cidade"></span></span></div>
   </div></footer>
 </div>
 
+<div class="tmodal" id="tm" hidden role="dialog" aria-modal="true" aria-labelledby="tm-t"><div class="tm-in"><div class="tm-head"><b id="tm-t">Termos e condições de uso</b><button type="button" class="icon-btn" id="tm-x" aria-label="Fechar">×</button></div><div class="termos-txt" id="tm-body" tabindex="0"></div><p class="hint" id="tm-info"></p></div></div>
+
 <!-- PAINEL DO ADMINISTRADOR -->
 <div id="view-admin" class="app" hidden>
   <header class="app-top"><div class="app-top-in">
-    <img src="assets/logo-dourado.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254">
+    <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413">
     <span class="crumb"><span class="hide-xs">Painel</span><span class="hide-xs" aria-hidden="true">›</span><b id="crumb">Resumo</b></span>
     <div class="who"><span class="who-name">Dra. Thalia Santiago</span><span class="avatar">TS</span></div>
   </div></header>
@@ -1302,6 +1374,7 @@ td.acts-col{text-align:right;white-space:nowrap}
           <div class="search"><input id="d-q" type="search" placeholder="Buscar por nome, CRO ou telefone" aria-label="Buscar dentista"></div>
         </div>
         <div class="stack" id="d-pend"></div>
+        <div class="stack" id="d-planos"></div>
         <div class="card">
           <div class="tbl-wrap"><table class="tbl">
             <thead><tr><th>Nome</th><th class="hide-sm">CRO</th><th class="hide-sm">WhatsApp</th><th class="num">Reservas</th><th class="num hide-sm">Horas</th><th>Última</th><th class="hide-sm">Próxima</th><th class="acts-col"><span class="sr">Ações</span></th></tr></thead>
@@ -1420,6 +1493,8 @@ td.acts-col{text-align:right;white-space:nowrap}
         <details class="acc" data-acc="fechadas"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M9.5 13l5 5M14.5 13l-5 5"/></svg></span><span class="acc-t"><b>Datas fechadas</b><small id="sum-fechadas"></small></span></summary><div class="acc-b"><p class="hint">Feriados, férias ou manutenção: os horários bloqueados somem para os dentistas. Toque numa data para desbloquear.</p><div class="mini" id="fx-list"></div><div class="nav"><button type="button" class="primary sm" data-aj="bloquear">Fechar datas ou horários</button></div></div></details>
         <details class="acc" data-acc="pag"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12.5" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span><span class="acc-t"><b>Pagamentos e Pix</b><small id="sum-pag"></small></span></summary><div class="acc-b" id="acc-pag"></div></details>
         <details class="acc" data-acc="regras"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h10a1.5 1.5 0 011.5 1.5v14H7A1.5 1.5 0 015.5 18.5V6A1.5 1.5 0 017 4.5zM9 9h6M9 12.5h6M9 16h4"/></svg></span><span class="acc-t"><b>Regras, checklist e espaço</b><small id="sum-regras"></small></span></summary><div class="acc-b" id="acc-regras"></div></details>
+        <details class="acc" data-acc="planos"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M8 13.5h3M8 17h3M14 13.5h2"/></svg></span><span class="acc-t"><b>Planos mensais</b><small id="sum-planos"></small></span></summary><div class="acc-b" id="acc-planos"></div></details>
+        <details class="acc" data-acc="termos"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 01-.5.5h-10A1.5 1.5 0 016 19V5a1.5 1.5 0 011-1.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h6"/></svg></span><span class="acc-t"><b>Termos de uso</b><small id="sum-termos"></small></span></summary><div class="acc-b" id="acc-termos"></div></details>
         <details class="acc" data-acc="rel"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span class="acc-t"><b>Relatório mensal e Google Agenda</b><small id="sum-rel"></small></span></summary><div class="acc-b" id="acc-rel"></div></details>
         <details class="acc" data-acc="app"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span><span class="acc-t"><b>App no celular</b><small id="sum-app"></small></span></summary><div class="acc-b"><div id="app-a"></div></div></details>
         <details class="acc" data-acc="email"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></span><span class="acc-t"><b>E-mails automáticos</b><small id="sum-email"></small></span></summary><div class="acc-b"><div id="aj-email"><div class="card-head"><span class="tag pend" id="em-status">Carregando</span></div><p class="hint" id="em-hint">Confirmação de reserva e lembrete 2 horas antes para os dentistas, aviso de vaga aberta para a lista de espera, e um e-mail para você a cada reserva nova, cancelamento e problema relatado. Usa o plano gratuito do Brevo (até 300 e-mails por dia).</p>
@@ -1468,7 +1543,7 @@ td.acts-col{text-align:right;white-space:nowrap}
 <!-- ÁREA DO DENTISTA -->
 <div id="view-dent" class="app" hidden>
   <header class="app-top"><div class="app-top-in">
-    <img src="assets/logo-dourado.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254">
+    <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413">
     <span class="crumb"><span class="hide-xs">Área do dentista</span><span class="hide-xs" aria-hidden="true">›</span><b id="c-crumb">Início</b></span>
     <div class="who"><span class="who-name" id="c-who"></span><span class="avatar" id="c-av"></span></div>
   </div></header>
@@ -1522,6 +1597,7 @@ td.acts-col{text-align:right;white-space:nowrap}
       <!-- NOVA RESERVA -->
       <section id="c-nova" class="tab" hidden aria-label="Nova reserva">
         <div class="page-head"><div><p class="eyebrow">Nova reserva</p><h2>Escolha a data e o horário</h2></div></div>
+        <div class="card" id="cn-plano" hidden></div>
         <div class="card" id="cn-pick">
           <div class="stack" id="cn-top"></div>
           <div class="cols">
@@ -1631,7 +1707,7 @@ td.acts-col{text-align:right;white-space:nowrap}
                 <div class="nav end"><button class="ghost" type="submit">Alterar senha</button></div>
               </form>
             </div>
-            <div class="card"><div class="card-head"><h3>Documentos</h3></div><div class="kv" id="cp-docs"></div></div>
+            <div class="card"><div class="card-head"><h3>Documentos</h3></div><div class="kv" id="cp-docs"></div><div class="dr-actions" style="margin-top:12px"><button type="button" class="ghost sm" data-termos>Ler os termos de uso</button></div></div>
           </div>
         </div>
         <div class="card" id="app-d"></div>
@@ -1680,7 +1756,9 @@ const CFG = {
   limiteHoras: 3,               // acima disso, a reserva é por período
   periodos: [{ de: 8, ate: 13, valor: 180 }, { de: 13, ate: 18, valor: 180 }, { de: 18, ate: 22, valor: 180 }],
   diaria: { de: 8, ate: 18, valor: 350 },
-  prazoCancelamentoH: 24,      // até quantas horas antes o dentista pode cancelar pelo site
+  prazoCancelamentoH: 4,       // até quantas horas antes o dentista pode cancelar ou remarcar pelo site
+  planos: { diaria: 1000, periodo: 600 }, // plano mensal (1x por semana), valor por mês
+  planoAvisoDias: 3,           // aviso mínimo para o dia do plano virar crédito
   pix: '',                     // chave Pix exibida na área do dentista
   pacotes: [],                 // ex.: [{ horas: 10, valor: 700 }, { horas: 20, valor: 1300 }]
   espaco: {                    // informações exibidas em "O consultório"
@@ -1689,7 +1767,7 @@ const CFG = {
   },
   regras: [                    // texto de exemplo: revisar antes de usar
     'Respeite o horário reservado: chegue e deixe o consultório dentro do intervalo marcado.',
-    'Cancelamentos pelo site podem ser feitos até 24 horas antes do início. Depois disso, fale com a Dra. Thalia.',
+    'Cancelamentos e remarcações pelo site podem ser feitos até 4 horas antes do início, com direito a reembolso. Depois disso, fale com a Dra. Thalia.',
     'Ao final, deixe instrumentais esterilizados ou recolhidos e a bancada, a cadeira e o refletor higienizados.',
     'Descarte os resíduos de acordo com as normas de biossegurança.',
     'Comunique qualquer problema com equipamentos ou falta de material pela área do dentista.',
@@ -1792,13 +1870,14 @@ const dayOpen = d => CFG.diasAbertos.includes(d.getDay());
 /* Estado de um agendamento: fica "agendado" até o fim do horário marcado. */
 function statusOf(b, now = new Date()) {
   if (b.status === 'cancelado') return 'cancelado';
+  if (b.status === 'credito') return 'credito';
   const start = new Date(`${b.date}T${pad(b.from)}:00`);
   const end = new Date(`${b.date}T${pad(b.to)}:00`);
   if (now >= end) return 'concluido';
   if (now >= start) return 'andamento';
   return 'agendado';
 }
-const STATUS_LABEL = { agendado: 'Agendado', andamento: 'Em atendimento', concluido: 'Concluído', cancelado: 'Cancelado' };
+const STATUS_LABEL = { agendado: 'Agendado', andamento: 'Em atendimento', concluido: 'Concluído', cancelado: 'Cancelado', credito: 'Crédito' };
 
 /* ---------- Boas-vindas ---------- */
 function fillInfo() {
@@ -2179,12 +2258,12 @@ function renderDue() {
   }));
 }
 function renderResumo() {
-  $('r-app').innerHTML = pendHtml() + appTipHtml('a');
+  $('r-app').innerHTML = pendHtml() + planPendHtml() + appTipHtml('a');
   $('r-aval').innerHTML = avaliacoesHtml();
   $('r-pac').innerHTML = pacHojeHtml();
   const all = S.cache.all, now = new Date(), t = iso(now), ym = t.slice(0, 7);
   $('r-date').textContent = `${DIAS_LONGOS[now.getDay()]}, ${now.getDate()} de ${MESES[now.getMonth()]} de ${now.getFullYear()}`;
-  const hoje = all.filter(x => isActive(x) && x.b.date === t);
+  const hoje = all.filter(x => isActive(x) && x.st !== 'credito' && x.b.date === t);
   const prox = all.filter(x => x.st === 'agendado' || x.st === 'andamento').sort(asc);
   const mes = all.filter(x => isActive(x) && x.b.date.startsWith(ym));
   const horasMes = sumH(mes);
@@ -2205,7 +2284,7 @@ function renderResumo() {
   if (!days.length) days = [mon];
   $('r-week').textContent = `${br(iso(days[0])).slice(0, 5)} a ${br(iso(days[days.length - 1])).slice(0, 5)} · de ${hpd}h por dia`;
   $('r-bars').innerHTML = days.map(d => {
-    const s = iso(d); const h = sumH(all.filter(x => isActive(x) && x.b.date === s));
+    const s = iso(d); const h = sumH(all.filter(x => isActive(x) && x.st !== 'credito' && x.b.date === s));
     return `<div class="bar${s === t ? ' today' : ''}"><span class="bar-v">${h}h</span><div class="bar-track" role="img" aria-label="${DIAS_LONGOS[d.getDay()]}: ${h} de ${hpd} horas"><i style="height:${Math.min(100, h / hpd * 100)}%"></i></div><span class="bar-l">${DIAS[d.getDay()]}</span></div>`;
   }).join('');
 
@@ -2224,14 +2303,14 @@ function renderResumo() {
 
 /* Dentistas */
 function renderDentistas() {
-  $('d-pend').innerHTML = pendHtml();
+  $('d-pend').innerHTML = pendHtml() + planPendHtml(); renderDPlanos();
   const all = getDents();
   $('d-count').textContent = plural(all.length, 'dentista cadastrado', 'dentistas cadastrados');
   const q = $('d-q').value.trim().toLowerCase(), qd = q.replace(/\D/g, '');
   const list = all.filter(d => !q || d.nome.toLowerCase().includes(q) || d.cro.toLowerCase().includes(q) || (qd && dkey(d.tel).includes(qd)))
     .sort((a, b) => ultKey(b).localeCompare(ultKey(a)));
   $('d-body').innerHTML = list.map(d => `<tr data-dent="${esc(d.key)}" tabindex="0">
-    <td><span class="who2"><span class="avatar">${esc(initials(d.nome))}</span><b>${esc(d.nome)}</b>${acessoTag(d)}</span></td>
+    <td><span class="who2"><span class="avatar">${esc(initials(d.nome))}</span><b>${esc(d.nome)}</b>${acessoTag(d)}${termosTag(d)}${d.doc && planos().some(p => p.dentist_id === d.doc.id && p.status === 'ativo') ? ' <span class="tag plano">Plano</span>' : ''}</span></td>
     <td class="hide-sm">${esc(d.cro || '—')}</td>
     <td class="hide-sm">${esc(d.tel)}</td>
     <td class="num">${d.reservas}</td>
@@ -2271,7 +2350,7 @@ function renderCal() {
     h += `<div class="cal-col${s === t ? ' today' : ''}${dayOpen(d) ? '' : ' closed'}">`;
     if (past > 0) h += `<div class="cal-past" style="height:${past * ROW}px"></div>`;
     if (s === t && past > 0 && past < n) h += `<div class="cal-now" style="top:${past * ROW}px"></div>`;
-    [...all.filter(x => isActive(x) && x.b.date === s), ...(S.cache.blocks || []).filter(x => x.b.date === s)].forEach(({ b, st }) => {
+    [...all.filter(x => isActive(x) && x.st !== 'credito' && x.b.date === s), ...(S.cache.blocks || []).filter(x => x.b.date === s)].forEach(({ b, st }) => {
       count++;
       h += `<button type="button" class="ev ${b.origem === 'bloqueio' ? 'bloqueio' : st}" data-bk="${esc(b.id)}" style="top:${(b.from - CFG.abre) * ROW + 2}px;height:${(b.to - b.from) * ROW - 4}px" aria-label="${esc(b.nome)}, ${hh(b.from)} às ${hh(b.to)}"><small>${hh(b.from)} – ${hh(b.to)}</small><b>${esc(b.nome)}</b></button>`;
     });
@@ -2367,7 +2446,7 @@ function renderAjustes() {
   const ah = appCardHtml('a', true); if (S.appAH !== ah) { $('app-a').innerHTML = ah; S.appAH = ah; }
   if (!S.pushLoaded) { S.pushLoaded = true; loadPushStatus(); }
   if (!S.ajLoaded) { S.ajLoaded = true; ajLoad(); }
-  ajSummaries();
+  ajSummaries(); ajSummaries7();
 }
 document.querySelectorAll('.theme-opt').forEach(b => b.addEventListener('click', () => setTema(b.dataset.tema, b.dataset.scope || 'painel')));
 
@@ -2387,7 +2466,7 @@ function renderDrawer() {
   let node = null;
   if (S.drawer.type === 'booking') {
     const x = S.cache.all.find(x => x.b.id === S.drawer.id) || (S.cache.blocks || []).find(x => x.b.id === S.drawer.id);
-    if (x) { $('dr-kind').textContent = x.b.origem === 'bloqueio' ? 'Bloqueio' : 'Reserva'; node = x.b.origem === 'bloqueio' ? blockDetail(x) : bookingDetail(x); }
+    if (x) { $('dr-kind').textContent = x.b.origem === 'bloqueio' ? 'Bloqueio' : 'Reserva'; node = x.b.origem === 'bloqueio' ? blockDetail(x) : bookingDetail(x); if (node && x.b.plano_id) node.appendChild(planoAdminBlock(x)); }
   } else {
     const d = getDents().find(d => d.key === S.drawer.key);
     if (d) { $('dr-kind').textContent = 'Dentista'; node = dentistDetail(d); }
@@ -2454,7 +2533,7 @@ function dentistDetail(d) {
       <div><span>Área do dentista</span><span>${d.doc ? 'Conta criada' : 'Ainda não criou conta'}</span></div>
       ${d.nota ? `<div><span>Avaliação média</span><span>${d.nota.toFixed(1).replace('.', ',')} de 5</span></div>` : ''}
     </div>
-    ${acessoActions(d)}
+    ${planosDentHtml(d)}${termosDentHtml(d)}${acessoActions(d)}
     <div class="dr-actions"><a class="wa-sm" target="_blank" rel="noopener" href="https://wa.me/${phoneIntl(d.tel)}">Conversar no WhatsApp</a><button type="button" class="ghost" data-recibo="${esc(d.key)}|${iso(S.fMonth || new Date()).slice(0, 7)}">Recibo de ${MESES[(S.fMonth || new Date()).getMonth()]} (PDF)</button></div>
     <div style="display:grid;gap:6px"><p class="eyebrow">Histórico</p><div class="mini">${d.list.map(miniBooking).join('')}</div></div>`;
   return w;
@@ -2509,7 +2588,8 @@ function sbAdapter(sb) {
     espera: { dentKey: 'dentist_id', from: 'h_from', to: 'h_to', criadoEm: 'criado_em' },
     avisos: { criadoEm: 'criado_em' },
     faq: { criadoEm: 'criado_em' },
-    pacientes: {}, consultas: {}, evolucoes: {}, paciente_docs: {}
+    pacientes: {}, consultas: {}, evolucoes: {}, paciente_docs: {},
+    termos_versoes: {}, termos_aceites: {}, planos: {}
   };
   const toDb = (map, o) => { const r = {}; for (const [k, v] of Object.entries(o)) { if (k === 'id' || v === undefined) continue; r[map[k] || k] = v; } return r; };
   const fromDb = (map, row) => { const inv = {}; for (const [k, v] of Object.entries(map)) inv[v] = k; const r = {}; for (const [k, v] of Object.entries(row)) r[inv[k] || k] = v; return r; };
@@ -2588,12 +2668,24 @@ function errText(e, fallback) {
     NOME_INVALIDO: 'Informe o nome completo.',
     DATA_DISTANTE: 'Essa data ainda não está aberta para reservas.',
     FORA_DO_PRAZO: `O prazo para cancelar pelo site já passou. Fale com a ${CFG.dentista}.`,
-    SEM_PERMISSAO: 'Você não tem permissão para fazer isso.'
+    SEM_PERMISSAO: 'Você não tem permissão para fazer isso.',
+    TERMOS_PENDENTES: 'Leia e aceite os termos de uso atualizados para continuar.',
+    TERMOS_OBRIGATORIOS: 'Para criar a conta, leia os termos de uso até o final e marque o aceite.',
+    TERMOS_DESATUALIZADOS: 'Os termos foram atualizados agora. Leia a nova versão e aceite de novo.',
+    PLANO_USE_CREDITO: 'Esta reserva é do seu plano mensal: use a opção de liberar o dia (vira crédito) ou fale com a Dra. Thalia.',
+    PLANO_PRAZO_CREDITO: `Para virar crédito, o dia do plano precisa ser liberado com ${CFG.planoAvisoDias} dias de antecedência. Fale com a Dra. Thalia.`,
+    PLANO_MES_CREDITO: 'O crédito só pode ser usado no mesmo mês do dia liberado.',
+    PLANO_DUPLICADO: 'Você já tem um plano (ou pedido) neste dia e horário.',
+    PLANO_SEM_VALOR: 'Os valores dos planos ainda não foram definidos pela Dra. Thalia.',
+    PLANO_JA_DECIDIDO: 'Este plano já foi aprovado, recusado ou encerrado.',
+    PLANO_NAO_ENCONTRADO: 'Plano não encontrado.',
+    RESERVA_NAO_ENCONTRADA: 'Reserva não encontrada.'
   };
   for (const k in map) if (m.includes(k)) return map[k];
   if (/Invalid login credentials/i.test(m)) return 'E-mail ou senha incorretos.';
   if (/Email not confirmed/i.test(m)) return 'Confirme seu e-mail pelo link que enviamos antes de entrar.';
   if (/already registered|already been registered/i.test(m)) return 'Este e-mail já tem conta. Use a opção Entrar.';
+  if (/Database error saving new user/i.test(m)) return 'Não foi possível criar a conta. Confira se leu e aceitou os termos de uso e tente de novo.';
   if (/Password should be|weak/i.test(m)) return 'Escolha uma senha mais forte, com pelo menos 8 caracteres.';
   if (/rate limit|too many/i.test(m)) return 'Muitas tentativas seguidas. Aguarde alguns minutos e tente de novo.';
   if (/fetch|network/i.test(m)) return 'Sem conexão com o servidor. Verifique a internet e tente de novo.';
@@ -2611,6 +2703,7 @@ async function syncAuth(session) {
   }
   if (S.dent !== S.lastDent) { S.cpfFor = null; S.cn = null; S.lastDent = S.dent; }
   try { await S.store.loadAll(); } catch (_) {}
+  if (!S.termos) { try { await loadTermos(); } catch (_) {} }
   route();
   appSync();
 }
@@ -2663,7 +2756,7 @@ function renderDLogin() {
   }[st];
   $('dl-title').textContent = T[0]; $('dl-lead').textContent = T[1];
   $('dl-eyebrow').textContent = st === 'new' ? 'Nova senha' : 'Área do dentista';
-  $('dr-rules').innerHTML = CFG.regras.map(r => `<li>${esc(r)}</li>`).join('');
+  if (st === 'reg') renderTermosReg();
 }
 document.querySelectorAll('#dl-seg [data-dl]').forEach(b => b.addEventListener('click', () => { S.dl.stage = b.dataset.dl; $('dl-fb').innerHTML = ''; renderDLogin(); }));
 $('dl-login').addEventListener('submit', async e => {
@@ -2690,14 +2783,14 @@ $('dl-reg').addEventListener('submit', async e => {
   if (!/^\S+@\S+\.\S+$/.test(email)) return msgIn($('dl-fb'), 'err', 'Informe um e-mail válido.');
   if (p1.length < 8) return msgIn($('dl-fb'), 'err', 'A senha precisa ter pelo menos 8 caracteres.');
   if (p1 !== p2) return msgIn($('dl-fb'), 'err', 'As duas senhas não são iguais.');
-  if (!$('dr-accept').checked) return msgIn($('dl-fb'), 'err', 'Para continuar, aceite as regras de uso do consultório.');
+  if (!$('dr-accept').checked) return msgIn($('dl-fb'), 'err', 'Para continuar, leia os termos de uso até o final e marque o aceite.');
   $('dr-submit').disabled = true;
   try {
     const r = await SB.auth.signUp({ email, password: p1, options: {
       emailRedirectTo: location.origin + location.pathname + '?area=dentista',
-      data: { nome, cro: $('dr-cro').value.trim(), whatsapp: tel, especialidade: $('dr-esp').value.trim(), regras_aceitas_em: new Date().toISOString() } } });
+      data: { nome, cro: $('dr-cro').value.trim(), whatsapp: tel, especialidade: $('dr-esp').value.trim(), regras_aceitas_em: new Date().toISOString(), termos_versao: String((S.termos && S.termos.versao) || '') } } });
     if (r.error) return msgIn($('dl-fb'), 'err', errText(r.error));
-    $('dl-reg').reset();
+    $('dl-reg').reset(); $('dr-termos').dataset.v = '';
     if (r.data.session) { S.dl.stage = 'login'; await syncAuth(r.data.session); S.ctab = 'inicio'; route(); }
     else { S.dl.stage = 'login'; renderDLogin(); $('dl-email').value = email; msgIn($('dl-fb'), 'ok', `Conta criada. Enviamos um link de confirmação para ${email}. Abra o e-mail, toque no link e depois entre com sua senha.`); }
   } catch (err) { msgIn($('dl-fb'), 'err', errText(err)); }
@@ -2795,6 +2888,7 @@ function cAlerts() {
   else if (nx && new Date(`${nx.b.date}T${pad(nx.b.from)}:00`) - now <= 24 * 36e5) al.push(notice('gold', `<b>Lembrete:</b> sua reserva é ${quando(nx.b)} às ${hh(nx.b.from)}.`, [btnHtml('Ver detalhes', `data-cbk="${esc(nx.b.id)}"`)]));
   myWaits().filter(w => w.livre).forEach(w => al.push(notice('gold', `<b>Vaga aberta!</b> O horário de ${DIAS_LONGOS[new Date(w.date + 'T12:00').getDay()]}, ${br(w.date)}, das ${hh(w.from)} às ${hh(w.to)}, que você queria, está livre.`,
     [btnHtml('Reservar agora', `data-wbook="${esc(w.id)}"`, 'primary'), btnHtml('Remover', `data-wdel="${esc(w.id)}"`, 'link')])));
+  al.push(...creditAlerts(mine));
   const recent = mine.filter(x => x.st === 'concluido' && now - new Date(x.b.date + 'T12:00') < 15 * 864e5).sort(desc);
   const pend = [];
   recent.forEach(x => { if (!x.b.checklist) pend.push(['Checklist de saída pendente', x]); else if (!x.b.avaliacao) pend.push(['Conte como foi o uso do consultório', x]); });
@@ -2803,6 +2897,7 @@ function cAlerts() {
 }
 function renderDent() {
   if (!CTABS.some(t => t[0] === S.ctab)) S.ctab = 'inicio';
+  if (termosPendente()) { S.cc = { all: [], mine: [] }; renderTermosGate(); renderCDrawer(); return; }
   const stD = statusDent(me());
   if (stD !== 'liberado') { S.cc = { all: [], mine: [] }; renderDWait(stD); renderCDrawer(); return; }
   if (!$('c-wait').hidden) { $('c-wait').hidden = true; S.waitH = null; document.querySelector('#view-dent .side').classList.remove('off'); document.querySelector('#view-dent .app-body').classList.remove('solo'); }
@@ -2861,18 +2956,18 @@ function renderCInicio(al) {
 /* Minhas reservas */
 function cRow({ b, st }) {
   const d = new Date(b.date + 'T12:00');
-  const extra = [b.pedido ? 'com pedido especial' : '', b.serie ? 'reserva semanal' : '', st === 'concluido' && !b.checklist ? 'checklist pendente' : ''].filter(Boolean).join(' · ');
+  const extra = [b.plano_id ? (b.status === 'credito' ? (mesAberto(b) ? 'crédito do plano para usar' : 'crédito vencido') : 'plano mensal') : '', b.pedido ? 'com pedido especial' : '', b.serie && !b.plano_id ? 'reserva semanal' : '', st === 'concluido' && !b.checklist ? 'checklist pendente' : ''].filter(Boolean).join(' · ');
   return `<button type="button" class="mini-row" data-cbk="${esc(b.id)}"><span class="date"><b>${d.getDate()}</b><small>${MESES[d.getMonth()].slice(0, 3)}</small></span>
     <span class="txt"><b>${DIAS_LONGOS[d.getDay()]}, ${hh(b.from)} – ${hh(b.to)}</b><span>${hoursOf(b)}h${extra ? ' · ' + extra : ''}</span></span>
     <span class="end"><span class="tag ${st}">${STATUS_LABEL[st]}</span></span></button>`;
 }
 function renderCReservas() {
   document.querySelectorAll('#cr-seg [data-crv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.crv === S.crv)));
-  const mine = S.cc.mine, fut = x => x.st === 'agendado' || x.st === 'andamento';
+  const mine = S.cc.mine, fut = x => x.st === 'agendado' || x.st === 'andamento' || (x.st === 'credito' && mesAberto(x.b));
   const list = S.crv === 'proximas' ? mine.filter(fut).sort(asc) : mine.filter(x => !fut(x)).sort(desc);
   $('cr-list').innerHTML = list.length ? list.map(cRow).join('')
     : emptyBox(S.crv === 'proximas' ? 'Nenhuma reserva marcada. Que tal reservar um horário?' : 'Seu histórico aparece aqui depois da primeira reserva.');
-  $('cr-rule').textContent = `Você pode cancelar pelo site até ${CFG.prazoCancelamentoH} horas antes do início. Depois disso, fale com a Dra. Thalia.`;
+  $('cr-rule').textContent = `Você pode cancelar ou remarcar pelo site até ${CFG.prazoCancelamentoH} horas antes do início, com direito a reembolso. Depois disso, fale com a Dra. Thalia. Dias do plano mensal: avise com ${CFG.planoAvisoDias} dias de antecedência para ganhar crédito.`;
 }
 
 /* Gaveta da reserva */
@@ -2891,7 +2986,7 @@ function renderCDrawer(force) {
   const x = S.cc.mine.find(x => x.b.id === S.cDrawer);
   if (!x) { S.cDrawer = null; $('c-drawer').hidden = true; $('c-scrim').hidden = true; return; }
   const ae = document.activeElement;
-  if (!force && ae && $('c-dr-body').contains(ae) && /TEXTAREA|INPUT/.test(ae.tagName)) return;
+  if (!force && ae && $('c-dr-body').contains(ae) && /TEXTAREA|INPUT|SELECT/.test(ae.tagName)) return;
   $('c-dr-body').replaceChildren(cBookingDetail(x));
   $('c-drawer').hidden = false; $('c-scrim').hidden = false;
 }
@@ -2942,7 +3037,8 @@ function cBookingDetail({ b, st }) {
   h += `<div class="block"><h4>Ações</h4><div class="dr-actions" id="cd-acts"></div><div id="cd-fb" role="status"></div></div>`;
   w.innerHTML = h;
   const acts = w.querySelector('#cd-acts');
-  if (canCancel) { acts.insertAdjacentHTML('beforeend', btnHtml('Remarcar', `data-remarcar="${esc(b.id)}"`, 'ghost')); acts.appendChild(cancelButton(b)); }
+  if (b.plano_id) planoAcoesDent(w, acts, b, st);
+  else if (canCancel) { acts.insertAdjacentHTML('beforeend', btnHtml('Remarcar', `data-remarcar="${esc(b.id)}"`, 'ghost')); acts.appendChild(cancelButton(b)); }
   else if (st === 'agendado') {
     const p = document.createElement('p'); p.className = 'hint'; p.style.margin = '0 0 4px'; p.style.flexBasis = '100%';
     p.textContent = `Faltam menos de ${CFG.prazoCancelamentoH} horas. Para cancelar ou remarcar, fale com a Dra. Thalia.`;
@@ -2951,7 +3047,7 @@ function cBookingDetail({ b, st }) {
     a.textContent = 'Falar com a Dra. Thalia';
     acts.append(p, a);
   }
-  if (st !== 'cancelado') acts.insertAdjacentHTML('beforeend', btnHtml('Reservar de novo neste horário', `data-repeat="${esc(b.id)}"`, 'ghost'));
+  if (st !== 'cancelado' && st !== 'credito' && !b.plano_id) acts.insertAdjacentHTML('beforeend', btnHtml('Reservar de novo neste horário', `data-repeat="${esc(b.id)}"`, 'ghost'));
   if (st === 'concluido') acts.insertAdjacentHTML('beforeend', btnHtml('Baixar comprovante', 'data-act="recibo"', 'ghost'));
   return w;
 }
@@ -2988,7 +3084,7 @@ function renderCNova() {
   $('cn-pick').hidden = !!c.done; $('cn-done').hidden = !c.done;
   if (c.done) { $('cn-opts').hidden = true; renderCNDone(c.done); return; }
   if (c.remarcar) c.weeks = 1;
-  renderCNTop();
+  renderCNTop(); renderCPlano();
   $('cn-dow').innerHTML = DIAS.map(d => `<span>${d}</span>`).join('');
   $('cn-month').textContent = `${MESES[c.month.getMonth()]} de ${c.month.getFullYear()}`;
   const first = new Date(c.month), last = new Date(first.getFullYear(), first.getMonth() + 1, 0);
@@ -3197,7 +3293,7 @@ function renderCPerfil() {
   }
   $('cpf-email').value = (d0 && d0.email) || S.email || '';
   $('cp-docs').innerHTML = kvHtml([
-    ['Regras de uso', d0 && d0.regrasAceitasEm ? `Aceitas em ${br(d0.regrasAceitasEm.slice(0, 10))}` : 'Ainda não aceitas'],
+    ['Termos de uso', d0 && d0.termos_versao ? `Versão ${d0.termos_versao}, aceita em ${dataBR(d0.termos_aceito_em)}` : 'Ainda não aceitos'],
     ['Cadastro', d0 && d0.criadoEm ? `Desde ${br(d0.criadoEm.slice(0, 10))}` : '—'],
     ['Comprovantes', 'Em cada reserva concluída']
   ]);
@@ -4162,6 +4258,8 @@ function applyCfg(c) {
   if (Number.isInteger(c.limiteHoras)) CFG.limiteHoras = c.limiteHoras;
   if (Array.isArray(c.periodos)) CFG.periodos = c.periodos.map(p => ({ de: +p.de, ate: +p.ate, valor: +p.valor })).sort((a, b) => a.de - b.de);
   if ('diaria' in c) CFG.diaria = c.diaria ? { de: +c.diaria.de, ate: +c.diaria.ate, valor: +c.diaria.valor } : null;
+  if (c.planos && typeof c.planos === 'object') CFG.planos = c.planos;
+  if (Number.isInteger(c.planoAvisoDias)) CFG.planoAvisoDias = c.planoAvisoDias;
   try { fillInfo(); } catch (_) {}
 }
 
@@ -4735,7 +4833,7 @@ function pacForm(pid) {
 const minOpts = (a, z, sel) => { let o = ''; for (let m = a; m <= z; m += 15) { const t = `${pad(Math.floor(m / 60))}:${pad(m % 60)}`; o += `<option value="${t}"${t === sel ? ' selected' : ''}>${t}</option>`; } return o; };
 function ocupadosDoDia(d, semCons) {
   const out = [];
-  live().filter(x => x.b.date === d && isActive(x)).forEach(x => out.push({ a: x.b.from * 60, z: x.b.to * 60, t: x.b.origem === 'bloqueio' ? 'Bloqueado' : 'Dentista' }));
+  live().filter(x => x.b.date === d && isActive(x) && x.st !== 'credito').forEach(x => out.push({ a: x.b.from * 60, z: x.b.to * 60, t: x.b.origem === 'bloqueio' ? 'Bloqueado' : 'Dentista' }));
   consultasDoDia(d).filter(c => c.id !== semCons).forEach(c => out.push({ a: tmin(c.inicio), z: tmin(c.fim), t: (PAC()[c.paciente_id] || {}).nome || 'Paciente' }));
   return out.sort((x, y) => x.a - y.a);
 }
@@ -4885,6 +4983,550 @@ function periodosDoForm(f) {
 }
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-aj6="addper"]'); if (b) { e.preventDefault(); $('vf-pers').insertAdjacentHTML('beforeend', ajRowPer()); } });
 
+
+/* ---------- v7: termos de uso, planos mensais ---------- */
+
+/* Termos de uso */
+const TERMOS_PADRAO = { versao: 0, texto: `TERMOS E CONDIÇÕES DE USO DO CONSULTÓRIO ODONTOLÓGICO
+COTS – Consultório Odontológico Thalia Santiago
+Estes termos estabelecem as condições para utilização e locação do consultório odontológico por cirurgiões-dentistas, visando à organização, conservação do espaço e segurança de todos os profissionais e pacientes.
+1. Cancelamentos e reembolsos
+O cancelamento da reserva deverá ser comunicado com, no mínimo, 4 (quatro) horas de antecedência do horário agendado para que haja direito ao reembolso do valor pago. Cancelamentos realizados fora desse prazo estarão sujeitos à não devolução do valor, observadas as condições previamente acordadas e a legislação aplicável.
+2. Câmeras de segurança
+O profissional declara estar ciente de que o ambiente possui câmeras de segurança destinadas à proteção do patrimônio, dos profissionais e das demais pessoas presentes.
+As imagens serão tratadas de forma confidencial e utilizadas exclusivamente para finalidades legítimas de segurança, respeitando a legislação de proteção de dados e a privacidade dos pacientes e profissionais.
+A gravação não será realizada em locais que exijam privacidade, nem deverá comprometer o sigilo profissional odontológico.
+3. Conservação do espaço e dos equipamentos
+O profissional deverá utilizar o consultório, os equipamentos, os móveis e os utensílios disponibilizados com zelo e responsabilidade, comprometendo-se a conservar o ambiente e devolvê-lo nas mesmas condições em que o recebeu, ressalvado o desgaste natural decorrente do uso adequado.
+Danos causados por uso inadequado, negligência ou descumprimento das orientações de utilização poderão gerar a obrigação de ressarcimento, conforme a responsabilidade apurada.
+4. Materiais e instrumentais odontológicos
+O profissional deverá utilizar somente os materiais e instrumentais disponibilizados mediante autorização ou aqueles de sua própria responsabilidade.
+O consultório não se responsabiliza por perdas, extravios ou esquecimentos de materiais, instrumentais, equipamentos ou objetos pessoais pertencentes ao profissional locatário, especialmente aqueles trazidos para a realização dos atendimentos.
+O profissional deverá conferir seus pertences ao finalizar o atendimento e antes de deixar o consultório.
+Essa disposição não exclui eventual responsabilidade do consultório quando legalmente aplicável.
+5. Responsabilidade profissional
+Cada cirurgião-dentista será integralmente responsável pelos procedimentos realizados, pelos prontuários de seus pacientes, pelas orientações clínicas fornecidas e pelo cumprimento das normas éticas, sanitárias e profissionais aplicáveis à odontologia.
+O profissional deverá manter seu registro no Conselho Regional de Odontologia (CRO) regular e cumprir as exigências legais necessárias ao exercício da profissão.
+6. Organização e limpeza
+Após a utilização do espaço, o profissional deverá respeitar os protocolos estabelecidos para organização, limpeza e processamento dos instrumentais, bem como as normas de biossegurança aplicáveis.
+Materiais descartáveis e resíduos deverão ser destinados corretamente, conforme as orientações do consultório e as normas sanitárias vigentes.
+7. Respeito aos horários
+O profissional deverá respeitar rigorosamente os horários reservados, incluindo o tempo necessário para organização do ambiente após o atendimento.
+A permanência além do período contratado dependerá da disponibilidade do consultório e poderá implicar cobrança adicional, desde que previamente estabelecida.
+8. Uso exclusivo para atividades odontológicas
+O espaço deverá ser utilizado exclusivamente para atividades profissionais compatíveis com sua finalidade e com as autorizações sanitárias aplicáveis.
+É vedado utilizar equipamentos ou materiais para finalidades diferentes daquelas para as quais foram destinados, bem como permitir o acesso de terceiros não autorizados.
+9. Aceitação dos termos
+Ao realizar a reserva e utilizar o espaço, o profissional declara que leu, compreendeu e concorda com as condições estabelecidas neste documento, comprometendo-se a respeitá-las durante todo o período de utilização do consultório.` };
+const dataBR = s => { if (!s) return '—'; const d = new Date(s); return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`; };
+const termosVersoes = () => Object.values(S.cols.termos_versoes || {}).map(v => ({ ...v, versao: Number(v.versao) })).sort((a, b) => b.versao - a.versao);
+function termosDaColecao() {
+  const v = termosVersoes()[0];
+  if (v) S.termos = { versao: v.versao, texto: v.texto, resumo: v.resumo, criadoEm: v.criado_em };
+}
+async function loadTermos() {
+  if (S.termosLoading) return S.termosLoading;
+  S.termosLoading = (async () => {
+    try { const t = await S.store.rpc('termos_atual', {}); if (t && t.versao) S.termos = t; } catch (_) {}
+    return S.termos || null;
+  })();
+  try { return await S.termosLoading; } finally { S.termosLoading = null; }
+}
+const termosTexto = () => (S.termos && S.termos.texto) || TERMOS_PADRAO.texto;
+
+// Diferença palavra a palavra entre duas versões (trechos removidos riscados, novos destacados).
+function difPalavras(a, b) {
+  const A = String(a || '').split(/(\s+)/).filter(x => x !== ''), B = String(b || '').split(/(\s+)/).filter(x => x !== '');
+  let p = 0; while (p < A.length && p < B.length && A[p] === B[p]) p++;
+  let s = 0; while (s < A.length - p && s < B.length - p && A[A.length - 1 - s] === B[B.length - 1 - s]) s++;
+  const a2 = A.slice(p, A.length - s), b2 = B.slice(p, B.length - s), n = a2.length, m = b2.length;
+  const out = A.slice(0, p).map(t => ({ t, k: '=' }));
+  if (n * m > 4e6) { a2.forEach(t => out.push({ t, k: '-' })); b2.forEach(t => out.push({ t, k: '+' })); }
+  else {
+    const L = new Uint16Array((n + 1) * (m + 1));
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) L[i * (m + 1) + j] = a2[i] === b2[j] ? L[(i + 1) * (m + 1) + j + 1] + 1 : Math.max(L[(i + 1) * (m + 1) + j], L[i * (m + 1) + j + 1]);
+    let i = 0, j = 0;
+    while (i < n && j < m) {
+      if (a2[i] === b2[j]) { out.push({ t: a2[i], k: '=' }); i++; j++; }
+      else if (L[(i + 1) * (m + 1) + j] >= L[i * (m + 1) + j + 1]) out.push({ t: a2[i++], k: '-' });
+      else out.push({ t: b2[j++], k: '+' });
+    }
+    while (i < n) out.push({ t: a2[i++], k: '-' });
+    while (j < m) out.push({ t: b2[j++], k: '+' });
+  }
+  A.slice(A.length - s).forEach(t => out.push({ t, k: '=' }));
+  // Agrupa cada trecho alterado: primeiro o texto removido, depois o incluído.
+  const res = [], ws = x => x.k === '=' && /^[ \t]+$/.test(x.t);
+  for (let i = 0; i < out.length;) {
+    if (out[i].k === '=') { res.push(out[i++]); continue; }
+    let j = i; while (j < out.length && (out[j].k !== '=' || (ws(out[j]) && j + 1 < out.length && out[j + 1].k !== '='))) j++;
+    const run = out.slice(i, j);
+    run.filter(x => x.k !== '+').forEach(x => res.push({ t: x.t, k: '-' }));
+    res.push({ t: ' ', k: '=' });
+    run.filter(x => x.k !== '-').forEach(x => res.push({ t: x.t, k: '+' }));
+    i = j;
+  }
+  return res;
+}
+// Texto dos termos em HTML. Com "anterior", mostra o que mudou.
+function termosHtml(texto, anterior) {
+  const toks = anterior != null && anterior !== texto ? difPalavras(anterior, texto) : [{ t: String(texto || ''), k: '=' }];
+  const linhas = [[]];
+  for (const tk of toks) {
+    const partes = tk.t.split('\n');
+    partes.forEach((pt, i) => { if (i > 0) linhas.push([]); if (pt) linhas[linhas.length - 1].push({ t: pt, k: tk.k }); });
+  }
+  let n = 0, mudou = 0;
+  const html = linhas.map(l => {
+    const plano = l.filter(x => x.k !== '-').map(x => x.t).join('').trim();
+    if (!l.some(x => x.t.trim())) return '';
+    const inner = l.map(x => x.k === '=' ? esc(x.t) : x.k === '+' ? (mudou++, `<ins>${esc(x.t)}</ins>`) : (mudou++, `<del>${esc(x.t)}</del>`)).join('');
+    n++;
+    if (n === 1) return `<h4>${inner}</h4>`;
+    if (n === 2 && /^COTS/i.test(plano)) return `<p class="t-sub">${inner}</p>`;
+    if (/^\d+\.\s/.test(plano) && plano.length < 90) return `<h5>${inner}</h5>`;
+    return `<p>${inner}</p>`;
+  }).join('');
+  return html + '<p class="t-fim" aria-hidden="true">— fim dos termos —</p>';
+}
+// Aceite só depois de rolar o texto até o final.
+function travaRolagem(box, chk, hint, msgOk) {
+  if (!box || !chk) return;
+  const ver = () => {
+    if (box.scrollTop + box.clientHeight >= box.scrollHeight - 14) {
+      if (chk.disabled) { chk.disabled = false; if (hint) { hint.textContent = msgOk || 'Pronto: agora você pode marcar o aceite.'; hint.classList.add('ok'); } }
+    }
+  };
+  box.addEventListener('scroll', ver, { passive: true });
+  setTimeout(ver, 60); setTimeout(ver, 600);
+}
+
+/* Cadastro: termos com rolagem obrigatória */
+function renderTermosReg() {
+  const box = $('dr-termos'); if (!box) return;
+  const v = String((S.termos && S.termos.versao) || 0);
+  if (box.dataset.v !== v) {
+    box.dataset.v = v; box.innerHTML = termosHtml(termosTexto()); box.scrollTop = 0;
+    $('dr-accept').checked = false; $('dr-accept').disabled = true; $('dr-submit').disabled = true;
+    const h = $('dr-termos-hint'); h.textContent = 'Role o texto até o final para liberar o aceite.'; h.classList.remove('ok');
+    if (!box.dataset.bound) { box.dataset.bound = '1'; travaRolagem(box, $('dr-accept'), h); } else box.dispatchEvent(new Event('scroll'));
+  }
+  if (!S.termos && !S.termosTentou) { S.termosTentou = true; loadTermos().then(() => { if (S.termos) renderTermosReg(); }); }
+}
+document.addEventListener('change', e => { if (e.target && e.target.id === 'dr-accept') $('dr-submit').disabled = !e.target.checked; });
+
+/* Área do dentista: aceite obrigatório da versão atual */
+function termosPendente() {
+  const d = me();
+  if (!d || !S.termos || !S.termos.versao || statusDent(d) === 'bloqueado') return false;
+  return (Number(d.termos_versao) || 0) < Number(S.termos.versao);
+}
+const ICO_DOC2 = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 01-.5.5h-10A1.5 1.5 0 016 19V5a1.5 1.5 0 011-1.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h6"/></svg>';
+function renderTermosGate() {
+  CTABS.forEach(([k]) => { $('c-' + k).hidden = true; });
+  const w = $('c-wait'); w.hidden = false;
+  document.querySelector('#view-dent .side').classList.add('off'); document.querySelector('#view-dent .app-body').classList.add('solo');
+  $('c-crumb').textContent = 'Termos de uso';
+  $('c-who').textContent = myName(); $('c-av').textContent = initials(myName());
+  const d = me(), antV = Number(d.termos_versao) || 0, T = S.termos;
+  const ant = antV ? (termosVersoes().find(v => v.versao === antV) || {}).texto : null;
+  const sig = `termos|${T.versao}|${antV}|${ant ? 1 : 0}`;
+  if (S.waitH === sig) return;
+  const intro = antV
+    ? `A Dra. Thalia atualizou os termos de uso em ${dataBR(T.criadoEm)}.${T.resumo ? ` <b>${esc(T.resumo)}</b>.` : ''}${ant ? ' O que mudou está destacado no texto.' : ''} Leia até o final e confirme para continuar usando a sua área.`
+    : 'Para usar a área do dentista, leia os termos e condições de uso do consultório até o final e confirme.';
+  w.innerHTML = `<div class="wait-card termos-gate"><span class="wait-ic">${ICO_DOC2}</span><p class="eyebrow">Termos de uso · versão ${T.versao}</p>
+    <h2>${antV ? 'Os termos de uso foram atualizados' : 'Leia e aceite os termos de uso'}</h2><p>${intro}</p>
+    <div class="termos-txt" id="tg-box" tabindex="0" aria-label="Texto dos termos de uso">${termosHtml(T.texto, ant)}</div>
+    <small class="t-hint" id="tg-hint">Role o texto até o final para liberar o aceite.</small>
+    <label class="check"><input type="checkbox" id="tg-ok" disabled><span>Li e concordo com os termos e condições de uso</span></label>
+    <div class="dr-actions"><button class="primary" type="button" id="tg-go" disabled>Aceitar e continuar</button><button type="button" class="ghost" data-dlogout>Sair</button></div>
+    <div id="tg-fb" role="status"></div></div>`;
+  S.waitH = sig;
+  travaRolagem($('tg-box'), $('tg-ok'), $('tg-hint'));
+}
+document.addEventListener('change', e => { if (e.target && e.target.id === 'tg-ok') $('tg-go').disabled = !e.target.checked; });
+document.addEventListener('click', async e => {
+  const b = e.target.closest && e.target.closest('#tg-go'); if (!b) return;
+  b.disabled = true;
+  try {
+    const v = Number(S.termos.versao);
+    await S.store.rpc('aceitar_termos', { p_versao: v });
+    const d = me(); if (d) { d.termos_versao = v; d.termos_aceito_em = new Date().toISOString(); }
+    S.waitH = null; S.store.refresh && S.store.refresh(); renderDent();
+  } catch (err) {
+    b.disabled = false;
+    if (/TERMOS_DESATUALIZADOS/.test(String(err && err.message))) { await loadTermos(); S.waitH = null; renderDent(); return; }
+    msgIn($('tg-fb'), 'err', errText(err));
+  }
+});
+
+/* Janela "Termos de uso" (rodapé, perfil) */
+async function abrirTermos() {
+  const m = $('tm'); m.hidden = false; document.body.classList.add('tm-open');
+  $('tm-body').innerHTML = '<p class="hint">Carregando…</p>'; $('tm-info').textContent = '';
+  if (!S.termos) await loadTermos();
+  $('tm-body').innerHTML = termosHtml(termosTexto()); $('tm-body').scrollTop = 0;
+  const d = (typeof me === 'function' && S.dent) ? me() : null;
+  const info = [];
+  if (S.termos && S.termos.versao) info.push(`Versão ${S.termos.versao}, publicada em ${dataBR(S.termos.criadoEm)}.`);
+  if (d) info.push(d.termos_versao ? `Você aceitou a versão ${d.termos_versao} em ${dataBR(d.termos_aceito_em)}.` : 'Você ainda não aceitou estes termos.');
+  $('tm-info').textContent = info.join(' ');
+  try { $('tm-x').focus(); } catch (_) {}
+}
+function fecharTermos() { $('tm').hidden = true; document.body.classList.remove('tm-open'); }
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  if (e.target.closest('[data-termos]')) { e.preventDefault(); abrirTermos(); return; }
+  if (e.target.closest('#tm-x') || e.target.id === 'tm') fecharTermos();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('tm').hidden) fecharTermos(); });
+
+/* Painel: termos no Ajustes, com histórico de versões e o que mudou */
+function aceitesDaVersao(v) { return Object.values(S.cols.termos_aceites || {}).filter(a => Number(a.versao) === v); }
+function ajTermos() {
+  const el = $('acc-termos'); if (!el) return;
+  const vers = termosVersoes(), atual = vers[0] || (S.termos && S.termos.versao ? { versao: S.termos.versao, texto: S.termos.texto, resumo: S.termos.resumo, criado_em: S.termos.criadoEm } : null);
+  const dents = Object.values(S.cols.dentists || {}).filter(d => statusDent(d) !== 'bloqueado');
+  const okD = atual ? dents.filter(d => (Number(d.termos_versao) || 0) >= atual.versao) : [];
+  const falta = atual ? dents.filter(d => (Number(d.termos_versao) || 0) < atual.versao) : [];
+  const sig = JSON.stringify([vers.map(v => v.versao), atual && atual.versao, okD.length, falta.map(d => d.id), Object.keys(S.cols.termos_aceites || {}).length]);
+  if (el.dataset.sig === sig) return;
+  if (el.contains(document.activeElement) && /TEXTAREA|INPUT/.test(document.activeElement.tagName)) return;
+  el.dataset.sig = sig;
+  if (!atual) { el.innerHTML = '<p class="hint">Os termos aparecem aqui depois de rodar a atualização do banco de dados (schema.sql) no Supabase.</p>'; return; }
+  const nomes = falta.slice(0, 6).map(d => esc(d.nome)).join(', ') + (falta.length > 6 ? ` e mais ${falta.length - 6}` : '');
+  el.innerHTML = `<div class="notice ${falta.length ? 'gold' : ''}"><p><b>Versão ${atual.versao}</b>, publicada em ${dataBR(atual.criado_em)}. ${plural(okD.length, 'dentista já aceitou', 'dentistas já aceitaram')} de ${dents.length}.${falta.length ? ` Ainda não aceitaram: ${nomes}. Eles aceitam no próximo acesso.` : ''}</p></div>
+    ${S.termosMsg ? `<div class="msg ok">${esc(S.termosMsg)}</div>` : ''}<form id="tf" class="ajf" novalidate>
+      <label>Texto dos termos<textarea id="tf-txt" rows="14">${esc(atual.texto)}</textarea></label>
+      <label><span>Resumo da alteração <em>(aparece para os dentistas)</em></span><input id="tf-res" maxlength="200" placeholder="Ex.: prazo de cancelamento passou para 6 horas"></label>
+      <p class="hint">Ao publicar, o texto vira uma nova versão. A anterior fica guardada no histórico com a data, e todos os dentistas leem e aceitam de novo no próximo acesso, com o que mudou destacado.</p>
+      <div class="aj-fb" role="status"></div><div class="nav end"><button class="primary" type="submit">Publicar nova versão</button></div></form>
+    <div class="ajsec"><b>Histórico de versões</b><small>Toque numa versão para ver o texto. O que mudou em relação à versão anterior aparece destacado.</small>
+      <div class="tv-list">${vers.map((v, i) => { const ac = aceitesDaVersao(v.versao); return `<details class="tv" data-tv="${v.versao}"><summary><span class="tv-h"><b>Versão ${v.versao}${i === 0 ? ' · atual' : ''}</b><small>${dataBR(v.criado_em)} às ${fmtDT(v.criado_em).split(' às ')[1]}${v.resumo ? ' · ' + esc(v.resumo) : ''}</small></span><span class="tag">${plural(ac.length, 'aceite', 'aceites')}</span></summary><div class="termos-txt sm" data-tvbody></div></details>`; }).join('')}</div></div>`;
+}
+document.addEventListener('toggle', e => {
+  const d = e.target; if (!d.matches || !d.matches('details.tv') || !d.open) return;
+  const body = d.querySelector('[data-tvbody]'); if (!body || body.dataset.ok) return;
+  const vers = termosVersoes(), v = Number(d.dataset.tv), i = vers.findIndex(x => x.versao === v), cur = vers[i], prev = vers[i + 1];
+  const ac = aceitesDaVersao(v).map(a => { const dn = (S.cols.dentists || {})[a.dentist_id]; return `${esc((dn && dn.nome) || 'Dentista')} (${fmtDT(a.aceito_em)})`; });
+  body.innerHTML = (prev ? `<p class="t-note">Comparado com a versão ${prev.versao}: <del>removido</del> · <ins>incluído</ins></p>` : '') + termosHtml(cur.texto, prev ? prev.texto : null)
+    + (ac.length ? `<p class="t-note"><b>Aceites desta versão:</b> ${ac.join(', ')}</p>` : '');
+  body.dataset.ok = '1';
+}, true);
+document.addEventListener('submit', async e => {
+  const f = e.target; if (!f || f.id !== 'tf') return;
+  e.preventDefault();
+  const fbx = f.querySelector('.aj-fb'), btn = f.querySelector('[type=submit]'), txt = $('tf-txt').value.trim();
+  const atual = termosVersoes()[0] || S.termos || {};
+  if (txt.length < 20) return msgIn(fbx, 'err', 'O texto dos termos está muito curto.');
+  if (txt === String(atual.texto || '').trim()) return msgIn(fbx, 'err', 'O texto não mudou. Edite os termos antes de publicar.');
+  btn.disabled = true;
+  try {
+    const v = await S.store.rpc('salvar_termos', { p_texto: txt, p_resumo: $('tf-res').value.trim() || null });
+    S.termos = { versao: v, texto: txt, resumo: $('tf-res').value.trim() || null, criadoEm: new Date().toISOString() };
+    try { document.activeElement && document.activeElement.blur(); } catch (_) {}
+    S.store.refresh && S.store.refresh();
+    S.termosMsg = `Versão ${v} publicada. Os dentistas aceitam no próximo acesso.`;
+    $('acc-termos').dataset.sig = ''; ajTermos();
+  } catch (err) { msgIn(fbx, 'err', errText(err)); }
+  finally { btn.disabled = false; }
+});
+function termosTag(d) {
+  if (!d || !d.doc || !S.termos || !S.termos.versao || statusDent(d.doc) === 'bloqueado') return '';
+  return (Number(d.doc.termos_versao) || 0) < Number(S.termos.versao) ? ' <span class="tag pend">Termos pendentes</span>' : '';
+}
+function termosDentHtml(d) {
+  if (!d || !d.doc) return '';
+  const ac = Object.values(S.cols.termos_aceites || {}).filter(a => a.dentist_id === d.doc.id).sort((a, b) => Number(b.versao) - Number(a.versao));
+  const atual = S.termos && S.termos.versao;
+  const linhas = ac.map(a => `<div><span>Versão ${a.versao}</span><span>Aceita em ${fmtDT(a.aceito_em)} de ${dataBR(a.aceito_em).slice(6)}</span></div>`).join('');
+  const pend = atual && (Number(d.doc.termos_versao) || 0) < atual;
+  return `<div class="block"><h4>Termos de uso</h4>${pend ? `<p class="hint">Ainda não aceitou a versão ${atual}. O aceite é pedido no próximo acesso.</p>` : ''}<div class="kv">${linhas || '<div><span>Aceites</span><span>Nenhum registrado</span></div>'}</div></div>`;
+}
+
+/* ---------- Planos mensais ---------- */
+const MOD_NOME = { diaria: 'Diária', periodo: 'Meio período' };
+const planos = () => Object.values(S.cols.planos || {});
+const planoDe = id => (S.cols.planos || {})[id] || null;
+const nomePer = a => NOMES_PER[a] || 'Período';
+function planoTxt(p) { return `${p.modalidade === 'diaria' ? 'Diária' : 'Meio período · ' + nomePer(p.h_from)} · toda ${DIAS_LONGOS[p.dia_semana]}, ${p.h_from}h às ${p.h_to}h`; }
+const planoValorCfg = mod => { const v = (CFG.planos || {})[mod]; return v == null || v === '' ? null : Number(v); };
+function planoOpcoes() {
+  const o = [];
+  if (CFG.diaria && planoValorCfg('diaria') != null) o.push({ mod: 'diaria', a: CFG.diaria.de, z: CFG.diaria.ate, nome: `Diária (${CFG.diaria.de}h às ${CFG.diaria.ate}h)`, avulso: Number(CFG.diaria.valor) });
+  if (planoValorCfg('periodo') != null) (CFG.periodos || []).forEach(p => o.push({ mod: 'periodo', a: p.de, z: p.ate, nome: `Meio período · ${nomePer(p.de)} (${p.de}h às ${p.ate}h)`, avulso: Number(p.valor) }));
+  return o;
+}
+function proximasDatas(dow, n, desde) {
+  const out = []; let d = new Date((desde || iso(new Date())) + 'T12:00');
+  for (let i = 0; out.length < n && i < 120; i++, d = addDays(d, 1)) if (d.getDay() === dow) out.push(iso(d));
+  return out;
+}
+// Ocorrências do dia da semana do início até o fim do mês seguinte.
+function datasDoPlano(dow, ini) {
+  if (!ini) return [];
+  const d0 = new Date(ini + 'T12:00'), fim = iso(new Date(d0.getFullYear(), d0.getMonth() + 2, 0, 12));
+  return proximasDatas(dow, 10, ini).filter(s => s <= fim);
+}
+const livreEm = (s, a, z) => rangeFree(s, a, z - 1);
+const statusPlanoTag = p => ({ pendente: '<span class="tag pend">Aguardando aprovação</span>', ativo: '<span class="tag agendado">Ativo</span>', recusado: '<span class="tag cancelado">Não aprovado</span>', encerrado: `<span class="tag concluido">${p.fim && p.fim >= iso(new Date()) ? 'Vale até ' + br(p.fim).slice(0, 5) : 'Encerrado'}</span>` }[p.status] || '');
+const mesAberto = b => (b.plano_data_orig || b.date).slice(0, 7) >= iso(new Date()).slice(0, 7);
+function creditosDoPlano(p) { return S.bookings.filter(b => b.plano_id === p.id && b.status === 'credito' && mesAberto(b)); }
+
+// Dentista: card "Plano mensal" na aba Reservar.
+function renderCPlano() {
+  const el = $('cn-plano'); if (!el) return;
+  const ops = planoOpcoes();
+  const meus = planos().filter(p => p.dentist_id === S.dent && (p.status === 'pendente' || p.status === 'ativo' || (p.status === 'encerrado' && p.fim && p.fim >= iso(new Date())) || (p.status === 'recusado' && Date.now() - new Date(p.encerrado_em || p.criado_em) < 15 * 864e5)))
+    .sort((a, b) => a.dia_semana - b.dia_semana);
+  if (!ops.length && !meus.length) { el.innerHTML = ''; el.hidden = true; return; }
+  el.hidden = false;
+  const st = S.pl = S.pl || { op: 0, dia: CFG.diasAbertos.includes(5) ? 5 : CFG.diasAbertos[0], ini: '', open: false };
+  if (st.op >= ops.length) st.op = 0;
+  const op = ops[st.op];
+  const iniOps = op ? proximasDatas(st.dia, 6, iso(addDays(new Date(), 1))) : [];
+  if (!iniOps.includes(st.ini)) st.ini = iniOps[0] || '';
+  const datas = op ? datasDoPlano(st.dia, st.ini) : [];
+  const ocup = datas.filter(s => !livreEm(s, op.a, op.z));
+  const v = op ? planoValorCfg(op.mod) : null, aviso = CFG.planoAvisoDias ?? 3;
+  const sig = JSON.stringify([st, meus.map(p => [p.id, p.status, p.fim, creditosDoPlano(p).length]), datas.map(s => [s, op && livreEm(s, op.a, op.z)]), CFG.planos, aviso, S.plMsg]);
+  if (el.dataset.sig === sig) return;
+  if (el.contains(document.activeElement) && document.activeElement.tagName === 'SELECT') return;
+  el.dataset.sig = sig;
+  const lista = meus.map(p => { const cr = creditosDoPlano(p).length; return `<div class="pl-row"><span class="pl-ic">${p.modalidade === 'diaria' ? 'D' : 'P'}</span><span class="txt"><b>${esc(planoTxt(p))}</b><small>${BRL(Number(p.valor_mensal))} por mês${p.status === 'ativo' ? ' · desde ' + br(p.inicio).slice(0, 5) : p.status === 'pendente' ? ' · começa em ' + br(p.inicio).slice(0, 5) : ''}${cr ? ` · <b>${plural(cr, 'crédito', 'créditos')} para usar</b>` : ''}${p.status === 'recusado' && p.obs ? ' · ' + esc(p.obs) : ''}</small></span>
+    <span class="acts">${statusPlanoTag(p)}${p.status === 'ativo' || p.status === 'pendente' ? `<button type="button" class="link" data-plend="${esc(p.id)}">${p.status === 'pendente' ? 'Cancelar pedido' : 'Encerrar plano'}</button>` : ''}</span></div>`; }).join('');
+  const economia = op && v != null ? op.avulso * 4 - v : 0;
+  el.innerHTML = `<div class="card-head"><h3>Plano mensal</h3>${ops.length ? '<span class="tag plano">1x por semana com desconto</span>' : ''}</div>
+    ${lista ? `<div class="pl-list">${lista}</div>` : ''}
+    ${S.plMsg ? `<div id="pl-fb" role="status"><div class="msg ${S.plMsg[0]}">${esc(S.plMsg[1])}</div></div>` : ''}
+    ${ops.length ? `<details class="pl-form"${st.open ? ' open' : ''}><summary>${meus.some(p => p.status !== 'recusado') ? 'Pedir outro plano' : 'Quero um plano: o mesmo dia e período toda semana'}</summary>
+      <div class="pl-grid">
+        <div class="pl-precos">${ops.filter((o, i, a) => a.findIndex(x => x.mod === o.mod) === i).map(o => `<div><b>${BRL(planoValorCfg(o.mod))}</b><span>${MOD_NOME[o.mod]} por mês</span><small>avulso: ${BRL(o.avulso)} cada</small></div>`).join('')}</div>
+        <div class="form2">
+          <label>Modalidade<select data-plf="op">${ops.map((o, i) => `<option value="${i}"${i === st.op ? ' selected' : ''}>${esc(o.nome)}</option>`).join('')}</select></label>
+          <label>Dia da semana<select data-plf="dia">${DIAS_ORD.filter(d => CFG.diasAbertos.includes(d)).map(d => `<option value="${d}"${d === st.dia ? ' selected' : ''}>${DIAS_LONGOS[d]}</option>`).join('')}</select></label>
+          <label>Começar em<select data-plf="ini">${iniOps.map(s => `<option value="${s}"${s === st.ini ? ' selected' : ''}>${br(s)}</option>`).join('')}</select></label>
+        </div>
+        <div class="pl-datas">${datas.map(s => { const d = new Date(s + 'T12:00'), ok = livreEm(s, op.a, op.z); return `<span class="${ok ? 'ok' : 'busy'}"><b>${d.getDate()}/${pad(d.getMonth() + 1)}</b><small>${ok ? 'livre' : 'ocupado'}</small></span>`; }).join('')}</div>
+        <p class="hint">${v != null ? `<b>${BRL(v)} por mês</b> (${MOD_NOME[op.mod].toLowerCase()} toda ${DIAS_LONGOS[st.dia]}, ${op.a}h às ${op.z}h)${economia > 0 ? `, economia de ${BRL(economia)} por mês em relação ao avulso` : ''}. O valor é o mesmo em meses com 4 ou 5 semanas. No primeiro mês, você paga só as semanas a partir do início. ` : ''}Não vai poder ir num dia? Avise pela sua área com pelo menos ${plural(aviso, 'dia', 'dias')} de antecedência e ganhe um crédito para remarcar outro dia do mesmo mês. O plano renova todo mês até você encerrar.</p>
+        ${ocup.length ? `<p class="hint warn">${plural(ocup.length, 'data já está ocupada', 'datas já estão ocupadas')} (${ocup.map(s => br(s).slice(0, 5)).join(', ')}): ${ocup.length === 1 ? 'ela não entra' : 'elas não entram'} no plano. Combine com a Dra. Thalia se precisar.</p>` : ''}
+        <div class="dr-actions"><button type="button" class="primary" data-plgo>Pedir plano à Dra. Thalia</button></div>
+      </div></details>` : ''}`;
+}
+document.addEventListener('change', e => {
+  const s = e.target.closest && e.target.closest('[data-plf]'); if (!s || !S.pl) return;
+  const k = s.dataset.plf; S.pl[k] = k === 'ini' ? s.value : Number(s.value); S.pl.open = true; S.plMsg = null;
+  s.blur(); renderCPlano();
+});
+document.addEventListener('toggle', e => { if (e.target.matches && e.target.matches('#cn-plano .pl-form') && S.pl) S.pl.open = e.target.open; }, true);
+document.addEventListener('click', async e => {
+  if (!e.target.closest || $('view-dent').hidden) return;
+  const go = e.target.closest('[data-plgo]'), end = e.target.closest('[data-plend]');
+  if (go) {
+    const op = planoOpcoes()[S.pl.op]; if (!op || !S.pl.ini) return;
+    go.disabled = true;
+    try {
+      await S.store.rpc('pedir_plano', { p_modalidade: op.mod, p_dia: S.pl.dia, p_from: op.a, p_to: op.z, p_inicio: S.pl.ini });
+      S.plMsg = ['ok', 'Pedido enviado. A Dra. Thalia recebe um aviso e, quando aprovar, as reservas do plano aparecem na sua área.'];
+      S.pl.open = false; S.store.refresh && S.store.refresh();
+    } catch (err) { S.plMsg = ['err', errText(err)]; }
+    $('cn-plano').dataset.sig = ''; renderCPlano();
+    return;
+  }
+  if (end) {
+    const p = planoDe(end.dataset.plend); if (!p) return;
+    return twoStep(end, p.status === 'pendente' ? 'Confirmar: cancelar pedido' : 'Confirmar: encerrar no fim do mês', async () => {
+      await S.store.rpc('encerrar_plano', { p_id: p.id });
+      S.plMsg = ['ok', p.status === 'pendente' ? 'Pedido cancelado.' : 'Plano encerrado. As reservas deste mês continuam valendo; as dos próximos meses foram canceladas.'];
+      S.store.refresh && S.store.refresh(); $('cn-plano').dataset.sig = ''; renderCPlano();
+    });
+  }
+});
+
+// Reserva do plano: liberar o dia (crédito) e usar o crédito.
+function opcoesCredito(b) {
+  const p = planoDe(b.plano_id), mod = p ? p.modalidade : 'periodo';
+  const faixas = mod === 'diaria' ? [[p ? p.h_from : CFG.diaria.de, p ? p.h_to : CFG.diaria.ate]] : (CFG.periodos || []).map(x => [x.de, x.ate]);
+  const ym = (b.plano_data_orig || b.date).slice(0, 7), out = [];
+  for (let d = new Date(ym + '-01T12:00'); iso(d).startsWith(ym); d = addDays(d, 1)) {
+    if (!dayOpen(d)) continue;
+    const s = iso(d);
+    for (const [a, z] of faixas) { if (z > CFG.fecha || a < CFG.abre) continue; if (livreEm(s, a, z)) out.push({ s, a, z }); }
+  }
+  return out;
+}
+function credSelectHtml(b, id) {
+  const ops = opcoesCredito(b), mes = MESES[Number((b.plano_data_orig || b.date).slice(5, 7)) - 1];
+  if (!ops.length) return `<p class="hint">Não há ${planoDe(b.plano_id) && planoDe(b.plano_id).modalidade === 'diaria' ? 'diárias livres' : 'períodos livres'} em ${mes} para usar o crédito. Fale com a Dra. Thalia.</p>`;
+  return `<label>Escolha o novo dia (${mes})<select id="${id}">${ops.map(o => { const d = new Date(o.s + 'T12:00'); return `<option value="${o.s}|${o.a}|${o.z}">${DIAS_LONGOS[d.getDay()]}, ${br(o.s).slice(0, 5)} · ${o.a}h às ${o.z}h</option>`; }).join('')}</select></label>
+    <div class="dr-actions"><button type="button" class="primary" data-usacred="${esc(b.id)}" data-sel="${id}">Remarcar com o crédito</button></div>`;
+}
+function planoAcoesDent(w, acts, b, st) {
+  const p = planoDe(b.plano_id), aviso = CFG.planoAvisoDias ?? 3;
+  const box = document.createElement('div'); box.className = 'pl-box'; box.style.flexBasis = '100%';
+  const start = new Date(`${b.date}T${pad(b.from)}:00`);
+  let h = `<p class="hint" style="margin:0">Reserva do seu plano mensal${p ? ': ' + esc(planoTxt(p)) : ''}.</p>`;
+  if (st === 'agendado') {
+    if (start - new Date() >= aviso * 864e5) h += `<p class="hint">Não vai poder ir? Liberando este dia com pelo menos ${plural(aviso, 'dia', 'dias')} de antecedência, ele vira um crédito para remarcar outro dia de ${MESES[start.getMonth()]}.</p><div class="dr-actions"><button type="button" class="ghost" data-libdia="${esc(b.id)}">Não vou poder ir: guardar crédito</button></div>`;
+    else h += `<p class="hint">Faltam menos de ${plural(aviso, 'dia', 'dias')}: liberar este dia não gera crédito. Se não puder ir, fale com a Dra. Thalia.</p><div class="dr-actions"><a class="wa-sm" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Olá Dra. Thalia, aqui é ${myName()}. Sobre o dia ${br(b.date)} do meu plano (${hh(b.from)} às ${hh(b.to)}).`)}">Falar com a Dra. Thalia</a></div>`;
+  } else if (st === 'credito') {
+    h += mesAberto(b) ? `<p class="hint">Você liberou o dia ${br(b.plano_data_orig || b.date)} e ganhou um crédito. Escolha outro dia do mesmo mês:</p>${credSelectHtml(b, 'cd-cred')}`
+      : `<p class="hint">O crédito do dia ${br(b.plano_data_orig || b.date)} não foi usado no mês e venceu.</p>`;
+  }
+  box.innerHTML = h + '<div class="pl-fb" role="status"></div>';
+  acts.appendChild(box);
+}
+function planoAdminBlock({ b, st }) {
+  const p = planoDe(b.plano_id), w = document.createElement('div'); w.className = 'block';
+  let h = `<h4>Plano mensal</h4><p class="hint">${p ? `${esc(planoTxt(p))} · ${BRL(Number(p.valor_mensal))} por mês` : 'Reserva gerada por um plano.'}${b.plano_data_orig && b.plano_data_orig !== b.date ? ` Remarcada com crédito (era ${br(b.plano_data_orig)}).` : ''}</p>`;
+  if (st === 'agendado') h += `<div class="dr-actions"><button type="button" class="ghost" data-libdia="${esc(b.id)}">Transformar em crédito</button></div>`;
+  if (st === 'credito') h += mesAberto(b) ? `<p class="hint">O dentista liberou este dia: virou crédito para remarcar no mesmo mês (o valor continua no mês).</p>${credSelectHtml(b, 'ad-cred')}` : '<p class="hint">Crédito vencido sem uso.</p>';
+  w.innerHTML = h + '<div class="pl-fb" role="status"></div>';
+  return w;
+}
+document.addEventListener('click', async e => {
+  if (!e.target.closest) return;
+  const lib = e.target.closest('[data-libdia]'), use = e.target.closest('[data-usacred]');
+  if (!lib && !use) return;
+  e.preventDefault(); e.stopPropagation();
+  const fbx = (e.target.closest('.pl-box, .block') || document).querySelector('.pl-fb');
+  if (lib) return twoStep(lib, 'Confirmar: liberar o dia', async () => {
+    try { await S.store.rpc('plano_liberar_dia', { p_booking: lib.dataset.libdia }); const b = S.bookings.find(x => x.id === lib.dataset.libdia); if (b) { b.status = 'credito'; (b.keys || []).forEach(k => { delete S.slots[k]; }); } S.store.refresh && S.store.refresh(); render(); }
+    catch (err) { lib.disabled = false; lib.classList.remove('sure'); lib.textContent = 'Tentar de novo'; if (fbx) msgIn(fbx, 'err', errText(err)); }
+  });
+  const sel = $(use.dataset.sel); if (!sel) return;
+  const [s, a, z] = sel.value.split('|');
+  use.disabled = true;
+  try { await S.store.rpc('plano_usar_credito', { p_booking: use.dataset.usacred, p_date: s, p_from: +a, p_to: +z }); if (fbx) msgIn(fbx, 'ok', `Remarcado para ${br(s)}, das ${a}h às ${z}h.`); S.store.refresh && S.store.refresh(); }
+  catch (err) { use.disabled = false; if (fbx) msgIn(fbx, 'err', errText(err)); }
+}, true);
+function creditAlerts(mine) {
+  return mine.filter(x => x.st === 'credito' && mesAberto(x.b)).slice(0, 2).map(x => { const o = x.b.plano_data_orig || x.b.date, m = MESES[Number(o.slice(5, 7)) - 1];
+    return notice('gold', `<b>Crédito do plano:</b> o dia ${br(o).slice(0, 5)} virou crédito. Escolha outro dia de ${m} para usar.`, [btnHtml('Usar crédito', `data-cbk="${esc(x.b.id)}"`, 'primary')]); });
+}
+
+// Painel: pedidos de plano, planos ativos e novo plano.
+function planPendHtml() {
+  const p = planos().filter(x => x.status === 'pendente').sort((a, b) => String(a.criado_em).localeCompare(String(b.criado_em)));
+  if (!p.length) return '';
+  const nm = x => ((S.cols.dentists || {})[x.dentist_id] || {}).nome || 'Dentista';
+  return `<div class="notice gold pend-list"><p><b>${plural(p.length, 'pedido de plano mensal', 'pedidos de plano mensal')}</b> aguardando a sua aprovação.</p>
+    <div class="pend-rows">${p.slice(0, 5).map(x => `<div class="pend-row"><span class="avatar">${esc(initials(nm(x)))}</span><span class="txt"><b>${esc(nm(x))}</b><small>${esc(planoTxt(x))} · ${BRL(Number(x.valor_mensal))}/mês · a partir de ${br(x.inicio).slice(0, 5)}</small></span>
+      <span class="acts">${btnHtml('Aprovar', `data-plact="${esc(x.id)}|aprovar"`, 'primary sm')}${btnHtml('Recusar', `data-plact="${esc(x.id)}|recusar"`, 'ghost sm')}</span></div>`).join('')}</div></div>`;
+}
+function planoRowAdmin(p) {
+  const nm = ((S.cols.dentists || {})[p.dentist_id] || {}).nome || 'Dentista', cr = creditosDoPlano(p).length;
+  return `<div class="pl-row"><span class="avatar">${esc(initials(nm))}</span><span class="txt"><b>${esc(nm)}</b><small>${esc(planoTxt(p))} · ${BRL(Number(p.valor_mensal))}/mês · desde ${br(p.inicio).slice(0, 5)}${cr ? ` · ${plural(cr, 'crédito aberto', 'créditos abertos')}` : ''}</small></span>
+    <span class="acts">${statusPlanoTag(p)}${p.status === 'ativo' ? btnHtml('Encerrar', `data-plact="${esc(p.id)}|encerrar"`, 'link') : ''}</span></div>`;
+}
+function renderDPlanos() {
+  const el = $('d-planos'); if (!el) return;
+  const at = planos().filter(p => p.status === 'ativo' || (p.status === 'encerrado' && p.fim && p.fim >= iso(new Date()))).sort((a, b) => a.dia_semana - b.dia_semana || a.h_from - b.h_from);
+  const total = at.filter(p => p.status === 'ativo').reduce((s, p) => s + Number(p.valor_mensal), 0);
+  el.innerHTML = `<div class="card"><div class="card-head"><h3>Planos mensais</h3><button type="button" class="link" data-pl="novo">+ Novo plano</button></div>
+    ${at.length ? `<p class="hint" style="margin:0 0 6px">${plural(at.filter(p => p.status === 'ativo').length, 'plano ativo', 'planos ativos')} · ${BRL(total)} por mês</p><div class="pl-list">${at.map(planoRowAdmin).join('')}</div>`
+      : '<p class="hint" style="margin:0">Nenhum plano ativo. Os pedidos dos dentistas aparecem aqui para você aprovar, ou crie um plano para um dentista.</p>'}</div>`;
+}
+function planosDentHtml(d) {
+  if (!d || !d.doc) return '';
+  const ps = planos().filter(p => p.dentist_id === d.doc.id && p.status !== 'recusado' && !(p.status === 'encerrado' && (!p.fim || p.fim < iso(new Date()))));
+  return `<div class="block"><h4>Plano mensal</h4>${ps.length ? `<div class="pl-list">${ps.map(planoRowAdmin).join('')}</div>` : '<p class="hint">Sem plano mensal.</p>'}
+    <div class="dr-actions">${statusDent(d.doc) !== 'bloqueado' ? btnHtml('Novo plano para este dentista', `data-pl="novo|${esc(d.doc.id)}"`, 'ghost') : ''}</div></div>`;
+}
+function planoAdminForm(dentId) {
+  return () => {
+    const f = document.createElement('form'); f.noValidate = true; f.style.cssText = 'display:grid;gap:16px';
+    const dents = Object.values(S.cols.dentists || {}).filter(d => statusDent(d) !== 'bloqueado').sort((a, b) => String(a.nome).localeCompare(String(b.nome)));
+    const ops = planoOpcoes();
+    f.innerHTML = `<div class="dr-title"><span class="avatar">P</span><div><h3>Novo plano mensal</h3><span class="hint">Fica ativo na hora e reserva o mês atual e o próximo</span></div></div>
+      ${ops.length ? '' : '<p class="notice gold">Defina os valores dos planos em Ajustes → Planos mensais.</p>'}
+      <label>Dentista<select id="pa-d">${dents.map(d => `<option value="${esc(d.id)}"${d.id === dentId ? ' selected' : ''}>${esc(d.nome)}</option>`).join('')}</select></label>
+      <label>Modalidade<select id="pa-op">${ops.map((o, i) => `<option value="${i}">${esc(o.nome)} · ${BRL(planoValorCfg(o.mod))}/mês</option>`).join('')}</select></label>
+      <div class="form2"><label>Dia da semana<select id="pa-dia">${DIAS_ORD.filter(d => CFG.diasAbertos.includes(d)).map(d => `<option value="${d}">${DIAS_LONGOS[d]}</option>`).join('')}</select></label>
+      <label>Começar em<select id="pa-ini"></select></label></div>
+      <div class="pl-datas" id="pa-prev"></div>
+      <p class="hint" id="pa-hint"></p><div id="pa-fb" role="status"></div>
+      <div class="dr-actions"><button class="primary" type="submit" id="pa-go">Ativar plano</button></div>`;
+    const upd = () => {
+      const op = ops[+f.querySelector('#pa-op').value || 0], dia = +f.querySelector('#pa-dia').value, sel = f.querySelector('#pa-ini');
+      const cur = sel.value, ds = proximasDatas(dia, 8, iso(new Date()));
+      sel.innerHTML = ds.map(s => `<option value="${s}"${s === cur ? ' selected' : ''}>${br(s)}</option>`).join('');
+      if (!op) return;
+      const datas = datasDoPlano(dia, sel.value);
+      f.querySelector('#pa-prev').innerHTML = datas.map(s => { const d = new Date(s + 'T12:00'), ok = livreEm(s, op.a, op.z); return `<span class="${ok ? 'ok' : 'busy'}"><b>${d.getDate()}/${pad(d.getMonth() + 1)}</b><small>${ok ? 'livre' : 'ocupado'}</small></span>`; }).join('');
+      const oc = datas.filter(s => !livreEm(s, op.a, op.z)).length;
+      f.querySelector('#pa-hint').textContent = `${BRL(planoValorCfg(op.mod))} por mês. Reserva automaticamente toda ${DIAS_LONGOS[dia]}, ${op.a}h às ${op.z}h, e renova todo mês.${oc ? ` ${plural(oc, 'data ocupada fica', 'datas ocupadas ficam')} de fora.` : ''}`;
+    };
+    f.addEventListener('change', upd);
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const op = ops[+f.querySelector('#pa-op').value || 0]; if (!op) return;
+      const go = f.querySelector('#pa-go'); go.disabled = true;
+      try {
+        const r = await S.store.rpc('criar_plano', { p_dentist: f.querySelector('#pa-d').value, p_modalidade: op.mod, p_dia: +f.querySelector('#pa-dia').value, p_from: op.a, p_to: op.z, p_inicio: f.querySelector('#pa-ini').value });
+        const conf = (r && r.conflitos) || [];
+        msgIn(f.querySelector('#pa-fb'), 'ok', `Plano ativado: ${plural((r && r.criadas) || 0, 'reserva criada', 'reservas criadas')}.${conf.length ? ` Ficaram de fora (ocupadas): ${conf.map(s => br(s).slice(0, 5)).join(', ')}.` : ''}`);
+        S.store.refresh && S.store.refresh();
+      } catch (err) { go.disabled = false; msgIn(f.querySelector('#pa-fb'), 'err', errText(err)); }
+    });
+    setTimeout(upd, 0);
+    return f;
+  };
+}
+document.addEventListener('click', async e => {
+  if (!e.target.closest || $('view-admin').hidden) return;
+  const nb = e.target.closest('[data-pl]'), act = e.target.closest('[data-plact]');
+  if (nb) { e.preventDefault(); e.stopPropagation(); const [, id] = nb.dataset.pl.split('|'); openForm('Plano mensal', planoAdminForm(id || null)); return; }
+  if (!act) return;
+  e.preventDefault(); e.stopPropagation();
+  const [id, a] = act.dataset.plact.split('|');
+  const run = async () => {
+    const r = await S.store.rpc(a === 'aprovar' ? 'aprovar_plano' : a === 'recusar' ? 'recusar_plano' : 'encerrar_plano', a === 'recusar' ? { p_id: id, p_motivo: null } : { p_id: id });
+    const p = planoDe(id); if (p) p.status = a === 'aprovar' ? 'ativo' : a === 'recusar' ? 'recusado' : 'encerrado';
+    if (a === 'aprovar' && r && (r.conflitos || []).length) alert7(`Plano aprovado. Datas que já estavam ocupadas ficaram de fora: ${r.conflitos.map(s => br(s).slice(0, 5)).join(', ')}.`);
+    S.store.refresh && S.store.refresh(); render();
+  };
+  if (a === 'aprovar') { act.disabled = true; try { await run(); } catch (err) { act.disabled = false; act.textContent = errText(err); } return; }
+  return twoStep(act, a === 'recusar' ? 'Confirmar recusa' : 'Confirmar: encerrar no fim do mês', run);
+}, true);
+function alert7(t) { S.aviso7 = t; const el = $('d-planos'); if (el) el.insertAdjacentHTML('afterbegin', `<div class="notice gold"><p>${esc(t)}</p></div>`); }
+
+// Ajustes → Planos mensais
+function ajPlanos() {
+  const el = $('acc-planos'); if (!el) return;
+  const c = S.ajCfg || {}, pl = c.planos || CFG.planos || {}, av = c.planoAvisoDias ?? CFG.planoAvisoDias ?? 3;
+  const sig = JSON.stringify([pl, av]); if (el.dataset.sig === sig) return;
+  if (el.contains(document.activeElement) && /INPUT|SELECT/.test(document.activeElement.tagName)) return;
+  el.dataset.sig = sig;
+  el.innerHTML = `<form id="plf" class="ajf" novalidate>
+    <div class="form2 w-3"><label>Diária, 1x por semana (R$ por mês)<input id="plf-d" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(pl.diaria ?? '')}"></label>
+      <label>Meio período, 1x por semana (R$ por mês)<input id="plf-p" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(pl.periodo ?? '')}"></label>
+      <label>Aviso para virar crédito<select id="plf-a">${[0, 1, 2, 3, 4, 5, 7, 10, 14].map(n => `<option value="${n}"${n === Number(av) ? ' selected' : ''}>${n ? `${plural(n, 'dia', 'dias')} antes` : 'Até o início'}</option>`).join('')}</select></label></div>
+    <p class="hint">O valor do mês é o mesmo com 4 ou 5 semanas. Avisando com essa antecedência, o dia vira crédito para remarcar no mesmo mês; avisando depois, o dia é perdido. Planos novos usam estes valores; os ativos mantêm o valor de quando foram feitos.</p>
+    <div class="aj-fb" role="status"></div><div class="nav end"><button class="primary" type="submit">Salvar planos</button></div></form>`;
+}
+document.addEventListener('submit', async e => {
+  const f = e.target; if (!f || f.id !== 'plf') return;
+  e.preventDefault();
+  const fbx = f.querySelector('.aj-fb'), d = numOrNull($('plf-d').value), p = numOrNull($('plf-p').value), a = +$('plf-a').value;
+  if (d == null || p == null || d < 0 || p < 0) return msgIn(fbx, 'err', 'Preencha os dois valores mensais.');
+  const btn = f.querySelector('[type=submit]'); btn.disabled = true;
+  try {
+    await S.store.rpc('salvar_planos_cfg', { p_diaria: d, p_periodo: p, p_aviso: a });
+    S.ajCfg = await S.store.rpc('config_admin'); S.cfgSig = null; applyCfg(Object.assign({}, S.ajCfg));
+    $('acc-planos').dataset.sig = ''; msgIn(fbx, 'ok', 'Planos salvos.'); render();
+  } catch (err) { msgIn(fbx, 'err', errText(err)); }
+  finally { btn.disabled = false; }
+});
+function ajSummaries7() {
+  const set = (k, t) => { const el = $('sum-' + k); if (el) el.textContent = t; };
+  const pl = CFG.planos || {};
+  set('planos', `${pl.diaria != null ? 'Diária ' + BRL(Number(pl.diaria)) : ''}${pl.periodo != null ? ' · meio período ' + BRL(Number(pl.periodo)) : ''} por mês · ${plural(planos().filter(p => p.status === 'ativo').length, 'plano ativo', 'planos ativos')}`);
+  const T = S.termos; set('termos', T && T.versao ? `Versão ${T.versao} de ${dataBR(T.criadoEm)}` : 'Termos de uso');
+  ajTermos(); ajPlanos();
+}
+
 /* ---------- Rotas e render ---------- */
 function route() {
   const h = location.hash, wantAdmin = h === '#admin', wantDent = h === '#dentista';
@@ -4932,9 +5574,10 @@ setInterval(render, 60000); // atualiza status e horas que passaram
   if ('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('sw.js').catch(() => {});
   const wire = st => {
     st.watch((sl, bk) => { S.slots = sl; S.bookings = bk; render(); });
-    ['dentists', 'avisos', 'problemas', 'espera', 'faq', 'pacientes', 'consultas', 'evolucoes', 'paciente_docs'].forEach(n => st.watchCol(n, (o, quiet) => {
+    ['dentists', 'avisos', 'problemas', 'espera', 'faq', 'pacientes', 'consultas', 'evolucoes', 'paciente_docs', 'termos_versoes', 'termos_aceites', 'planos'].forEach(n => st.watchCol(n, (o, quiet) => {
       S.cols[n] = o;
       if (n === 'faq') S.faq = Object.values(o).sort((a, b) => (a.ordem || 0) - (b.ordem || 0) || String(a.criadoEm).localeCompare(String(b.criadoEm)));
+      if (n === 'termos_versoes') termosDaColecao();
       if (n === 'dentists') { S.phoneUid = {}; Object.values(o).forEach(d => { const k = dkey(d.tel); if (k) S.phoneUid[k] = d.id; }); }
       if (!quiet) render();
     }));

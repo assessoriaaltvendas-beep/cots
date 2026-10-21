@@ -120,6 +120,22 @@ No painel, aba **Pacientes** (só a Dra. Thalia vê):
 
 Dados de saúde são sensíveis (LGPD): mantenha a senha do painel só com a Dra. Thalia. Para o prontuário digital substituir o papel com validade legal, confira as regras do CRO (normalmente exigem assinatura com certificado digital).
 
+## Termos de uso
+No cadastro, o dentista lê os **termos e condições de uso** numa caixa com rolagem: o aceite só libera depois de rolar até o final, e a conta só é criada com o aceite marcado. Dentistas que já tinham conta aceitam no próximo acesso.
+- A Dra. Thalia edita o texto em **Ajustes → Termos de uso**. Cada publicação vira uma nova versão, com data e resumo; o histórico mostra o que mudou (trecho removido riscado, trecho novo destacado).
+- Com uma versão nova, todos os dentistas leem e aceitam de novo no próximo acesso, vendo o que mudou. Sem o aceite, não conseguem reservar.
+- O painel mostra quem aceitou cada versão e quando (aba Dentistas, nos detalhes de cada um). Os termos ficam também no rodapé do site e no Perfil do dentista.
+
+## Planos mensais
+Plano 1x por semana, no mesmo dia e período: **diária R$ 1.000/mês** e **meio período R$ 600/mês** (valores em Ajustes → Planos mensais). O valor do mês é o mesmo com 4 ou 5 semanas; no primeiro mês, cobra só as semanas a partir do início.
+- O dentista pede o plano na aba **Reservar**; a Dra. Thalia aprova no Resumo ou na aba Dentistas (ou cria um plano direto, já ativo, em Dentistas → Novo plano).
+- O site reserva sozinho as semanas do mês atual e do próximo, e renova todo mês (rotina diária). Datas já ocupadas ficam de fora e a Dra. Thalia é avisada.
+- Não vai poder ir num dia? Avisando pela área do dentista com **3 dias** de antecedência (ajustável), o dia vira **crédito** para remarcar outro dia do mesmo mês. Com menos de 3 dias, o dia é perdido. O valor do mês não muda.
+- Encerrar o plano: vale até o fim do mês atual; as reservas dos meses seguintes são canceladas.
+
+## Prazo de cancelamento
+Cancelar ou remarcar pelo site: até **4 horas** antes do início, com direito a reembolso (Ajustes → Funcionamento).
+
 ## Preços
 Em Ajustes → Valores: valor da hora (até o limite de horas avulsas), períodos (manhã, tarde, noite) e diária. Acima do limite, o dentista reserva um período ou a diária; intervalos que cruzam períodos aparecem com o botão "Falar com a Dra. Thalia".
 
