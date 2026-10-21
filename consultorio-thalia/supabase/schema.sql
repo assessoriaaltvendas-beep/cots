@@ -174,6 +174,13 @@ begin
                      when public.is_admin() then 'painel' else 'site' end;
   end if;
 
+  -- Reserva só com conta liberada pela Dra. Thalia (a administradora reserva para qualquer um).
+  if not public.is_admin() then
+    if v_dentist is null then raise exception 'LOGIN_NECESSARIO'; end if;
+    if exists (select 1 from public.dentists where id = v_dentist and status = 'pendente') then raise exception 'CONTA_PENDENTE'; end if;
+    if exists (select 1 from public.dentists where id = v_dentist and status = 'bloqueado') then raise exception 'CONTA_BLOQUEADA'; end if;
+  end if;
+
   insert into public.bookings (dentist_id, nome, cro, tel, email, primeira, date, h_from, h_to, pedido, serie, origem)
   values (v_dentist, trim(p_nome), nullif(trim(p_cro), ''), trim(p_tel), nullif(lower(trim(p_email)), ''), coalesce(p_primeira, false),
           p_date, p_from, p_to, nullif(trim(p_pedido), ''), p_serie, v_origem)
@@ -299,7 +306,7 @@ drop policy if exists "faq: editar" on public.faq;
 create policy "faq: editar" on public.faq for all using (public.is_admin()) with check (public.is_admin());
 insert into public.faq (pergunta, resposta, ordem)
 select * from (values
-  ('Como faço para reservar?', 'Toque em "Agendar horário", informe seus dados, escolha o dia e as horas livres e confirme. O horário fica bloqueado para você na hora.', 1),
+  ('Como faço para reservar?', 'Crie sua conta na Área do dentista. Assim que a Dra. Thalia liberar o seu acesso (você recebe um e-mail), escolha o dia e as horas livres e confirme. O horário fica bloqueado para você na hora.', 1),
   ('Qual o tempo mínimo de reserva?', '1 hora. Você pode reservar várias horas seguidas no mesmo dia e repetir o mesmo horário toda semana.', 2),
   ('Posso cancelar ou remarcar?', 'Sim, pela área do dentista, até 24 horas antes do início. Depois disso, fale com a Dra. Thalia pelo WhatsApp.', 3),
   ('E se o horário que eu quero estiver ocupado?', 'Entre na lista de espera pela área do dentista. Se o horário vagar, você recebe um aviso.', 4)
@@ -402,7 +409,7 @@ begin
     || '<p style="font-size:17px"><b>' || public.quando_txt(new.date, new.h_from, new.h_to) || '</b></p>'
     || '<p>Você recebe um lembrete por e-mail 2 horas antes.</p>'
     || '<p><a href="' || public.link_agenda(new) || '" style="display:inline-block;background:#590117;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none">Adicionar à minha agenda</a></p>'
-    || coalesce('<p style="color:#7a6a6e">Precisa cancelar? Pela área do dentista, até 24 horas antes: <a href="' || c.site_url || '/#dentista" style="color:#590117">abrir área do dentista</a>.</p>', ''));
+    || coalesce('<p style="color:#7a6a6e">Precisa cancelar? Pela área do dentista, até ' || extract(epoch from public.cfg_prazo_cancelamento())::int / 3600 || ' horas antes: <a href="' || c.site_url || '/#dentista" style="color:#590117">abrir área do dentista</a>.</p>', ''));
   perform public.enviar_email(c.email_admin, 'Dra. Thalia', 'Nova reserva · ' || new.nome,
     '<p><b>' || public.esc_html(new.nome) || '</b>' || coalesce(' (' || public.esc_html(new.cro) || ')', '') || ' reservou o consultório:</p>'
     || '<p style="font-size:17px"><b>' || public.quando_txt(new.date, new.h_from, new.h_to) || '</b></p>'
@@ -754,7 +761,7 @@ begin
   if v is null then perform vault.create_secret(p_privada, 'vapid_privada', 'Chave privada das notificações');
   else perform vault.update_secret(v, p_privada); end if;
   -- Chaves novas invalidam as inscrições antigas: os aparelhos se inscrevem de novo ao abrir o app.
-  if antiga is distinct from p_publica then delete from public.push_subs; end if;
+  if antiga is distinct from p_publica then delete from public.push_subs where endpoint is not null; end if;
 end $$;
 
 -- Notificação de teste para os aparelhos da própria pessoa (administradora ou dentista).
@@ -771,6 +778,458 @@ revoke execute on function public.testar_push() from public, anon;
 grant execute on function public.status_push() to authenticated;
 grant execute on function public.salvar_config_push(text, text, text) to authenticated;
 grant execute on function public.testar_push() to authenticated;
+
+-- ---------- Ajustes editáveis pelo painel (valores, funcionamento, Pix, regras) ----------
+alter table public.app_config add column if not exists valor_hora numeric(10,2);
+alter table public.app_config add column if not exists precos jsonb not null default '{"porDia":{},"porHora":[]}'::jsonb;
+alter table public.app_config add column if not exists pacotes jsonb not null default '[]'::jsonb;
+alter table public.app_config add column if not exists abre int not null default 8;
+alter table public.app_config add column if not exists fecha int not null default 18;
+alter table public.app_config add column if not exists dias int[] not null default '{1,2,3,4,5,6}';
+alter table public.app_config add column if not exists prazo_cancel_h int not null default 24;
+alter table public.app_config add column if not exists pix_chave text;
+alter table public.app_config add column if not exists pix_nome text;
+alter table public.app_config add column if not exists pix_cidade text not null default 'Ipatinga';
+alter table public.app_config add column if not exists regras jsonb;
+alter table public.app_config add column if not exists checklist jsonb;
+alter table public.app_config add column if not exists espaco jsonb;
+alter table public.app_config add column if not exists limite_atraso_dias int;
+alter table public.app_config add column if not exists lembrete_pagamento boolean not null default true;
+alter table public.app_config add column if not exists relatorio_mensal boolean not null default true;
+alter table public.app_config add column if not exists ultimo_relatorio date;
+alter table public.app_config add column if not exists agenda_token text;
+alter table public.app_config drop constraint if exists app_config_horario_ok;
+alter table public.app_config add constraint app_config_horario_ok check (abre >= 0 and fecha <= 24 and abre < fecha and prazo_cancel_h between 0 and 720
+  and (limite_atraso_dias is null or limite_atraso_dias between 1 and 90) and (valor_hora is null or valor_hora >= 0) and cardinality(dias) between 1 and 7);
+
+-- Valor de cada reserva fica gravado: mudar o preço depois não altera reservas antigas.
+alter table public.bookings add column if not exists valor numeric(10,2);
+
+-- Horário de funcionamento lido dos ajustes (substitui os valores fixos do começo do arquivo).
+create or replace function public.cfg_abre() returns int language sql stable security definer set search_path = public as $$
+  select coalesce((select abre from public.app_config where id = 1), 8) $$;
+create or replace function public.cfg_fecha() returns int language sql stable security definer set search_path = public as $$
+  select coalesce((select fecha from public.app_config where id = 1), 18) $$;
+create or replace function public.cfg_dias() returns int[] language sql stable security definer set search_path = public as $$
+  select coalesce((select dias from public.app_config where id = 1), array[1,2,3,4,5,6]) $$;
+create or replace function public.cfg_prazo_cancelamento() returns interval language sql stable security definer set search_path = public as $$
+  select make_interval(hours => coalesce((select prazo_cancel_h from public.app_config where id = 1), 24)) $$;
+
+-- Preço de uma hora: faixa de horário > dia da semana > valor padrão.
+create or replace function public.preco_hora(d date, h int) returns numeric
+language plpgsql stable security definer set search_path = public as $$
+declare c public.app_config; r jsonb; dow int := extract(dow from d)::int;
+begin
+  select * into c from public.app_config where id = 1;
+  for r in select * from jsonb_array_elements(coalesce(c.precos -> 'porHora', '[]'::jsonb)) loop
+    if h >= (r ->> 'de')::int and h < (r ->> 'ate')::int
+       and (jsonb_typeof(r -> 'dias') is distinct from 'array' or (r -> 'dias') @> to_jsonb(dow)) then
+      return (r ->> 'valor')::numeric;
+    end if;
+  end loop;
+  if coalesce(c.precos -> 'porDia', '{}'::jsonb) ? dow::text then return (c.precos -> 'porDia' ->> dow::text)::numeric; end if;
+  return c.valor_hora;
+end $$;
+create or replace function public.preco_reserva(d date, h1 int, h2 int) returns numeric
+language plpgsql stable security definer set search_path = public as $$
+declare t numeric := 0; v numeric; h int;
+begin
+  for h in h1 .. h2 - 1 loop
+    v := public.preco_hora(d, h);
+    if v is null then return null; end if;
+    t := t + v;
+  end loop;
+  return t;
+end $$;
+
+-- Antes de gravar uma reserva: calcula o valor e confere pagamentos em atraso.
+create or replace function public.antes_reserva() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare lim int; v_tel text;
+begin
+  if new.origem = 'bloqueio' then return new; end if;
+  if new.valor is null then new.valor := public.preco_reserva(new.date, new.h_from, new.h_to); end if;
+  if public.is_admin() or coalesce(current_setting('app.bypass', true), '') = 'on' then return new; end if;
+  select limite_atraso_dias into lim from public.app_config where id = 1;
+  if lim is null then return new; end if;
+  v_tel := right(regexp_replace(coalesce(new.tel, ''), '\D', '', 'g'), 10);
+  if exists (
+    select 1 from public.bookings b
+    where b.status = 'ativo' and not b.pago and b.origem <> 'bloqueio' and coalesce(b.valor, 0) > 0
+      and b.date < public.agora_local()::date - lim
+      and ((new.dentist_id is not null and b.dentist_id = new.dentist_id)
+           or (length(v_tel) = 10 and right(regexp_replace(b.tel, '\D', '', 'g'), 10) = v_tel))
+  ) then
+    raise exception 'PAGAMENTO_PENDENTE';
+  end if;
+  return new;
+end $$;
+drop trigger if exists antes_reserva on public.bookings;
+create trigger antes_reserva before insert on public.bookings for each row execute function public.antes_reserva();
+
+-- O valor gravado só muda pela administradora.
+create or replace function public.proteger_valor() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if not (coalesce(current_setting('app.bypass', true), '') = 'on' or public.is_admin()) then new.valor := old.valor; end if;
+  return new;
+end $$;
+drop trigger if exists proteger_valor on public.bookings;
+create trigger proteger_valor before update on public.bookings for each row execute function public.proteger_valor();
+
+-- Ajustes que o site precisa mostrar (sem dados sensíveis).
+create or replace function public.config_publica() returns jsonb
+language sql stable security definer set search_path = public as $$
+  select jsonb_build_object('valorHora', c.valor_hora, 'precos', c.precos, 'pacotes', c.pacotes, 'abre', c.abre, 'fecha', c.fecha,
+    'diasAbertos', to_jsonb(c.dias), 'prazoCancelamentoH', c.prazo_cancel_h, 'pix', c.pix_chave, 'pixNome', c.pix_nome, 'pixCidade', c.pix_cidade,
+    'regras', c.regras, 'checklist', c.checklist, 'espaco', c.espaco, 'limiteAtrasoDias', c.limite_atraso_dias)
+  from public.app_config c where c.id = 1
+$$;
+grant execute on function public.config_publica() to anon, authenticated;
+
+create or replace function public.config_admin() returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare c public.app_config;
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  select * into c from public.app_config where id = 1;
+  return public.config_publica() || jsonb_build_object('lembretePagamento', c.lembrete_pagamento, 'relatorioMensal', c.relatorio_mensal,
+    'agendaToken', c.agenda_token, 'pushUrl', c.push_url, 'emailAdmin', c.email_admin);
+end $$;
+
+create or replace function public.lista_texto(p jsonb, max_itens int, max_len int) returns jsonb language plpgsql immutable as $$
+begin
+  if p is null or jsonb_typeof(p) = 'null' then return null; end if;
+  if jsonb_typeof(p) <> 'array' or jsonb_array_length(p) > max_itens
+     or exists (select 1 from jsonb_array_elements(p) e where jsonb_typeof(e) <> 'string' or length(e #>> '{}') > max_len) then
+    raise exception 'DADOS_INVALIDOS';
+  end if;
+  return (select coalesce(jsonb_agg(trim(e #>> '{}')), '[]'::jsonb) from jsonb_array_elements(p) e where trim(e #>> '{}') <> '');
+end $$;
+
+-- Salva os ajustes do painel. Só altera os campos enviados.
+create or replace function public.salvar_ajustes(p jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+declare c public.app_config; v numeric; r jsonb; k text;
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  if jsonb_typeof(p) <> 'object' then raise exception 'DADOS_INVALIDOS'; end if;
+  select * into c from public.app_config where id = 1;
+  if p ? 'valorHora' then c.valor_hora := nullif(p ->> 'valorHora', '')::numeric; end if;
+  if p ? 'precos' then
+    if jsonb_typeof(p -> 'precos') <> 'object' then raise exception 'DADOS_INVALIDOS'; end if;
+    for k in select jsonb_object_keys(coalesce(p -> 'precos' -> 'porDia', '{}'::jsonb)) loop
+      if k !~ '^[0-6]$' or coalesce((p -> 'precos' -> 'porDia' ->> k)::numeric, -1) < 0 then raise exception 'DADOS_INVALIDOS'; end if;
+    end loop;
+    for r in select * from jsonb_array_elements(coalesce(p -> 'precos' -> 'porHora', '[]'::jsonb)) loop
+      if coalesce((r ->> 'de')::int, -1) < 0 or coalesce((r ->> 'ate')::int, 99) > 24 or (r ->> 'de')::int >= (r ->> 'ate')::int or coalesce((r ->> 'valor')::numeric, -1) < 0 then raise exception 'DADOS_INVALIDOS'; end if;
+    end loop;
+    c.precos := jsonb_build_object('porDia', coalesce(p -> 'precos' -> 'porDia', '{}'::jsonb), 'porHora', coalesce(p -> 'precos' -> 'porHora', '[]'::jsonb));
+  end if;
+  if p ? 'pacotes' then
+    if jsonb_typeof(p -> 'pacotes') <> 'array' or jsonb_array_length(p -> 'pacotes') > 12 then raise exception 'DADOS_INVALIDOS'; end if;
+    for r in select * from jsonb_array_elements(p -> 'pacotes') loop
+      if coalesce((r ->> 'horas')::numeric, 0) <= 0 or coalesce((r ->> 'valor')::numeric, -1) < 0 then raise exception 'DADOS_INVALIDOS'; end if;
+    end loop;
+    c.pacotes := p -> 'pacotes';
+  end if;
+  if p ? 'abre' then c.abre := (p ->> 'abre')::int; end if;
+  if p ? 'fecha' then c.fecha := (p ->> 'fecha')::int; end if;
+  if p ? 'diasAbertos' then
+    c.dias := array(select distinct x::int from jsonb_array_elements_text(p -> 'diasAbertos') x order by 1);
+    if exists (select 1 from unnest(c.dias) d where d < 0 or d > 6) then raise exception 'DADOS_INVALIDOS'; end if;
+  end if;
+  if p ? 'prazoCancelamentoH' then c.prazo_cancel_h := (p ->> 'prazoCancelamentoH')::int; end if;
+  if p ? 'pix' then c.pix_chave := left(nullif(trim(p ->> 'pix'), ''), 77); end if;
+  if p ? 'pixNome' then c.pix_nome := left(nullif(trim(p ->> 'pixNome'), ''), 25); end if;
+  if p ? 'pixCidade' then c.pix_cidade := coalesce(left(nullif(trim(p ->> 'pixCidade'), ''), 15), 'Ipatinga'); end if;
+  if p ? 'regras' then c.regras := public.lista_texto(p -> 'regras', 30, 400); end if;
+  if p ? 'checklist' then c.checklist := public.lista_texto(p -> 'checklist', 20, 200); end if;
+  if p ? 'espaco' then
+    if jsonb_typeof(p -> 'espaco') <> 'object' then raise exception 'DADOS_INVALIDOS'; end if;
+    c.espaco := jsonb_build_object(
+      'equipamentos', coalesce(public.lista_texto(p -> 'espaco' -> 'equipamentos', 40, 200), '[]'::jsonb),
+      'inclusos', coalesce(public.lista_texto(p -> 'espaco' -> 'inclusos', 40, 200), '[]'::jsonb),
+      'levar', coalesce(public.lista_texto(p -> 'espaco' -> 'levar', 40, 200), '[]'::jsonb),
+      'chegada', left(coalesce(p -> 'espaco' ->> 'chegada', ''), 300), 'saida', left(coalesce(p -> 'espaco' ->> 'saida', ''), 300),
+      'wifi', left(coalesce(p -> 'espaco' ->> 'wifi', ''), 120));
+  end if;
+  if p ? 'limiteAtrasoDias' then c.limite_atraso_dias := nullif(p ->> 'limiteAtrasoDias', '')::int; end if;
+  if p ? 'lembretePagamento' then c.lembrete_pagamento := (p ->> 'lembretePagamento')::boolean; end if;
+  if p ? 'relatorioMensal' then c.relatorio_mensal := (p ->> 'relatorioMensal')::boolean; end if;
+  update public.app_config set valor_hora = c.valor_hora, precos = c.precos, pacotes = c.pacotes, abre = c.abre, fecha = c.fecha, dias = c.dias,
+    prazo_cancel_h = c.prazo_cancel_h, pix_chave = c.pix_chave, pix_nome = c.pix_nome, pix_cidade = c.pix_cidade, regras = c.regras,
+    checklist = c.checklist, espaco = c.espaco, limite_atraso_dias = c.limite_atraso_dias, lembrete_pagamento = c.lembrete_pagamento,
+    relatorio_mensal = c.relatorio_mensal, atualizado_em = now()
+  where id = 1;
+  -- Reservas ainda sem valor (feitas antes de definir o preço) passam a ter o valor atual.
+  if p ? 'valorHora' or p ? 'precos' then
+    update public.bookings set valor = public.preco_reserva(date, h_from, h_to)
+    where valor is null and origem <> 'bloqueio' and status = 'ativo' and not pago;
+  end if;
+exception
+  when invalid_text_representation or numeric_value_out_of_range or check_violation or invalid_parameter_value then raise exception 'DADOS_INVALIDOS';
+end $$;
+revoke execute on function public.config_admin() from public, anon;
+revoke execute on function public.salvar_ajustes(jsonb) from public, anon;
+grant execute on function public.config_admin() to authenticated;
+grant execute on function public.salvar_ajustes(jsonb) to authenticated;
+
+-- ---------- Cobrança de pagamentos pendentes (e-mail e celular, a cada 3 dias) ----------
+create table if not exists public.cobrancas (dentist_id uuid primary key references public.dentists (id) on delete cascade, enviado_em timestamptz not null default now());
+alter table public.cobrancas enable row level security;
+
+create or replace function public.brl(v numeric) returns text language sql immutable as $$
+  select 'R$ ' || replace(replace(replace(to_char(coalesce(v, 0), 'FM999,999,990.00'), ',', '#'), '.', ','), '#', '.')
+$$;
+
+create or replace function public.cobrar_pendentes() returns int
+language plpgsql security definer set search_path = public as $$
+declare r record; c public.app_config; n int := 0; lista text;
+begin
+  select * into c from public.app_config where id = 1;
+  if not c.lembrete_pagamento then return 0; end if;
+  for r in
+    select b.dentist_id, d.nome, d.email, count(*) as qtd, sum(b.valor) as total
+    from public.bookings b join public.dentists d on d.id = b.dentist_id
+    where b.status = 'ativo' and not b.pago and b.origem <> 'bloqueio' and coalesce(b.valor, 0) > 0
+      and b.comprovante_em is null and b.comprovante_path is null and b.date < public.agora_local()::date
+      and not exists (select 1 from public.cobrancas k where k.dentist_id = b.dentist_id and k.enviado_em > now() - interval '3 days')
+    group by b.dentist_id, d.nome, d.email
+  loop
+    select string_agg('<li>' || public.quando_txt(b.date, b.h_from, b.h_to) || ' · ' || public.brl(b.valor) || '</li>', '' order by b.date) into lista
+    from public.bookings b where b.dentist_id = r.dentist_id and b.status = 'ativo' and not b.pago and b.origem <> 'bloqueio'
+      and coalesce(b.valor, 0) > 0 and b.comprovante_em is null and b.comprovante_path is null and b.date < public.agora_local()::date;
+    perform public.enviar_email(r.email, r.nome, 'Pagamento pendente · ' || public.brl(r.total),
+      '<p>Olá, ' || public.esc_html(split_part(r.nome, ' ', 1)) || '!</p><p>Consta pagamento pendente do uso do consultório:</p><ul>' || lista || '</ul>'
+      || '<p style="font-size:17px"><b>Total: ' || public.brl(r.total) || '</b></p>'
+      || coalesce('<p>Chave Pix: <b>' || public.esc_html(c.pix_chave) || '</b></p>', '')
+      || '<p>Na área do dentista, em Financeiro, você encontra o Pix copia e cola e pode enviar o comprovante.</p>'
+      || coalesce('<p><a href="' || c.site_url || '/#dentista" style="display:inline-block;background:#590117;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none">Abrir minha área</a></p>', '')
+      || '<p style="color:#7a6a6e">Se você já pagou, envie o comprovante e desconsidere este aviso.</p>');
+    perform public.push_para(array[r.dentist_id], 'Pagamento pendente · ' || public.brl(r.total),
+      r.qtd || case when r.qtd = 1 then ' reserva aguardando pagamento.' else ' reservas aguardando pagamento.' end || ' Toque para ver o Pix.', './#dentista', 'cobranca');
+    insert into public.cobrancas (dentist_id, enviado_em) values (r.dentist_id, now())
+      on conflict (dentist_id) do update set enviado_em = excluded.enviado_em;
+    n := n + 1;
+  end loop;
+  return n;
+end $$;
+revoke execute on function public.cobrar_pendentes() from public, anon, authenticated;
+
+-- ---------- Relatório do mês por e-mail ----------
+create or replace function public.relatorio_html(p_mes date) returns text
+language plpgsql stable security definer set search_path = public as $$
+declare
+  ini date := date_trunc('month', p_mes)::date; fim date := (date_trunc('month', p_mes) + interval '1 month')::date;
+  c public.app_config; q int; hrs int; prev numeric; v_pago numeric; v_aberto numeric; canc int; cap int; nota numeric; nnotas int; novos int; probs int;
+  sem_valor int; top text; mes text;
+begin
+  select * into c from public.app_config where id = 1;
+  select count(*), coalesce(sum(h_to - h_from), 0), sum(valor), coalesce(sum(valor) filter (where pago), 0), coalesce(sum(valor) filter (where not pago), 0), count(*) filter (where valor is null)
+    into q, hrs, prev, v_pago, v_aberto, sem_valor
+  from public.bookings where status = 'ativo' and origem <> 'bloqueio' and date >= ini and date < fim;
+  select count(*) into canc from public.bookings where status = 'cancelado' and origem <> 'bloqueio' and date >= ini and date < fim;
+  select count(*) * (c.fecha - c.abre) into cap from generate_series(ini, fim - 1, interval '1 day') g where extract(dow from g)::int = any (c.dias);
+  select avg((avaliacao ->> 'nota')::numeric), count(*) into nota, nnotas from public.bookings where avaliacao is not null and date >= ini and date < fim;
+  select count(*) into novos from public.dentists where criado_em >= ini and criado_em < fim;
+  select count(*) into probs from public.problemas where status = 'aberto';
+  select string_agg('<tr><td style="padding:6px 0;border-bottom:1px solid #efe4e4">' || public.esc_html(nome) || '</td><td style="padding:6px 0;border-bottom:1px solid #efe4e4;text-align:right">' || horas || 'h</td><td style="padding:6px 0;border-bottom:1px solid #efe4e4;text-align:right">' || coalesce(public.brl(total), '—') || '</td></tr>', '' order by horas desc)
+    into top from (select nome, sum(h_to - h_from) as horas, sum(valor) as total from public.bookings
+                   where status = 'ativo' and origem <> 'bloqueio' and date >= ini and date < fim group by nome order by 2 desc limit 8) t;
+  mes := (array['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'])[extract(month from ini)::int] || ' de ' || extract(year from ini);
+  return '<p>Olá, Dra. Thalia!</p><p>Este é o resumo do consultório em <b>' || mes || '</b>.</p>'
+    || '<table style="width:100%;border-collapse:collapse;font-size:15px">'
+    || '<tr><td style="padding:8px 0;border-bottom:1px solid #efe4e4">Reservas</td><td style="text-align:right;border-bottom:1px solid #efe4e4"><b>' || q || '</b></td></tr>'
+    || '<tr><td style="padding:8px 0;border-bottom:1px solid #efe4e4">Horas reservadas</td><td style="text-align:right;border-bottom:1px solid #efe4e4"><b>' || hrs || 'h</b>' || case when cap > 0 then ' (' || round(100.0 * hrs / cap) || '% de ocupação)' else '' end || '</td></tr>'
+    || '<tr><td style="padding:8px 0;border-bottom:1px solid #efe4e4">Receita prevista</td><td style="text-align:right;border-bottom:1px solid #efe4e4"><b>' || coalesce(public.brl(prev), 'Valor a definir') || '</b></td></tr>'
+    || '<tr><td style="padding:8px 0;border-bottom:1px solid #efe4e4">Recebido</td><td style="text-align:right;border-bottom:1px solid #efe4e4"><b>' || public.brl(v_pago) || '</b></td></tr>'
+    || '<tr><td style="padding:8px 0;border-bottom:1px solid #efe4e4">Em aberto</td><td style="text-align:right;border-bottom:1px solid #efe4e4"><b>' || public.brl(v_aberto) || '</b></td></tr>'
+    || '<tr><td style="padding:8px 0;border-bottom:1px solid #efe4e4">Cancelamentos</td><td style="text-align:right;border-bottom:1px solid #efe4e4"><b>' || canc || '</b></td></tr>'
+    || '<tr><td style="padding:8px 0;border-bottom:1px solid #efe4e4">Dentistas novos</td><td style="text-align:right;border-bottom:1px solid #efe4e4"><b>' || novos || '</b></td></tr>'
+    || '<tr><td style="padding:8px 0;border-bottom:1px solid #efe4e4">Avaliação média</td><td style="text-align:right;border-bottom:1px solid #efe4e4"><b>' || coalesce(to_char(nota, 'FM0D0') || ' de 5 (' || nnotas || ')', 'Sem avaliações') || '</b></td></tr>'
+    || '<tr><td style="padding:8px 0">Problemas em aberto</td><td style="text-align:right"><b>' || probs || '</b></td></tr></table>'
+    || case when sem_valor > 0 then '<p style="color:#7a6a6e">' || sem_valor || ' reserva(s) sem valor definido não entram na receita.</p>' else '' end
+    || coalesce('<h3 style="font-family:Georgia,serif;color:#590117;margin:22px 0 6px">Por dentista</h3><table style="width:100%;border-collapse:collapse;font-size:14px">' || top || '</table>', '')
+    || coalesce('<p style="margin-top:20px"><a href="' || c.site_url || '/#admin" style="display:inline-block;background:#590117;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none">Abrir o painel</a></p>', '');
+end $$;
+revoke execute on function public.relatorio_html(date) from public, anon, authenticated;
+
+create or replace function public.enviar_relatorio(p_mes date default null) returns boolean
+language plpgsql security definer set search_path = public as $$
+declare c public.app_config; m date := coalesce(p_mes, (date_trunc('month', public.agora_local()) - interval '1 month')::date); ok boolean; mes text;
+begin
+  if auth.uid() is not null and not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  select * into c from public.app_config where id = 1;
+  mes := (array['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'])[extract(month from m)::int];
+  ok := public.enviar_email(c.email_admin, 'Dra. Thalia', 'Relatório de ' || mes || ' · consultório', public.relatorio_html(m));
+  if ok then perform public.push_admins('Relatório de ' || mes || ' enviado', 'O resumo do mês chegou no seu e-mail.', 'relatorio'); end if;
+  return ok;
+end $$;
+revoke execute on function public.enviar_relatorio(date) from public, anon;
+grant execute on function public.enviar_relatorio(date) to authenticated;
+
+-- Rotina diária (9h): cobrança de pendências e, no dia 1º, o relatório do mês anterior.
+create or replace function public.rotina_diaria() returns void
+language plpgsql security definer set search_path = public as $$
+declare c public.app_config; este_mes date := date_trunc('month', public.agora_local())::date;
+begin
+  begin perform public.cobrar_pendentes(); exception when others then null; end;
+  select * into c from public.app_config where id = 1;
+  if c.relatorio_mensal and extract(day from public.agora_local()) <= 3 and (c.ultimo_relatorio is null or c.ultimo_relatorio < este_mes) then
+    if public.enviar_relatorio((este_mes - interval '1 month')::date) then
+      update public.app_config set ultimo_relatorio = este_mes where id = 1;
+    end if;
+  end if;
+end $$;
+revoke execute on function public.rotina_diaria() from public, anon, authenticated;
+
+do $$
+begin
+  if exists (select 1 from pg_extension where extname = 'pg_cron') then
+    perform cron.unschedule(jobid) from cron.job where jobname = 'rotina-diaria-consultorio';
+    perform cron.schedule('rotina-diaria-consultorio', '0 12 * * *', 'select public.rotina_diaria()');
+  end if;
+exception when others then raise notice 'Não foi possível agendar a rotina diária: ative pg_cron em Database > Extensions e rode de novo.';
+end $$;
+
+-- ---------- Agenda do consultório no Google Agenda (link secreto, só leitura) ----------
+create or replace function public.ics_txt(t text) returns text language sql immutable as $$
+  select replace(replace(replace(replace(replace(coalesce(t, ''), '\', '\\'), ';', '\;'), ',', '\,'), E'\r', ''), E'\n', '\n')
+$$;
+create or replace function public.ics_utc(d date, h int) returns text language sql immutable as $$
+  select to_char(((d + make_time(h, 0, 0)) at time zone 'America/Sao_Paulo') at time zone 'UTC', 'YYYYMMDD"T"HH24MISS"Z"')
+$$;
+create or replace function public.ics_fold(l text) returns text language plpgsql immutable as $$
+declare o text := ''; begin
+  while length(l) > 70 loop o := o || left(l, 70) || E'\r\n '; l := substr(l, 71); end loop;
+  return o || l || E'\r\n';
+end $$;
+
+create or replace function public.agenda_ics(p_token text) returns text
+language plpgsql stable security definer set search_path = public as $$
+declare c public.app_config; r record; o text; stamp text := to_char(now() at time zone 'UTC', 'YYYYMMDD"T"HH24MISS"Z"');
+begin
+  select * into c from public.app_config where id = 1;
+  if c.agenda_token is null or p_token is null or length(p_token) < 20 or p_token <> c.agenda_token then raise exception 'TOKEN_INVALIDO'; end if;
+  o := E'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Consultorio Thalia Santiago//Reservas//PT\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\n'
+    || public.ics_fold('X-WR-CALNAME:' || public.ics_txt('Consultório · reservas'))
+    || E'X-WR-TIMEZONE:America/Sao_Paulo\r\nREFRESH-INTERVAL;VALUE=DURATION:PT1H\r\nX-PUBLISHED-TTL:PT1H\r\n';
+  for r in
+    select * from public.bookings where status = 'ativo' and date between public.agora_local()::date - 60 and public.agora_local()::date + 180 order by date, h_from
+  loop
+    o := o || E'BEGIN:VEVENT\r\n' || 'UID:' || r.id || E'@consultorio-thalia\r\n' || 'DTSTAMP:' || stamp || E'\r\n'
+      || 'DTSTART:' || public.ics_utc(r.date, r.h_from) || E'\r\n' || 'DTEND:' || public.ics_utc(r.date, r.h_to) || E'\r\n'
+      || public.ics_fold('SUMMARY:' || public.ics_txt(case when r.origem = 'bloqueio' then 'Bloqueado · ' || r.nome else r.nome || ' · ' || (r.h_to - r.h_from) || 'h' end))
+      || public.ics_fold('DESCRIPTION:' || public.ics_txt(case when r.origem = 'bloqueio' then 'Horário bloqueado no painel.' else
+           concat_ws(E'\n', 'WhatsApp: ' || r.tel, 'CRO: ' || r.cro, 'Pedido especial: ' || r.pedido,
+             case when r.valor is not null then 'Valor: ' || public.brl(r.valor) || case when r.pago then ' (pago)' else ' (em aberto)' end end) end))
+      || public.ics_fold('LOCATION:' || public.ics_txt(c.endereco))
+      || E'END:VEVENT\r\n';
+  end loop;
+  return o || E'END:VCALENDAR\r\n';
+end $$;
+grant execute on function public.agenda_ics(text) to anon, authenticated;
+
+create or replace function public.gerar_token_agenda() returns text
+language plpgsql security definer set search_path = public as $$
+declare t text := replace(gen_random_uuid()::text || gen_random_uuid()::text, '-', '');
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  update public.app_config set agenda_token = t where id = 1;
+  return t;
+end $$;
+revoke execute on function public.gerar_token_agenda() from public, anon;
+grant execute on function public.gerar_token_agenda() to authenticated;
+
+-- ---------- Aprovação de cadastros: conta nova só reserva depois que a Dra. Thalia liberar ----------
+do $$
+begin
+  if not exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'dentists' and column_name = 'status') then
+    alter table public.dentists add column status text;
+    update public.dentists set status = 'liberado' where status is null;  -- quem já tinha conta continua com acesso
+    alter table public.dentists alter column status set not null;
+  end if;
+end $$;
+alter table public.dentists alter column status set default 'pendente';
+alter table public.dentists add column if not exists status_em timestamptz;
+alter table public.dentists drop constraint if exists dentists_status_ok;
+alter table public.dentists add constraint dentists_status_ok check (status in ('pendente', 'liberado', 'bloqueado'));
+
+create or replace function public.dentista_liberado() returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (select 1 from public.dentists where id = auth.uid() and status = 'liberado')
+$$;
+grant execute on function public.dentista_liberado() to anon, authenticated;
+
+-- Só a administradora muda o status (o próprio dentista não consegue se liberar).
+create or replace function public.proteger_dentista() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if tg_op = 'INSERT' then
+    if not public.is_admin() then new.status := 'pendente'; end if;
+    return new;
+  end if;
+  if not (coalesce(current_setting('app.bypass', true), '') = 'on' or public.is_admin()) then
+    new.status := old.status; new.status_em := old.status_em;
+  elsif new.status is distinct from old.status then
+    new.status_em := now();
+  end if;
+  return new;
+end $$;
+drop trigger if exists proteger_dentista on public.dentists;
+create trigger proteger_dentista before insert or update on public.dentists for each row execute function public.proteger_dentista();
+
+-- Lista de espera e avisos de problema só para contas liberadas.
+drop policy if exists "espera: entrar" on public.espera;
+create policy "espera: entrar" on public.espera for insert with check (dentist_id = auth.uid() and public.dentista_liberado());
+drop policy if exists "problemas: enviar" on public.problemas;
+create policy "problemas: enviar" on public.problemas for insert with check (dentist_id = auth.uid() and public.dentista_liberado());
+
+-- Liberar, bloquear ou voltar para pendente (painel da Dra. Thalia).
+create or replace function public.definir_status_dentista(p_id uuid, p_status text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  if p_status not in ('pendente', 'liberado', 'bloqueado') then raise exception 'DADOS_INVALIDOS'; end if;
+  perform set_config('app.bypass', 'on', true);
+  update public.dentists set status = p_status where id = p_id;
+  if not found then raise exception 'DENTISTA_NAO_ENCONTRADO'; end if;
+end $$;
+revoke execute on function public.definir_status_dentista(uuid, text) from public, anon;
+grant execute on function public.definir_status_dentista(uuid, text) to authenticated;
+
+-- Avisos: cadastro novo (para a Dra. Thalia) e acesso liberado (para o dentista).
+create or replace function public.aviso_cadastro() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare c public.app_config;
+begin
+  select * into c from public.app_config where id = 1;
+  if tg_op = 'INSERT' and new.status = 'pendente' then
+    perform public.push_admins('Novo cadastro · ' || new.nome, coalesce(new.cro || ' · ', '') || new.whatsapp || '. Toque para liberar ou bloquear o acesso.', 'cadastro-' || new.id);
+    perform public.enviar_email(c.email_admin, 'Dra. Thalia', 'Novo cadastro para liberar · ' || new.nome,
+      '<p>Um novo dentista se cadastrou e está aguardando a sua liberação:</p>'
+      || '<p style="font-size:17px"><b>' || public.esc_html(new.nome) || '</b></p><p>'
+      || coalesce('CRO: ' || public.esc_html(new.cro) || '<br>', '') || 'WhatsApp: ' || public.esc_html(new.whatsapp)
+      || coalesce('<br>E-mail: ' || public.esc_html(new.email), '') || coalesce('<br>Especialidade: ' || public.esc_html(new.especialidade), '') || '</p>'
+      || '<p>Até você liberar, ele não consegue reservar.</p>'
+      || coalesce('<p><a href="' || c.site_url || '/#admin" style="display:inline-block;background:#590117;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none">Liberar ou bloquear no painel</a></p>', ''));
+  elsif tg_op = 'UPDATE' and new.status = 'liberado' and old.status is distinct from 'liberado' then
+    perform public.enviar_email(new.email, new.nome, 'Seu acesso ao consultório foi liberado',
+      '<p>Olá, ' || public.esc_html(split_part(new.nome, ' ', 1)) || '!</p><p>A Dra. Thalia liberou o seu acesso. Você já pode reservar o consultório pela sua área.</p>'
+      || coalesce('<p><a href="' || c.site_url || '/#dentista" style="display:inline-block;background:#590117;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none">Reservar horário</a></p>', ''));
+    perform public.push_para(array[new.id], 'Acesso liberado', 'A Dra. Thalia liberou seu acesso. Você já pode reservar o consultório.', './#dentista', 'liberado');
+  end if;
+  return new;
+exception when others then return new;
+end $$;
+drop trigger if exists aviso_cadastro on public.dentists;
+create trigger aviso_cadastro after insert or update of status on public.dentists for each row execute function public.aviso_cadastro();
+
+
+-- Pergunta frequente atualizada para o novo jeito de reservar (só troca se o texto nunca foi editado).
+update public.faq set resposta = 'Crie sua conta na Área do dentista. Assim que a Dra. Thalia liberar o seu acesso (você recebe um e-mail), escolha o dia e as horas livres e confirme. O horário fica bloqueado para você na hora.'
+where pergunta = 'Como faço para reservar?' and resposta = 'Toque em "Agendar horário", informe seus dados, escolha o dia e as horas livres e confirme. O horário fica bloqueado para você na hora.';
 
 -- ---------- Arquivos: fotos do consultório (públicas) e comprovantes (privados) ----------
 do $$
