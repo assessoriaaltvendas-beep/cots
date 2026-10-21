@@ -6,7 +6,7 @@
 <title>Consultório Thalia Santiago · Reservas</title>
 <meta name="description" content="Aluguel por hora do consultório odontológico da Dra. Thalia Santiago no Centro de Ipatinga/MG.">
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
 <style>
 /* Clean e branco: barra superior com logo, hero em duas colunas (texto + horários livres), faixa de informações, passos do agendamento em folha única. Vinho e dourado só em detalhes. */
 :root{
@@ -15,8 +15,8 @@
   --gold:#9b7a35; --gold-soft:#f6efe1;
   --app-bg:#f8f4f4; --band:#590117; --band-ink:#e2c682;
   --busy:#a3979a; --busy-soft:#f4f0f0; --past:#f7f4f4; --danger:#a3302a; --wa:#1f7a4d; --ok:#1f6b45; --ok-soft:#e5f2ea;
-  --font-display:"Cormorant Garamond",Georgia,serif;
-  --font-body:"Jost",system-ui,sans-serif;
+  --font-display:"Lora",Georgia,serif;
+  --font-body:"Inter",system-ui,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -24,7 +24,7 @@ img{max-width:100%}
 html{-webkit-text-size-adjust:100%}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--font-body);padding:0;margin:0}
-.wrap{max-width:1132px;margin:0 auto;display:grid;gap:32px;padding-block:0 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{display:block;padding:0}
 h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance;line-height:1.1;font-weight:600;color:var(--ink)}
 h2{font-size:clamp(1.7rem,3.4vw,2.2rem)}
 .eyebrow{margin:0;font:500 .74rem var(--font-body);text-transform:uppercase;letter-spacing:.18em;color:var(--gold)}
@@ -33,7 +33,7 @@ a{color:inherit}
 input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
 
 /* barra superior */
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px;border-bottom:1px solid var(--line)}
+.top{display:block}
 .top .logo{display:block;background:none;border:0;padding:0}
 .top .logo img{display:block;width:132px;height:auto}
 .top nav{display:flex;align-items:center;gap:22px}
@@ -429,6 +429,208 @@ details.rd[open] summary{margin-bottom:10px}
 .mini-row.top{align-items:flex-start}
 .foot-admin{display:flex;justify-content:center;padding-top:8px}
 @media (max-width:820px){.side button{font-size:.62rem;letter-spacing:-.01em}}
+
+/* ---------- página inicial (versão 2) ---------- */
+.in{width:100%;max-width:1248px;margin-inline:auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+@media (max-width:560px){.in{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.hide-md{}
+@media (max-width:860px){.hide-md{display:none!important}}
+@media (max-width:480px){.hide-sm{display:none!important}}
+.mode{margin-top:16px}
+
+.topbar{background:var(--band);color:#f1dfb0;font-size:.8rem}
+.topbar .in{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:42px}
+.tb-l{display:flex;gap:26px;min-width:0}
+.tb-l > span,.tb-r{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.tb-r{color:#f1dfb0;text-decoration:none;white-space:nowrap}
+.tb-r:hover{color:#fff}
+.topbar svg.i{width:15px;height:15px;color:#d9bb6f}
+
+.top{border-bottom:1px solid var(--line);background:#fff}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:88px}
+.top .logo img{width:140px}
+.mainnav{display:flex;gap:30px}
+.top .t{font-size:.94rem;color:var(--muted);text-decoration:none}
+.top .t:hover{color:var(--accent)}
+.top-r{display:flex;align-items:center;gap:22px}
+@media (max-width:960px){.mainnav{display:none}}
+@media (max-width:560px){.top-r .t{display:none}.top .logo img{width:110px}.top-in{min-height:74px}}
+
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:16px 30px;font:500 .95rem var(--font-body);letter-spacing:.02em;text-decoration:none;box-shadow:0 14px 30px -14px rgba(89,1,23,.6)}
+.cta.line{background:#fff;color:var(--ink);border:1px solid #e2d2d3;box-shadow:none}
+.cta.line:hover{border-color:var(--gold)}
+.cta.sm{padding:12px 22px;justify-self:start}
+.cta.gold{background:#d9bb6f;color:#3f0010;box-shadow:none}
+.cta.ghostw{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);box-shadow:none}
+
+.hero2{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--soft),#fff 92%);padding-block:clamp(40px,6vw,72px) clamp(56px,7vw,96px)}
+.deco{position:absolute;color:var(--gold);opacity:.16;fill:none;stroke:currentColor;stroke-width:.4;stroke-linejoin:round;pointer-events:none}
+.dots{position:absolute;width:220px;height:220px;background-image:radial-gradient(var(--gold) 1.4px,transparent 1.6px);background-size:18px 18px;opacity:.26;pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:56px;align-items:center}
+.hero-text{display:grid;gap:0;min-width:0}
+.hero2 h1{font-size:clamp(2.4rem,5vw,3.9rem);line-height:1.08;letter-spacing:-.01em;margin:18px 0 22px}
+.hero2 h1 em{color:var(--accent);font-style:italic;font-weight:500}
+.hero2 .lead,.about .lead{font-size:1.1rem;color:var(--muted);max-width:34em;margin:0}
+.btns{display:flex;flex-wrap:wrap;gap:14px;margin:32px 0}
+.trust{display:flex;flex-wrap:wrap;gap:18px 28px}
+.trust > div{display:flex;gap:12px;align-items:center;font-size:.86rem;color:var(--muted);line-height:1.35}
+.trust .ic{width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;color:var(--gold);flex:none}
+.trust b{display:block;color:var(--ink);font-weight:600;font-size:.9rem}
+
+.stage{position:relative;height:590px;min-width:0}
+.agenda{position:absolute;right:10px;top:58px;width:min(470px,100%);background:var(--band);border-radius:26px;padding:30px 30px 26px;color:#f6e9ea;box-shadow:0 40px 80px -40px rgba(63,0,16,.75);display:grid;gap:4px}
+.agenda .eyebrow{color:#d9bb6f}
+.agenda h3{color:#fff;font-size:1.7rem;margin:6px 0 8px}
+#free-list{display:grid;gap:18px}
+.agenda .free-day{display:grid;gap:10px}
+.agenda .lbl{display:flex;justify-content:space-between;gap:8px;font-size:.85rem}
+.agenda .lbl b{font-weight:600;text-transform:capitalize}
+.agenda .lbl span{color:#d9b9be}
+.agenda .slots{display:flex;flex-wrap:wrap;gap:7px}
+.agenda .slot{border:1px solid rgba(217,187,111,.45);background:transparent;color:#fff;border-radius:999px;padding:6px 12px;font:400 .82rem var(--font-body);font-variant-numeric:tabular-nums}
+button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
+.agenda .slot.off{color:#b88a92;text-decoration:line-through;border-color:rgba(255,255,255,.12)}
+.agenda .hint{color:#d9b9be}
+.agenda-foot{margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid rgba(255,255,255,.14);padding-top:16px;font-size:.86rem;color:#d9b9be}
+.go-gold{background:none;border:0;padding:0;color:#d9bb6f;font:600 .9rem var(--font-body)}
+.float{position:absolute;background:#fff;border-radius:18px;box-shadow:0 24px 50px -24px rgba(36,22,26,.35);border:1px solid var(--line);display:flex;gap:12px;align-items:center;font-size:.86rem;color:var(--ink)}
+.float b{font-weight:600}
+.float .ic{width:36px;height:36px;border-radius:10px;background:var(--gold-soft);color:var(--gold);display:grid;place-items:center;flex:none}
+.float .ic.wine{background:var(--accent-soft);color:var(--accent)}
+.f1{left:0;bottom:0;padding:16px 20px}
+.f1 .ok{width:44px;height:44px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;flex:none}
+.f1 small{display:block;color:var(--muted);font-size:.78rem}
+.f2{left:40px;top:0;padding:14px 18px}
+.f3{right:-14px;bottom:10px;padding:14px 18px;line-height:1.35}
+@media (max-width:1100px){.f3{right:0}}
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:minmax(0,1fr);gap:36px}
+  .stage{height:auto}
+  .agenda{position:relative;right:auto;top:auto;width:100%}
+  .float{display:none}
+}
+@media (max-width:560px){.agenda{padding:24px 20px 22px;border-radius:22px}.btns .cta{flex:1 1 100%}}
+
+.band{background:var(--band);color:#fff}
+.band-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.band-grid > div{display:flex;gap:16px;align-items:center;padding:32px 26px;border-left:1px solid rgba(255,255,255,.12);min-width:0}
+.band-grid > div:first-child{border-left:0;padding-left:0}
+.band .ic{width:52px;height:52px;border-radius:50%;border:1px solid rgba(217,187,111,.5);display:grid;place-items:center;color:#d9bb6f;flex:none}
+.band b{display:block;font:600 1.15rem var(--font-display);color:#fff}
+.band-grid span{font-size:.85rem;color:#dcc3c7}
+@media (max-width:960px){.band-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.band-grid > div:nth-child(3){border-left:0;padding-left:0}.band-grid > div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}.band-grid > div{padding:24px 18px}}
+@media (max-width:560px){.band-grid{grid-template-columns:minmax(0,1fr)}.band-grid > div{border-left:0;padding:20px 0}.band-grid > div + div{border-top:1px solid rgba(255,255,255,.12)}}
+
+.sec{padding-block:clamp(56px,8vw,96px)}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 40px;margin-bottom:40px}
+.sec-head h2{font-size:clamp(1.9rem,3.6vw,2.6rem);margin-top:10px;max-width:16em}
+.sec-head p{max-width:420px;color:var(--muted);margin:0}
+.steps4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;position:relative}
+.steps4::before{content:"";position:absolute;left:60px;right:60px;top:53px;border-top:1px dashed #d8c7a3}
+.step4{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px 24px 28px}
+.step4 .n{width:56px;height:56px;border-radius:50%;background:var(--band);color:#d9bb6f;display:grid;place-items:center;font:italic 600 1.5rem var(--font-display);margin-bottom:22px;box-shadow:0 0 0 8px #fff}
+.step4 h3{font-size:1.35rem;margin-bottom:8px}
+.step4 p{color:var(--muted);font-size:.92rem;margin:0}
+.tag4{display:inline-block;margin-top:16px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-soft);padding:5px 10px;border-radius:999px;font-weight:600}
+@media (max-width:960px){.steps4{grid-template-columns:repeat(2,minmax(0,1fr))}.steps4::before{display:none}}
+@media (max-width:560px){.steps4{grid-template-columns:minmax(0,1fr)}}
+
+.about{position:relative;overflow:hidden;background:var(--soft)}
+.about-grid{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:64px;align-items:center}
+.brandpanel{position:relative;background:var(--band);border-radius:30px;height:470px;display:grid;place-items:center;overflow:hidden}
+.brandpanel img{width:min(330px,70%);height:auto;position:relative}
+.brandpanel .ring{position:absolute;border:1px solid rgba(217,187,111,.25);border-radius:50%}
+.brandpanel .sig{position:absolute;left:30px;right:30px;bottom:24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;color:#e4cfa0;font-size:.85rem;border-top:1px solid rgba(217,187,111,.25);padding-top:16px}
+.about h2{font-size:clamp(1.9rem,3.6vw,2.6rem);margin:10px 0 18px}
+.about .lead{margin-bottom:30px}
+.feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.feat > div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;gap:14px;min-width:0}
+.feat .ic{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.feat b{display:block;font-weight:600;font-size:.95rem;margin-bottom:2px}
+.feat span span{font-size:.85rem;color:var(--muted);line-height:1.45;display:block}
+@media (max-width:960px){.about-grid{grid-template-columns:minmax(0,1fr);gap:36px}.brandpanel{height:340px}}
+@media (max-width:560px){.feat{grid-template-columns:minmax(0,1fr)}.brandpanel{height:330px;border-radius:24px;place-items:start center;padding-top:56px}.brandpanel img{width:68%}.brandpanel .sig{left:20px;right:20px;bottom:18px;font-size:.78rem}}
+
+.loc{padding-bottom:0}
+.loc-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#fff}
+.map{position:relative;height:380px;background:#f3eeec;overflow:hidden}
+.map .st{position:absolute;background:#fff;border:1px solid #e9dfdd}
+.map .st.main{border-color:#e3d3a8}
+.map .blk{position:absolute;background:#ebe3e0;border-radius:6px}
+.map .blk.green{background:#e3ebde}
+.mlabel{position:absolute;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#a99a9d}
+.pin{position:absolute;left:52%;top:40%;transform:translate(-50%,-100%);display:grid;justify-items:center}
+.bub{background:var(--band);color:#fff;border-radius:14px;padding:10px 14px;font-size:.8rem;white-space:nowrap;box-shadow:0 14px 30px -14px rgba(89,1,23,.7);display:grid}
+.bub b{color:#d9bb6f;font:600 .95rem var(--font-display)}
+.pdot{width:18px;height:18px;border-radius:50%;background:#d9bb6f;border:4px solid var(--band);margin-top:8px;box-shadow:0 0 0 10px rgba(89,1,23,.12)}
+.loc-info{padding:clamp(28px,4vw,40px);display:grid;gap:20px;align-content:center}
+.loc-info h2{font-size:clamp(1.7rem,3vw,2.1rem)}
+.row2{display:flex;gap:14px;align-items:flex-start}
+.row2 .ic{width:42px;height:42px;border-radius:50%;background:var(--gold-soft);color:var(--gold);display:grid;place-items:center;flex:none}
+.row2 > span:last-child{display:grid}
+.row2 b{font-weight:600}
+.row2 span span,.row2 a{color:var(--muted);font-size:.92rem}
+.row2 a{color:var(--accent);text-underline-offset:3px}
+@media (max-width:960px){.loc-grid{grid-template-columns:minmax(0,1fr)}.map{height:280px}}
+
+.cta-band{position:relative;margin-top:clamp(56px,8vw,96px);background:var(--band);border-radius:32px;padding:clamp(32px,5vw,56px) clamp(24px,5vw,64px);display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;overflow:hidden;color:#fff}
+.cta-band .deco{color:#d9bb6f;opacity:.14}
+.cta-t,.cta-b{position:relative}
+.cta-b{display:flex;flex-wrap:wrap;gap:12px}
+.cta-band h2{color:#fff;font-size:clamp(1.8rem,3.4vw,2.5rem);max-width:14em}
+.cta-band h2 em{color:#d9bb6f;font-weight:500}
+.cta-band p{color:#dcc3c7;margin:12px 0 0}
+
+.site-foot{margin-top:clamp(56px,8vw,96px);background:#3f0010;color:#d9c2c6;padding-block:56px 28px}
+.fcols{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.1)}
+.site-foot img{width:160px;height:auto}
+.site-foot p{margin:16px 0 0;font-size:.9rem;max-width:260px}
+.site-foot h4{margin:0 0 14px;font:600 .72rem var(--font-body);letter-spacing:.18em;text-transform:uppercase;color:#d9bb6f}
+.site-foot ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:.9rem}
+.site-foot a,.flink{color:#d9c2c6;text-decoration:none;background:none;border:0;padding:0;font:inherit}
+.site-foot a:hover,.flink:hover{color:#fff}
+.fbase{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;font-size:.8rem;padding-top:22px;color:#a88d92}
+@media (max-width:860px){.fcols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.fcols{grid-template-columns:minmax(0,1fr)}}
+
+/* telas de reserva e login dentro da largura do site */
+#view-public > .sheet,#site > .login{width:min(1200px,calc(100% - 32px));margin:40px auto 0}
+#site > .login{max-width:460px}
+
+/* ---------- painéis: elementos do novo visual ---------- */
+.app-top{background-image:radial-gradient(rgba(217,187,111,.16) 1px,transparent 1.3px);background-size:16px 16px}
+.card,.kpi{box-shadow:0 18px 40px -34px rgba(89,1,23,.45)}
+.card{border-radius:22px}
+.greet{position:relative;overflow:hidden;background:linear-gradient(120deg,var(--accent-soft),var(--soft) 65%);border:1px solid var(--line);border-radius:24px;padding:26px 28px}
+.greet > *{position:relative}
+.greet .gdeco{position:absolute;color:var(--gold);opacity:.18;fill:none;stroke:currentColor;stroke-width:.4;pointer-events:none}
+.greet .gdots{position:absolute;right:150px;top:-30px;width:160px;height:120px;background-image:radial-gradient(var(--gold) 1.3px,transparent 1.5px);background-size:16px 16px;opacity:.25;pointer-events:none}
+@media (max-width:560px){.greet{padding:22px 20px}.greet .gdots{display:none}}
+.kpis.band-k{background:var(--band);border-radius:22px;gap:0;overflow:hidden;box-shadow:0 30px 60px -40px rgba(63,0,16,.8)}
+.kpis.band-k .kpi{background:transparent;border:0;border-left:1px solid rgba(255,255,255,.12);border-radius:0;box-shadow:none;color:#fff;padding:22px}
+.kpis.band-k .kpi:first-child{border-left:0}
+.kpis.band-k .kpi .ico{background:transparent;border:1px solid rgba(217,187,111,.5);color:#d9bb6f;border-radius:50%}
+.kpis.band-k .kpi b{color:#fff}
+.kpis.band-k .kpi small{color:#dcc3c7}
+@media (max-width:1100px){.kpis.band-k .kpi:nth-child(3){border-left:0}.kpis.band-k .kpi:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}}
+@media (max-width:340px){.kpis.band-k .kpi{border-left:0}.kpis.band-k .kpi + .kpi{border-top:1px solid rgba(255,255,255,.12)}}
+.next-card{background:var(--band);border-color:transparent;color:#f6e9ea;position:relative;overflow:hidden;box-shadow:0 30px 60px -40px rgba(63,0,16,.8)}
+.next-card > *{position:relative}
+.next-card .eyebrow{color:#d9bb6f}
+.next-card .when-big{color:#fff}
+.next-card .hint{color:#dcc3c7}
+.next-card a{color:#d9bb6f}
+.next-card .chip-s{background:#d9bb6f;color:#3f0010}
+.next-card .primary{background:#d9bb6f;color:#3f0010}
+.next-card .ghost{border-color:rgba(255,255,255,.3);color:#fff}
+.next-card .empty{color:#dcc3c7}
+.next-card .empty svg{color:#d9bb6f}
+.next-card .ncdeco{position:absolute;right:-40px;bottom:-50px;width:200px;color:#d9bb6f;opacity:.14;fill:none;stroke:currentColor;stroke-width:.4;pointer-events:none}
+.side a.side-help{display:grid;gap:4px;margin:0 2px 10px;padding:16px;border-radius:16px;background:var(--band);color:#f6e9ea;text-decoration:none;font-size:.82rem;position:relative;overflow:hidden}
+.side-help b{color:#fff;font:600 1.05rem var(--font-display)}
+.side-help span:last-child{color:#d9bb6f;font-weight:500}
+@media (max-width:820px){.side a.side-help{display:none}}
 </style>
 </head>
 <body>
@@ -438,59 +640,141 @@ details.rd[open] summary{margin-bottom:10px}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="tooth" d="M12 3c-2.5 0-4 1-5.500 1C4.500 4 3 5.500 3 8c0 3 1.500 4.500 2 7 .5 3 1 6 2.500 6 1.700 0 1.500-4 2.500-6 .4-.9 1-1.500 2-1.500s1.600.6 2 1.500c1 2 .8 6 2.500 6 1.500 0 2-3 2.500-6 .5-2.500 2-4 2-7 0-2.500-1.500-4-3.500-4C16 4 14.500 3 12 3z"/></defs></svg>
 
 <div class="wrap" id="site">
-  <header class="top">
+  <div class="topbar"><div class="in">
+    <span class="tb-l">
+      <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span data-fill="endcidade"></span></span>
+      <span class="hide-md"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span data-fill="hor"></span></span>
+    </span>
+    <a class="tb-r" data-href="wa" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/></svg><span data-fill="tel"></span><span class="hide-sm">&nbsp;· WhatsApp</span></a>
+  </div></div>
+
+  <header class="top"><div class="in top-in">
     <a class="logo" href="#" aria-label="Início"><img src="assets/logo-vinho.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254"></a>
-    <nav>
-      <a class="t" href="#sobre">O consultório</a>
+    <nav class="mainnav">
       <a class="t" href="#como">Como funciona</a>
+      <a class="t" href="#sobre">O consultório</a>
+      <a class="t" href="#local">Localização</a>
+    </nav>
+    <div class="top-r">
       <a class="t" href="#admin">Administrador</a>
       <a class="pill" href="#dentista">Área do dentista</a>
-    </nav>
-  </header>
-  <h1 hidden id="clinic-name">Consultório Odontológico</h1>
-  <div class="mode" id="mode" hidden></div>
+    </div>
+  </div></header>
+  <div class="in"><h1 hidden id="clinic-name">Consultório Odontológico</h1><div class="mode" id="mode" hidden></div></div>
 
-  <div id="view-public" style="display:grid;gap:40px">
+  <div id="view-public">
 
     <!-- 0. INÍCIO -->
-    <div id="v-welcome" style="display:grid;gap:56px">
-      <section class="hero" aria-label="Apresentação">
-        <div class="hero-text">
-          <p class="eyebrow">Aluguel de consultório · Ipatinga/MG</p>
-          <h1 class="hero-title">Um consultório pronto para <em>o seu atendimento</em></h1>
-          <p class="lead">Reserve por hora o consultório da Dra. Thalia Santiago, no Centro de Ipatinga. Escolha o dia, veja os horários livres e confirme em poucos passos.</p>
-          <div class="btns">
-            <button class="cta" id="start" type="button">Agendamento de horário</button>
-            <a class="cta line" href="#sobre" style="text-decoration:none">Ver informações</a>
+    <div id="v-welcome">
+      <section class="hero2" aria-label="Apresentação">
+        <svg class="deco" style="left:-70px;top:50px;width:260px" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
+        <svg class="deco" style="left:40px;bottom:-40px;width:150px;transform:rotate(-14deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
+        <svg class="deco" style="right:-80px;top:140px;width:280px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
+        <svg class="deco" style="right:70px;top:20px;width:90px;transform:rotate(-8deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
+        <span class="dots" style="left:24px;top:330px" aria-hidden="true"></span>
+        <span class="dots" style="right:20px;bottom:40px" aria-hidden="true"></span>
+        <div class="in hero-grid">
+          <div class="hero-text">
+            <p class="eyebrow">Aluguel de consultório odontológico · Ipatinga/MG</p>
+            <h1 class="hero-title">Um consultório pronto para <em>o seu atendimento</em></h1>
+            <p class="lead">Reserve por hora o consultório da Dra. Thalia Santiago, no Centro de Ipatinga. Escolha o dia, veja os horários livres e confirme em poucos passos.</p>
+            <div class="btns">
+              <button class="cta" id="start" type="button">Agendar horário <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <a class="cta line" href="#sobre">Conhecer o consultório</a>
+            </div>
+            <div class="trust">
+              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Reserva por hora</b>A partir de 1 hora</span></div>
+              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg></span><span><b>Agenda ao vivo</b>Só horários livres</span></div>
+              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/></svg></span><span><b>Confirmação</b>Pelo WhatsApp</span></div>
+            </div>
           </div>
-          <div class="facts"><span>Reserva por hora</span><span id="fact-hours"></span><span>Confirmação pelo WhatsApp</span></div>
-        </div>
-        <aside class="free" aria-label="Próximos horários livres">
-          <svg class="ghost-tooth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".45" stroke-linejoin="round" aria-hidden="true"><use href="#tooth"/></svg>
-          <p class="eyebrow" style="position:relative">Agenda ao vivo</p>
-          <h3>Próximos horários livres</h3>
-          <div id="free-list" style="display:grid;gap:18px;position:relative"></div>
-          <p class="note">Horários riscados já estão reservados por outro profissional.</p>
-        </aside>
-      </section>
-
-      <section class="info" id="sobre" aria-label="Informações do consultório">
-        <div><p class="eyebrow">Responsável</p><b id="i-dentista"></b><span id="i-dentista-sub"></span></div>
-        <div><p class="eyebrow">Endereço</p><b id="i-end"></b><a class="go" id="i-map" target="_blank" rel="noopener" hidden>Abrir no Google Maps</a></div>
-        <div><p class="eyebrow">Contato</p><b id="i-tel"></b><a class="go" id="i-wa" target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
-        <div><p class="eyebrow">Funcionamento</p><b id="i-hor"></b><span>Reservas de 1 hora em diante</span></div>
-      </section>
-
-      <section class="how" id="como" aria-label="Como funciona">
-        <p class="eyebrow">Como funciona</p>
-        <div class="how-grid">
-          <div><i>1</i><b>Seus dados</b><span>Nome, CRO e WhatsApp para contato.</span></div>
-          <div><i>2</i><b>Primeira vez?</b><span>Conte se já alugou o consultório antes.</span></div>
-          <div><i>3</i><b>Data e horário</b><span>Veja só os horários livres e marque o intervalo.</span></div>
-          <div><i>4</i><b>Confirmação</b><span>O horário fica reservado até o fim do seu atendimento.</span></div>
+          <div class="stage">
+            <aside class="agenda" aria-label="Próximos horários livres">
+              <p class="eyebrow">Agenda ao vivo</p>
+              <h3>Próximos horários livres</h3>
+              <div id="free-list"></div>
+              <div class="agenda-foot"><span>Toque num horário livre para começar</span><button type="button" class="go-gold" data-start>Reservar →</button></div>
+            </aside>
+            <div class="float f2" aria-hidden="true"><span class="ic"><svg class="i" viewBox="0 0 24 24"><use href="#tooth"/></svg></span><span><b>Sala odontológica</b> no Centro</span></div>
+            <div class="float f1" aria-hidden="true"><span class="ok"><svg class="i" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span><small>Reservou, está garantido</small><b>Horário bloqueado na hora</b></span></div>
+            <div class="float f3" aria-hidden="true"><span class="ic wine"><svg class="i" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0113.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 01-13.7 5.6L4 15.5M4 20v-4.5h4.5"/></svg></span><span><b>Repetir toda semana</b><br>no mesmo horário</span></div>
+          </div>
         </div>
       </section>
-      <div class="foot-admin"><a class="link" href="#admin">Área do administrador</a></div>
+
+      <section class="band" aria-label="Destaques"><div class="in band-grid">
+        <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Reserva por hora</b>Use só o tempo que precisar</span></div>
+        <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg></span><span><b data-fill="dias"></b><span data-fill="horas"></span></span></div>
+        <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><b>Centro de Ipatinga</b><span data-fill="end"></span></span></div>
+        <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0113.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 01-13.7 5.6L4 15.5M4 20v-4.5h4.5"/></svg></span><span><b>Reserva semanal</b>Repita o mesmo horário</span></div>
+      </div></section>
+
+      <section class="sec" id="como" aria-label="Como funciona"><div class="in">
+        <div class="sec-head"><div><p class="eyebrow">Como funciona</p><h2>Do cadastro à reserva em quatro passos</h2></div><p>Tudo pelo site, sem ligação. Os horários ocupados aparecem riscados e voltam a ficar livres quando uma reserva é cancelada.</p></div>
+        <div class="steps4">
+          <div class="step4"><span class="n">1</span><h3>Seus dados</h3><p>Nome, CRO e WhatsApp para contato.</p><span class="tag4">1 minuto</span></div>
+          <div class="step4"><span class="n">2</span><h3>Primeira vez?</h3><p>Conte se já alugou o consultório antes.</p><span class="tag4">Um toque</span></div>
+          <div class="step4"><span class="n">3</span><h3>Data e horário</h3><p>Veja só os horários livres e marque o intervalo.</p><span class="tag4">Agenda ao vivo</span></div>
+          <div class="step4"><span class="n">4</span><h3>Confirmação</h3><p>O horário fica reservado até o fim do seu atendimento.</p><span class="tag4">Via WhatsApp</span></div>
+        </div>
+      </div></section>
+
+      <section class="sec about" id="sobre" aria-label="O consultório">
+        <svg class="deco" style="right:-60px;top:-40px;width:230px" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
+        <div class="in about-grid">
+          <div class="brandpanel">
+            <span class="ring" style="width:420px;height:420px" aria-hidden="true"></span><span class="ring" style="width:560px;height:560px" aria-hidden="true"></span>
+            <img src="assets/logo-dourado.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254">
+            <div class="sig"><span data-fill="dentista"></span><span>Cirurgiã-dentista responsável</span></div>
+          </div>
+          <div class="about-text">
+            <p class="eyebrow">O consultório</p>
+            <h2>Estrutura pronta para você atender com tranquilidade</h2>
+            <p class="lead">Um espaço odontológico no Centro de Ipatinga para profissionais que querem atender sem o custo de manter um consultório próprio.</p>
+            <div class="feat">
+              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg></span><span><b>Sala odontológica</b><span>Reserve só as horas que precisar</span></span></div>
+              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1-3.5 3.8-5 7-5s6 1.5 7 5"/></svg></span><span><b>Área do dentista</b><span>Reservas, histórico e comprovantes</span></span></div>
+              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.5 9a4 4 0 010 6"/></svg></span><span><b>Avisos do consultório</b><span>Recados da Dra. Thalia no seu painel</span></span></div>
+              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Lista de espera</b><span>Aviso quando um horário vagar</span></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec loc" id="local" aria-label="Localização"><div class="in"><div class="loc-grid">
+        <div class="map" role="img" aria-label="Ilustração da localização na Rua Juiz de Fora, Centro">
+          <span class="blk" style="left:30px;top:30px;width:180px;height:110px"></span>
+          <span class="blk green" style="left:250px;top:30px;width:150px;height:110px"></span>
+          <span class="blk" style="left:440px;top:30px;width:260px;height:110px"></span>
+          <span class="blk" style="left:30px;top:200px;width:120px;height:150px"></span>
+          <span class="blk" style="left:190px;top:200px;width:210px;height:70px"></span>
+          <span class="blk" style="left:190px;top:300px;width:210px;height:60px"></span>
+          <span class="blk green" style="left:440px;top:200px;width:120px;height:150px"></span>
+          <span class="blk" style="left:600px;top:200px;width:100px;height:150px"></span>
+          <span class="st main" style="left:0;right:0;top:158px;height:26px"></span>
+          <span class="st" style="left:220px;top:0;bottom:0;width:16px"></span>
+          <span class="st" style="left:415px;top:0;bottom:0;width:16px"></span>
+          <span class="st" style="left:572px;top:0;bottom:0;width:16px"></span>
+          <span class="mlabel" style="left:40px;top:164px">Rua Juiz de Fora</span>
+          <span class="mlabel" style="left:470px;top:250px">Centro</span>
+          <span class="pin"><span class="bub"><b>Consultório Thalia Santiago</b><span data-fill="end"></span></span><span class="pdot"></span></span>
+        </div>
+        <div class="loc-info">
+          <p class="eyebrow">Localização</p>
+          <h2>No Centro de Ipatinga</h2>
+          <div class="row2"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><b data-fill="end"></b><span data-fill="cidade"></span></span></div>
+          <div class="row2"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/></svg></span><span><b data-fill="tel"></b><a data-href="wa" target="_blank" rel="noopener">Chamar no WhatsApp</a></span></div>
+          <div class="row2"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b data-fill="dias"></b><span data-fill="horas"></span></span></div>
+          <a class="cta line sm" data-href="map" target="_blank" rel="noopener">Abrir no Google Maps</a>
+        </div>
+      </div></div></section>
+
+      <div class="in"><div class="cta-band">
+        <svg class="deco" style="right:280px;top:-60px;width:220px" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
+        <svg class="deco" style="right:-30px;bottom:-70px;width:200px;transform:rotate(14deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
+        <div class="cta-t"><h2>Pronto para reservar <em>o seu horário?</em></h2><p>Veja a agenda ao vivo e confirme em poucos passos.</p></div>
+        <div class="cta-b"><button class="cta gold" type="button" data-start>Agendar horário</button><a class="cta ghostw" href="#dentista">Área do dentista</a></div>
+      </div></div>
     </div>
 
     <!-- 1. DADOS -->
@@ -637,6 +921,15 @@ details.rd[open] summary{margin-bottom:10px}
     <div id="dl-fb" role="status"></div>
     <a class="link" href="#">Voltar ao início</a>
   </section>
+  <footer class="site-foot"><div class="in">
+    <div class="fcols">
+      <div><img src="assets/logo-dourado.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254"><p>Aluguel por hora de consultório odontológico no Centro de Ipatinga/MG.</p></div>
+      <div><h4>Consultório</h4><ul><li data-fill="end"></li><li data-fill="cidade"></li><li data-fill="hor"></li></ul></div>
+      <div><h4>Contato</h4><ul><li data-fill="tel"></li><li><a data-href="wa" target="_blank" rel="noopener">WhatsApp</a></li><li data-fill="dentista"></li></ul></div>
+      <div><h4>Acesso</h4><ul><li><button type="button" class="flink" data-start>Agendar horário</button></li><li><a href="#dentista">Área do dentista</a></li><li><a href="#admin">Administrador</a></li></ul></div>
+    </div>
+    <div class="fbase"><span>© <span data-fill="ano"></span> Consultório Odontológico Thalia Santiago</span><span><span data-fill="end"></span> · <span data-fill="cidade"></span></span></div>
+  </div></footer>
 </div>
 
 <!-- PAINEL DO ADMINISTRADOR -->
@@ -664,11 +957,11 @@ details.rd[open] summary{margin-bottom:10px}
     <main class="app-main">
       <!-- RESUMO -->
       <section id="t-resumo" class="tab" aria-label="Resumo">
-        <div class="page-head">
+        <div class="page-head greet"><svg class="gdeco" style="right:-30px;top:-46px;width:170px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span class="gdots" aria-hidden="true"></span>
           <div><p class="eyebrow" id="r-date"></p><h2>Olá, Dra. Thalia</h2></div>
           <button class="primary" type="button" data-tab="agenda">Abrir agenda</button>
         </div>
-        <div class="kpis" id="r-kpis"></div>
+        <div class="kpis band-k" id="r-kpis"></div>
         <section class="alert" id="due" hidden aria-label="Confirmações a enviar"></section>
         <div class="grid2">
           <div class="card"><div class="card-head"><h3>Ocupação da semana</h3><span class="hint" id="r-week"></span></div><div class="bars" id="r-bars"></div></div>
@@ -802,6 +1095,7 @@ details.rd[open] summary{margin-bottom:10px}
       <button type="button" data-ctab="consultorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-2.500 0-4 1-5.500 1C4.500 4 3 5.500 3 8c0 3 1.500 4.500 2 7 .5 3 1 6 2.500 6 1.700 0 1.500-4 2.500-6 .4-.9 1-1.500 2-1.500s1.600.6 2 1.500c1 2 .8 6 2.500 6 1.500 0 2-3 2.500-6 .5-2.500 2-4 2-7 0-2.500-1.500-4-3.500-4C16 4 14.500 3 12 3z"/></svg>Consultório</button>
       <button type="button" data-ctab="perfil"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Perfil</button>
       <div class="side-foot">
+        <a class="side-help" data-href="wa" target="_blank" rel="noopener"><span>Dúvidas sobre sua reserva?</span><b>Fale com a Dra. Thalia</b><span>Abrir WhatsApp →</span></a>
         <a href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5.500H4.500V6H10"/></svg>Ver site</a>
         <button type="button" data-dlogout><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4.500h4.500v15H14M10 8l-4 4 4 4M6 12h9"/></svg>Sair</button>
       </div>
@@ -810,7 +1104,7 @@ details.rd[open] summary{margin-bottom:10px}
     <main class="app-main">
       <!-- INÍCIO -->
       <section id="c-inicio" class="tab" aria-label="Início">
-        <div class="page-head">
+        <div class="page-head greet"><svg class="gdeco" style="right:-30px;top:-46px;width:170px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span class="gdots" aria-hidden="true"></span>
           <div><p class="eyebrow" id="ci-date"></p><h2 id="ci-hello">Olá!</h2></div>
           <button class="primary" type="button" data-ctab="nova">Reservar horário</button>
         </div>
@@ -1099,20 +1393,22 @@ const STATUS_LABEL = { agendado: 'Agendado', andamento: 'Em atendimento', conclu
 
 /* ---------- Boas-vindas ---------- */
 function fillInfo() {
-  $('i-dentista').textContent = CFG.dentista;
-  $('i-dentista-sub').textContent = 'Cirurgiã-dentista responsável pelo consultório';
-  $('i-end').textContent = CFG.endereco;
-  const m = $('i-map'); m.hidden = false;
-  m.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CFG.mapa);
-  m.insertAdjacentHTML('beforebegin', '');
-  const city = document.createElement('span'); city.textContent = CFG.cidade; m.before(city);
-  $('i-tel').textContent = CFG.telefone;
-  $('i-wa').href = `https://wa.me/${CFG.whatsapp}`;
-  const dias = CFG.diasAbertos;
-  const a = DIAS_LONGOS[dias[0]].replace('-feira', ''), z = DIAS_LONGOS[dias[dias.length - 1]].replace('-feira', '');
-  $('i-hor').textContent = `${a[0].toUpperCase() + a.slice(1)} a ${z}, ${CFG.abre}h às ${CFG.fecha}h`;
-  $('fact-hours').textContent = `${a[0].toUpperCase() + a.slice(1)} a ${z}, ${CFG.abre}h às ${CFG.fecha}h`;
+  const d = CFG.diasAbertos, a = DIAS_LONGOS[d[0]].replace('-feira', ''), z = DIAS_LONGOS[d[d.length - 1]].replace('-feira', '');
+  const dias = `${a[0].toUpperCase() + a.slice(1)} a ${z}`;
+  const V = { end: CFG.endereco, cidade: CFG.cidade, endcidade: `${CFG.endereco} · ${CFG.cidade}`, tel: CFG.telefone, dentista: CFG.dentista,
+    dias, horas: `Das ${CFG.abre}h às ${CFG.fecha}h`, hor: `${dias}, ${CFG.abre}h às ${CFG.fecha}h`, ano: String(new Date().getFullYear()) };
+  document.querySelectorAll('[data-fill]').forEach(el => { const v = V[el.dataset.fill]; if (v != null) el.textContent = v; });
+  const H = { wa: `https://wa.me/${CFG.whatsapp}`, map: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CFG.mapa) };
+  document.querySelectorAll('[data-href]').forEach(el => { if (H[el.dataset.href]) el.href = H[el.dataset.href]; });
 }
+document.addEventListener('click', e => {
+  if (!e.target.closest || !$('view-admin').hidden || !$('view-dent').hidden) return;
+  const sl = e.target.closest('[data-slot]'), st = e.target.closest('[data-start]');
+  if (!sl && !st) return;
+  if (sl) { const [dd, h] = sl.dataset.slot.split('|'); S.date = dd; S.start = S.end = +h; S.month = new Date(+dd.slice(0, 4), +dd.slice(5, 7) - 1, 1); }
+  try { history.replaceState(null, '', location.pathname); } catch (_) {}
+  S.step = 'data'; route();
+});
 
 /* Painel "Próximos horários livres" da página inicial: próximos 2 dias abertos com hora livre. */
 function renderFree() {
@@ -1130,7 +1426,7 @@ function renderFree() {
   box.replaceChildren(...out.map(o => {
     const el = document.createElement('div'); el.className = 'free-day';
     const nome = o.s === t ? 'Hoje' : o.s === iso(tm) ? 'Amanhã' : DIAS_LONGOS[o.d.getDay()];
-    el.innerHTML = `<div class="lbl"><b>${nome}, ${br(o.s).slice(0, 5)}</b><span>${o.free} ${o.free === 1 ? 'hora livre' : 'horas livres'}</span></div><div class="slots">${o.hrs.map(x => `<span class="slot${x.busy ? ' off' : ''}">${hh(x.h)}</span>`).join('')}</div>`;
+    el.innerHTML = `<div class="lbl"><b>${nome}, ${br(o.s).slice(0, 5)}</b><span>${o.free} ${o.free === 1 ? 'hora livre' : 'horas livres'}</span></div><div class="slots">${o.hrs.map(x => x.busy ? `<span class="slot off" aria-label="${hh(x.h)} ocupado">${hh(x.h)}</span>` : `<button type="button" class="slot" data-slot="${o.s}|${x.h}" aria-label="Reservar ${nome} às ${hh(x.h)}">${hh(x.h)}</button>`).join('')}</div>`;
     return el;
   }));
   if (!out.length) box.innerHTML = '<p class="hint">Sem horários livres nas próximas semanas.</p>';
@@ -2056,14 +2352,14 @@ function renderCInicio(al) {
   const up = mine.filter(x => x.st === 'agendado' || x.st === 'andamento').sort(asc), nx = up[0];
   if (nx) {
     const d = new Date(nx.b.date + 'T12:00');
-    $('ci-next').innerHTML = `<p class="eyebrow">Sua próxima reserva</p><span class="chip-s">${countdown(nx.b, nx.st)}</span>
+    $('ci-next').innerHTML = `<svg class="ncdeco" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><p class="eyebrow">Sua próxima reserva</p><span class="chip-s">${countdown(nx.b, nx.st)}</span>
       <span class="when-big">${DIAS_LONGOS[d.getDay()]}, ${d.getDate()} de ${MESES[d.getMonth()]}</span>
       <span class="time">${hh(nx.b.from)} às ${hh(nx.b.to)} · ${hoursOf(nx.b)}h</span>
       <span class="hint">${esc(CFG.endereco)}, ${esc(CFG.cidade)} · <a href="${mapUrl()}" target="_blank" rel="noopener">Ver no mapa</a></span>
       ${nx.b.pedido ? `<span class="hint">Pedido especial: ${esc(nx.b.pedido)}</span>` : ''}
       <div class="dr-actions"><button class="primary" type="button" data-cbk="${esc(nx.b.id)}">Ver detalhes</button>${up.length > 1 ? `<button class="ghost" type="button" data-ctab="reservas">Mais ${plural(up.length - 1, 'reserva', 'reservas')}</button>` : ''}</div>`;
   } else {
-    $('ci-next').innerHTML = `<p class="eyebrow">Sua próxima reserva</p>${emptyBox('Você não tem reservas marcadas.')}<div class="dr-actions" style="justify-content:center"><button class="primary" type="button" data-ctab="nova">Reservar horário</button></div>`;
+    $('ci-next').innerHTML = `<svg class="ncdeco" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><p class="eyebrow">Sua próxima reserva</p>${emptyBox('Você não tem reservas marcadas.')}<div class="dr-actions" style="justify-content:center"><button class="primary" type="button" data-ctab="nova">Reservar horário</button></div>`;
   }
   const ok = mine.filter(isActive), done = ok.filter(x => x.st === 'concluido'), horas = sumH(done), ym = iso(now).slice(0, 7);
   const desde = d0 && d0.criadoEm ? d0.criadoEm.slice(0, 10) : (mine.length ? [...mine].sort(asc)[0].b.date : iso(now));
