@@ -94,15 +94,40 @@ Para ligar as notificações (uma vez só):
 
 Avisos enviados: lembrete 2 horas antes, vaga aberta, reserva feita ou cancelada pela Dra. Thalia, pagamento confirmado e avisos do mural (dentistas); nova reserva, cancelamento, comprovante e problema relatado (Dra. Thalia).
 
+## Liberação de cadastros
+Quem cria conta na Área do dentista fica **aguardando liberação** e não consegue reservar.
+A Dra. Thalia recebe notificação e e-mail a cada cadastro novo e, no painel (Resumo ou aba **Dentistas**), toca em **Liberar** ou **Bloquear**.
+Quando a conta é liberada, o dentista recebe um e-mail. Reservar exige conta liberada; a página inicial continua mostrando os horários livres.
+
+## Ajustes pelo painel (sem mexer em código)
+No painel, aba **Ajustes**:
+- **Valores:** valor da hora, preço por dia da semana, preço por faixa de horário e pacotes de horas. Cada reserva guarda o valor de quando foi feita; dá para ajustar uma reserva específica nos detalhes dela.
+- **Funcionamento:** dias abertos, horário de abrir e fechar, prazo de cancelamento.
+- **Datas fechadas:** feriados, férias e manutenção.
+- **Pagamentos e Pix:** chave Pix (gera QR Code e Pix copia e cola com o valor de cada reserva), lembrete automático de pagamento e bloqueio de novas reservas para quem está com pagamento atrasado.
+- **Regras, checklist e espaço:** textos que aparecem para os dentistas.
+- **Relatório mensal e Google Agenda:** resumo do mês por e-mail todo dia 1º e link para ver as reservas no Google Agenda.
+
+O recibo do mês em PDF fica em Financeiro (dentista) e nos detalhes de cada dentista (painel).
+
 ## Fotos e perguntas frequentes
 No painel, aba **Site**: envie fotos do consultório (aparecem na galeria da página inicial) e escreva as perguntas frequentes.
 
+## Domínio próprio (opcional)
+1. Compre o domínio em **registro.br** (um .com.br custa em torno de R$ 40 por ano).
+2. Na Vercel, abra o projeto → **Settings → Domains → Add** e digite o domínio (ex.: `consultoriothalia.com.br`). Adicione também a versão com `www`.
+3. A Vercel mostra os registros de DNS a criar. No registro.br, abra o domínio → **DNS** → **Editar zona** e crie exatamente os registros que a Vercel mostrar (normalmente um registro **A** para o domínio e um **CNAME** para o `www`). Em algumas horas o site abre no novo endereço.
+4. No Supabase, em **Authentication → URL Configuration**, troque o **Site URL** e o **Redirect URL** para o novo endereço.
+5. No painel do site, em **Ajustes → E-mails automáticos**, toque em **Salvar** de novo (assim os links dos e-mails usam o novo endereço).
+6. Me peça para trocar o endereço da prévia de link (`og:url` e `og:image` no começo do `index.html`).
+
 ## Como mudar algo depois
-- **Textos, regras de uso, checklist, valor da hora, preços por dia ou horário (`precos`), chave Pix, pacotes, Instagram, informações do espaço:** ficam no começo do código dentro de `index.html`, no bloco `const CFG = { ... }`. Edite pelo GitHub (lápis) e a Vercel publica sozinha em 1 minuto.
-- **Horário de funcionamento, dias abertos e prazo de cancelamento:** mude no `CFG` do `index.html` **e também** no começo do `supabase/schema.sql` (funções `cfg_abre`, `cfg_fecha`, `cfg_dias`, `cfg_prazo_cancelamento`). Depois rode o `schema.sql` de novo no SQL Editor.
+- **Valores, horários, Pix, regras e checklist:** pelo painel, em Ajustes (veja acima).
+- **Textos fixos do site, endereço, telefone e Instagram:** no começo do `index.html`, no bloco `const CFG = { ... }`. Edite pelo GitHub (lápis) e a Vercel publica sozinha em 1 minuto.
 
 ## Segurança
 - Cada dentista vê somente as próprias reservas, avisos e lista de espera.
 - Visitantes sem conta só veem quais horários estão ocupados, nunca nomes ou telefones.
 - Duas pessoas não conseguem reservar a mesma hora: o banco recusa a segunda reserva.
-- Dentistas não conseguem marcar reservas como pagas nem cancelar depois do prazo; só a administradora.
+- Dentistas não conseguem marcar reservas como pagas, mudar o valor, nem cancelar depois do prazo; só a administradora.
+- Contas novas só reservam depois de liberadas pela administradora; o dentista não consegue se liberar sozinho.

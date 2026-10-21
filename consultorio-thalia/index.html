@@ -729,6 +729,152 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
 .push-cfg .rules button{margin-top:6px;display:inline-flex}
 @media (max-width:560px){.app-row{grid-template-columns:auto minmax(0,1fr)}.app-bt{grid-column:2;justify-content:flex-start}}
 @media (display-mode:standalone){html,body{overscroll-behavior-y:none}body{-webkit-tap-highlight-color:transparent}}
+
+/* ---------- v5: ajustes, Pix, avaliações, liberação de cadastros ---------- */
+.accs{display:grid;gap:10px}
+.acc{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.acc>summary{list-style:none;display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:"";width:9px;height:9px;border-right:1.6px solid var(--muted);border-bottom:1.6px solid var(--muted);transform:rotate(45deg);margin:0 4px 4px auto;flex:none}
+.acc[open]>summary::after{transform:rotate(225deg);margin-bottom:-4px}
+.acc>summary:hover{background:var(--soft)}
+.acc-ic{width:40px;height:40px;border-radius:12px;background:var(--gold-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.acc-ic svg.i{width:20px;height:20px}
+.acc-t{display:grid;gap:2px;min-width:0}
+.acc-t b{font:600 1.05rem var(--font-display)}
+.acc-t small{color:var(--muted);font-size:.84rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc-b{padding:4px 18px 20px;display:grid;gap:14px;border-top:1px solid var(--line);padding-top:18px}
+.acc-b .card-head{justify-content:flex-start}
+.ajf{display:grid;gap:16px}
+.ajf .w-sm{max-width:280px}
+.ajsec{display:grid;gap:8px}
+.ajsec>b{font-weight:600}
+.ajsec>small{color:var(--muted);font-size:.85rem;margin-top:-4px}
+.ajdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.ajdays label{font-size:.8rem;text-transform:capitalize}
+.ajdays input{padding:9px 8px;text-align:center}
+@media (max-width:560px){.ajdays{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.ajrows{display:grid;gap:8px}
+.ajrows:empty{display:none}
+.ajrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:end;background:var(--soft);border-radius:12px;padding:10px}
+.ajrow[data-row="pac"]{grid-template-columns:repeat(2,minmax(0,1fr)) auto}
+.ajrow label{font-size:.8rem}
+.ajrow .icon-btn{margin-bottom:4px}
+.chips2{display:flex;flex-wrap:wrap;gap:8px}
+.chip2{position:relative}
+.chip2 input{position:absolute;opacity:0;width:1px;height:1px}
+.chip2 span{display:inline-block;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);text-transform:capitalize;font-size:.9rem;cursor:pointer}
+.chip2 input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip2 input:focus-visible+span{outline:2px solid var(--gold);outline-offset:2px}
+label.sw{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;font-size:.95rem}
+label.sw input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
+label.sw span{display:grid;gap:3px}
+label.sw small{color:var(--muted);font-size:.84rem}
+.ag-link{display:flex;gap:8px;align-items:center}
+.ag-link input{flex:1;min-width:0;font-size:.82rem}
+.val-edit{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 10px;align-items:end;background:var(--soft);border-radius:14px;padding:12px 14px}
+.val-edit .hint{grid-column:1/-1;margin:0}
+.val-edit:has(.hint:empty) .hint{display:none}
+/* Pix */
+.pixbox{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:16px}
+.pixbox.sm{gap:14px;padding:12px}
+.pix-qr svg{display:block;border-radius:10px;background:#fff;width:176px;height:176px;max-width:40vw;height:auto;aspect-ratio:1}
+.pixbox.sm .pix-qr svg{width:150px}
+.pix-tx{display:grid;gap:6px;min-width:0}
+.pix-v{font:600 1.5rem var(--font-display);color:var(--accent)}
+.pix-tx small{color:var(--muted);font-size:.85rem;line-height:1.45}
+.pix-fb:empty{display:none}
+@media (max-width:520px){.pixbox{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}.pix-qr svg{max-width:60vw}.pix-tx .dr-actions{justify-content:center}}
+/* Avaliações */
+.aval{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
+.aval-m{display:grid;justify-items:center;gap:4px;padding-right:22px;border-right:1px solid var(--line)}
+.aval-m b{font:600 2.6rem/1 var(--font-display);color:var(--accent)}
+.aval-m small{color:var(--muted);font-size:.8rem}
+.aval-st{display:flex;gap:3px}
+.aval-st i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.aval-st i.on{background:var(--gold)}
+.aval-d{display:grid;gap:5px}
+.aval-d div{display:grid;grid-template-columns:12px minmax(0,1fr) 22px;gap:8px;align-items:center;font-size:.8rem;color:var(--muted)}
+.aval-d i{height:7px;border-radius:99px;background:var(--soft);overflow:hidden;display:block}
+.aval-d u{display:block;height:100%;background:var(--gold);border-radius:99px}
+.aval-c{display:grid;gap:10px}
+.aval-c blockquote{margin:0;padding:10px 14px;border-left:3px solid var(--gold);background:var(--soft);border-radius:0 12px 12px 0}
+.aval-c p{margin:0 0 4px;font-style:italic}
+.aval-c small{color:var(--muted);font-size:.78rem}
+/* Liberação de cadastros */
+.pend-list{display:grid;gap:12px}
+.pend-list>p{margin:0}
+.pend-rows{display:grid;gap:8px}
+.pend-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--surface);border-radius:14px;padding:10px 12px}
+.pend-row .txt{display:grid;min-width:0}
+.pend-row .txt small{color:var(--muted);font-size:.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pend-row .acts{display:flex;gap:6px}
+@media (max-width:560px){.pend-row{grid-template-columns:auto minmax(0,1fr)}.pend-row .acts{grid-column:1/-1}}
+.acesso-box .dr-actions{margin-top:4px}
+button.sure{background:var(--busy,#b4232f)!important;border-color:var(--busy,#b4232f)!important;color:#fff!important}
+.side.off{display:none!important}
+.wait-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:34px 28px;display:grid;gap:12px;justify-items:start;max-width:640px}
+.wait-card h2{margin:0;font-size:clamp(1.5rem,4vw,2rem)}
+.wait-card p{margin:0;color:var(--muted)}
+.wait-ic{width:52px;height:52px;border-radius:16px;background:var(--gold-soft);color:var(--accent);display:grid;place-items:center}
+.wait-ic svg.i{width:26px;height:26px}
+#c-wait{display:grid;gap:16px}
+#c-wait[hidden]{display:none}
+
+/* ---------- celular mais limpo ---------- */
+.kpi{container-type:inline-size}
+.kpi b{font-size:clamp(1.35rem,13cqi,2rem);white-space:nowrap;overflow-wrap:normal}
+.page-head>.tb{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.a-range{white-space:nowrap}
+#f-csv{white-space:nowrap;order:9}
+.more-al{border:1px dashed var(--line);border-radius:16px;padding:0 14px}
+.more-al>summary{cursor:pointer;padding:12px 0;font-size:.9rem;font-weight:500;color:var(--accent);list-style:none}
+.more-al>summary::-webkit-details-marker{display:none}
+.more-al[open]>summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+.more-al>.stack{padding-bottom:12px}
+.more-btn,.more-sheet{display:none}
+@media (max-width:820px){
+  #view-admin .side>[data-tab="mural"],#view-admin .side>[data-tab="site"],#view-admin .side>[data-tab="ajustes"],
+  #view-dent .side>[data-ctab="consultorio"],#view-dent .side>[data-ctab="perfil"]{display:none}
+  .side .more-btn{display:flex;flex-direction:column;gap:3px;font-size:.68rem;padding:6px 2px;align-items:center;text-align:center;flex:1 1 0;min-width:0;border:0;background:transparent;color:var(--ink);border-radius:12px;font-family:var(--font-body)}
+  .side .more-btn[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:500}
+  .more-sheet:not([hidden]){display:grid;position:absolute;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(100% + 8px);min-width:210px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:8px;box-shadow:0 18px 40px -16px rgba(40,10,18,.45);z-index:25}
+  .more-sheet>*{display:flex!important;flex-direction:row!important;align-items:center;gap:12px!important;padding:12px 14px!important;font-size:.95rem!important;text-align:left!important;border-radius:12px;color:var(--ink);text-decoration:none;background:transparent;border:0;width:100%;font-family:var(--font-body)}
+  .more-sheet>[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
+  .tab{gap:14px}
+  .card{padding:16px 16px 18px}
+  .page-head.greet{padding:18px 18px 20px}
+  .page-head.greet h2{font-size:1.65rem}
+  .page-head.greet .gdeco{display:none}
+  .kpi .ico{display:none}
+  .kpis{gap:10px}
+  .kpis:not(.band-k){grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi{padding:14px 14px 16px}
+  .kpis.band-k{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpis.band-k .kpi{padding:14px 16px}
+  .kpis.band-k .kpi small{display:none}
+  .bar-track{height:84px}
+  .quick{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px}
+  .quick>*{padding:12px}
+  .quick span{display:none}
+  .empty{padding:14px;gap:6px}
+  .empty svg{width:26px;height:26px}
+  .acc>summary{padding:14px}
+  .acc-b{padding:14px}
+}
+@media (max-width:760px){
+  .trust{display:none!important}
+  .steps4{grid-template-columns:minmax(0,1fr);gap:10px}
+  .steps4::before{display:none}
+  .step4{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 14px;padding:14px 16px;border-radius:16px;align-items:center}
+  .step4 .n{grid-row:span 2;width:40px;height:40px;font-size:1.1rem;margin:0;box-shadow:none}
+  .step4 h3{font-size:1.05rem;margin:0}
+  .step4 p{font-size:.86rem}
+  .step4 .tag4{display:none}
+  .brandpanel{display:none}
+  .map{height:220px}
+  .site-foot .fcols>div:nth-child(2),.site-foot .fcols>div:nth-child(4){display:none}
+}
 </style>
 </head>
 <body>
@@ -811,10 +957,10 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
       <section class="sec" id="como" aria-label="Como funciona"><div class="in">
         <div class="sec-head"><div><p class="eyebrow">Como funciona</p><h2>Do cadastro à reserva em quatro passos</h2></div><p>Tudo pelo site, sem ligação. Os horários ocupados aparecem riscados e voltam a ficar livres quando uma reserva é cancelada.</p></div>
         <div class="steps4">
-          <div class="step4"><span class="n">1</span><h3>Seus dados</h3><p>Nome, CRO e WhatsApp para contato.</p><span class="tag4">1 minuto</span></div>
-          <div class="step4"><span class="n">2</span><h3>Primeira vez?</h3><p>Conte se já alugou o consultório antes.</p><span class="tag4">Um toque</span></div>
+          <div class="step4"><span class="n">1</span><h3>Crie sua conta</h3><p>Nome, CRO, WhatsApp e e-mail.</p><span class="tag4">1 minuto</span></div>
+          <div class="step4"><span class="n">2</span><h3>Liberação</h3><p>A Dra. Thalia confere o cadastro e libera seu acesso.</p><span class="tag4">Aviso por e-mail</span></div>
           <div class="step4"><span class="n">3</span><h3>Data e horário</h3><p>Veja só os horários livres e marque o intervalo.</p><span class="tag4">Agenda ao vivo</span></div>
-          <div class="step4"><span class="n">4</span><h3>Confirmação</h3><p>O horário fica reservado até o fim do seu atendimento.</p><span class="tag4">Via WhatsApp</span></div>
+          <div class="step4"><span class="n">4</span><h3>Confirmação</h3><p>O horário fica reservado até o fim do seu atendimento.</p><span class="tag4">Lembrete no celular</span></div>
         </div>
       </div></section>
 
@@ -1047,6 +1193,8 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
       <button type="button" data-tab="mural"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.500 9a4 4 0 010 6M19 6.500a7.500 7.500 0 010 11"/></svg>Mural<span class="badge" id="mural-badge" hidden>0</span></button>
       <button type="button" data-tab="site"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8"/></svg>Site</button>
       <button type="button" data-tab="ajustes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3.500v2.200M12 18.300v2.200M3.500 12h2.200M18.300 12h2.200M6 6l1.600 1.600M16.400 16.400L18 18M6 18l1.600-1.600M16.400 7.600L18 6"/></svg>Ajustes</button>
+      <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
+      <div class="more-sheet" hidden><button type="button" data-tab="mural">Mural</button><button type="button" data-tab="site">Site</button><button type="button" data-tab="ajustes">Ajustes</button><a href="#">Ver site</a><button type="button" data-logout>Sair</button></div>
       <div class="side-foot">
         <a href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5.500H4.500V6H10"/></svg>Ver site</a>
         <button type="button" data-logout><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4.500h4.500v15H14M10 8l-4 4 4 4M6 12h9"/></svg>Sair</button>
@@ -1068,6 +1216,7 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
           <div class="card"><div class="card-head"><h3>Financeiro do mês</h3><button class="link" type="button" data-tab="financeiro">Ver detalhes</button></div><div class="kv" id="r-fin"></div></div>
           <div class="card"><div class="card-head"><h3>Próximas reservas</h3><button class="link" type="button" data-tab="agenda">Ver agenda</button></div><div class="mini" id="r-next"></div></div>
           <div class="card"><div class="card-head"><h3>Dentistas recentes</h3><button class="link" type="button" data-tab="dentistas">Ver todos</button></div><div class="mini" id="r-dent"></div></div>
+          <div class="card" id="r-aval"></div>
         </div>
       </section>
 
@@ -1077,6 +1226,7 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
           <div><p class="eyebrow" id="d-count"></p><h2>Dentistas</h2></div>
           <div class="search"><input id="d-q" type="search" placeholder="Buscar por nome, CRO ou telefone" aria-label="Buscar dentista"></div>
         </div>
+        <div class="stack" id="d-pend"></div>
         <div class="card">
           <div class="tbl-wrap"><table class="tbl">
             <thead><tr><th>Nome</th><th class="hide-sm">CRO</th><th class="hide-sm">WhatsApp</th><th class="num">Reservas</th><th class="num hide-sm">Horas</th><th>Última</th><th class="hide-sm">Próxima</th></tr></thead>
@@ -1174,20 +1324,17 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
 
       <!-- AJUSTES -->
       <section id="t-ajustes" class="tab" hidden aria-label="Ajustes">
-        <div class="page-head"><h2>Ajustes</h2></div>
-        <div class="card">
-          <div class="card-head"><h3>Aparência</h3></div>
-          <p class="hint">Escolha como o painel aparece para você neste aparelho. A página de reservas continua clara.</p>
-          <div class="themes" role="radiogroup" aria-label="Tema do painel">
-            <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="claro"><span class="pv light"><u></u><i></i><em></em></span><b>Claro</b><small>Fundo branco, ideal durante o dia</small></button>
-            <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="escuro"><span class="pv dark"><u></u><i></i><em></em></span><b>Escuro</b><small>Fundo escuro, confortável à noite</small></button>
-            <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="auto"><span class="pv auto"><u></u><i></i><em></em></span><b>Automático</b><small>Segue o tema do seu aparelho</small></button>
-          </div>
-        </div>
-        <div class="card" id="app-a"></div>
-        <div class="card" id="aj-email">
-          <div class="card-head"><h3>E-mails automáticos</h3><span class="tag pend" id="em-status">Carregando</span></div>
-          <p class="hint">Confirmação de reserva e lembrete 2 horas antes para os dentistas, aviso de vaga aberta para a lista de espera, e um e-mail para você a cada reserva nova, cancelamento e problema relatado. Usa o plano gratuito do Brevo (até 300 e-mails por dia).</p>
+        <div class="page-head"><div><p class="eyebrow">Configurações do consultório</p><h2>Ajustes</h2></div></div>
+        <p class="msg err" id="aj-sql" hidden>Rode o arquivo schema.sql atualizado no Supabase (SQL Editor → New query → Run) para liberar estes ajustes.</p>
+        <div class="accs">
+        <details class="acc" data-acc="valores"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v17M16.5 7.5c-.6-1.4-2.2-2.3-4.5-2.3-2.6 0-4.3 1.3-4.3 3.2 0 4.6 9 2.4 9 7.2 0 1.9-1.9 3.3-4.7 3.3-2.4 0-4.2-1-4.9-2.7"/></svg></span><span class="acc-t"><b>Valores</b><small id="sum-valores"></small></span></summary><div class="acc-b" id="acc-valores"></div></details>
+        <details class="acc" data-acc="func"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="acc-t"><b>Funcionamento</b><small id="sum-func"></small></span></summary><div class="acc-b" id="acc-func"></div></details>
+        <details class="acc" data-acc="fechadas"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M9.5 13l5 5M14.5 13l-5 5"/></svg></span><span class="acc-t"><b>Datas fechadas</b><small id="sum-fechadas"></small></span></summary><div class="acc-b"><p class="hint">Feriados, férias ou manutenção: os horários bloqueados somem para os dentistas. Toque numa data para desbloquear.</p><div class="mini" id="fx-list"></div><div class="nav"><button type="button" class="primary sm" data-aj="bloquear">Fechar datas ou horários</button></div></div></details>
+        <details class="acc" data-acc="pag"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12.5" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span><span class="acc-t"><b>Pagamentos e Pix</b><small id="sum-pag"></small></span></summary><div class="acc-b" id="acc-pag"></div></details>
+        <details class="acc" data-acc="regras"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h10a1.5 1.5 0 011.5 1.5v14H7A1.5 1.5 0 015.5 18.5V6A1.5 1.5 0 017 4.5zM9 9h6M9 12.5h6M9 16h4"/></svg></span><span class="acc-t"><b>Regras, checklist e espaço</b><small id="sum-regras"></small></span></summary><div class="acc-b" id="acc-regras"></div></details>
+        <details class="acc" data-acc="rel"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span class="acc-t"><b>Relatório mensal e Google Agenda</b><small id="sum-rel"></small></span></summary><div class="acc-b" id="acc-rel"></div></details>
+        <details class="acc" data-acc="app"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span><span class="acc-t"><b>App no celular</b><small id="sum-app"></small></span></summary><div class="acc-b"><div id="app-a"></div></div></details>
+        <details class="acc" data-acc="email"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></span><span class="acc-t"><b>E-mails automáticos</b><small id="sum-email"></small></span></summary><div class="acc-b"><div id="aj-email"><div class="card-head"><span class="tag pend" id="em-status">Carregando</span></div><p class="hint" id="em-hint">Confirmação de reserva e lembrete 2 horas antes para os dentistas, aviso de vaga aberta para a lista de espera, e um e-mail para você a cada reserva nova, cancelamento e problema relatado. Usa o plano gratuito do Brevo (até 300 e-mails por dia).</p>
           <p class="msg err" id="em-ext" hidden>Ative as extensões <b>pg_net</b> e <b>pg_cron</b> no Supabase (Database → Extensions) e rode o arquivo schema.sql de novo. Sem elas, os e-mails não saem.</p>
           <form id="em-form" novalidate>
             <div class="form2">
@@ -1207,13 +1354,16 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
               <li>Salve e toque em “Enviar e-mail de teste”.</li>
             </ol>
           </details>
-        </div>
-        <div class="grid2">
-          <div class="card"><div class="card-head"><h3>Funcionamento</h3></div><div class="kv" id="aj-func"></div><p class="hint">Esses dados ficam na configuração do site.</p></div>
-          <div class="card"><div class="card-head"><h3>Conta</h3></div>
-            <div class="kv"><div><span>Administradora</span><span>Thalia Santiago</span></div><div><span>Acesso</span><span>Login e senha</span></div></div>
-            <div class="dr-actions"><a class="ghost" href="#" style="text-decoration:none">Ver site</a><button class="danger" type="button" data-logout>Sair do painel</button></div>
+        </div></div></details>
+        <details class="acc" data-acc="tema"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17A8.5 8.5 0 0012 3.5z" fill="currentColor"/></svg></span><span class="acc-t"><b>Aparência</b><small id="sum-tema"></small></span></summary><div class="acc-b"><p class="hint">Escolha como o painel aparece para você neste aparelho. A página de reservas continua clara.</p>
+          <div class="themes" role="radiogroup" aria-label="Tema do painel">
+            <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="claro"><span class="pv light"><u></u><i></i><em></em></span><b>Claro</b><small>Fundo branco, ideal durante o dia</small></button>
+            <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="escuro"><span class="pv dark"><u></u><i></i><em></em></span><b>Escuro</b><small>Fundo escuro, confortável à noite</small></button>
+            <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="auto"><span class="pv auto"><u></u><i></i><em></em></span><b>Automático</b><small>Segue o tema do seu aparelho</small></button>
           </div>
+        </div></details>
+        <details class="acc" data-acc="conta"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1-3.5 3.8-5 7-5s6 1.5 7 5"/></svg></span><span class="acc-t"><b>Conta</b><small id="sum-conta"></small></span></summary><div class="acc-b"><div class="kv"><div><span>Administradora</span><span>Thalia Santiago</span></div><div><span>Acesso</span><span>Login e senha</span></div></div>
+            <div class="dr-actions"><a class="ghost" href="#" style="text-decoration:none">Ver site</a><button class="danger" type="button" data-logout>Sair do painel</button></div></div></details>
         </div>
       </section>
     </main>
@@ -1243,6 +1393,8 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
       <button type="button" data-ctab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
       <button type="button" data-ctab="consultorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-2.500 0-4 1-5.500 1C4.500 4 3 5.500 3 8c0 3 1.500 4.500 2 7 .5 3 1 6 2.500 6 1.700 0 1.500-4 2.500-6 .4-.9 1-1.500 2-1.500s1.600.6 2 1.500c1 2 .8 6 2.500 6 1.500 0 2-3 2.500-6 .5-2.500 2-4 2-7 0-2.500-1.500-4-3.500-4C16 4 14.500 3 12 3z"/></svg>Consultório</button>
       <button type="button" data-ctab="perfil"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Perfil</button>
+      <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
+      <div class="more-sheet" hidden><button type="button" data-ctab="consultorio">O consultório</button><button type="button" data-ctab="perfil">Meu perfil</button><a href="#">Ver site</a><button type="button" data-dlogout>Sair</button></div>
       <div class="side-foot">
         <a class="side-help" data-href="wa" target="_blank" rel="noopener"><span>Dúvidas sobre sua reserva?</span><b>Fale com a Dra. Thalia</b><span>Abrir WhatsApp →</span></a>
         <a href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5.500H4.500V6H10"/></svg>Ver site</a>
@@ -1252,6 +1404,7 @@ svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
 
     <main class="app-main">
       <!-- INÍCIO -->
+      <section id="c-wait" class="tab" hidden aria-label="Aguardando liberação"></section>
       <section id="c-inicio" class="tab" aria-label="Início">
         <div class="page-head greet"><svg class="gdeco" style="right:-30px;top:-46px;width:170px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span class="gdots" aria-hidden="true"></span>
           <div><p class="eyebrow" id="ci-date"></p><h2 id="ci-hello">Olá!</h2></div>
@@ -1568,9 +1721,7 @@ document.addEventListener('click', e => {
   if (!e.target.closest || !$('view-admin').hidden || !$('view-dent').hidden) return;
   const sl = e.target.closest('[data-slot]'), st = e.target.closest('[data-start]');
   if (!sl && !st) return;
-  if (sl) { const [dd, h] = sl.dataset.slot.split('|'); S.date = dd; S.start = S.end = +h; S.month = new Date(+dd.slice(0, 4), +dd.slice(5, 7) - 1, 1); }
-  try { history.replaceState(null, '', location.pathname); } catch (_) {}
-  S.step = 'data'; route();
+  goReservar(sl ? sl.dataset.slot.split('|')[0] : null);
 });
 
 /* Painel "Próximos horários livres" da página inicial: próximos 2 dias abertos com hora livre. */
@@ -1610,7 +1761,7 @@ document.addEventListener('click', e => {
   const g = e.target.closest && e.target.closest('[data-go]');
   if (g) go(g.getAttribute('data-go'));
 });
-$('start').addEventListener('click', () => go('data'));
+$('start').addEventListener('click', () => goReservar());
 
 /* ---------- 1. Dados ---------- */
 function msgIn(el, kind, text) {
@@ -1906,6 +2057,9 @@ function renderAdmin() {
   const L = live();
   S.cache = { all: L.filter(x => x.b.origem !== 'bloqueio'), blocks: L.filter(x => x.b.origem === 'bloqueio' && x.st !== 'cancelado'), dents: null };
   document.querySelectorAll('.side [data-tab]').forEach(b => b.setAttribute('aria-current', b.dataset.tab === S.tab ? 'page' : 'false'));
+  { const pb = document.querySelector('#view-admin .side [data-tab="dentistas"]'), n = pendentes().length;
+    markMore();
+    if (pb) { let bd = pb.querySelector('.badge'); if (!bd) { bd = document.createElement('span'); bd.className = 'badge'; pb.appendChild(bd); } bd.hidden = !n; bd.textContent = n; } }
   TABS.forEach(([k]) => { $('t-' + k).hidden = k !== S.tab; });
   $('crumb').textContent = TABS.find(t => t[0] === S.tab)[1];
   const due = dueList(); const badge = $('due-badge');
@@ -1931,7 +2085,8 @@ function renderDue() {
   }));
 }
 function renderResumo() {
-  $('r-app').innerHTML = appTipHtml('a');
+  $('r-app').innerHTML = pendHtml() + appTipHtml('a');
+  $('r-aval').innerHTML = avaliacoesHtml();
   const all = S.cache.all, now = new Date(), t = iso(now), ym = t.slice(0, 7);
   $('r-date').textContent = `${DIAS_LONGOS[now.getDay()]}, ${now.getDate()} de ${MESES[now.getMonth()]} de ${now.getFullYear()}`;
   const hoje = all.filter(x => isActive(x) && x.b.date === t);
@@ -1974,13 +2129,14 @@ function renderResumo() {
 
 /* Dentistas */
 function renderDentistas() {
+  $('d-pend').innerHTML = pendHtml();
   const all = getDents();
   $('d-count').textContent = plural(all.length, 'dentista cadastrado', 'dentistas cadastrados');
   const q = $('d-q').value.trim().toLowerCase(), qd = q.replace(/\D/g, '');
   const list = all.filter(d => !q || d.nome.toLowerCase().includes(q) || d.cro.toLowerCase().includes(q) || (qd && dkey(d.tel).includes(qd)))
     .sort((a, b) => ultKey(b).localeCompare(ultKey(a)));
   $('d-body').innerHTML = list.map(d => `<tr data-dent="${esc(d.key)}" tabindex="0">
-    <td><span class="who2"><span class="avatar">${esc(initials(d.nome))}</span><b>${esc(d.nome)}</b></span></td>
+    <td><span class="who2"><span class="avatar">${esc(initials(d.nome))}</span><b>${esc(d.nome)}</b>${acessoTag(d)}</span></td>
     <td class="hide-sm">${esc(d.cro || '—')}</td>
     <td class="hide-sm">${esc(d.tel)}</td>
     <td class="num">${d.reservas}</td>
@@ -2107,17 +2263,11 @@ function applyTheme() {
 if (mqDark && mqDark.addEventListener) mqDark.addEventListener('change', applyTheme);
 function renderAjustes() {
   renderThemes();
-  const d = CFG.diasAbertos, a = DIAS_LONGOS[d[0]], z = DIAS_LONGOS[d[d.length - 1]];
-  $('aj-func').innerHTML = [
-    ['Dias', `${a[0].toUpperCase() + a.slice(1)} a ${z}`],
-    ['Horário', `${CFG.abre}h às ${CFG.fecha}h`],
-    ['Endereço', `${CFG.endereco}, ${CFG.cidade}`],
-    ['WhatsApp do consultório', CFG.telefone],
-    ['Valor da hora', precoTexto()]
-  ].map(([k, v]) => `<div><span>${k}</span><span>${esc(v)}</span></div>`).join('');
   if (!S.emLoaded) { S.emLoaded = true; loadEmailStatus(); }
-  const ah = appCardHtml('a'); if (S.appAH !== ah) { $('app-a').innerHTML = ah; S.appAH = ah; }
+  const ah = appCardHtml('a', true); if (S.appAH !== ah) { $('app-a').innerHTML = ah; S.appAH = ah; }
   if (!S.pushLoaded) { S.pushLoaded = true; loadPushStatus(); }
+  if (!S.ajLoaded) { S.ajLoaded = true; ajLoad(); }
+  ajSummaries();
 }
 document.querySelectorAll('.theme-opt').forEach(b => b.addEventListener('click', () => setTema(b.dataset.tema, b.dataset.scope || 'painel')));
 
@@ -2179,6 +2329,13 @@ function bookingDetail({ b, st }) {
     acts.appendChild(cv);
     S.store.signedUrl('comprovantes', b.comprovantePath).then(u => { if (u) cv.href = u; }).catch(() => {});
   }
+  if (st !== 'cancelado') {
+    const vb = document.createElement('div'); vb.className = 'val-edit';
+    vb.innerHTML = `<label>Valor desta reserva (R$)<input type="number" min="0" step="0.01" inputmode="decimal" value="${priceOf(b) != null ? priceOf(b) : ''}" placeholder="A definir"></label><button type="button" class="ghost sm">Salvar valor</button><span class="hint" role="status"></span>`;
+    const inp = vb.querySelector('input'), sv = vb.querySelector('button'), fbv = vb.querySelector('.hint');
+    sv.addEventListener('click', async e => { e.stopPropagation(); const v = numOrNull(inp.value); if (v != null && !(v >= 0)) { fbv.textContent = 'Valor inválido.'; return; } sv.disabled = true; try { await S.store.mark(b, { valor: v }); fbv.textContent = 'Valor salvo.'; } catch (_) { fbv.textContent = 'Não foi possível salvar.'; } sv.disabled = false; });
+    w.insertBefore(vb, w.children[2] || null);
+  }
   const hist = document.createElement('button'); hist.type = 'button'; hist.className = 'ghost'; hist.textContent = 'Ver histórico do dentista';
   hist.dataset.dent = keyOfB(b); acts.appendChild(hist);
   w.appendChild(acts);
@@ -2197,7 +2354,8 @@ function dentistDetail(d) {
       <div><span>Área do dentista</span><span>${d.doc ? 'Conta criada' : 'Ainda não criou conta'}</span></div>
       ${d.nota ? `<div><span>Avaliação média</span><span>${d.nota.toFixed(1).replace('.', ',')} de 5</span></div>` : ''}
     </div>
-    <div class="dr-actions"><a class="wa-sm" target="_blank" rel="noopener" href="https://wa.me/${phoneIntl(d.tel)}">Conversar no WhatsApp</a></div>
+    ${acessoActions(d)}
+    <div class="dr-actions"><a class="wa-sm" target="_blank" rel="noopener" href="https://wa.me/${phoneIntl(d.tel)}">Conversar no WhatsApp</a><button type="button" class="ghost" data-recibo="${esc(d.key)}|${iso(S.fMonth || new Date()).slice(0, 7)}">Recibo de ${MESES[(S.fMonth || new Date()).getMonth()]} (PDF)</button></div>
     <div style="display:grid;gap:6px"><p class="eyebrow">Histórico</p><div class="mini">${d.list.map(miniBooking).join('')}</div></div>`;
   return w;
 }
@@ -2258,6 +2416,7 @@ function sbAdapter(sb) {
   async function loadAll() {
     if (loading) return loading;
     loading = (async () => {
+      try { applyCfg(ok(await sb.rpc('config_publica'))); } catch (_) {}
       const since = iso(addDays(new Date(), -1));
       const slots = {};
       ok(await sb.from('slots').select('date,hour,booking_id').gte('date', since)).forEach(r => { slots[keyOf(r.date, r.hour)] = { bookingId: r.booking_id, date: r.date }; });
@@ -2312,6 +2471,11 @@ function errText(e, fallback) {
     TELEFONE_INVALIDO: 'Informe um telefone com DDD.',
     EMAIL_INVALIDO: 'Confira o e-mail informado.',
     DADOS_INVALIDOS: 'Dados inválidos. Tente de novo.',
+    PAGAMENTO_PENDENTE: 'Há pagamento em atraso. Regularize com a Dra. Thalia (em Financeiro você encontra o Pix) para fazer novas reservas.',
+    LOGIN_NECESSARIO: 'Para reservar, entre na sua conta de dentista.',
+    DENTISTA_NAO_ENCONTRADO: 'Dentista não encontrado.',
+    CONTA_PENDENTE: 'Seu cadastro ainda está aguardando a liberação da Dra. Thalia.',
+    CONTA_BLOQUEADA: 'Seu acesso está bloqueado. Fale com a Dra. Thalia.',
     NOME_INVALIDO: 'Informe o nome completo.',
     DATA_DISTANTE: 'Essa data ainda não está aberta para reservas.',
     FORA_DO_PRAZO: `O prazo para cancelar pelo site já passou. Fale com a ${CFG.dentista}.`,
@@ -2384,8 +2548,8 @@ function renderDLogin() {
   $('dl-seg').hidden = st === 'new';
   document.querySelectorAll('#dl-seg [data-dl]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.dl === st)));
   const T = {
-    login: ['Acesse suas reservas', 'Entre com o e-mail e a senha da sua conta.'],
-    reg: ['Crie sua conta', 'Cadastre seus dados profissionais para reservar e acompanhar seus horários.'],
+    login: S.dlAviso ? ['Entre para reservar', 'Para reservar, entre na sua conta. Ainda não tem? Toque em “Criar conta”: a Dra. Thalia libera o acesso dos cadastros novos.'] : ['Acesse suas reservas', 'Entre com o e-mail e a senha da sua conta.'],
+    reg: ['Crie sua conta', 'Cadastre seus dados profissionais. A Dra. Thalia confere e libera o seu acesso, e você recebe um e-mail avisando.'],
     new: ['Crie uma nova senha', 'Digite a nova senha da sua conta.']
   }[st];
   $('dl-title').textContent = T[0]; $('dl-lead').textContent = T[1];
@@ -2404,7 +2568,7 @@ $('dl-login').addEventListener('submit', async e => {
     $('dl-pass').value = ''; $('dl-fb').innerHTML = '';
     await syncAuth(r.data.session);
     if (!S.dent) msgIn($('dl-fb'), 'err', S.isAdmin ? 'Esta é a conta da administradora. Use a Área do administrador.' : 'Esta conta não tem cadastro de dentista.');
-    else { S.ctab = 'inicio'; route(); }
+    else { S.ctab = S.dlAviso ? 'nova' : 'inicio'; S.dlAviso = false; route(); }
   } catch (err) { msgIn($('dl-fb'), 'err', errText(err)); }
 });
 $('dl-reg').addEventListener('submit', async e => {
@@ -2530,8 +2694,11 @@ function cAlerts() {
 }
 function renderDent() {
   if (!CTABS.some(t => t[0] === S.ctab)) S.ctab = 'inicio';
+  const stD = statusDent(me());
+  if (stD !== 'liberado') { S.cc = { all: [], mine: [] }; renderDWait(stD); renderCDrawer(); return; }
+  if (!$('c-wait').hidden) { $('c-wait').hidden = true; S.waitH = null; document.querySelector('#view-dent .side').classList.remove('off'); }
   const all = live(); S.cc = { all, mine: all.filter(x => keyOfB(x.b) === S.dent) };
-  document.querySelectorAll('#view-dent .side [data-ctab]').forEach(b => b.setAttribute('aria-current', b.dataset.ctab === S.ctab ? 'page' : 'false'));
+  document.querySelectorAll('#view-dent .side [data-ctab]').forEach(b => b.setAttribute('aria-current', b.dataset.ctab === S.ctab ? 'page' : 'false')); markMore();
   CTABS.forEach(([k]) => { $('c-' + k).hidden = k !== S.ctab; });
   $('c-crumb').textContent = CTABS.find(t => t[0] === S.ctab)[1];
   $('c-who').textContent = myName(); $('c-av').textContent = initials(myName());
@@ -2545,7 +2712,9 @@ function renderCInicio(al) {
   const now = new Date(), mine = S.cc.mine, d0 = me();
   $('ci-date').textContent = `${DIAS_LONGOS[now.getDay()]}, ${now.getDate()} de ${MESES[now.getMonth()]}`;
   $('ci-hello').textContent = `Olá, ${firstName(myName())}`;
-  $('ci-alerts').innerHTML = appTipHtml('d') + quickBookHtml() + al.join('');
+  { const baixo = h => /Checklist de saída pendente|Conte como foi/.test(h);
+    const items = [...al.filter(h => !baixo(h)), quickBookHtml(), appTipHtml('d'), ...al.filter(baixo)].filter(Boolean);
+    $('ci-alerts').innerHTML = items.slice(0, 2).join('') + (items.length > 2 ? `<details class="more-al"><summary>Ver mais ${items.length - 2} ${items.length - 2 === 1 ? 'aviso' : 'avisos'}</summary><div class="stack">${items.slice(2).join('')}</div></details>` : ''); }
   const up = mine.filter(x => x.st === 'agendado' || x.st === 'andamento').sort(asc), nx = up[0];
   if (nx) {
     const d = new Date(nx.b.date + 'T12:00');
@@ -2633,7 +2802,7 @@ function cBookingDetail({ b, st }) {
   if (st === 'agendado' || st === 'andamento') h += `<div class="block"><h4>Lembrete no celular</h4><p class="hint">Salve na sua agenda com alerta 2 horas antes.</p><div class="dr-actions">${calButtons(b)}</div></div>`;
   if (st !== 'cancelado') {
     if (b.pago) h += `<div class="block"><h4>Pagamento</h4><p style="margin:0">Pagamento confirmado${b.pagoEm ? ' em ' + fmtDT(b.pagoEm) : ''}.</p></div>`;
-    else h += `<div class="block"><h4>Comprovante de pagamento</h4><p class="hint">${b.comprovantePath ? `Enviado em ${fmtDT(b.comprovanteEm)}. A Dra. Thalia confirma o pagamento pelo painel.` : 'Pagou por Pix? Anexe a foto ou o PDF do comprovante.'}</p><label class="upload"><input type="file" accept="image/*,application/pdf" data-comp="${esc(b.id)}"><span>${b.comprovantePath ? 'Enviar outro comprovante' : 'Anexar comprovante'}</span></label><span class="hint" id="cd-cfb"></span></div>`;
+    else h += (CFG.pix && priceOf(b) > 0 && st !== 'cancelado' ? `<div class="block"><h4>Pagar com Pix</h4>${pixBox(priceOf(b), txidOf('R', b.id), 'Valor desta reserva')}</div>` : '') + `<div class="block"><h4>Comprovante de pagamento</h4><p class="hint">${b.comprovantePath ? `Enviado em ${fmtDT(b.comprovanteEm)}. A Dra. Thalia confirma o pagamento pelo painel.` : 'Pagou por Pix? Anexe a foto ou o PDF do comprovante.'}</p><label class="upload"><input type="file" accept="image/*,application/pdf" data-comp="${esc(b.id)}"><span>${b.comprovantePath ? 'Enviar outro comprovante' : 'Anexar comprovante'}</span></label><span class="hint" id="cd-cfb"></span></div>`;
   }
   if (st === 'agendado') {
     const val = dr.pedido != null ? dr.pedido : (b.pedido || '');
@@ -2833,10 +3002,11 @@ function renderCFin() {
   const abertas = pend.filter(x => !x.b.comprovanteEm);
   const comp = [`Olá Dra. Thalia, aqui é ${myName()}. Segue o comprovante de pagamento das reservas:`, ...pend.map(x => `• ${br(x.b.date)}, das ${hh(x.b.from)} às ${hh(x.b.to)}`)].join('\n');
   $('cf-pix').innerHTML = `<div class="card-head"><h3>Pagamento via Pix</h3></div>` +
-    (CFG.pix ? `<div class="pix" id="cf-pixkey">${esc(CFG.pix)}</div><div class="dr-actions"><button class="ghost sm" type="button" data-act3="copy">Copiar chave Pix</button><span class="hint" id="cf-cfb"></span></div>`
+    (CFG.pix ? (sumPrice(pend) > 0 ? pixBox(sumPrice(pend), txidOf('M' + ym.replace('-', ''), S.dent), 'Total em aberto no mês') + '<p class="hint">Prefere pagar uma reserva por vez? O Pix de cada reserva fica nos detalhes dela.</p>' : `<div class="pix" id="cf-pixkey">${esc(CFG.pix)}</div><div class="dr-actions"><button class="ghost sm" type="button" data-act3="copy">Copiar chave Pix</button><span class="hint" id="cf-cfb"></span></div>`)
       : `<p class="hint">A chave Pix será informada pela Dra. Thalia em breve.</p>`) +
     (pend.length ? `<p class="hint">Depois de pagar, envie o comprovante pelo WhatsApp. As reservas em aberto deste mês ficam marcadas como “comprovante enviado” até a Dra. Thalia confirmar.</p><div class="dr-actions"><a class="wa-sm" data-act3="comp" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(comp)}">Enviar comprovante no WhatsApp</a></div>`
       : `<p class="hint">Nenhuma reserva em aberto neste mês.</p>`);
+  $('cf-pix').insertAdjacentHTML('beforeend', `<div class="dr-actions"><button type="button" class="ghost sm" data-recibo="${esc(S.dent)}|${ym}">Baixar recibo de ${MESES[m.getMonth()]} (PDF)</button></div>`);
   S.cfAbertas = abertas.map(x => x.b);
   const pac = CFG.pacotes || [];
   $('cf-pac').innerHTML = `<div class="card-head"><h3>Pacotes de horas</h3></div>` + (pac.length
@@ -3073,7 +3243,7 @@ function priceHour(date, h) {
   if (p.porDia && p.porDia[dow] != null) return p.porDia[dow];
   return CFG.valorHora;
 }
-function priceOf(b) { let t = 0; for (let h = b.from; h < b.to; h++) { const v = priceHour(b.date, h); if (v == null) return null; t += v; } return t; }
+function priceOf(b) { if (b.valor != null && b.valor !== '') return Number(b.valor); let t = 0; for (let h = b.from; h < b.to; h++) { const v = priceHour(b.date, h); if (v == null) return null; t += v; } return t; }
 function sumPrice(arr) { let t = 0; for (const x of arr) { const v = priceOf(x.b); if (v == null) return null; t += v; } return t; }
 const temPreco = () => CFG.valorHora != null || Object.keys((CFG.precos || {}).porDia || {}).length > 0 || ((CFG.precos || {}).porHora || []).length > 0;
 function precoTexto() {
@@ -3614,11 +3784,11 @@ function pushInfo(scope) {
     default: return { txt: oQue, btn: btnHtml(APP.busy ? 'Ativando…' : 'Ativar', `data-app="ligar"${busy}`, 'primary sm') };
   }
 }
-function appCardHtml(scope) {
+function appCardHtml(scope, noHead) {
   const i = installInfo(), p = pushInfo(scope);
   const row = (ico, t, x) => `<div class="app-row"><span class="app-ic">${ico}</span><div class="app-tx"><b>${t}${x.tag ? ` <span class="tag pago">${x.tag}</span>` : ''}</b><small>${x.txt}</small></div>${x.btn ? `<div class="app-bt">${x.btn}</div>` : ''}</div>`;
   const m = APP.msg ? `<p class="msg ${APP.msg.kind}" role="status">${esc(APP.msg.text)}</p>` : '';
-  return `<div class="card-head"><h3>App no celular</h3></div>
+  return `${noHead ? '' : '<div class="card-head"><h3>App no celular</h3></div>'}
     <div class="app-rows">${row(ICO_PHONE, 'Instalar o app', i)}${row(ICO_BELL, 'Notificações', p)}</div>${m}${scope === 'a' ? pushCfgHtml() : ''}`;
 }
 function appTipHtml(scope) {
@@ -3685,10 +3855,534 @@ async function setupPush() {
     await loadPushStatus();
     appMsg('ok', 'Tudo certo: notificações ligadas. Agora toque em Ativar, acima, para receber os avisos neste aparelho.');
   } catch (err) {
-    appMsg('err', errText(err));
+    appMsg('err', errText(err, 'Não foi possível ativar. Detalhe técnico: ' + String((err && err.message) || err || 'desconhecido').slice(0, 160)));
   } finally { APP.busy = false; render(); }
 }
 
+/* ---------- QR Code (modo byte, correção M), Pix copia e cola e PDF simples ---------- */
+const QR = (() => {
+  const ECC = [-1, 10, 16, 26, 18, 24, 16, 18, 22, 22, 26, 30, 22, 22, 24, 24, 28, 28, 26, 26, 26, 26, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28];
+  const BLK = [-1, 1, 1, 1, 2, 2, 4, 4, 4, 5, 5, 5, 8, 9, 9, 10, 10, 11, 13, 14, 16, 17, 17, 18, 20, 21, 23, 25, 26, 28, 29, 31, 33, 35, 37, 38, 40, 43, 45, 47, 49];
+  const rawModules = v => { let r = (16 * v + 128) * v + 64; if (v >= 2) { const n = Math.floor(v / 7) + 2; r -= (25 * n - 10) * n - 55; if (v >= 7) r -= 36; } return r; };
+  const dataCw = v => Math.floor(rawModules(v) / 8) - ECC[v] * BLK[v];
+  const mul = (x, y) => { let z = 0; for (let i = 7; i >= 0; i--) { z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z & 0xFF; };
+  function rsDivisor(deg) { const r = new Array(deg).fill(0); r[deg - 1] = 1; let root = 1; for (let i = 0; i < deg; i++) { for (let j = 0; j < r.length; j++) { r[j] = mul(r[j], root); if (j + 1 < r.length) r[j] ^= r[j + 1]; } root = mul(root, 2); } return r; }
+  function rsRemainder(data, div) { const r = div.map(() => 0); for (const b of data) { const f = b ^ r.shift(); r.push(0); div.forEach((c, i) => { r[i] ^= mul(c, f); }); } return r; }
+  function alignPos(v) { if (v === 1) return []; const n = Math.floor(v / 7) + 2, size = v * 4 + 17; const step = v === 32 ? 26 : Math.ceil((v * 4 + 4) / (n * 2 - 2)) * 2; const r = [6]; for (let p = size - 7; r.length < n; p -= step) r.splice(1, 0, p); return r; }
+  function encode(text, forceMask) {
+    const bytes = Array.from(new TextEncoder().encode(text));
+    let v = 1;
+    for (; v <= 40; v++) { const cc = v < 10 ? 8 : 16; if (4 + cc + bytes.length * 8 <= dataCw(v) * 8) break; }
+    if (v > 40) throw new Error('texto longo demais');
+    const cap = dataCw(v) * 8, bits = [];
+    const put = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+    put(4, 4); put(bytes.length, v < 10 ? 8 : 16); bytes.forEach(b => put(b, 8));
+    put(0, Math.min(4, cap - bits.length)); put(0, (8 - bits.length % 8) % 8);
+    for (let p = 0xEC; bits.length < cap; p ^= 0xEC ^ 0x11) put(p, 8);
+    const data = []; for (let i = 0; i < bits.length; i += 8) data.push(parseInt(bits.slice(i, i + 8).join(''), 2));
+    // blocos e correção de erros
+    const nb = BLK[v], el = ECC[v], raw = Math.floor(rawModules(v) / 8), ns = nb - raw % nb, sl = Math.floor(raw / nb), div = rsDivisor(el);
+    const blocks = []; for (let i = 0, k = 0; i < nb; i++) { const d = data.slice(k, k + sl - el + (i < ns ? 0 : 1)); k += d.length; const e = rsRemainder(d, div); if (i < ns) d.push(0); blocks.push(d.concat(e)); }
+    const cw = []; for (let i = 0; i < blocks[0].length; i++) blocks.forEach((b, j) => { if (i !== sl - el || j >= ns) cw.push(b[i]); });
+    // matriz
+    const size = v * 4 + 17, M = [], F = [];
+    for (let y = 0; y < size; y++) { M.push(new Array(size).fill(false)); F.push(new Array(size).fill(false)); }
+    const set = (x, y, d) => { M[y][x] = d; F[y][x] = true; };
+    for (let i = 0; i < size; i++) { set(6, i, i % 2 === 0); set(i, 6, i % 2 === 0); }
+    const finder = (cx, cy) => { for (let dy = -4; dy <= 4; dy++) for (let dx = -4; dx <= 4; dx++) { const x = cx + dx, y = cy + dy, d = Math.max(Math.abs(dx), Math.abs(dy)); if (x >= 0 && x < size && y >= 0 && y < size) set(x, y, d !== 2 && d !== 4); } };
+    finder(3, 3); finder(size - 4, 3); finder(3, size - 4);
+    const ap = alignPos(v), na = ap.length;
+    for (let i = 0; i < na; i++) for (let j = 0; j < na; j++) {
+      if ((i === 0 && j === 0) || (i === 0 && j === na - 1) || (i === na - 1 && j === 0)) continue;
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) set(ap[i] + dx, ap[j] + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+    }
+    const format = mask => {
+      const d = (0 << 3) | mask; let r = d; for (let i = 0; i < 10; i++) r = (r << 1) ^ ((r >>> 9) * 0x537);
+      const b = ((d << 10) | r) ^ 0x5412, g = i => ((b >>> i) & 1) === 1;
+      for (let i = 0; i <= 5; i++) set(8, i, g(i));
+      set(8, 7, g(6)); set(8, 8, g(7)); set(7, 8, g(8));
+      for (let i = 9; i < 15; i++) set(14 - i, 8, g(i));
+      for (let i = 0; i < 8; i++) set(size - 1 - i, 8, g(i));
+      for (let i = 8; i < 15; i++) set(8, size - 15 + i, g(i));
+      set(8, size - 8, true);
+    };
+    format(0);
+    if (v >= 7) {
+      let r = v; for (let i = 0; i < 12; i++) r = (r << 1) ^ ((r >>> 11) * 0x1F25);
+      const b = (v << 12) | r;
+      for (let i = 0; i < 18; i++) { const bit = ((b >>> i) & 1) === 1, a = size - 11 + i % 3, c = Math.floor(i / 3); set(a, c, bit); set(c, a, bit); }
+    }
+    let i = 0;
+    for (let right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (let vert = 0; vert < size; vert++) for (let j = 0; j < 2; j++) {
+        const x = right - j, up = ((right + 1) & 2) === 0, y = up ? size - 1 - vert : vert;
+        if (!F[y][x] && i < cw.length * 8) { M[y][x] = ((cw[i >>> 3] >>> (7 - (i & 7))) & 1) === 1; i++; }
+      }
+    }
+    const maskFn = [(x, y) => (x + y) % 2 === 0, (x, y) => y % 2 === 0, x => x % 3 === 0, (x, y) => (x + y) % 3 === 0,
+      (x, y) => (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0, (x, y) => x * y % 2 + x * y % 3 === 0,
+      (x, y) => (x * y % 2 + x * y % 3) % 2 === 0, (x, y) => ((x + y) % 2 + x * y % 3) % 2 === 0];
+    const apply = m => { for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) if (!F[y][x] && maskFn[m](x, y)) M[y][x] = !M[y][x]; };
+    const penalty = () => {
+      let p = 0, dark = 0;
+      const line = get => { let s = ''; for (let k = 0; k < size; k++) s += get(k) ? '1' : '0'; return s; };
+      for (let k = 0; k < size; k++) for (const s of [line(x => M[k][x]), line(y => M[y][k])]) {
+        for (const run of s.match(/0+|1+/g)) if (run.length >= 5) p += run.length - 2;
+        const t = '0000' + s + '0000'; let q = -1; while ((q = t.indexOf('1011101', q + 1)) !== -1) { if (t.slice(q - 4, q) === '0000' || t.slice(q + 7, q + 11) === '0000') p += 40; }
+      }
+      for (let y = 0; y < size - 1; y++) for (let x = 0; x < size - 1; x++) { const c = M[y][x]; if (c === M[y][x + 1] && c === M[y + 1][x] && c === M[y + 1][x + 1]) p += 3; }
+      for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) if (M[y][x]) dark++;
+      return p + Math.floor(Math.abs(dark * 20 - size * size * 10) / (size * size)) * 10;
+    };
+    let best = forceMask;
+    if (best == null) { let min = Infinity; for (let m = 0; m < 8; m++) { apply(m); format(m); const s = penalty(); if (s < min) { min = s; best = m; } apply(m); } }
+    apply(best); format(best);
+    return { size, modules: M, version: v, mask: best };
+  }
+  function svg(text, px) {
+    const q = encode(text), n = q.size + 8; let d = '';
+    for (let y = 0; y < q.size; y++) for (let x = 0; x < q.size; x++) if (q.modules[y][x]) d += `M${x + 4},${y + 4}h1v1h-1z`;
+    return `<svg class="qr" viewBox="0 0 ${n} ${n}" width="${px || 200}" height="${px || 200}" role="img" aria-label="QR Code do Pix" shape-rendering="crispEdges"><rect width="${n}" height="${n}" fill="#fff"/><path d="${d}" fill="#1f1416"/></svg>`;
+  }
+  return { encode, svg };
+})();
+
+/* Pix copia e cola (BR Code estático do Banco Central) */
+function pixCrc(s) {
+  let crc = 0xFFFF;
+  for (const b of new TextEncoder().encode(s)) { crc ^= b << 8; for (let i = 0; i < 8; i++) crc = crc & 0x8000 ? ((crc << 1) ^ 0x1021) & 0xFFFF : (crc << 1) & 0xFFFF; }
+  return crc.toString(16).toUpperCase().padStart(4, '0');
+}
+const pixAscii = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9 .\-]/g, '').replace(/\s+/g, ' ').trim().toUpperCase();
+function pixPayload({ chave, nome, cidade, valor, txid }) {
+  const f = (id, v) => id + String(v.length).padStart(2, '0') + v;
+  const tx = String(txid || '').replace(/[^A-Za-z0-9]/g, '').slice(0, 25) || '***';
+  let p = f('00', '01') + f('26', f('00', 'br.gov.bcb.pix') + f('01', String(chave).trim())) + f('52', '0000') + f('53', '986');
+  if (valor > 0) p += f('54', Number(valor).toFixed(2));
+  p += f('58', 'BR') + f('59', (pixAscii(nome) || 'THALIA SANTIAGO').slice(0, 25)) + f('60', (pixAscii(cidade) || 'IPATINGA').slice(0, 15)) + f('62', f('05', tx)) + '6304';
+  return p + pixCrc(p);
+}
+// Ajusta a chave ao formato do Pix conforme o tipo.
+function pixFormatKey(tipo, k) {
+  k = String(k || '').trim();
+  const dig = k.replace(/\D/g, '');
+  if (tipo === 'doc') return dig;
+  if (tipo === 'cel') return dig.length >= 12 && dig.startsWith('55') ? '+' + dig : '+55' + dig;
+  return tipo === 'email' ? k.toLowerCase() : k.toLowerCase();
+}
+function pixKeyType(k) {
+  k = String(k || '');
+  if (/@/.test(k)) return 'email';
+  if (/^\+\d{12,13}$/.test(k)) return 'cel';
+  if (/^\d{11}$|^\d{14}$/.test(k)) return 'doc';
+  return k ? 'aleatoria' : 'cel';
+}
+
+/* PDF simples (texto, linhas e retângulos), sem bibliotecas externas */
+const PDF = (() => {
+  const W = { ' ': 278, '!': 278, '"': 355, '(': 333, ')': 333, ',': 278, '-': 333, '.': 278, '/': 278, ':': 278, ';': 278, 'I': 278, 'J': 500, 'f': 278, 'i': 222, 'j': 222, 'l': 222, 'r': 333, 't': 278, 'm': 833, 'w': 722, 'M': 833, 'W': 944, '·': 278, '–': 556, '—': 1000, 'R': 722, 'C': 722, 'D': 722, 'H': 722, 'N': 722, 'U': 722, 'O': 778, 'Q': 778, 'G': 778, 'A': 667, 'B': 667, 'E': 667, 'K': 667, 'P': 667, 'S': 667, 'V': 667, 'X': 667, 'Y': 667, 'F': 611, 'T': 611, 'Z': 611, 'L': 556, 'c': 500, 'k': 500, 's': 500, 'v': 500, 'x': 500, 'y': 500, 'z': 500 };
+  const width = (s, size, bold) => [...String(s)].reduce((n, ch) => n + (W[ch] || (/[A-ZÁÉÍÓÚÂÊÔÃÕÇ]/.test(ch) ? 690 : 556)) * (bold ? 1.06 : 1), 0) * size / 1000;
+  const WIN = { '€': 0x80, '‚': 0x82, '„': 0x84, '…': 0x85, '‘': 0x91, '’': 0x92, '“': 0x93, '”': 0x94, '•': 0x95, '–': 0x96, '—': 0x97 };
+  const enc = s => [...String(s)].map(ch => { const c = ch.charCodeAt(0); const b = WIN[ch] || (c < 256 ? c : 63); const t = String.fromCharCode(b); return t === '(' || t === ')' || t === '\\' ? '\\' + t : t; }).join('');
+  function doc() {
+    const pages = []; let ops = null;
+    const api = {
+      W: 595.28, H: 841.89,
+      page() { ops = []; pages.push(ops); return api; },
+      color(r, g, b) { ops.push(`${r} ${g} ${b} rg ${r} ${g} ${b} RG`); return api; },
+      rect(x, y, w, h) { ops.push(`${x.toFixed(2)} ${(api.H - y - h).toFixed(2)} ${w.toFixed(2)} ${h.toFixed(2)} re f`); return api; },
+      line(x1, y1, x2, y2, lw) { ops.push(`${lw || 0.6} w ${x1.toFixed(2)} ${(api.H - y1).toFixed(2)} m ${x2.toFixed(2)} ${(api.H - y2).toFixed(2)} l S`); return api; },
+      text(x, y, s, size, bold, align) {
+        let xx = x; if (align === 'right') xx = x - width(s, size, bold); else if (align === 'center') xx = x - width(s, size, bold) / 2;
+        ops.push(`BT /${bold ? 'F2' : 'F1'} ${size} Tf ${xx.toFixed(2)} ${(api.H - y).toFixed(2)} Td (${enc(s)}) Tj ET`); return api;
+      },
+      wrap(s, size, maxW, bold) {
+        const out = []; let cur = '';
+        for (const w of String(s).split(/\s+/)) { const t = cur ? cur + ' ' + w : w; if (width(t, size, bold) > maxW && cur) { out.push(cur); cur = w; } else cur = t; }
+        if (cur) out.push(cur); return out;
+      },
+      width,
+      build() {
+        const objs = [];
+        const add = s => { objs.push(s); return objs.length; };
+        const cat = add(''), pgs = add(''), f1 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'), f2 = add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
+        const kids = pages.map(o => { const st = o.join('\n'); const c = add(`<< /Length ${st.length} >>\nstream\n${st}\nendstream`); return add(`<< /Type /Page /Parent ${pgs} 0 R /MediaBox [0 0 ${api.W} ${api.H}] /Resources << /Font << /F1 ${f1} 0 R /F2 ${f2} 0 R >> >> /Contents ${c} 0 R >>`); });
+        objs[cat - 1] = `<< /Type /Catalog /Pages ${pgs} 0 R >>`;
+        objs[pgs - 1] = `<< /Type /Pages /Kids [${kids.map(k => k + ' 0 R').join(' ')}] /Count ${kids.length} >>`;
+        let out = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n'; const xref = [];
+        objs.forEach((o, i) => { xref.push(out.length); out += `${i + 1} 0 obj\n${o}\nendobj\n`; });
+        const xs = out.length;
+        out += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` + xref.map(n => String(n).padStart(10, '0') + ' 00000 n \n').join('') + `trailer\n<< /Size ${objs.length + 1} /Root ${cat} 0 R >>\nstartxref\n${xs}\n%%EOF`;
+        return Uint8Array.from(out, c => c.charCodeAt(0) & 0xFF);
+      }
+    };
+    return api;
+  }
+  return { doc };
+})();
+
+/* ---------- Ajustes editáveis pelo painel (lidos do banco) ---------- */
+const CFG_PADRAO = { regras: CFG.regras.slice(), checklist: CFG.checklist.slice(), espaco: JSON.parse(JSON.stringify(CFG.espaco)) };
+function applyCfg(c) {
+  if (!c || typeof c !== 'object') return;
+  const sig = JSON.stringify(c); if (sig === S.cfgSig) return; S.cfgSig = sig;
+  CFG.valorHora = c.valorHora == null ? null : Number(c.valorHora);
+  CFG.precos = { porDia: (c.precos && c.precos.porDia) || {}, porHora: (c.precos && c.precos.porHora) || [] };
+  CFG.pacotes = Array.isArray(c.pacotes) ? c.pacotes : [];
+  if (Number.isInteger(c.abre)) CFG.abre = c.abre;
+  if (Number.isInteger(c.fecha)) CFG.fecha = c.fecha;
+  if (Array.isArray(c.diasAbertos) && c.diasAbertos.length) CFG.diasAbertos = c.diasAbertos.map(Number).sort((a, b) => ((a + 6) % 7) - ((b + 6) % 7));
+  if (Number.isInteger(c.prazoCancelamentoH)) CFG.prazoCancelamentoH = c.prazoCancelamentoH;
+  CFG.pix = c.pix || ''; CFG.pixNome = c.pixNome || ''; CFG.pixCidade = c.pixCidade || 'Ipatinga';
+  CFG.regras = Array.isArray(c.regras) ? c.regras : CFG_PADRAO.regras;
+  CFG.checklist = Array.isArray(c.checklist) && c.checklist.length ? c.checklist : CFG_PADRAO.checklist;
+  CFG.espaco = c.espaco && typeof c.espaco === 'object' ? { ...CFG_PADRAO.espaco, ...c.espaco } : CFG_PADRAO.espaco;
+  CFG.limiteAtrasoDias = c.limiteAtrasoDias == null ? null : c.limiteAtrasoDias;
+  try { fillInfo(); } catch (_) {}
+}
+
+/* ---------- Pix: QR Code e copia e cola ---------- */
+const pixDe = (valor, txid) => pixPayload({ chave: CFG.pix, nome: CFG.pixNome || 'Thalia Santiago', cidade: CFG.pixCidade || 'Ipatinga', valor, txid });
+function pixBox(valor, txid, titulo) {
+  if (!CFG.pix) return '';
+  const code = pixDe(valor, txid);
+  return `<div class="pixbox"><div class="pix-qr">${QR.svg(code, 176)}</div><div class="pix-tx">
+    <span class="eyebrow">${esc(titulo)}</span><b class="pix-v">${valor > 0 ? BRL(valor) : 'Valor a combinar'}</b>
+    <small>No app do banco, escolha Pix e “Ler QR Code”, ou copie o código abaixo e use “Pix copia e cola”.</small>
+    <div class="dr-actions"><button type="button" class="primary sm" data-pixcp="${esc(code)}">Copiar Pix copia e cola</button><button type="button" class="ghost sm" data-pixcp="${esc(CFG.pix)}">Copiar chave</button></div>
+    <span class="hint pix-fb" role="status"></span></div></div>`;
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-pixcp]'); if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  const fb = b.closest('.pix-tx') && b.closest('.pix-tx').querySelector('.pix-fb');
+  try { await navigator.clipboard.writeText(b.dataset.pixcp); if (fb) fb.textContent = 'Copiado! Agora é só colar no app do banco.'; }
+  catch (_) { if (fb) fb.textContent = 'Não foi possível copiar neste aparelho. Use o QR Code.'; }
+});
+const txidOf = (pre, id) => (pre + String(id || '').replace(/[^A-Za-z0-9]/g, '')).slice(0, 25);
+
+/* ---------- Recibo do mês em PDF ---------- */
+function reciboMes(lista, nome, cro, ym) {
+  const [y, m] = ym.split('-').map(Number), mes = `${MESES[m - 1]} de ${y}`;
+  const itens = lista.filter(x => isActive(x) && x.b.origem !== 'bloqueio').sort((a, b) => (a.b.date + pad(a.b.from)).localeCompare(b.b.date + pad(b.b.from)));
+  const val = x => priceOf(x.b), tot = arr => arr.reduce((n, x) => n + (val(x) || 0), 0);
+  const pagos = itens.filter(x => x.b.pago), abertos = itens.filter(x => !x.b.pago);
+  const d = PDF.doc(), L = 48, R = d.W - 48, wine = [0.349, 0.004, 0.09], gold = [0.85, 0.73, 0.44], ink = [0.12, 0.08, 0.09], mute = [0.45, 0.4, 0.42];
+  let y0 = 0;
+  const header = () => {
+    d.page(); d.color(...wine).rect(0, 0, d.W, 78);
+    d.color(...gold).text(L, 34, 'CONSULTÓRIO ODONTOLÓGICO THALIA SANTIAGO', 11, true);
+    d.color(1, 1, 1).text(L, 54, `${CFG.endereco}, ${CFG.cidade} · WhatsApp ${CFG.telefone}`, 9);
+    y0 = 118;
+  };
+  header();
+  d.color(...ink).text(L, y0, `Recibo · ${mes}`, 20, true); y0 += 26;
+  d.color(...mute).text(L, y0, `Profissional: ${nome}${cro ? ' · ' + cro : ''}`, 10.5); y0 += 30;
+  const cols = [L, L + 150, L + 245, R - 120, R];
+  const head = () => { d.color(...wine).text(cols[0], y0, 'DATA', 8, true).text(cols[1], y0, 'HORÁRIO', 8, true).text(cols[2], y0, 'HORAS', 8, true).text(cols[3], y0, 'VALOR', 8, true, 'right').text(cols[4], y0, 'SITUAÇÃO', 8, true, 'right'); d.color(...gold).line(L, y0 + 7, R, y0 + 7, 1); y0 += 24; };
+  head();
+  if (!itens.length) { d.color(...mute).text(L, y0, 'Nenhuma reserva neste mês.', 10.5); y0 += 22; }
+  itens.forEach(x => {
+    if (y0 > 700) { header(); head(); }
+    const dt = new Date(x.b.date + 'T12:00'), v = val(x);
+    d.color(...ink).text(cols[0], y0, `${DIAS[dt.getDay()]}, ${br(x.b.date)}`, 10).text(cols[1], y0, `${hh(x.b.from)} – ${hh(x.b.to)}`, 10).text(cols[2], y0, `${hoursOf(x.b)}h`, 10)
+      .text(cols[3], y0, v != null ? BRL(v) : 'A definir', 10, false, 'right');
+    d.color(...(x.b.pago ? [0.12, 0.48, 0.3] : mute)).text(cols[4], y0, x.b.pago ? 'Pago' : x.b.comprovanteEm ? 'Comprovante enviado' : 'Em aberto', 9.5, x.b.pago, 'right');
+    d.color(0.9, 0.87, 0.87).line(L, y0 + 8, R, y0 + 8, 0.5); y0 += 22;
+  });
+  if (y0 > 640) header();
+  y0 += 10;
+  d.color(0.98, 0.965, 0.96).rect(L, y0, R - L, 74);
+  const box = [['Horas no mês', `${itens.reduce((n, x) => n + hoursOf(x.b), 0)}h`], ['Total', BRL(tot(itens))], ['Pago', BRL(tot(pagos))], ['Em aberto', BRL(tot(abertos))]];
+  box.forEach(([k, v], i) => { const x = L + 18 + i * ((R - L - 36) / 4); d.color(...mute).text(x, y0 + 28, k.toUpperCase(), 8, true); d.color(...ink).text(x, y0 + 52, v, 14, true); });
+  y0 += 104;
+  if (pagos.length) {
+    const txt = `Recebi de ${nome} a importância de ${BRL(tot(pagos))}, referente ao uso do consultório odontológico por hora em ${mes}, conforme as reservas marcadas como pagas acima.`;
+    d.wrap(txt, 11, R - L).forEach(l => { d.color(...ink).text(L, y0, l, 11); y0 += 16; });
+    y0 += 46;
+    d.color(...ink).line(L, y0, L + 230, y0, 0.7); y0 += 16;
+    d.text(L, y0, CFG.dentista, 11, true); y0 += 14;
+    d.color(...mute).text(L, y0, 'Cirurgiã-dentista responsável', 9.5);
+  } else {
+    d.color(...mute).text(L, y0, 'Ainda não há pagamentos confirmados neste mês.', 10.5);
+  }
+  const hoje = new Date();
+  d.color(...mute).text(R, y0, `Ipatinga, ${hoje.getDate()} de ${MESES[hoje.getMonth()]} de ${hoje.getFullYear()}`, 9.5, false, 'right');
+  d.color(...mute).text(L, 810, 'Documento gerado pelo site de reservas do consultório.', 8);
+  const slug = String(nome).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  downloadFile(`recibo-${ym}-${slug || 'dentista'}.pdf`, d.build(), 'application/pdf');
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-recibo]'); if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  const [k, ym] = b.dataset.recibo.split('|');
+  const src = S.isAdmin ? live() : S.cc.mine;
+  const lista = src.filter(x => keyOfB(x.b) === k && x.b.date.startsWith(ym));
+  const doc = (S.cols.dentists || {})[k] || {}, ref = lista[0] ? lista[0].b : {};
+  try { reciboMes(lista, doc.nome || ref.nome || myName(), doc.cro || ref.cro || '', ym); }
+  catch (_) { b.textContent = 'Não foi possível gerar o PDF'; }
+});
+
+/* ---------- Liberação de cadastros ---------- */
+const statusDent = d => (d && d.status) || 'liberado';
+const pendentes = () => Object.values(S.cols.dentists || {}).filter(d => statusDent(d) === 'pendente').sort((a, b) => String(a.criadoEm).localeCompare(String(b.criadoEm)));
+function pendHtml() {
+  const p = pendentes(); if (!p.length) return '';
+  return `<div class="notice gold pend-list"><p><b>${plural(p.length, 'cadastro aguardando', 'cadastros aguardando')} liberação.</b> Até você liberar, a pessoa não consegue reservar.</p>
+    <div class="pend-rows">${p.slice(0, 5).map(d => `<div class="pend-row"><span class="avatar">${esc(initials(d.nome))}</span><span class="txt"><b>${esc(d.nome)}</b><small>${esc([d.cro, d.tel, d.criadoEm ? 'cadastro em ' + fmtDT(d.criadoEm) : ''].filter(Boolean).join(' · '))}</small></span>
+      <span class="acts">${btnHtml('Liberar', `data-acesso="${esc(d.id)}|liberado"`, 'primary sm')}${btnHtml('Bloquear', `data-acesso="${esc(d.id)}|bloqueado"`, 'ghost sm')}</span></div>`).join('')}</div></div>`;
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-acesso]'); if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  const [id, st] = b.dataset.acesso.split('|');
+  if (st === 'bloqueado' && !b.classList.contains('sure')) { b.classList.add('sure'); b.dataset.label = b.textContent; b.textContent = 'Confirmar bloqueio'; setTimeout(() => { if (b.isConnected && b.classList.contains('sure')) { b.classList.remove('sure'); b.textContent = b.dataset.label; } }, 4000); return; }
+  b.disabled = true;
+  try {
+    await S.store.rpc('definir_status_dentista', { p_id: id, p_status: st });
+    const d = (S.cols.dentists || {})[id]; if (d) d.status = st;
+    S.store.refresh && S.store.refresh(); render();
+  } catch (err) { b.disabled = false; b.textContent = 'Tente de novo'; }
+});
+function acessoTag(d) {
+  const s = d && d.doc ? statusDent(d.doc) : null;
+  return s === 'pendente' ? ' <span class="tag pend">Aguardando liberação</span>' : s === 'bloqueado' ? ' <span class="tag cancelado">Bloqueado</span>' : '';
+}
+function acessoActions(d) {
+  if (!d || !d.doc) return '';
+  const s = statusDent(d.doc), id = esc(d.doc.id);
+  const msg = { pendente: 'Cadastro aguardando liberação. Até liberar, não consegue reservar.', liberado: 'Acesso liberado: pode reservar pela área do dentista.', bloqueado: 'Acesso bloqueado: não consegue reservar. Reservas já marcadas continuam na agenda.' }[s];
+  const bt = s === 'liberado' ? btnHtml('Bloquear acesso', `data-acesso="${id}|bloqueado"`, 'danger')
+    : btnHtml('Liberar acesso', `data-acesso="${id}|liberado"`, 'primary') + (s === 'pendente' ? btnHtml('Bloquear', `data-acesso="${id}|bloqueado"`, 'ghost') : '');
+  return `<div class="block acesso-box"><h4>Acesso à área do dentista</h4><p class="hint">${msg}</p><div class="dr-actions">${bt}</div></div>`;
+}
+// Tela de espera para conta pendente ou bloqueada.
+function renderDWait(st) {
+  CTABS.forEach(([k]) => { $('c-' + k).hidden = true; });
+  const w = $('c-wait'); w.hidden = false;
+  document.querySelector('#view-dent .side').classList.add('off');
+  $('c-crumb').textContent = st === 'bloqueado' ? 'Acesso bloqueado' : 'Aguardando liberação';
+  $('c-who').textContent = myName(); $('c-av').textContent = initials(myName());
+  const wa = `https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(st === 'bloqueado' ? `Olá Dra. Thalia, aqui é ${myName()}. Meu acesso ao site do consultório está bloqueado. Pode me ajudar?` : `Olá Dra. Thalia, aqui é ${myName()}. Acabei de criar minha conta no site do consultório e aguardo a liberação.`)}`;
+  const h = st === 'bloqueado'
+    ? `<div class="wait-card"><span class="wait-ic">${ICO_LOCK2}</span><p class="eyebrow">Acesso bloqueado</p><h2>Sua conta está bloqueada</h2><p>Para voltar a reservar o consultório, fale com a Dra. Thalia.</p><div class="dr-actions"><a class="wa-sm" target="_blank" rel="noopener" href="${wa}">Falar com a Dra. Thalia</a><button type="button" class="ghost" data-dlogout>Sair</button></div></div>`
+    : `<div class="wait-card"><span class="wait-ic">${ICO_CLOCK2}</span><p class="eyebrow">Cadastro recebido</p><h2>Olá, ${esc(firstName(myName()))}! Falta só a liberação</h2><p>A Dra. Thalia confere os cadastros novos e libera o acesso. Você recebe um e-mail quando estiver liberado, e esta tela abre a sua área automaticamente.</p><div class="dr-actions"><a class="wa-sm" target="_blank" rel="noopener" href="${wa}">Avisar a Dra. Thalia no WhatsApp</a><button type="button" class="ghost" data-dlogout>Sair</button></div></div>`;
+  const ah = h + (st === 'pendente' ? `<div class="card" id="app-w">${appCardHtml('d')}</div>` : '');
+  if (S.waitH !== ah) { w.innerHTML = ah; S.waitH = ah; }
+}
+const ICO_CLOCK2 = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>';
+const ICO_LOCK2 = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/></svg>';
+
+window.addEventListener('hashchange', () => { if (location.hash !== '#dentista') S.dlAviso = false; });
+// Botão "Agendar horário" e horários da página inicial levam para a área do dentista.
+function goReservar(date) {
+  S.ctab = 'nova'; S.dlAviso = true;
+  if (date) S.cnPre = date;
+  try { sessionStorage.setItem('cab', 'nova'); history.replaceState(null, '', location.pathname); } catch (_) {}
+  location.hash = '#dentista';
+}
+
+/* ---------- Avaliações (Resumo) ---------- */
+function avaliacoesHtml() {
+  const av = S.cache.all.filter(x => x.b.avaliacao && x.b.avaliacao.nota).sort((a, b) => String(b.b.avaliacao.em || b.b.date).localeCompare(String(a.b.avaliacao.em || a.b.date)));
+  const head = `<div class="card-head"><h3>Avaliações do consultório</h3></div>`;
+  if (!av.length) return head + `<p class="hint">Ainda não há avaliações. Elas aparecem aqui quando os dentistas avaliam o uso do consultório, depois de cada reserva.</p>`;
+  const m = av.reduce((n, x) => n + Number(x.b.avaliacao.nota), 0) / av.length;
+  const dist = [5, 4, 3, 2, 1].map(n => [n, av.filter(x => Number(x.b.avaliacao.nota) === n).length]);
+  const coms = av.filter(x => (x.b.avaliacao.comentario || '').trim()).slice(0, 3);
+  return head + `<div class="aval"><div class="aval-m"><b>${m.toFixed(1).replace('.', ',')}</b><span class="aval-st" aria-hidden="true">${[1, 2, 3, 4, 5].map(n => `<i class="${n <= Math.round(m) ? 'on' : ''}"></i>`).join('')}</span><small>${plural(av.length, 'avaliação', 'avaliações')}</small></div>
+    <div class="aval-d">${dist.map(([n, c]) => `<div><span>${n}</span><i><u style="width:${Math.round(100 * c / av.length)}%"></u></i><small>${c}</small></div>`).join('')}</div></div>`
+    + (coms.length ? `<div class="aval-c">${coms.map(x => `<blockquote><p>“${esc(x.b.avaliacao.comentario)}”</p><small>${esc(firstName(x.b.nome))} · ${br(x.b.date).slice(0, 5)} · ${x.b.avaliacao.nota}/5</small></blockquote>`).join('')}</div>` : '');
+}
+
+/* ---------- Aba Ajustes: formulários (montados uma vez; o resto da tela atualiza sozinho) ---------- */
+const DIAS_ORD = [1, 2, 3, 4, 5, 6, 0];
+const numOrNull = v => { const s = String(v == null ? '' : v).trim().replace(',', '.'); return s === '' ? null : Number(s); };
+function ajRowFaixa(r) {
+  r = r || { de: 18, ate: Math.min(CFG.fecha, 20), valor: '' };
+  return `<div class="ajrow" data-row="faixa"><label>Das<select data-k="de">${hourOpts(0, 23, +r.de)}</select></label><label>Até<select data-k="ate">${hourOpts(1, 24, +r.ate)}</select></label><label>R$ por hora<input data-k="valor" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(r.valor)}"></label><button type="button" class="icon-btn" data-aj="del" aria-label="Remover">×</button></div>`;
+}
+function ajRowPac(p) {
+  p = p || { horas: '', valor: '' };
+  return `<div class="ajrow" data-row="pac"><label>Horas<input data-k="horas" type="number" min="1" step="1" inputmode="numeric" value="${esc(p.horas)}"></label><label>Valor total (R$)<input data-k="valor" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(p.valor)}"></label><button type="button" class="icon-btn" data-aj="del" aria-label="Remover">×</button></div>`;
+}
+const listTxt = a => (Array.isArray(a) ? a : []).join('\n');
+const linesOf = id => $(id).value.split('\n').map(s => s.trim()).filter(Boolean);
+function ajBuild() {
+  const c = S.ajCfg || {}, e = Object.assign({ equipamentos: [], inclusos: [], levar: [], chegada: '', saida: '', wifi: '' }, c.espaco || {});
+  const fb = '<div class="aj-fb" role="status"></div>';
+  $('acc-valores').innerHTML = `<form id="vf" class="ajf" novalidate>
+    <label class="w-sm">Valor da hora (R$)<input id="vf-hora" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Ex.: 80" value="${c.valorHora == null ? '' : esc(c.valorHora)}"></label>
+    <div class="ajsec"><b>Preço diferente por dia</b><small>Deixe em branco para usar o valor da hora.</small>
+      <div class="ajdays">${DIAS_ORD.map(d => `<label>${DIAS[d]}<input data-vdia="${d}" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(((c.precos || {}).porDia || {})[d] ?? '')}"></label>`).join('')}</div></div>
+    <div class="ajsec"><b>Preço por horário</b><small>Ex.: das 18h às 20h, R$ 100 por hora. Vale em todos os dias e tem prioridade sobre os outros preços.</small>
+      <div class="ajrows" id="vf-faixas">${((c.precos || {}).porHora || []).map(ajRowFaixa).join('')}</div><button type="button" class="link" data-aj="addfaixa">+ Adicionar faixa de horário</button></div>
+    <div class="ajsec"><b>Pacotes de horas</b><small>Aparecem para os dentistas em Financeiro, com o valor por hora calculado.</small>
+      <div class="ajrows" id="vf-pacs">${(c.pacotes || []).map(ajRowPac).join('')}</div><button type="button" class="link" data-aj="addpac">+ Adicionar pacote</button></div>
+    <p class="hint">Novas reservas usam os valores atuais. As já marcadas mantêm o valor de quando foram feitas (você pode ajustar uma reserva específica nos detalhes dela, na Agenda).</p>
+    ${fb}<div class="nav end"><button class="primary" type="submit">Salvar valores</button></div></form>`;
+  $('acc-func').innerHTML = `<form id="ff" class="ajf" novalidate>
+    <div class="ajsec"><b>Dias abertos</b><div class="chips2">${DIAS_ORD.map(d => `<label class="chip2"><input type="checkbox" data-fdia="${d}"${(c.diasAbertos || CFG.diasAbertos).includes(d) ? ' checked' : ''}><span>${DIAS[d]}</span></label>`).join('')}</div></div>
+    <div class="form2"><label>Abre às<select id="ff-abre">${hourOpts(0, 23, c.abre ?? CFG.abre)}</select></label><label>Fecha às<select id="ff-fecha">${hourOpts(1, 24, c.fecha ?? CFG.fecha)}</select></label></div>
+    <label class="w-sm">Cancelamento pelo site até<select id="ff-prazo">${[0, 2, 4, 6, 12, 24, 48, 72].map(n => `<option value="${n}"${n === (c.prazoCancelamentoH ?? CFG.prazoCancelamentoH) ? ' selected' : ''}>${n ? n + ' horas antes' : 'Até o início'}</option>`).join('')}</select></label>
+    <p class="hint">Reservas já marcadas fora do novo horário continuam valendo. Para fechar datas específicas (feriados, férias), use “Datas fechadas”.</p>
+    ${fb}<div class="nav end"><button class="primary" type="submit">Salvar funcionamento</button></div></form>`;
+  const tipo = pixKeyType(c.pix);
+  $('acc-pag').innerHTML = `<form id="pf" class="ajf" novalidate>
+    <div class="form2"><label>Tipo de chave Pix<select id="pf-tipo">${[['cel', 'Celular'], ['doc', 'CPF ou CNPJ'], ['email', 'E-mail'], ['aleatoria', 'Chave aleatória']].map(([v, l]) => `<option value="${v}"${v === tipo ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
+      <label>Chave Pix<input id="pf-chave" autocomplete="off" value="${esc(tipo === 'cel' && c.pix ? String(c.pix).replace(/^\+55/, '') : c.pix || '')}"></label>
+      <label>Nome do recebedor (como aparece no banco)<input id="pf-nome" maxlength="25" value="${esc(c.pixNome || '')}" placeholder="Ex.: Thalia Santiago"></label>
+      <label>Cidade<input id="pf-cid" maxlength="15" value="${esc(c.pixCidade || 'Ipatinga')}"></label></div>
+    <div id="pf-prev"></div>
+    <label class="sw"><input type="checkbox" id="pf-lemb"${c.lembretePagamento !== false ? ' checked' : ''}><span><b>Lembrete automático de pagamento</b><small>A cada 3 dias, e-mail e notificação para o dentista com reserva já realizada sem pagamento e sem comprovante.</small></span></label>
+    <label>Bloquear novas reservas de quem está com pagamento atrasado<select id="pf-lim"><option value="">Não bloquear</option>${[3, 5, 7, 10, 15, 30].map(n => `<option value="${n}"${n === c.limiteAtrasoDias ? ' selected' : ''}>Atraso de mais de ${n} dias</option>`).join('')}</select></label>
+    ${fb}<div class="nav end"><button class="primary" type="submit">Salvar pagamentos</button></div></form>`;
+  $('acc-regras').innerHTML = `<form id="rf" class="ajf" novalidate>
+    <label>Regras de uso (uma por linha)<textarea id="rf-regras" rows="6">${esc(listTxt(c.regras || CFG.regras))}</textarea></label>
+    <label>Checklist de saída (um item por linha)<textarea id="rf-check" rows="5">${esc(listTxt(c.checklist || CFG.checklist))}</textarea></label>
+    <div class="form2">
+      <label>Equipamentos (um por linha)<textarea id="rf-eq" rows="4">${esc(listTxt(e.equipamentos))}</textarea></label>
+      <label>Materiais inclusos (um por linha)<textarea id="rf-inc" rows="4">${esc(listTxt(e.inclusos))}</textarea></label>
+      <label>O que o dentista deve levar<textarea id="rf-lev" rows="4">${esc(listTxt(e.levar))}</textarea></label>
+      <label>Wi-Fi<input id="rf-wifi" value="${esc(e.wifi)}" placeholder="Rede e senha"></label>
+      <label>Chegada<input id="rf-che" value="${esc(e.chegada)}" placeholder="Ex.: chegar 10 minutos antes"></label>
+      <label>Saída<input id="rf-sai" value="${esc(e.saida)}" placeholder="Ex.: deixar a chave na recepção"></label></div>
+    <p class="hint">Aparecem para os dentistas em “O consultório”, no cadastro e no checklist ao fim de cada reserva.</p>
+    ${fb}<div class="nav end"><button class="primary" type="submit">Salvar regras e espaço</button></div></form>`;
+  $('acc-rel').innerHTML = `<div class="ajf">
+    <label class="sw"><input type="checkbox" id="gf-rel"${c.relatorioMensal !== false ? ' checked' : ''}><span><b>Relatório mensal por e-mail</b><small>Todo dia 1º: reservas, horas, ocupação, receita, pagamentos em aberto, avaliações e ranking de dentistas do mês anterior.</small></span></label>
+    <div class="dr-actions"><button type="button" class="ghost sm" data-aj="relatorio">Enviar o relatório do mês passado agora</button></div>
+    <div class="ajsec"><b>Google Agenda</b><small>As reservas e bloqueios aparecem na sua agenda do Google. O Google atualiza a cada poucas horas.</small><div id="gf-agenda"></div></div>
+    ${fb}</div>`;
+  ajAgenda(); ajPixPrev();
+}
+function ajAgenda() {
+  const el = $('gf-agenda'); if (!el) return;
+  const tk = S.ajCfg && S.ajCfg.agendaToken;
+  if (!tk) { el.innerHTML = `<div class="dr-actions"><button type="button" class="primary sm" data-aj="agenda">Criar link da agenda</button></div>`; return; }
+  const url = agendaUrl(tk);
+  el.innerHTML = `<div class="ag-link"><input readonly value="${esc(url)}" aria-label="Link da agenda" onclick="this.select()"><button type="button" class="ghost sm" data-aj="copiaragenda">Copiar link</button></div>
+    <ol class="rules"><li>No computador, abra <b>calendar.google.com</b>.</li><li>Na esquerda, ao lado de <b>Outras agendas</b>, clique em <b>+</b> e depois em <b>Do URL</b>.</li><li>Cole o link e clique em <b>Adicionar agenda</b>. Ela aparece também no app do Google Agenda do celular.</li></ol>
+    <p class="hint">O link é secreto: quem tiver ele vê a agenda. A função “push” do Supabase precisa estar com o código atualizado (Ajustes → App no celular → Copiar código da função → colar e Deploy).</p>
+    <div class="dr-actions"><button type="button" class="ghost sm" data-aj="testaragenda">Testar link</button><button type="button" class="link" data-aj="agenda">Gerar novo link (o antigo para de funcionar)</button></div>`;
+}
+const agendaUrl = tk => `${String((window.APP_CONFIG || {}).supabaseUrl || '').replace(/\/$/, '')}/functions/v1/push?agenda=${tk}`;
+function ajPixPrev() {
+  const el = $('pf-prev'); if (!el) return;
+  const t = $('pf-tipo').value, k = $('pf-chave').value.trim();
+  if (!k) { el.innerHTML = '<p class="hint">Cadastre a chave para os dentistas pagarem com QR Code e Pix copia e cola, já com o valor de cada reserva.</p>'; return; }
+  const code = pixPayload({ chave: pixFormatKey(t, k), nome: $('pf-nome').value || 'Thalia Santiago', cidade: $('pf-cid').value || 'Ipatinga', valor: 0, txid: 'TESTE' });
+  el.innerHTML = `<div class="pixbox sm"><div class="pix-qr">${QR.svg(code, 150)}</div><div class="pix-tx"><span class="eyebrow">Prévia (sem valor)</span><small>Chave: <b>${esc(pixFormatKey(t, k))}</b>. Teste lendo o QR Code no app do seu banco: deve aparecer o seu nome como recebedor. Não precisa concluir o pagamento.</small></div></div>`;
+}
+async function ajLoad() {
+  if (!SB) { $('aj-sql').hidden = false; $('aj-sql').textContent = 'Configure o Supabase para editar os ajustes.'; return; }
+  try { S.ajCfg = await S.store.rpc('config_admin'); $('aj-sql').hidden = true; }
+  catch (_) { $('aj-sql').hidden = false; S.ajLoaded = false; return; }
+  applyCfg(Object.assign({}, S.ajCfg)); ajBuild(); render();
+}
+async function ajSave(form, patch, okMsg) {
+  const fbx = form.querySelector('.aj-fb'), btn = form.querySelector('[type=submit]');
+  if (btn) btn.disabled = true;
+  try {
+    await S.store.rpc('salvar_ajustes', { p: patch });
+    S.ajCfg = await S.store.rpc('config_admin'); S.cfgSig = null; applyCfg(Object.assign({}, S.ajCfg));
+    msgIn(fbx, 'ok', okMsg || 'Salvo.'); S.store.refresh && S.store.refresh(); render();
+  } catch (err) { msgIn(fbx, 'err', errText(err, 'Não foi possível salvar. Confira os campos e tente de novo.')); }
+  finally { if (btn) btn.disabled = false; }
+}
+function ajSummaries() {
+  const c = S.ajCfg;
+  const set = (k, t) => { const el = $('sum-' + k); if (el) el.textContent = t; };
+  set('valores', precoTexto() + (CFG.pacotes.length ? ` · ${plural(CFG.pacotes.length, 'pacote', 'pacotes')}` : ''));
+  set('func', `${funcText()} · cancelamento até ${CFG.prazoCancelamentoH}h antes`);
+  const fut = (S.cache.blocks || []).filter(x => x.b.date >= iso(new Date()));
+  set('fechadas', fut.length ? plural(new Set(fut.map(x => x.b.date)).size, 'data com bloqueio', 'datas com bloqueio') : 'Nenhuma data fechada');
+  set('pag', (CFG.pix ? 'Pix cadastrado' : 'Chave Pix não cadastrada') + (CFG.limiteAtrasoDias ? ` · bloqueio após ${CFG.limiteAtrasoDias} dias de atraso` : ''));
+  set('regras', `${plural(CFG.regras.length, 'regra', 'regras')} · ${plural(CFG.checklist.length, 'item', 'itens')} no checklist`);
+  set('rel', c ? `${c.relatorioMensal === false ? 'Relatório desligado' : 'Relatório todo dia 1º'} · ${c.agendaToken ? 'Google Agenda conectado' : 'Google Agenda não conectado'}` : '');
+  set('app', { ativo: 'Notificações ativas neste aparelho', desligado: 'Notificações desligadas neste aparelho', 'sem-config': 'Notificações não configuradas' }[pushState()] || 'Instalar e notificações');
+  set('email', ($('em-status') && $('em-status').textContent) || '');
+  set('tema', { claro: 'Claro', escuro: 'Escuro', auto: 'Automático' }[(document.querySelector('#t-ajustes .theme-opt[aria-checked="true"]') || {}).dataset?.tema] || '');
+  const fx = $('fx-list');
+  if (fx) {
+    const sig = fut.map(x => x.b.id + x.st).join();
+    if (fx.dataset.sig !== sig) {
+      fx.dataset.sig = sig;
+      fx.innerHTML = fut.length ? fut.sort(asc).map(({ b }) => { const d = new Date(b.date + 'T12:00'), todo = b.from <= CFG.abre && b.to >= CFG.fecha; return `<button type="button" class="mini-row" data-bk="${esc(b.id)}"><span class="date"><b>${d.getDate()}</b><small>${MESES[d.getMonth()].slice(0, 3)}</small></span><span class="txt"><b>${esc(b.nome)}</b><span>${DIAS_LONGOS[d.getDay()]} · ${todo ? 'dia inteiro' : `${hh(b.from)} – ${hh(b.to)}`}</span></span><span class="end"><span class="tag cancelado">Fechado</span></span></button>`; }).join('')
+        : emptyBox('Nenhuma data fechada. Use o botão abaixo para fechar feriados, férias ou dias de manutenção.');
+    }
+  }
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-aj]'); if (!b || $('view-admin').hidden) return;
+  const a = b.dataset.aj, fbx = (b.closest('.ajf') || document).querySelector('.aj-fb');
+  if (a === 'addfaixa') { $('vf-faixas').insertAdjacentHTML('beforeend', ajRowFaixa()); return; }
+  if (a === 'addpac') { $('vf-pacs').insertAdjacentHTML('beforeend', ajRowPac()); return; }
+  if (a === 'del') { b.closest('.ajrow').remove(); return; }
+  if (a === 'bloquear') { openForm('Bloqueio', blockForm); return; }
+  if (a === 'copiaragenda') { try { await navigator.clipboard.writeText(agendaUrl(S.ajCfg.agendaToken)); msgIn(fbx, 'ok', 'Link copiado.'); } catch (_) { msgIn(fbx, 'err', 'Selecione o link e copie manualmente.'); } return; }
+  b.disabled = true;
+  try {
+    if (a === 'relatorio') {
+      const ok = await S.store.rpc('enviar_relatorio', {});
+      msgIn(fbx, ok ? 'ok' : 'err', ok ? 'Relatório enviado para o seu e-mail.' : 'Não foi enviado. Confira a configuração dos e-mails automáticos (mais abaixo).');
+    } else if (a === 'agenda') {
+      await S.store.rpc('gerar_token_agenda', {}); S.ajCfg = await S.store.rpc('config_admin'); ajAgenda(); ajSummaries();
+      msgIn(fbx, 'ok', 'Link criado. Siga os passos para adicionar no Google Agenda.');
+    } else if (a === 'testaragenda') {
+      let ok = false; try { const r = await fetch(agendaUrl(S.ajCfg.agendaToken)); ok = r.ok && /BEGIN:VCALENDAR/.test(await r.text()); } catch (_) {}
+      msgIn(fbx, ok ? 'ok' : 'err', ok ? 'O link está funcionando.' : 'O link ainda não responde. Atualize o código da função push no Supabase (cole o código novo e clique em Deploy) e teste de novo.');
+    }
+  } catch (err) { msgIn(fbx, 'err', errText(err)); }
+  finally { b.disabled = false; }
+});
+document.addEventListener('input', e => { if (e.target.closest && e.target.closest('#pf') && e.target.id !== 'pf-lim') ajPixPrev(); });
+document.addEventListener('change', async e => {
+  if (e.target.id === 'pf-tipo') ajPixPrev();
+  if (e.target.id === 'gf-rel') { const f = e.target.closest('.ajf'); await ajSave(f, { relatorioMensal: e.target.checked }, e.target.checked ? 'Relatório mensal ligado.' : 'Relatório mensal desligado.'); }
+});
+document.addEventListener('submit', e => {
+  const f = e.target; if (!f.classList || !f.classList.contains('ajf')) return;
+  e.preventDefault();
+  const fbx = f.querySelector('.aj-fb'), bad = t => msgIn(fbx, 'err', t);
+  if (f.id === 'vf') {
+    const hora = numOrNull($('vf-hora').value); if (hora != null && !(hora >= 0)) return bad('Confira o valor da hora.');
+    const porDia = {}; for (const i of f.querySelectorAll('[data-vdia]')) { const v = numOrNull(i.value); if (v != null) { if (!(v >= 0)) return bad('Confira os preços por dia.'); porDia[i.dataset.vdia] = v; } }
+    const porHora = []; for (const r of f.querySelectorAll('[data-row="faixa"]')) { const de = +r.querySelector('[data-k="de"]').value, ate = +r.querySelector('[data-k="ate"]').value, v = numOrNull(r.querySelector('[data-k="valor"]').value); if (v == null) continue; if (!(ate > de) || !(v >= 0)) return bad('Em cada faixa, o “até” precisa ser depois do “das” e o valor precisa estar preenchido.'); porHora.push({ de, ate, valor: v }); }
+    const pacotes = []; for (const r of f.querySelectorAll('[data-row="pac"]')) { const h = numOrNull(r.querySelector('[data-k="horas"]').value), v = numOrNull(r.querySelector('[data-k="valor"]').value); if (h == null && v == null) continue; if (!(h > 0) || !(v >= 0)) return bad('Confira as horas e o valor de cada pacote.'); pacotes.push({ horas: h, valor: v }); }
+    return ajSave(f, { valorHora: hora, precos: { porDia, porHora }, pacotes }, 'Valores salvos. Novas reservas já usam os valores atualizados.');
+  }
+  if (f.id === 'ff') {
+    const dias = [...f.querySelectorAll('[data-fdia]:checked')].map(i => +i.dataset.fdia), abre = +$('ff-abre').value, fecha = +$('ff-fecha').value;
+    if (!dias.length) return bad('Marque pelo menos um dia aberto.');
+    if (fecha <= abre) return bad('O horário de fechar precisa ser depois do de abrir.');
+    return ajSave(f, { diasAbertos: dias, abre, fecha, prazoCancelamentoH: +$('ff-prazo').value }, 'Funcionamento salvo. A agenda já mostra os novos horários.');
+  }
+  if (f.id === 'pf') {
+    const t = $('pf-tipo').value, k = $('pf-chave').value.trim(), dig = k.replace(/\D/g, '');
+    if (k && t === 'cel' && (dig.length < 10 || dig.length > 13)) return bad('Confira o celular da chave Pix, com DDD.');
+    if (k && t === 'doc' && dig.length !== 11 && dig.length !== 14) return bad('CPF tem 11 números e CNPJ tem 14.');
+    if (k && t === 'email' && !/^\S+@\S+\.\S+$/.test(k)) return bad('Confira o e-mail da chave Pix.');
+    return ajSave(f, { pix: k ? pixFormatKey(t, k) : '', pixNome: $('pf-nome').value.trim(), pixCidade: $('pf-cid').value.trim(), lembretePagamento: $('pf-lemb').checked, limiteAtrasoDias: $('pf-lim').value || null }, 'Pagamentos salvos.');
+  }
+  if (f.id === 'rf') {
+    const regras = linesOf('rf-regras'), checklist = linesOf('rf-check');
+    if (!checklist.length) return bad('O checklist precisa de pelo menos um item.');
+    return ajSave(f, { regras, checklist, espaco: { equipamentos: linesOf('rf-eq'), inclusos: linesOf('rf-inc'), levar: linesOf('rf-lev'), wifi: $('rf-wifi').value.trim(), chegada: $('rf-che').value.trim(), saida: $('rf-sai').value.trim() } }, 'Regras, checklist e espaço salvos.');
+  }
+});
+
+/* Menu "Mais" da barra inferior no celular */
+document.addEventListener('click', e => {
+  const m = e.target.closest && e.target.closest('[data-more]');
+  document.querySelectorAll('.more-sheet').forEach(sh => { const btn = sh.previousElementSibling; const open = !!m && m === btn && sh.hidden; sh.hidden = !open; btn.setAttribute('aria-expanded', String(open)); });
+}, true);
+function markMore() {
+  const a = document.querySelector('#view-admin .more-btn'), d = document.querySelector('#view-dent .more-btn');
+  if (a) a.setAttribute('aria-current', ['mural', 'site', 'ajustes'].includes(S.tab) ? 'page' : 'false');
+  if (d) d.setAttribute('aria-current', ['consultorio', 'perfil'].includes(S.ctab) ? 'page' : 'false');
+}
 /* ---------- Rotas e render ---------- */
 function route() {
   const h = location.hash, wantAdmin = h === '#admin', wantDent = h === '#dentista';
