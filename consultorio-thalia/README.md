@@ -118,6 +118,11 @@ No painel, aba **Pacientes** (só a Dra. Thalia vê):
 - **Documentos:** prontuário, orçamento, radiografias e outros arquivos (foto ou PDF), num armazenamento privado. O plano gratuito do Supabase guarda cerca de 1 GB; fotos grandes são reduzidas automaticamente.
 - As consultas aparecem na Agenda (em verde) e em "Pacientes de hoje", no Resumo.
 
+- **Lembrete no WhatsApp:** em cada consulta agendada (na ficha, em "Consultas de hoje" e "Próximas consultas"), o ícone verde abre o WhatsApp do paciente com dia, hora e endereço.
+- **Aniversariantes:** no Resumo e na aba Pacientes, quem faz aniversário na semana, com botão para mandar parabéns.
+- **Receita e atestado em PDF** com a logo, direto da ficha (botões Receita e Atestado). O PDF é baixado e fica salvo nos documentos do paciente. Nome e CRO da assinatura em Ajustes → Receitas e atestados.
+- **Financeiro do paciente:** orçamentos (em aberto, aprovado, recusado), parcelas com vencimento, pagamentos recebidos e recibo em PDF. O total a receber aparece na aba Pacientes e no Financeiro do painel.
+
 Dados de saúde são sensíveis (LGPD): mantenha a senha do painel só com a Dra. Thalia. Para o prontuário digital substituir o papel com validade legal, confira as regras do CRO (normalmente exigem assinatura com certificado digital).
 
 ## Termos de uso
@@ -139,8 +144,17 @@ Cancelar ou remarcar pelo site: até **4 horas** antes do início, com direito a
 ## Preços
 Em Ajustes → Valores: valor da hora (até o limite de horas avulsas), períodos (manhã, tarde, noite) e diária. Acima do limite, o dentista reserva um período ou a diária; intervalos que cruzam períodos aparecem com o botão "Falar com a Dra. Thalia".
 
+## Faltas e cancelamento fora do prazo
+Na reserva (Agenda → toque na reserva): **Cancelar com taxa** libera o horário e deixa cobrada a taxa (padrão em Ajustes → Faltas e cancelamento fora do prazo: 100%, 75%, 50% ou 25% do valor). A taxa aparece no Financeiro do dentista, no Pix do mês e no recibo. **O dentista faltou** registra a falta (a reserva continua cobrada).
+
+## Backup
+Em Ajustes → Backup: uma planilha do Excel (abre no Google Planilhas) com reservas, dentistas, planos, pacientes, consultas, evoluções, orçamentos, pagamentos, documentos, problemas e aceites dos termos. Todo dia 1º chega um lembrete. Os arquivos anexados ficam no Supabase (Storage). Guarde a planilha em local seguro: ela tem dados de saúde.
+
+## Relatório de ocupação
+No Financeiro do painel: mapa de ocupação por dia da semana e horário (últimas 4, 8 ou 12 semanas, ou próximas 4), com os horários mais procurados e os mais vazios, bons para promoção.
+
 ## Fotos e perguntas frequentes
-No painel, aba **Site**: envie fotos do consultório (aparecem na galeria da página inicial) e escreva as perguntas frequentes.
+No painel, aba **Site**: envie fotos do consultório (aparecem na galeria da página inicial) e escreva as perguntas frequentes. Os equipamentos e o que está incluso no aluguel (Ajustes → Regras, checklist e espaço) aparecem na página inicial, na seção Estrutura e valores, junto com os preços.
 
 ## Domínio próprio (opcional)
 1. Compre o domínio em **registro.br** (um .com.br custa em torno de R$ 40 por ano).

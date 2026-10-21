@@ -1,5 +1,5 @@
 -- =====================================================================
--- Consultório Odontológico Thalia Santiago · banco de dados (Supabase) · versão 7
+-- Consultório Odontológico Thalia Santiago · banco de dados (Supabase) · versão 8
 -- Cole este arquivo inteiro em: Supabase > SQL Editor > New query > Run
 -- Pode rodar de novo sem problema: ele recria funções e regras.
 -- =====================================================================
@@ -893,7 +893,7 @@ begin
   v_tel := right(regexp_replace(coalesce(new.tel, ''), '\D', '', 'g'), 10);
   if exists (
     select 1 from public.bookings b
-    where b.status in ('ativo', 'credito') and not b.pago and b.origem <> 'bloqueio' and coalesce(b.valor, 0) > 0
+    where b.status in ('ativo', 'credito', 'taxa') and not b.pago and b.origem <> 'bloqueio' and coalesce(b.valor, 0) > 0
       and b.date < public.agora_local()::date - lim
       and ((new.dentist_id is not null and b.dentist_id = new.dentist_id)
            or (length(v_tel) = 10 and right(regexp_replace(b.tel, '\D', '', 'g'), 10) = v_tel))
@@ -1044,13 +1044,13 @@ begin
   for r in
     select b.dentist_id, d.nome, d.email, count(*) as qtd, sum(b.valor) as total
     from public.bookings b join public.dentists d on d.id = b.dentist_id
-    where b.status in ('ativo', 'credito') and not b.pago and b.origem <> 'bloqueio' and coalesce(b.valor, 0) > 0
+    where b.status in ('ativo', 'credito', 'taxa') and not b.pago and b.origem <> 'bloqueio' and coalesce(b.valor, 0) > 0
       and b.comprovante_em is null and b.comprovante_path is null and b.date < public.agora_local()::date
       and not exists (select 1 from public.cobrancas k where k.dentist_id = b.dentist_id and k.enviado_em > now() - interval '3 days')
     group by b.dentist_id, d.nome, d.email
   loop
     select string_agg('<li>' || public.quando_txt(b.date, b.h_from, b.h_to) || ' · ' || public.brl(b.valor) || '</li>', '' order by b.date) into lista
-    from public.bookings b where b.dentist_id = r.dentist_id and b.status in ('ativo', 'credito') and not b.pago and b.origem <> 'bloqueio'
+    from public.bookings b where b.dentist_id = r.dentist_id and b.status in ('ativo', 'credito', 'taxa') and not b.pago and b.origem <> 'bloqueio'
       and coalesce(b.valor, 0) > 0 and b.comprovante_em is null and b.comprovante_path is null and b.date < public.agora_local()::date;
     perform public.enviar_email(r.email, r.nome, 'Pagamento pendente · ' || public.brl(r.total),
       '<p>Olá, ' || public.esc_html(split_part(r.nome, ' ', 1)) || '!</p><p>Consta pagamento pendente do uso do consultório:</p><ul>' || lista || '</ul>'
@@ -1080,7 +1080,7 @@ begin
   select * into c from public.app_config where id = 1;
   select count(*), coalesce(sum(h_to - h_from), 0), sum(valor), coalesce(sum(valor) filter (where pago), 0), coalesce(sum(valor) filter (where not pago), 0), count(*) filter (where valor is null)
     into q, hrs, prev, v_pago, v_aberto, sem_valor
-  from public.bookings where status in ('ativo', 'credito') and origem <> 'bloqueio' and date >= ini and date < fim;
+  from public.bookings where status in ('ativo', 'credito', 'taxa') and origem <> 'bloqueio' and date >= ini and date < fim;
   select count(*) into canc from public.bookings where status = 'cancelado' and origem <> 'bloqueio' and date >= ini and date < fim;
   select count(*) * (c.fecha - c.abre) into cap from generate_series(ini, fim - 1, interval '1 day') g where extract(dow from g)::int = any (c.dias);
   select avg((avaliacao ->> 'nota')::numeric), count(*) into nota, nnotas from public.bookings where avaliacao is not null and date >= ini and date < fim;
@@ -1088,7 +1088,7 @@ begin
   select count(*) into probs from public.problemas where status = 'aberto';
   select string_agg('<tr><td style="padding:6px 0;border-bottom:1px solid #efe4e4">' || public.esc_html(nome) || '</td><td style="padding:6px 0;border-bottom:1px solid #efe4e4;text-align:right">' || horas || 'h</td><td style="padding:6px 0;border-bottom:1px solid #efe4e4;text-align:right">' || coalesce(public.brl(total), '—') || '</td></tr>', '' order by horas desc)
     into top from (select nome, sum(h_to - h_from) as horas, sum(valor) as total from public.bookings
-                   where status in ('ativo', 'credito') and origem <> 'bloqueio' and date >= ini and date < fim group by nome order by 2 desc limit 8) t;
+                   where status in ('ativo', 'credito', 'taxa') and origem <> 'bloqueio' and date >= ini and date < fim group by nome order by 2 desc limit 8) t;
   mes := (array['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'])[extract(month from ini)::int] || ' de ' || extract(year from ini);
   return '<p>Olá, Dra. Thalia!</p><p>Este é o resumo do consultório em <b>' || mes || '</b>.</p>'
     || '<table style="width:100%;border-collapse:collapse;font-size:15px">'
@@ -2044,6 +2044,243 @@ begin
     end loop;
   end if;
 end $$;
+
+-- =====================================================================
+-- v8 (out/2026): pacientes (financeiro, receita e atestado), taxa por cancelamento fora do prazo, backup
+-- =====================================================================
+
+alter table public.app_config add column if not exists taxa_cancel_pct int not null default 100;
+alter table public.app_config add column if not exists prof_nome text;
+alter table public.app_config add column if not exists prof_cro text;
+alter table public.app_config add column if not exists prof_especialidade text;
+alter table public.app_config add column if not exists ultimo_lembrete_backup date;
+alter table public.app_config drop constraint if exists app_config_taxa_ok;
+alter table public.app_config add constraint app_config_taxa_ok check (taxa_cancel_pct between 0 and 100
+  and (prof_nome is null or length(prof_nome) <= 120) and (prof_cro is null or length(prof_cro) <= 40) and (prof_especialidade is null or length(prof_especialidade) <= 120));
+
+-- ---------- Faltas e cancelamento fora do prazo ----------
+alter table public.bookings add column if not exists falta boolean not null default false;
+alter table public.bookings add column if not exists valor_original numeric(10,2);
+alter table public.bookings add column if not exists taxa_em timestamptz;
+-- "taxa": cancelada fora do prazo; o horário fica livre e fica cobrada a taxa (percentual do valor).
+alter table public.bookings drop constraint if exists bookings_status_check;
+alter table public.bookings add constraint bookings_status_check check (status in ('ativo', 'cancelado', 'credito', 'taxa'));
+
+create or replace function public.proteger_booking() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if coalesce(current_setting('app.bypass', true), '') = 'on' or public.is_admin() then
+    return new;
+  end if;
+  new.id := old.id; new.dentist_id := old.dentist_id; new.nome := old.nome; new.cro := old.cro;
+  new.tel := old.tel; new.primeira := old.primeira; new.date := old.date; new.h_from := old.h_from;
+  new.h_to := old.h_to; new.status := old.status; new.origem := old.origem; new.serie := old.serie;
+  new.conf_aberta_em := old.conf_aberta_em; new.pago := old.pago; new.pago_em := old.pago_em;
+  new.criado_em := old.criado_em; new.email := old.email; new.lembrete_em := old.lembrete_em;
+  new.plano_id := old.plano_id; new.plano_data_orig := old.plano_data_orig;
+  new.falta := old.falta; new.valor_original := old.valor_original; new.taxa_em := old.taxa_em;
+  return new;
+end $$;
+
+create or replace function public.cancelar_com_taxa(p_id uuid, p_pct int) returns numeric
+language plpgsql security definer set search_path = public as $$
+declare b public.bookings; v numeric;
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  if p_pct is null or p_pct < 0 or p_pct > 100 then raise exception 'DADOS_INVALIDOS'; end if;
+  select * into b from public.bookings where id = p_id for update;
+  if not found then raise exception 'RESERVA_NAO_ENCONTRADA'; end if;
+  if b.status <> 'ativo' or b.origem = 'bloqueio' then raise exception 'DADOS_INVALIDOS'; end if;
+  if p_pct = 0 then perform public.cancelar(p_id); return 0; end if;
+  v := round(coalesce(b.valor, public.preco_reserva(b.date, b.h_from, b.h_to), 0) * p_pct / 100.0, 2);
+  perform set_config('app.bypass', 'on', true);
+  delete from public.slots where booking_id = p_id;
+  update public.bookings set status = 'taxa', valor_original = coalesce(b.valor, valor_original), valor = v, taxa_em = now() where id = p_id;
+  return v;
+end $$;
+revoke execute on function public.cancelar_com_taxa(uuid, int) from public, anon;
+grant execute on function public.cancelar_com_taxa(uuid, int) to authenticated;
+
+create or replace function public.marcar_falta(p_id uuid, p_falta boolean) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  perform set_config('app.bypass', 'on', true);
+  update public.bookings set falta = coalesce(p_falta, false) where id = p_id and origem <> 'bloqueio';
+  if not found then raise exception 'RESERVA_NAO_ENCONTRADA'; end if;
+end $$;
+revoke execute on function public.marcar_falta(uuid, boolean) from public, anon;
+grant execute on function public.marcar_falta(uuid, boolean) to authenticated;
+
+-- Ajustes do v8 (painel)
+create or replace function public.salvar_cfg_v8(p jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+declare c public.app_config;
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  if jsonb_typeof(p) <> 'object' then raise exception 'DADOS_INVALIDOS'; end if;
+  select * into c from public.app_config where id = 1;
+  if p ? 'taxaCancelPct' then c.taxa_cancel_pct := (p ->> 'taxaCancelPct')::int; end if;
+  if p ? 'profNome' then c.prof_nome := nullif(trim(p ->> 'profNome'), ''); end if;
+  if p ? 'profCro' then c.prof_cro := nullif(trim(p ->> 'profCro'), ''); end if;
+  if p ? 'profEspecialidade' then c.prof_especialidade := nullif(trim(p ->> 'profEspecialidade'), ''); end if;
+  update public.app_config set taxa_cancel_pct = c.taxa_cancel_pct, prof_nome = c.prof_nome, prof_cro = c.prof_cro,
+    prof_especialidade = c.prof_especialidade, atualizado_em = now() where id = 1;
+exception
+  when invalid_text_representation or numeric_value_out_of_range or check_violation then raise exception 'DADOS_INVALIDOS';
+end $$;
+revoke execute on function public.salvar_cfg_v8(jsonb) from public, anon;
+grant execute on function public.salvar_cfg_v8(jsonb) to authenticated;
+
+create or replace function public.config_admin() returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare c public.app_config;
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  select * into c from public.app_config where id = 1;
+  return public.config_publica() || jsonb_build_object('lembretePagamento', c.lembrete_pagamento, 'relatorioMensal', c.relatorio_mensal,
+    'agendaToken', c.agenda_token, 'pushUrl', c.push_url, 'emailAdmin', c.email_admin,
+    'taxaCancelPct', c.taxa_cancel_pct, 'profNome', c.prof_nome, 'profCro', c.prof_cro, 'profEspecialidade', c.prof_especialidade);
+end $$;
+revoke execute on function public.config_admin() from public, anon;
+grant execute on function public.config_admin() to authenticated;
+
+-- Avisos de cancelamento (também crédito do plano e cancelamento com taxa).
+create or replace function public.email_cancelamento() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare
+  c public.app_config; w record;
+begin
+  if not (old.status = 'ativo' and new.status in ('cancelado', 'credito', 'taxa')) then return new; end if;
+  if coalesce(current_setting('app.silencioso', true), '') = 'on' then return new; end if;
+  select * into c from public.app_config where id = 1;
+  if new.origem <> 'bloqueio' and new.status <> 'taxa' then
+    if new.status = 'credito' then
+      perform public.enviar_email(c.email_admin, 'Dra. Thalia', 'Dia do plano liberado · ' || new.nome,
+        '<p><b>' || public.esc_html(new.nome) || '</b> avisou que não vai usar este dia do plano mensal:</p><p><b>' || public.quando_txt(new.date, new.h_from, new.h_to) || '</b></p><p>O dia virou crédito para remarcar no mesmo mês, e o horário ficou livre.</p>');
+    else
+      perform public.enviar_email(c.email_admin, 'Dra. Thalia', 'Reserva cancelada · ' || new.nome,
+        '<p>A reserva de <b>' || public.esc_html(new.nome) || '</b> foi cancelada:</p><p><b>' || public.quando_txt(new.date, new.h_from, new.h_to) || '</b></p><p>O horário voltou a ficar livre.</p>');
+    end if;
+  end if;
+  for w in
+    select e.*, d.email as dest from public.espera e join public.dentists d on d.id = e.dentist_id
+    where e.date = new.date and e.h_from < new.h_to and e.h_to > new.h_from
+      and (new.dentist_id is null or e.dentist_id <> new.dentist_id)
+      and not exists (select 1 from public.slots s where s.date = e.date and s.hour >= e.h_from and s.hour < e.h_to)
+  loop
+    perform public.enviar_email(w.dest, w.nome, 'Vaga aberta no consultório · ' || to_char(w.date, 'DD/MM'),
+      '<p>Olá, ' || public.esc_html(split_part(w.nome, ' ', 1)) || '!</p><p>O horário que você queria ficou livre:</p>'
+      || '<p style="font-size:17px"><b>' || public.quando_txt(w.date, w.h_from, w.h_to) || '</b></p>'
+      || coalesce('<p><a href="' || c.site_url || '/#dentista" style="display:inline-block;background:#590117;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none">Reservar agora</a></p>', '')
+      || '<p style="color:#7a6a6e">Quem reservar primeiro fica com o horário.</p>');
+  end loop;
+  return new;
+exception when others then return new;
+end $$;
+
+create or replace function public.push_reserva_alterada() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare w record; adm boolean := public.is_admin(); quieto boolean := coalesce(current_setting('app.silencioso', true), '') = 'on';
+begin
+  if old.status = 'ativo' and new.status in ('cancelado', 'credito', 'taxa') and not quieto then
+    if new.origem <> 'bloqueio' then
+      if adm and new.dentist_id is not null then
+        perform public.push_para(array[new.dentist_id], case when new.status = 'credito' then 'Dia do plano virou crédito' when new.status = 'taxa' then 'Reserva cancelada com taxa' else 'Reserva cancelada' end,
+          case when new.status = 'taxa' then 'A Dra. Thalia cancelou sua reserva de ' || public.hora_txt(new.date, new.h_from, new.h_to) || '. Taxa por cancelamento fora do prazo: ' || public.brl(new.valor) || '.'
+               when new.status = 'credito' then 'A Dra. Thalia liberou o dia ' || public.hora_txt(new.date, new.h_from, new.h_to) || ' do seu plano. Use o crédito para remarcar no mesmo mês.'
+               else 'A Dra. Thalia cancelou sua reserva de ' || public.hora_txt(new.date, new.h_from, new.h_to) || '.' end, './#dentista', 'reserva-' || new.id);
+      elsif not adm then
+        perform public.push_admins(case when new.status = 'credito' then 'Dia do plano liberado · ' else 'Reserva cancelada · ' end || new.nome,
+          public.hora_txt(new.date, new.h_from, new.h_to) || case when new.status = 'credito' then '. Virou crédito; o horário ficou livre.' else '. O horário ficou livre.' end, 'cancel-' || new.id);
+      end if;
+    end if;
+    for w in
+      select distinct e.dentist_id, e.date, e.h_from, e.h_to from public.espera e
+      where e.date = new.date and e.h_from < new.h_to and e.h_to > new.h_from
+        and (new.dentist_id is null or e.dentist_id <> new.dentist_id)
+        and not exists (select 1 from public.slots s where s.date = e.date and s.hour >= e.h_from and s.hour < e.h_to)
+    loop
+      perform public.push_para(array[w.dentist_id], 'Vaga aberta no consultório', 'O horário que você queria ficou livre: ' || public.hora_txt(w.date, w.h_from, w.h_to) || '. Quem reservar primeiro fica com ele.', './#dentista', 'vaga-' || w.date || '-' || w.h_from);
+    end loop;
+  end if;
+  if not old.pago and new.pago and new.dentist_id is not null then
+    perform public.push_para(array[new.dentist_id], 'Pagamento confirmado', 'A Dra. Thalia confirmou o pagamento da reserva de ' || public.hora_txt(new.date, new.h_from, new.h_to) || '.', './#dentista', 'pago-' || new.id);
+  end if;
+  if new.comprovante_path is not null and new.comprovante_path is distinct from old.comprovante_path then
+    perform public.push_admins('Comprovante enviado · ' || new.nome, 'Pagamento da reserva de ' || public.hora_txt(new.date, new.h_from, new.h_to) || '.', 'comp-' || new.id);
+  end if;
+  return new;
+exception when others then return new;
+end $$;
+
+
+-- ---------- Financeiro dos pacientes (só a administradora vê) ----------
+create table if not exists public.pac_orcamentos (
+  id uuid primary key default gen_random_uuid(),
+  paciente_id uuid not null references public.pacientes (id) on delete cascade,
+  descricao text not null check (length(trim(descricao)) between 1 and 500),
+  valor numeric(10,2) not null check (valor >= 0),
+  status text not null default 'aberto' check (status in ('aberto', 'aprovado', 'recusado')),
+  parcelas int not null default 1 check (parcelas between 1 and 48),
+  primeiro_venc date,
+  data date not null default current_date,
+  obs text check (obs is null or length(obs) <= 1000),
+  criado_em timestamptz not null default now()
+);
+create index if not exists pac_orcamentos_paciente_idx on public.pac_orcamentos (paciente_id);
+create table if not exists public.pac_pagamentos (
+  id uuid primary key default gen_random_uuid(),
+  paciente_id uuid not null references public.pacientes (id) on delete cascade,
+  orcamento_id uuid references public.pac_orcamentos (id) on delete set null,
+  data date not null default current_date,
+  valor numeric(10,2) not null check (valor > 0),
+  forma text not null default 'pix' check (forma in ('pix', 'dinheiro', 'cartao_debito', 'cartao_credito', 'transferencia', 'outro')),
+  obs text check (obs is null or length(obs) <= 500),
+  criado_em timestamptz not null default now()
+);
+create index if not exists pac_pagamentos_paciente_idx on public.pac_pagamentos (paciente_id);
+do $$
+declare t text;
+begin
+  foreach t in array array['pac_orcamentos', 'pac_pagamentos'] loop
+    execute format('alter table public.%I enable row level security', t);
+    execute format('drop policy if exists "%s: administradora" on public.%I', t, t);
+    execute format('create policy "%s: administradora" on public.%I for all using (public.is_admin()) with check (public.is_admin())', t, t);
+    if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+       and not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = t) then
+      execute format('alter publication supabase_realtime add table public.%I', t);
+    end if;
+  end loop;
+end $$;
+
+-- Receitas e atestados gerados no painel ficam nos documentos do paciente.
+alter table public.paciente_docs drop constraint if exists paciente_docs_tipo_check;
+alter table public.paciente_docs add constraint paciente_docs_tipo_check check (tipo in ('prontuario', 'orcamento', 'radiografia', 'receita', 'atestado', 'outro'));
+
+-- Rotina diária: planos, cobrança, lembrete de backup (dia 1º) e relatório do mês.
+create or replace function public.rotina_diaria() returns void
+language plpgsql security definer set search_path = public as $$
+declare c public.app_config; este_mes date := date_trunc('month', public.agora_local())::date;
+begin
+  begin perform public.gerar_planos(); exception when others then null; end;
+  begin perform public.cobrar_pendentes(); exception when others then null; end;
+  select * into c from public.app_config where id = 1;
+  if extract(day from public.agora_local()) = 1 and (c.ultimo_lembrete_backup is null or c.ultimo_lembrete_backup < este_mes) then
+    perform public.push_admins('Backup do mês', 'Baixe a planilha de backup do consultório em Ajustes → Backup.', 'backup');
+    perform public.enviar_email(c.email_admin, 'Dra. Thalia', 'Lembrete: backup do mês',
+      '<p>Olá, Dra. Thalia!</p><p>É dia 1º: hora de baixar a planilha de backup do consultório (reservas, dentistas, pacientes, consultas e financeiro).</p><p>No painel, abra <b>Ajustes → Backup</b> e toque em <b>Baixar planilha</b>. Guarde o arquivo em um lugar seguro, como o Google Drive.</p>'
+      || coalesce('<p><a href="' || c.site_url || '/#admin" style="display:inline-block;background:#590117;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none">Abrir o painel</a></p>', ''));
+    update public.app_config set ultimo_lembrete_backup = este_mes where id = 1;
+  end if;
+  if c.relatorio_mensal and extract(day from public.agora_local()) <= 3 and (c.ultimo_relatorio is null or c.ultimo_relatorio < este_mes) then
+    if public.enviar_relatorio((este_mes - interval '1 month')::date) then
+      update public.app_config set ultimo_relatorio = este_mes where id = 1;
+    end if;
+  end if;
+end $$;
+revoke execute on function public.rotina_diaria() from public, anon, authenticated;
+
 
 -- ---------- Arquivos: fotos do consultório (públicas) e comprovantes (privados) ----------
 do $$
