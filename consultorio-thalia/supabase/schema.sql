@@ -798,6 +798,13 @@ alter table public.app_config add column if not exists lembrete_pagamento boolea
 alter table public.app_config add column if not exists relatorio_mensal boolean not null default true;
 alter table public.app_config add column if not exists ultimo_relatorio date;
 alter table public.app_config add column if not exists agenda_token text;
+-- Preço por período (acima do limite de horas avulsas) e diária
+alter table public.app_config add column if not exists limite_horas int not null default 3;
+alter table public.app_config add column if not exists periodos jsonb not null default '[{"de":8,"ate":13,"valor":180},{"de":13,"ate":18,"valor":180},{"de":18,"ate":22,"valor":180}]'::jsonb;
+alter table public.app_config add column if not exists diaria jsonb default '{"de":8,"ate":18,"valor":350}'::jsonb;
+alter table public.app_config add column if not exists v6_aplicado boolean not null default false;
+-- Valores combinados com a Dra. Thalia (out/2026): R$ 50 a hora e funcionamento até as 22h. Aplicado uma única vez.
+update public.app_config set valor_hora = 50, fecha = greatest(fecha, 22), v6_aplicado = true where id = 1 and not v6_aplicado;
 alter table public.app_config drop constraint if exists app_config_horario_ok;
 alter table public.app_config add constraint app_config_horario_ok check (abre >= 0 and fecha <= 24 and abre < fecha and prazo_cancel_h between 0 and 720
   and (limite_atraso_dias is null or limite_atraso_dias between 1 and 90) and (valor_hora is null or valor_hora >= 0) and cardinality(dias) between 1 and 7);
@@ -830,10 +837,37 @@ begin
   if coalesce(c.precos -> 'porDia', '{}'::jsonb) ? dow::text then return (c.precos -> 'porDia' ->> dow::text)::numeric; end if;
   return c.valor_hora;
 end $$;
+-- Acima do limite de horas: dentro de um período = valor do período; diária; ou períodos inteiros em sequência.
+-- Retorna null quando o intervalo não se encaixa (ex.: 11h às 15h): nesse caso o dentista fala com a Dra. Thalia.
+create or replace function public.preco_periodos(h1 int, h2 int) returns numeric
+language plpgsql stable security definer set search_path = public as $$
+declare c public.app_config; p jsonb; acc numeric := 0; cur int := h1;
+begin
+  select * into c from public.app_config where id = 1;
+  for p in select * from jsonb_array_elements(coalesce(c.periodos, '[]'::jsonb)) loop
+    if h1 >= (p ->> 'de')::int and h2 <= (p ->> 'ate')::int then return (p ->> 'valor')::numeric; end if;
+  end loop;
+  if jsonb_typeof(c.diaria) = 'object' and h1 = (c.diaria ->> 'de')::int and h2 >= (c.diaria ->> 'ate')::int then
+    acc := (c.diaria ->> 'valor')::numeric; cur := (c.diaria ->> 'ate')::int;
+  end if;
+  while cur < h2 loop
+    select x into p from jsonb_array_elements(coalesce(c.periodos, '[]'::jsonb)) x where (x ->> 'de')::int = cur and (x ->> 'ate')::int <= h2 limit 1;
+    if p is null then return null; end if;
+    acc := acc + (p ->> 'valor')::numeric; cur := (p ->> 'ate')::int;
+  end loop;
+  return acc;
+end $$;
+
+create or replace function public.usa_periodo(h1 int, h2 int) returns boolean
+language sql stable security definer set search_path = public as $$
+  select coalesce(h2 - h1 > c.limite_horas and jsonb_array_length(coalesce(c.periodos, '[]'::jsonb)) > 0, false) from public.app_config c where c.id = 1
+$$;
+
 create or replace function public.preco_reserva(d date, h1 int, h2 int) returns numeric
 language plpgsql stable security definer set search_path = public as $$
 declare t numeric := 0; v numeric; h int;
 begin
+  if public.usa_periodo(h1, h2) then return public.preco_periodos(h1, h2); end if;
   for h in h1 .. h2 - 1 loop
     v := public.preco_hora(d, h);
     if v is null then return null; end if;
@@ -850,6 +884,8 @@ begin
   if new.origem = 'bloqueio' then return new; end if;
   if new.valor is null then new.valor := public.preco_reserva(new.date, new.h_from, new.h_to); end if;
   if public.is_admin() or coalesce(current_setting('app.bypass', true), '') = 'on' then return new; end if;
+  -- Mais horas que o limite, fora de um período/diária: só combinando com a Dra. Thalia.
+  if public.usa_periodo(new.h_from, new.h_to) and public.preco_periodos(new.h_from, new.h_to) is null then raise exception 'FORA_DO_PERIODO'; end if;
   select limite_atraso_dias into lim from public.app_config where id = 1;
   if lim is null then return new; end if;
   v_tel := right(regexp_replace(coalesce(new.tel, ''), '\D', '', 'g'), 10);
@@ -882,7 +918,8 @@ create or replace function public.config_publica() returns jsonb
 language sql stable security definer set search_path = public as $$
   select jsonb_build_object('valorHora', c.valor_hora, 'precos', c.precos, 'pacotes', c.pacotes, 'abre', c.abre, 'fecha', c.fecha,
     'diasAbertos', to_jsonb(c.dias), 'prazoCancelamentoH', c.prazo_cancel_h, 'pix', c.pix_chave, 'pixNome', c.pix_nome, 'pixCidade', c.pix_cidade,
-    'regras', c.regras, 'checklist', c.checklist, 'espaco', c.espaco, 'limiteAtrasoDias', c.limite_atraso_dias)
+    'regras', c.regras, 'checklist', c.checklist, 'espaco', c.espaco, 'limiteAtrasoDias', c.limite_atraso_dias,
+    'limiteHoras', c.limite_horas, 'periodos', c.periodos, 'diaria', c.diaria, 'endereco', c.endereco, 'whatsapp', c.whatsapp)
   from public.app_config c where c.id = 1
 $$;
 grant execute on function public.config_publica() to anon, authenticated;
@@ -954,16 +991,29 @@ begin
       'chegada', left(coalesce(p -> 'espaco' ->> 'chegada', ''), 300), 'saida', left(coalesce(p -> 'espaco' ->> 'saida', ''), 300),
       'wifi', left(coalesce(p -> 'espaco' ->> 'wifi', ''), 120));
   end if;
+  if p ? 'limiteHoras' then c.limite_horas := (p ->> 'limiteHoras')::int; if c.limite_horas < 1 or c.limite_horas > 24 then raise exception 'DADOS_INVALIDOS'; end if; end if;
+  if p ? 'periodos' then
+    if jsonb_typeof(p -> 'periodos') <> 'array' or jsonb_array_length(p -> 'periodos') > 6 then raise exception 'DADOS_INVALIDOS'; end if;
+    for r in select * from jsonb_array_elements(p -> 'periodos') loop
+      if coalesce((r ->> 'de')::int, -1) < 0 or coalesce((r ->> 'ate')::int, 99) > 24 or (r ->> 'de')::int >= (r ->> 'ate')::int or coalesce((r ->> 'valor')::numeric, -1) < 0 then raise exception 'DADOS_INVALIDOS'; end if;
+    end loop;
+    c.periodos := p -> 'periodos';
+  end if;
+  if p ? 'diaria' then
+    if jsonb_typeof(p -> 'diaria') = 'null' then c.diaria := null;
+    elsif coalesce((p -> 'diaria' ->> 'de')::int, -1) < 0 or coalesce((p -> 'diaria' ->> 'ate')::int, 99) > 24 or (p -> 'diaria' ->> 'de')::int >= (p -> 'diaria' ->> 'ate')::int or coalesce((p -> 'diaria' ->> 'valor')::numeric, -1) < 0 then raise exception 'DADOS_INVALIDOS';
+    else c.diaria := jsonb_build_object('de', (p -> 'diaria' ->> 'de')::int, 'ate', (p -> 'diaria' ->> 'ate')::int, 'valor', (p -> 'diaria' ->> 'valor')::numeric); end if;
+  end if;
   if p ? 'limiteAtrasoDias' then c.limite_atraso_dias := nullif(p ->> 'limiteAtrasoDias', '')::int; end if;
   if p ? 'lembretePagamento' then c.lembrete_pagamento := (p ->> 'lembretePagamento')::boolean; end if;
   if p ? 'relatorioMensal' then c.relatorio_mensal := (p ->> 'relatorioMensal')::boolean; end if;
   update public.app_config set valor_hora = c.valor_hora, precos = c.precos, pacotes = c.pacotes, abre = c.abre, fecha = c.fecha, dias = c.dias,
     prazo_cancel_h = c.prazo_cancel_h, pix_chave = c.pix_chave, pix_nome = c.pix_nome, pix_cidade = c.pix_cidade, regras = c.regras,
     checklist = c.checklist, espaco = c.espaco, limite_atraso_dias = c.limite_atraso_dias, lembrete_pagamento = c.lembrete_pagamento,
-    relatorio_mensal = c.relatorio_mensal, atualizado_em = now()
+    relatorio_mensal = c.relatorio_mensal, limite_horas = c.limite_horas, periodos = c.periodos, diaria = c.diaria, atualizado_em = now()
   where id = 1;
   -- Reservas ainda sem valor (feitas antes de definir o preço) passam a ter o valor atual.
-  if p ? 'valorHora' or p ? 'precos' then
+  if p ? 'valorHora' or p ? 'precos' or p ? 'periodos' or p ? 'diaria' or p ? 'limiteHoras' then
     update public.bookings set valor = public.preco_reserva(date, h_from, h_to)
     where valor is null and origem <> 'bloqueio' and status = 'ativo' and not pago;
   end if;
@@ -1230,6 +1280,159 @@ create trigger aviso_cadastro after insert or update of status on public.dentist
 -- Pergunta frequente atualizada para o novo jeito de reservar (só troca se o texto nunca foi editado).
 update public.faq set resposta = 'Crie sua conta na Área do dentista. Assim que a Dra. Thalia liberar o seu acesso (você recebe um e-mail), escolha o dia e as horas livres e confirme. O horário fica bloqueado para você na hora.'
 where pergunta = 'Como faço para reservar?' and resposta = 'Toque em "Agendar horário", informe seus dados, escolha o dia e as horas livres e confirme. O horário fica bloqueado para você na hora.';
+
+-- ---------- Contato do consultório (out/2026) ----------
+alter table public.app_config alter column endereco set default 'Rua Juiz de Fora, 52, Galeria Êxito, sala 208, Centro, Ipatinga/MG';
+alter table public.app_config alter column whatsapp set default '5531995745413';
+update public.app_config set endereco = 'Rua Juiz de Fora, 52, Galeria Êxito, sala 208, Centro, Ipatinga/MG' where id = 1 and endereco = 'Rua Juiz de Fora, Centro, Ipatinga/MG';
+update public.app_config set whatsapp = '5531995745413' where id = 1 and whatsapp = '553185825564';
+
+-- ---------- Excluir dentista (a administradora). As reservas antigas ficam no histórico, com o nome. ----------
+create or replace function public.excluir_dentista(p_id uuid) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  if exists (select 1 from public.admins where user_id = p_id) then raise exception 'SEM_PERMISSAO'; end if;
+  if not exists (select 1 from public.dentists where id = p_id) then raise exception 'DENTISTA_NAO_ENCONTRADO'; end if;
+  begin
+    delete from auth.users where id = p_id;               -- apaga o login (e o cadastro, em cascata)
+  exception when insufficient_privilege then
+    delete from public.dentists where id = p_id;          -- sem permissão no login: apaga só o cadastro (a pessoa perde o acesso à área)
+  end;
+  delete from public.dentists where id = p_id;
+end $$;
+revoke execute on function public.excluir_dentista(uuid) from public, anon;
+grant execute on function public.excluir_dentista(uuid) to authenticated;
+
+-- ---------- Pacientes da Dra. Thalia (só a administradora vê) ----------
+create table if not exists public.pacientes (
+  id uuid primary key default gen_random_uuid(),
+  nome text not null check (length(trim(nome)) between 2 and 120),
+  telefone text check (telefone is null or length(telefone) <= 30),
+  cpf text check (cpf is null or length(cpf) <= 20),
+  nascimento date,
+  email text check (email is null or length(email) <= 120),
+  endereco text check (endereco is null or length(endereco) <= 300),
+  observacoes text check (observacoes is null or length(observacoes) <= 4000),
+  criado_em timestamptz not null default now()
+);
+create table if not exists public.consultas (
+  id uuid primary key default gen_random_uuid(),
+  paciente_id uuid not null references public.pacientes (id) on delete cascade,
+  data date not null,
+  inicio time not null,
+  fim time not null,
+  status text not null default 'agendada' check (status in ('agendada', 'realizada', 'faltou', 'cancelada')),
+  observacao text check (observacao is null or length(observacao) <= 1000),
+  criado_em timestamptz not null default now(),
+  check (fim > inicio)
+);
+create index if not exists consultas_data_idx on public.consultas (data);
+create index if not exists consultas_paciente_idx on public.consultas (paciente_id);
+create table if not exists public.evolucoes (
+  id uuid primary key default gen_random_uuid(),
+  paciente_id uuid not null references public.pacientes (id) on delete cascade,
+  consulta_id uuid references public.consultas (id) on delete set null,
+  data date not null default current_date,
+  texto text not null check (length(trim(texto)) between 1 and 6000),
+  criado_em timestamptz not null default now()
+);
+create index if not exists evolucoes_paciente_idx on public.evolucoes (paciente_id);
+create table if not exists public.paciente_docs (
+  id uuid primary key default gen_random_uuid(),
+  paciente_id uuid not null references public.pacientes (id) on delete cascade,
+  tipo text not null default 'outro' check (tipo in ('prontuario', 'orcamento', 'radiografia', 'outro')),
+  nome text not null check (length(nome) <= 200),
+  path text not null check (length(path) <= 400),
+  tamanho bigint,
+  criado_em timestamptz not null default now()
+);
+create index if not exists paciente_docs_paciente_idx on public.paciente_docs (paciente_id);
+do $$
+declare t text;
+begin
+  foreach t in array array['pacientes', 'consultas', 'evolucoes', 'paciente_docs'] loop
+    execute format('alter table public.%I enable row level security', t);
+    execute format('drop policy if exists "%s: administradora" on public.%I', t, t);
+    execute format('create policy "%s: administradora" on public.%I for all using (public.is_admin()) with check (public.is_admin())', t, t);
+  end loop;
+end $$;
+
+-- Consultas ocupam a agenda: para os dentistas, a hora fica "ocupada" (sem nenhum dado do paciente).
+alter table public.slots alter column booking_id drop not null;
+alter table public.slots add column if not exists consulta boolean not null default false;
+
+create or replace function public.horas_da_consulta(i time, f time) returns setof int language sql immutable as $$
+  select generate_series(extract(hour from i)::int, ceil(extract(epoch from f) / 3600)::int - 1)
+$$;
+
+create or replace function public.recalc_slots_consultas(d date) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if d is null then return; end if;
+  delete from public.slots s where s.date = d and s.consulta and s.booking_id is null
+    and not exists (select 1 from public.consultas c where c.data = d and c.status <> 'cancelada'
+                    and s.hour in (select public.horas_da_consulta(c.inicio, c.fim)));
+  insert into public.slots (date, hour, booking_id, consulta)
+  select distinct d, h, null::uuid, true
+  from public.consultas c, lateral public.horas_da_consulta(c.inicio, c.fim) h
+  where c.data = d and c.status <> 'cancelada'
+  on conflict (date, hour) do nothing;
+end $$;
+revoke execute on function public.recalc_slots_consultas(date) from public, anon, authenticated;
+
+-- Antes de gravar: não pode cruzar com outra consulta nem com reserva de dentista ou bloqueio.
+create or replace function public.checar_consulta() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if new.status = 'cancelada' then return new; end if;
+  if extract(epoch from new.inicio)::int % 300 <> 0 or extract(epoch from new.fim)::int % 300 <> 0 then raise exception 'HORARIO_INVALIDO'; end if;
+  if exists (select 1 from public.consultas c where c.data = new.data and c.id <> new.id and c.status <> 'cancelada'
+             and c.inicio < new.fim and c.fim > new.inicio) then
+    raise exception 'CONSULTA_CONFLITO';
+  end if;
+  if exists (select 1 from public.slots s where s.date = new.data and s.booking_id is not null
+             and s.hour in (select public.horas_da_consulta(new.inicio, new.fim))) then
+    raise exception 'HORARIO_OCUPADO';
+  end if;
+  return new;
+end $$;
+drop trigger if exists checar_consulta on public.consultas;
+create trigger checar_consulta before insert or update on public.consultas for each row execute function public.checar_consulta();
+
+create or replace function public.consulta_slots() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if tg_op in ('UPDATE', 'DELETE') then perform public.recalc_slots_consultas(old.data); end if;
+  if tg_op in ('INSERT', 'UPDATE') then perform public.recalc_slots_consultas(new.data); end if;
+  return null;
+end $$;
+drop trigger if exists consulta_slots on public.consultas;
+create trigger consulta_slots after insert or update or delete on public.consultas for each row execute function public.consulta_slots();
+
+-- Arquivos dos pacientes (prontuário, orçamento, radiografias): bucket privado, só a administradora.
+do $$
+begin
+  if exists (select 1 from pg_namespace where nspname = 'storage') then
+    insert into storage.buckets (id, name, public) values ('pacientes', 'pacientes', false) on conflict (id) do nothing;
+    drop policy if exists "pacientes: ver" on storage.objects;
+    create policy "pacientes: ver" on storage.objects for select using (bucket_id = 'pacientes' and public.is_admin());
+    drop policy if exists "pacientes: enviar" on storage.objects;
+    create policy "pacientes: enviar" on storage.objects for insert with check (bucket_id = 'pacientes' and public.is_admin());
+    drop policy if exists "pacientes: excluir" on storage.objects;
+    create policy "pacientes: excluir" on storage.objects for delete using (bucket_id = 'pacientes' and public.is_admin());
+  end if;
+end $$;
+
+do $$
+declare t text;
+begin
+  foreach t in array array['pacientes', 'consultas', 'evolucoes', 'paciente_docs'] loop
+    if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = t) then
+      execute format('alter publication supabase_realtime add table public.%I', t);
+    end if;
+  end loop;
+end $$;
 
 -- ---------- Arquivos: fotos do consultório (públicas) e comprovantes (privados) ----------
 do $$
