@@ -19,6 +19,9 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <meta name="apple-mobile-web-app-title" content="Thalia Santiago">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
 <style>
@@ -706,6 +709,26 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
 .sf-item button{position:absolute;right:8px;bottom:8px;background:var(--surface)}
 .ev.bloqueio{background:repeating-linear-gradient(135deg,var(--past) 0 8px,var(--busy-soft) 8px 16px);color:var(--muted);border:1px dashed var(--busy)}
 .dr-title .avatar svg.i{width:22px;height:22px}
+
+/* ---------- app no celular ---------- */
+.app-rows{display:grid}
+.app-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.app-row:first-child{border-top:0;padding-top:2px}
+.app-ic{width:42px;height:42px;border-radius:12px;background:var(--gold-soft);color:var(--accent);display:grid;place-items:center}
+.app-ic svg.i{width:20px;height:20px}
+.app-tx{display:grid;gap:3px;min-width:0}
+.app-tx>b{font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.app-tx small b{font-weight:600;color:var(--ink)}
+.app-tx small{color:var(--muted);font-size:.86rem;line-height:1.5}
+.app-bt{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+svg.i.sh{width:16px;height:16px;vertical-align:-3px;color:var(--accent)}
+.notice svg.i.sh{color:inherit}
+.push-cfg{margin-top:16px}
+.push-cfg summary{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.push-cfg .rules li{margin-bottom:8px}
+.push-cfg .rules button{margin-top:6px;display:inline-flex}
+@media (max-width:560px){.app-row{grid-template-columns:auto minmax(0,1fr)}.app-bt{grid-column:2;justify-content:flex-start}}
+@media (display-mode:standalone){html,body{overscroll-behavior-y:none}body{-webkit-tap-highlight-color:transparent}}
 </style>
 </head>
 <body>
@@ -1038,6 +1061,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
           <button class="primary" type="button" data-tab="agenda">Abrir agenda</button>
         </div>
         <div class="kpis band-k" id="r-kpis"></div>
+        <div class="stack" id="r-app"></div>
         <section class="alert" id="due" hidden aria-label="Confirmações a enviar"></section>
         <div class="grid2">
           <div class="card"><div class="card-head"><h3>Ocupação da semana</h3><span class="hint" id="r-week"></span></div><div class="bars" id="r-bars"></div></div>
@@ -1160,7 +1184,8 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
             <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="auto"><span class="pv auto"><u></u><i></i><em></em></span><b>Automático</b><small>Segue o tema do seu aparelho</small></button>
           </div>
         </div>
-                <div class="card" id="aj-email">
+        <div class="card" id="app-a"></div>
+        <div class="card" id="aj-email">
           <div class="card-head"><h3>E-mails automáticos</h3><span class="tag pend" id="em-status">Carregando</span></div>
           <p class="hint">Confirmação de reserva e lembrete 2 horas antes para os dentistas, aviso de vaga aberta para a lista de espera, e um e-mail para você a cada reserva nova, cancelamento e problema relatado. Usa o plano gratuito do Brevo (até 300 e-mails por dia).</p>
           <p class="msg err" id="em-ext" hidden>Ative as extensões <b>pg_net</b> e <b>pg_cron</b> no Supabase (Database → Extensions) e rode o arquivo schema.sql de novo. Sem elas, os e-mails não saem.</p>
@@ -1368,6 +1393,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
             <div class="card"><div class="card-head"><h3>Documentos</h3></div><div class="kv" id="cp-docs"></div></div>
           </div>
         </div>
+        <div class="card" id="app-d"></div>
         <div class="card"><div class="card-head"><h3>Aparência</h3></div>
           <div class="themes" role="radiogroup" aria-label="Tema da área do dentista">
             <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="claro" data-scope="dentista"><span class="pv light"><u></u><i></i><em></em></span><b>Claro</b><small>Fundo branco, ideal durante o dia</small></button>
@@ -1905,6 +1931,7 @@ function renderDue() {
   }));
 }
 function renderResumo() {
+  $('r-app').innerHTML = appTipHtml('a');
   const all = S.cache.all, now = new Date(), t = iso(now), ym = t.slice(0, 7);
   $('r-date').textContent = `${DIAS_LONGOS[now.getDay()]}, ${now.getDate()} de ${MESES[now.getMonth()]} de ${now.getFullYear()}`;
   const hoje = all.filter(x => isActive(x) && x.b.date === t);
@@ -2089,6 +2116,8 @@ function renderAjustes() {
     ['Valor da hora', precoTexto()]
   ].map(([k, v]) => `<div><span>${k}</span><span>${esc(v)}</span></div>`).join('');
   if (!S.emLoaded) { S.emLoaded = true; loadEmailStatus(); }
+  const ah = appCardHtml('a'); if (S.appAH !== ah) { $('app-a').innerHTML = ah; S.appAH = ah; }
+  if (!S.pushLoaded) { S.pushLoaded = true; loadPushStatus(); }
 }
 document.querySelectorAll('.theme-opt').forEach(b => b.addEventListener('click', () => setTema(b.dataset.tema, b.dataset.scope || 'painel')));
 
@@ -2206,7 +2235,7 @@ function logout() {
   closeDrawer();
   try { history.replaceState(null, '', location.pathname); } catch (_) {}
   S.step = 'welcome';
-  if (SB) SB.auth.signOut().finally(() => syncAuth(null)); else { S.isAdmin = false; route(); }
+  if (SB) appForget().finally(() => SB.auth.signOut().finally(() => syncAuth(null))); else { S.isAdmin = false; route(); }
 }
 
 /* ---------- Supabase: banco de dados e login ---------- */
@@ -2282,6 +2311,7 @@ function errText(e, fallback) {
     HORARIO_INVALIDO: 'Horário fora do funcionamento do consultório.',
     TELEFONE_INVALIDO: 'Informe um telefone com DDD.',
     EMAIL_INVALIDO: 'Confira o e-mail informado.',
+    DADOS_INVALIDOS: 'Dados inválidos. Tente de novo.',
     NOME_INVALIDO: 'Informe o nome completo.',
     DATA_DISTANTE: 'Essa data ainda não está aberta para reservas.',
     FORA_DO_PRAZO: `O prazo para cancelar pelo site já passou. Fale com a ${CFG.dentista}.`,
@@ -2309,6 +2339,7 @@ async function syncAuth(session) {
   if (S.dent !== S.lastDent) { S.cpfFor = null; S.cn = null; S.lastDent = S.dent; }
   try { await S.store.loadAll(); } catch (_) {}
   route();
+  appSync();
 }
 const needSB = el => { if (SB) return false; msgIn(el, 'err', 'O login ainda não está ativo: preencha o arquivo config.js com os dados do Supabase.'); return true; };
 
@@ -2422,7 +2453,7 @@ function dlogout() {
   closeCDrawer(); S.dl = { stage: 'login' };
   try { history.replaceState(null, '', location.pathname); } catch (_) {}
   S.step = 'welcome';
-  if (SB) SB.auth.signOut().finally(() => syncAuth(null)); else route();
+  if (SB) appForget().finally(() => SB.auth.signOut().finally(() => syncAuth(null))); else route();
 }
 
 /* ---------- Área do dentista ---------- */
@@ -2514,7 +2545,7 @@ function renderCInicio(al) {
   const now = new Date(), mine = S.cc.mine, d0 = me();
   $('ci-date').textContent = `${DIAS_LONGOS[now.getDay()]}, ${now.getDate()} de ${MESES[now.getMonth()]}`;
   $('ci-hello').textContent = `Olá, ${firstName(myName())}`;
-  $('ci-alerts').innerHTML = quickBookHtml() + al.join('');
+  $('ci-alerts').innerHTML = appTipHtml('d') + quickBookHtml() + al.join('');
   const up = mine.filter(x => x.st === 'agendado' || x.st === 'andamento').sort(asc), nx = up[0];
   if (nx) {
     const d = new Date(nx.b.date + 'T12:00');
@@ -2885,6 +2916,7 @@ function renderCPerfil() {
     ['Cadastro', d0 && d0.criadoEm ? `Desde ${br(d0.criadoEm.slice(0, 10))}` : '—'],
     ['Comprovantes', 'Em cada reserva concluída']
   ]);
+  const dh = appCardHtml('d'); if (S.appDH !== dh) { $('app-d').innerHTML = dh; S.appDH = dh; }
   renderThemes();
 }
 $('cpf-form').addEventListener('submit', async e => {
@@ -3460,6 +3492,203 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') lbShow(S.lbI + 1);
 });
 
+/* ---------- App no celular: instalar e notificações ---------- */
+const APP = {
+  evt: null, key: null, sub: null, st: null, msg: null, busy: false,
+  standalone: () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true,
+  ios: () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1),
+  android: () => /android/i.test(navigator.userAgent),
+  pushOk: () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && window.isSecureContext
+};
+const u8 = b64 => { const s = String(b64).replace(/-/g, '+').replace(/_/g, '/'); const bin = atob(s + '='.repeat((4 - s.length % 4) % 4)); return Uint8Array.from(bin, c => c.charCodeAt(0)); };
+const b64u = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const lsGet = k => { try { return localStorage.getItem(k); } catch (_) { return null; } };
+const lsSet = (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (_) {} };
+function aparelho() {
+  const ua = navigator.userAgent;
+  const so = /iphone/i.test(ua) ? 'iPhone' : /ipad/i.test(ua) || APP.ios() ? 'iPad' : /android/i.test(ua) ? 'Android' : /windows/i.test(ua) ? 'Windows' : /mac/i.test(ua) ? 'Mac' : 'Computador';
+  const nav = /edg\//i.test(ua) ? 'Edge' : /samsungbrowser/i.test(ua) ? 'Samsung' : /firefox|fxios/i.test(ua) ? 'Firefox' : /chrome|crios/i.test(ua) ? 'Chrome' : /safari/i.test(ua) ? 'Safari' : '';
+  return (so + (nav ? ' · ' + nav : '') + (APP.standalone() ? ' · app' : '')).slice(0, 79);
+}
+function pushState() {
+  if (!APP.key) return 'sem-config';
+  if (APP.ios() && !APP.standalone() && !('PushManager' in window)) return 'ios-instalar';
+  if (!APP.pushOk()) return 'sem-suporte';
+  if (Notification.permission === 'denied') return 'bloqueado';
+  return APP.sub ? 'ativo' : 'desligado';
+}
+async function swReg() {
+  let reg = await navigator.serviceWorker.getRegistration();
+  if (!reg) reg = await navigator.serviceWorker.register('sw.js');
+  if (!reg.active) await navigator.serviceWorker.ready;
+  return reg;
+}
+const subArgs = sub => { const j = sub.toJSON(); return { p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth, p_aparelho: aparelho() }; };
+async function pushSubscribe(reg) {
+  let sub = await reg.pushManager.getSubscription();
+  const k = sub && sub.options && sub.options.applicationServerKey;
+  if (sub && k && b64u(k) !== APP.key) { await sub.unsubscribe().catch(() => {}); sub = null; }
+  if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: u8(APP.key) });
+  await S.store.rpc('push_inscrever', subArgs(sub));
+  APP.sub = sub;
+  return sub;
+}
+// Ao entrar: lê a chave pública e reinscreve o aparelho se a pessoa já tinha ativado.
+async function appSync() {
+  APP.sub = null;
+  if (!SB || !S.uid) { APP.key = null; return; }
+  try { APP.key = (await S.store.rpc('push_chave_publica')) || null; } catch (_) { APP.key = null; }
+  if (APP.key && APP.pushOk() && Notification.permission === 'granted' && lsGet('push-off') !== S.uid) {
+    try { await pushSubscribe(await swReg()); } catch (_) { APP.sub = null; }
+  }
+  render();
+}
+// Ao sair: este aparelho para de receber os avisos desta conta.
+async function appForget() {
+  const sub = APP.sub; APP.sub = null;
+  if (!sub || !SB) return;
+  try { await Promise.race([S.store.rpc('push_cancelar', { p_endpoint: sub.endpoint }), new Promise(r => setTimeout(r, 2500))]); } catch (_) {}
+}
+function appMsg(kind, text) {
+  APP.msg = { kind, text };
+  clearTimeout(APP.msgT); APP.msgT = setTimeout(() => { APP.msg = null; render(); }, 9000);
+  render();
+}
+async function appAction(act, el) {
+  if (APP.busy) return;
+  if (act === 'instalar') {
+    if (!APP.evt) return;
+    APP.evt.prompt();
+    try { const r = await APP.evt.userChoice; if (r && r.outcome === 'accepted') appMsg('ok', 'App instalado. Ele aparece na tela inicial do celular.'); } catch (_) {}
+    APP.evt = null; return render();
+  }
+  if (act === 'dispensar') { lsSet('dica-app-' + el.dataset.scope, String(Date.now())); return render(); }
+  if (act === 'copiar') return copyPushCode();
+  if (act === 'configurar') return setupPush();
+  APP.busy = true; render();
+  try {
+    if (act === 'ligar') {
+      const p = await Notification.requestPermission();
+      if (p !== 'granted') { appMsg('err', p === 'denied' ? 'As notificações foram bloqueadas. Para ligar depois, libere nas configurações do navegador para este site.' : 'Notificações não ativadas.'); return; }
+      await pushSubscribe(await swReg());
+      lsSet('push-off', null);
+      const n = await S.store.rpc('testar_push').catch(() => 0);
+      appMsg('ok', n ? 'Notificações ativadas. Enviamos uma de teste para este aparelho.' : 'Notificações ativadas neste aparelho.');
+    } else if (act === 'desligar') {
+      const sub = APP.sub; APP.sub = null;
+      if (sub) { await S.store.rpc('push_cancelar', { p_endpoint: sub.endpoint }).catch(() => {}); await sub.unsubscribe().catch(() => {}); }
+      lsSet('push-off', S.uid);
+      appMsg('ok', 'Notificações desativadas neste aparelho.');
+    } else if (act === 'testar') {
+      const n = await S.store.rpc('testar_push');
+      appMsg(n ? 'ok' : 'err', n ? 'Notificação de teste enviada. Ela chega em alguns segundos.' : 'Nenhum aparelho ativo. Ative as notificações primeiro.');
+    }
+  } catch (err) {
+    appMsg('err', 'Não foi possível concluir. Verifique a internet e tente de novo.');
+  } finally { APP.busy = false; render(); }
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-app]'); if (b) { e.preventDefault(); appAction(b.dataset.app, b); } });
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); APP.evt = e; render(); });
+window.addEventListener('appinstalled', () => { APP.evt = null; render(); });
+
+const ICO_PHONE = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg>';
+const ICO_BELL = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0"/></svg>';
+const ICO_SHARE = '<svg class="i sh" viewBox="0 0 24 24" aria-label="Compartilhar"><path d="M12 15V3.5M8 7l4-4 4 4M7 11H5.5v9.5h13V11H17"/></svg>';
+const IOS_PASSOS = `No Safari, toque em ${ICO_SHARE} <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.`;
+function installInfo() {
+  if (APP.standalone()) return { tag: 'Instalado', txt: 'Você está usando o app instalado.' };
+  if (APP.evt) return { txt: 'Coloca um ícone na tela inicial e abre em tela cheia, como um aplicativo.', btn: btnHtml('Instalar app', 'data-app="instalar"', 'primary sm') };
+  if (APP.ios()) return { txt: IOS_PASSOS };
+  if (APP.android()) return { txt: 'No menu do navegador (⋮), toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>.' };
+  return { txt: 'Abra este site no celular para instalar o app na tela inicial.' };
+}
+function pushInfo(scope) {
+  const st = pushState(), busy = APP.busy ? ' disabled' : '';
+  const oQue = scope === 'a' ? 'Nova reserva, cancelamento, comprovante de pagamento e problema relatado.' : 'Lembrete 2 horas antes, vaga aberta na lista de espera, pagamento confirmado e avisos do mural.';
+  switch (st) {
+    case 'sem-config': return { txt: scope === 'a' ? 'Faça a configuração abaixo (uma vez só) para ligar as notificações.' : 'A Dra. Thalia ainda vai ativar as notificações do consultório.' };
+    case 'ios-instalar': return { txt: 'No iPhone, as notificações funcionam no app instalado. Instale e abra pelo ícone da tela inicial.' };
+    case 'sem-suporte': return { txt: 'Este navegador não recebe notificações. No Android, use o Chrome; no iPhone, o app instalado.' };
+    case 'bloqueado': return { tag: 'Bloqueadas', txt: 'As notificações estão bloqueadas para este site. Libere nas configurações do navegador e volte aqui.' };
+    case 'ativo': return { tag: 'Ativas', txt: 'Ativas neste aparelho. ' + oQue, btn: btnHtml('Testar', `data-app="testar"${busy}`) + btnHtml('Desativar', `data-app="desligar"${busy}`, 'link') };
+    default: return { txt: oQue, btn: btnHtml(APP.busy ? 'Ativando…' : 'Ativar', `data-app="ligar"${busy}`, 'primary sm') };
+  }
+}
+function appCardHtml(scope) {
+  const i = installInfo(), p = pushInfo(scope);
+  const row = (ico, t, x) => `<div class="app-row"><span class="app-ic">${ico}</span><div class="app-tx"><b>${t}${x.tag ? ` <span class="tag pago">${x.tag}</span>` : ''}</b><small>${x.txt}</small></div>${x.btn ? `<div class="app-bt">${x.btn}</div>` : ''}</div>`;
+  const m = APP.msg ? `<p class="msg ${APP.msg.kind}" role="status">${esc(APP.msg.text)}</p>` : '';
+  return `<div class="card-head"><h3>App no celular</h3></div>
+    <div class="app-rows">${row(ICO_PHONE, 'Instalar o app', i)}${row(ICO_BELL, 'Notificações', p)}</div>${m}${scope === 'a' ? pushCfgHtml() : ''}`;
+}
+function appTipHtml(scope) {
+  if (!S.uid || lsGet('dica-app-' + scope)) return '';
+  const st = pushState(), x = btnHtml('Agora não', `data-app="dispensar" data-scope="${scope}"`, 'link');
+  const oQue = scope === 'a' ? 'um aviso a cada reserva nova, cancelamento e comprovante' : 'o lembrete 2 horas antes de cada reserva';
+  if (st === 'desligado') return notice('gold', `<b>Avisos no celular.</b> Ative as notificações e receba ${oQue}.`, [btnHtml('Ativar notificações', 'data-app="ligar"', 'primary'), x]);
+  if (st === 'ios-instalar') return notice('gold', `<b>Instale o app no iPhone</b> para receber ${oQue}. ${IOS_PASSOS}`, [x]);
+  return '';
+}
+
+/* Configuração das notificações (só a administradora, uma vez) */
+function pushCfgHtml() {
+  const s = APP.st;
+  const ok = s && s.ativo;
+  return `<details class="rd push-cfg"${ok ? '' : ' open'}><summary>Configuração das notificações ${ok ? '<span class="tag pago">Ativa</span>' : '<span class="tag pend">Pendente</span>'}</summary>
+    ${ok ? `<p class="hint">Funcionando. ${plural(s.aparelhos || 0, 'aparelho', 'aparelhos')} de ${plural(s.pessoas || 0, 'pessoa', 'pessoas')} recebendo avisos.</p>` : ''}
+    <ol class="rules">
+      <li>No Supabase, abra <b>Edge Functions</b> → <b>Deploy a new function</b> → <b>Via Editor</b>. Dê o nome <b>push</b>, apague o código de exemplo, cole o código da função e toque em <b>Deploy</b>. ${btnHtml('Copiar código da função', 'data-app="copiar"')}</li>
+      <li>Ainda na função <b>push</b>, abra <b>Details</b> (ou Settings), desligue <b>Enforce JWT verification</b> e salve.</li>
+      <li>Volte aqui e toque em ${btnHtml(ok ? 'Verificar de novo' : 'Verificar e ativar', 'data-app="configurar"', ok ? 'ghost sm' : 'primary sm')}</li>
+    </ol>
+    ${s && !s.pg_net ? '<p class="msg err">Ative a extensão <b>pg_net</b> no Supabase (Database → Extensions) e rode o schema.sql de novo.</p>' : ''}
+  </details>`;
+}
+async function loadPushStatus() {
+  if (!SB || !S.isAdmin) return;
+  try { APP.st = await S.store.rpc('status_push'); } catch (_) { APP.st = null; }
+  render();
+}
+async function copyPushCode() {
+  try {
+    const r = await fetch('supabase/functions/push/index.ts', { cache: 'no-store' });
+    if (!r.ok) throw new Error('arquivo');
+    const code = await r.text();
+    if (!/Deno\.serve/.test(code)) throw new Error('arquivo');
+    await navigator.clipboard.writeText(code);
+    appMsg('ok', 'Código copiado. Cole no editor da função push no Supabase.');
+  } catch (_) {
+    appMsg('err', 'Não foi possível copiar. Abra no GitHub o arquivo supabase/functions/push/index.ts e copie o conteúdo.');
+  }
+}
+async function setupPush() {
+  const base = String((window.APP_CONFIG || {}).supabaseUrl || '').replace(/\/$/, '');
+  if (!SB || !base) return appMsg('err', 'Configure o Supabase primeiro.');
+  const url = base + '/functions/v1/push';
+  APP.busy = true; render();
+  try {
+    let r;
+    try { r = await fetch(url, { method: 'GET' }); } catch (_) { r = null; }
+    if (!r) return appMsg('err', 'Não conseguimos falar com a função push. Confira o passo 1 (o nome precisa ser exatamente push) e o passo 2 (verificação JWT desligada).');
+    if (r.status === 401 || r.status === 403) return appMsg('err', 'A função existe, mas a verificação JWT ainda está ligada. Desligue no passo 2 e tente de novo.');
+    let j = null; try { j = await r.json(); } catch (_) {}
+    if (!r.ok || !j || j.funcao !== 'push') return appMsg('err', 'Não encontramos a função push. Confira o passo 1 (o nome precisa ser exatamente push) e se ela terminou de publicar.');
+    if (!APP.st) await loadPushStatus();
+    if (!APP.st) return appMsg('err', 'Não foi possível ler a configuração. Rode o schema.sql atualizado no Supabase e tente de novo.');
+    if (!APP.st.ativo) {
+      const k = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+      const pub = b64u(await crypto.subtle.exportKey('raw', k.publicKey));
+      const priv = (await crypto.subtle.exportKey('jwk', k.privateKey)).d;
+      await S.store.rpc('salvar_config_push', { p_publica: pub, p_privada: priv, p_url: url });
+      APP.key = pub;
+    }
+    await loadPushStatus();
+    appMsg('ok', 'Tudo certo: notificações ligadas. Agora toque em Ativar, acima, para receber os avisos neste aparelho.');
+  } catch (err) {
+    appMsg('err', errText(err));
+  } finally { APP.busy = false; render(); }
+}
+
 /* ---------- Rotas e render ---------- */
 function route() {
   const h = location.hash, wantAdmin = h === '#admin', wantDent = h === '#dentista';
@@ -3503,7 +3732,7 @@ setInterval(render, 60000); // atualiza status e horas que passaram
 /* ---------- Inicialização ---------- */
 (async function init() {
   try { S.tab = sessionStorage.getItem('aba') || 'resumo'; S.ctab = sessionStorage.getItem('cab') || 'inicio'; } catch (_) {}
-  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+  if ('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('sw.js').catch(() => {});
   const wire = st => {
     st.watch((sl, bk) => { S.slots = sl; S.bookings = bk; render(); });
     ['dentists', 'avisos', 'problemas', 'espera', 'faq'].forEach(n => st.watchCol(n, (o, quiet) => {
@@ -3537,6 +3766,10 @@ setInterval(render, 60000); // atualiza status e horas que passaram
     if (area.startsWith('redefinir') && session) { S.recovery = true; S.dl.stage = 'new'; }
   }
   await syncAuth(session);
+  // Aberto pelo ícone do app: vai direto para a área de quem já entrou.
+  const fromApp = new URLSearchParams(location.search).has('app');
+  if (fromApp) { try { history.replaceState(null, '', location.pathname + location.hash); } catch (_) {} }
+  if ((fromApp || APP.standalone()) && !location.hash && (S.isAdmin || S.dent)) location.hash = S.isAdmin ? '#admin' : '#dentista';
   SB.auth.onAuthStateChange((ev, sess) => {
     if (ev === 'PASSWORD_RECOVERY') { S.recovery = true; S.dl.stage = 'new'; try { history.replaceState(null, '', location.pathname + '#dentista'); } catch (_) {} }
     if (['SIGNED_IN', 'SIGNED_OUT', 'PASSWORD_RECOVERY', 'USER_UPDATED'].includes(ev)) setTimeout(() => syncAuth(sess), 0);

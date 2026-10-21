@@ -458,12 +458,13 @@ end $$;
 drop trigger if exists email_problema on public.problemas;
 create trigger email_problema after insert on public.problemas for each row execute function public.email_problema();
 
--- Lembrete 2 horas antes (roda a cada 10 minutos)
+-- Lembrete 2 horas antes, por e-mail e no celular (roda a cada 10 minutos)
 create or replace function public.enviar_lembretes() returns int
 language plpgsql security definer set search_path = public as $$
 declare
   r record; n int := 0;
 begin
+  perform public.limpar_push();
   for r in
     select b.*, coalesce(d.email, b.email) as dest from public.bookings b left join public.dentists d on d.id = b.dentist_id
     where b.status = 'ativo' and b.origem <> 'bloqueio' and b.lembrete_em is null
@@ -475,6 +476,10 @@ begin
       || '<p style="font-size:17px"><b>' || public.quando_txt(r.date, r.h_from, r.h_to) || '</b></p>'
       || '<p>Ao terminar, faça o checklist de saída na área do dentista. Bom atendimento!</p>') then
       n := n + 1;
+    end if;
+    if r.dentist_id is not null then
+      perform public.push_para(array[r.dentist_id], 'Sua reserva começa às ' || r.h_from || 'h',
+        'Lembrete do consultório: ' || public.hora_txt(r.date, r.h_from, r.h_to) || '. Ao terminar, faça o checklist de saída.', './#dentista', 'lembrete-' || r.id);
     end if;
     perform set_config('app.bypass', 'on', true);
     update public.bookings set lembrete_em = now() where id = r.id;
@@ -538,6 +543,234 @@ revoke execute on function public.testar_email() from public, anon;
 grant execute on function public.status_email() to authenticated;
 grant execute on function public.salvar_config_email(text, text, text, text, text) to authenticated;
 grant execute on function public.testar_email() to authenticated;
+
+-- ---------- Notificações no celular (gratuitas, pelo app instalado) ----------
+create table if not exists public.push_subs (
+  endpoint text primary key check (endpoint ~ '^https://' and length(endpoint) < 1000),
+  user_id uuid not null references auth.users (id) on delete cascade,
+  p256dh text not null check (length(p256dh) < 200),
+  auth text not null check (length(auth) < 100),
+  aparelho text check (aparelho is null or length(aparelho) < 80),
+  criado_em timestamptz not null default now()
+);
+create index if not exists push_subs_user_idx on public.push_subs (user_id);
+alter table public.push_subs enable row level security;
+drop policy if exists "push: ver os meus" on public.push_subs;
+create policy "push: ver os meus" on public.push_subs for select using (user_id = auth.uid());
+
+-- Envios em andamento, para apagar aparelhos que desinstalaram o app.
+create table if not exists public.push_envios (request_id bigint primary key, criado_em timestamptz not null default now());
+alter table public.push_envios enable row level security;
+
+alter table public.app_config add column if not exists vapid_publica text;
+alter table public.app_config add column if not exists push_url text;
+
+-- Chave pública (necessária para o celular se inscrever). Não é segredo.
+create or replace function public.push_chave_publica() returns text
+language sql stable security definer set search_path = public as $$
+  select vapid_publica from public.app_config where id = 1 and push_url is not null
+$$;
+grant execute on function public.push_chave_publica() to anon, authenticated;
+
+create or replace function public.push_inscrever(p_endpoint text, p_p256dh text, p_auth text, p_aparelho text default null) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is null then raise exception 'SEM_PERMISSAO'; end if;
+  insert into public.push_subs (endpoint, user_id, p256dh, auth, aparelho)
+  values (p_endpoint, auth.uid(), p_p256dh, p_auth, left(p_aparelho, 79))
+  on conflict (endpoint) do update set user_id = excluded.user_id, p256dh = excluded.p256dh, auth = excluded.auth, aparelho = excluded.aparelho, criado_em = now();
+end $$;
+
+create or replace function public.push_cancelar(p_endpoint text) returns void
+language sql security definer set search_path = public as $$
+  delete from public.push_subs where endpoint = p_endpoint and user_id = auth.uid()
+$$;
+revoke execute on function public.push_inscrever(text, text, text, text) from public, anon;
+revoke execute on function public.push_cancelar(text) from public, anon;
+grant execute on function public.push_inscrever(text, text, text, text) to authenticated;
+grant execute on function public.push_cancelar(text) to authenticated;
+
+-- Envia uma notificação para os aparelhos das pessoas indicadas. Se não estiver configurado, não faz nada.
+create or replace function public.push_para(p_users uuid[], p_titulo text, p_corpo text, p_url text default './', p_tag text default null) returns int
+language plpgsql security definer set search_path = public as $$
+declare
+  c public.app_config; k text; subs jsonb; rid bigint;
+begin
+  if p_users is null or cardinality(p_users) = 0 then return 0; end if;
+  select * into c from public.app_config where id = 1;
+  if c.push_url is null or c.vapid_publica is null then return 0; end if;
+  select jsonb_agg(jsonb_build_object('endpoint', s.endpoint, 'p256dh', s.p256dh, 'auth', s.auth)) into subs
+  from public.push_subs s where s.user_id = any (p_users);
+  if subs is null then return 0; end if;
+  begin
+    select decrypted_secret into k from vault.decrypted_secrets where name = 'vapid_privada' limit 1;
+  exception when others then k := null; end;
+  if k is null then return 0; end if;
+  rid := net.http_post(
+    url := c.push_url,
+    headers := jsonb_build_object('Content-Type', 'application/json'),
+    body := jsonb_build_object(
+      'vapid', jsonb_build_object('publicKey', c.vapid_publica, 'privateKey', k,
+        'subject', coalesce('mailto:' || c.email_admin, c.site_url, 'mailto:contato@consultorio.app')),
+      'subs', subs,
+      'payload', jsonb_build_object('title', p_titulo, 'body', p_corpo, 'url', coalesce(p_url, './'), 'tag', p_tag)),
+    timeout_milliseconds := 10000);
+  insert into public.push_envios (request_id) values (rid) on conflict do nothing;
+  return jsonb_array_length(subs);
+exception when others then
+  return 0;
+end $$;
+revoke execute on function public.push_para(uuid[], text, text, text, text) from public, anon, authenticated;
+
+create or replace function public.push_admins(p_titulo text, p_corpo text, p_tag text default null) returns int
+language sql security definer set search_path = public as $$
+  select public.push_para(array(select user_id from public.admins), p_titulo, p_corpo, './#admin', p_tag)
+$$;
+revoke execute on function public.push_admins(text, text, text) from public, anon, authenticated;
+
+create or replace function public.hora_txt(d date, h1 int, h2 int) returns text language sql immutable as $$
+  select left(public.dia_semana(d), 3) || ', ' || to_char(d, 'DD/MM') || ', ' || h1 || 'h às ' || h2 || 'h'
+$$;
+
+-- Apaga aparelhos que desinstalaram o app ou desligaram as notificações (o serviço responde "não existe mais").
+create or replace function public.limpar_push() returns int
+language plpgsql security definer set search_path = public as $$
+declare r record; n int := 0; k int;
+begin
+  for r in
+    select e.request_id, h.status_code, h.content from public.push_envios e join net._http_response h on h.id = e.request_id
+  loop
+    if r.status_code = 200 then
+      begin
+        delete from public.push_subs where endpoint in (select jsonb_array_elements_text(r.content::jsonb -> 'gone'));
+        get diagnostics k = row_count;
+        n := n + k;
+      exception when others then null; end;
+    end if;
+    delete from public.push_envios where request_id = r.request_id;
+  end loop;
+  delete from public.push_envios where criado_em < now() - interval '1 day';
+  return n;
+exception when others then
+  return 0;
+end $$;
+revoke execute on function public.limpar_push() from public, anon, authenticated;
+
+-- Gatilhos de notificação
+create or replace function public.push_nova_reserva() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if new.origem = 'bloqueio' then return new; end if;
+  if new.origem = 'painel' then
+    if new.dentist_id is not null then
+      perform public.push_para(array[new.dentist_id], 'Reserva feita pela Dra. Thalia', public.hora_txt(new.date, new.h_from, new.h_to), './#dentista', 'reserva-' || new.id);
+    end if;
+  else
+    perform public.push_admins('Nova reserva · ' || new.nome, public.hora_txt(new.date, new.h_from, new.h_to), 'nova-' || coalesce(new.serie, new.id::text));
+  end if;
+  return new;
+exception when others then return new;
+end $$;
+drop trigger if exists push_nova_reserva on public.bookings;
+create trigger push_nova_reserva after insert on public.bookings for each row execute function public.push_nova_reserva();
+
+create or replace function public.push_reserva_alterada() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare w record; adm boolean := public.is_admin();
+begin
+  if old.status = 'ativo' and new.status = 'cancelado' then
+    if new.origem <> 'bloqueio' then
+      if adm and new.dentist_id is not null then
+        perform public.push_para(array[new.dentist_id], 'Reserva cancelada', 'A Dra. Thalia cancelou sua reserva de ' || public.hora_txt(new.date, new.h_from, new.h_to) || '.', './#dentista', 'reserva-' || new.id);
+      elsif not adm then
+        perform public.push_admins('Reserva cancelada · ' || new.nome, public.hora_txt(new.date, new.h_from, new.h_to) || '. O horário ficou livre.', 'cancel-' || new.id);
+      end if;
+    end if;
+    for w in
+      select distinct e.dentist_id, e.date, e.h_from, e.h_to from public.espera e
+      where e.date = new.date and e.h_from < new.h_to and e.h_to > new.h_from
+        and (new.dentist_id is null or e.dentist_id <> new.dentist_id)
+        and not exists (select 1 from public.slots s where s.date = e.date and s.hour >= e.h_from and s.hour < e.h_to)
+    loop
+      perform public.push_para(array[w.dentist_id], 'Vaga aberta no consultório', 'O horário que você queria ficou livre: ' || public.hora_txt(w.date, w.h_from, w.h_to) || '. Quem reservar primeiro fica com ele.', './#dentista', 'vaga-' || w.date || '-' || w.h_from);
+    end loop;
+  end if;
+  if not old.pago and new.pago and new.dentist_id is not null then
+    perform public.push_para(array[new.dentist_id], 'Pagamento confirmado', 'A Dra. Thalia confirmou o pagamento da reserva de ' || public.hora_txt(new.date, new.h_from, new.h_to) || '.', './#dentista', 'pago-' || new.id);
+  end if;
+  if new.comprovante_path is not null and new.comprovante_path is distinct from old.comprovante_path then
+    perform public.push_admins('Comprovante enviado · ' || new.nome, 'Pagamento da reserva de ' || public.hora_txt(new.date, new.h_from, new.h_to) || '.', 'comp-' || new.id);
+  end if;
+  return new;
+exception when others then return new;
+end $$;
+drop trigger if exists push_reserva_alterada on public.bookings;
+create trigger push_reserva_alterada after update on public.bookings for each row execute function public.push_reserva_alterada();
+
+create or replace function public.push_problema() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  perform public.push_admins('Problema relatado · ' || new.tipo, new.nome || ': ' || left(new.descricao, 120), 'problema-' || new.id);
+  return new;
+exception when others then return new;
+end $$;
+drop trigger if exists push_problema on public.problemas;
+create trigger push_problema after insert on public.problemas for each row execute function public.push_problema();
+
+create or replace function public.push_aviso() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  perform public.push_para(array(select id from public.dentists), 'Mural · ' || new.titulo, left(new.texto, 140), './#dentista', 'aviso-' || new.id);
+  return new;
+exception when others then return new;
+end $$;
+drop trigger if exists push_aviso on public.avisos;
+create trigger push_aviso after insert on public.avisos for each row execute function public.push_aviso();
+
+-- Funções do painel e do app
+create or replace function public.status_push() returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare c public.app_config; tem boolean := false;
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  select * into c from public.app_config where id = 1;
+  begin select exists (select 1 from vault.secrets where name = 'vapid_privada') into tem; exception when others then tem := false; end;
+  return jsonb_build_object('ativo', tem and c.vapid_publica is not null and c.push_url is not null, 'url', c.push_url,
+    'aparelhos', (select count(*) from public.push_subs), 'pessoas', (select count(distinct user_id) from public.push_subs),
+    'pg_net', exists (select 1 from pg_extension where extname = 'pg_net'));
+end $$;
+
+create or replace function public.salvar_config_push(p_publica text, p_privada text, p_url text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v uuid; antiga text;
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  if p_publica !~ '^[A-Za-z0-9_-]{87}$' or p_privada !~ '^[A-Za-z0-9_-]{43}$' or p_url !~ '^https://[a-z0-9-]+\.supabase\.co/functions/v1/[a-z0-9_-]+$' then
+    raise exception 'DADOS_INVALIDOS';
+  end if;
+  select vapid_publica into antiga from public.app_config where id = 1;
+  update public.app_config set vapid_publica = p_publica, push_url = p_url, atualizado_em = now() where id = 1;
+  select id into v from vault.secrets where name = 'vapid_privada';
+  if v is null then perform vault.create_secret(p_privada, 'vapid_privada', 'Chave privada das notificações');
+  else perform vault.update_secret(v, p_privada); end if;
+  -- Chaves novas invalidam as inscrições antigas: os aparelhos se inscrevem de novo ao abrir o app.
+  if antiga is distinct from p_publica then delete from public.push_subs; end if;
+end $$;
+
+-- Notificação de teste para os aparelhos da própria pessoa (administradora ou dentista).
+create or replace function public.testar_push() returns int
+language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is null then raise exception 'SEM_PERMISSAO'; end if;
+  return public.push_para(array[auth.uid()], 'Notificações ativadas', 'Tudo certo! Os avisos do consultório vão chegar aqui.',
+    case when public.is_admin() then './#admin' else './#dentista' end, 'teste');
+end $$;
+revoke execute on function public.status_push() from public, anon;
+revoke execute on function public.salvar_config_push(text, text, text) from public, anon;
+revoke execute on function public.testar_push() from public, anon;
+grant execute on function public.status_push() to authenticated;
+grant execute on function public.salvar_config_push(text, text, text) to authenticated;
+grant execute on function public.testar_push() to authenticated;
 
 -- ---------- Arquivos: fotos do consultório (públicas) e comprovantes (privados) ----------
 do $$

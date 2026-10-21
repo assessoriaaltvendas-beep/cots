@@ -2,15 +2,54 @@
   "name": "Consultório Thalia Santiago",
   "short_name": "Thalia Santiago",
   "description": "Reservas do consultório odontológico da Dra. Thalia Santiago em Ipatinga/MG.",
-  "start_url": "./",
+  "start_url": "./?app=1",
   "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#590117",
   "lang": "pt-BR",
   "icons": [
-    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "./",
+  "orientation": "portrait",
+  "shortcuts": [
+    {
+      "name": "Área do dentista",
+      "short_name": "Minha área",
+      "url": "./?app=1#dentista",
+      "icons": [
+        {
+          "src": "assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Painel da Dra. Thalia",
+      "short_name": "Painel",
+      "url": "./?app=1#admin",
+      "icons": [
+        {
+          "src": "assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }

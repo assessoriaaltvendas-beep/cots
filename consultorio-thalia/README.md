@@ -6,6 +6,8 @@ Site de aluguel por hora do consultório, com área do dentista e painel da admi
 - `config.js`: onde entram os dados do Supabase (passo 6)
 - `assets/`: logos e ícone
 - `supabase/schema.sql`: banco de dados e regras de segurança (passo 4)
+- `supabase/functions/push/index.ts`: função que entrega as notificações no celular
+- `sw.js` e `manifest.webmanifest`: fazem o site funcionar como app
 
 O site roda na **Vercel** (hospedagem) e usa o **Supabase** (banco de dados e login). Os dois têm plano gratuito.
 
@@ -80,6 +82,17 @@ Confirmação de reserva, lembrete 2 horas antes, aviso de vaga aberta e avisos 
 1. Crie uma conta grátis em **brevo.com** (até 300 e-mails por dia).
 2. No Brevo, cadastre e confirme o e-mail remetente (Remetentes / Senders) e gere uma chave de API (SMTP e API → Chaves de API).
 3. No painel do site, vá em **Ajustes → E-mails automáticos**, preencha os campos, cole a chave e toque em **Salvar**. Depois, **Enviar e-mail de teste**.
+
+## App no celular e notificações (grátis)
+O site funciona como um app: no celular, abra o site e instale pelo navegador (Android: menu ⋮ → Instalar app; iPhone: Safari → Compartilhar → Adicionar à Tela de Início). Pelo ícone, ele abre direto na área de quem já entrou.
+
+Para ligar as notificações (uma vez só):
+1. No Supabase, abra **Edge Functions → Deploy a new function → Via Editor**. Nome: `push`. Apague o exemplo, cole o conteúdo de `supabase/functions/push/index.ts` e clique em **Deploy**.
+2. Na função `push`, em **Details**, desligue **Enforce JWT verification** e salve.
+3. No painel do site, vá em **Ajustes → App no celular → Configuração das notificações** e toque em **Verificar e ativar**.
+4. Cada pessoa toca em **Ativar** (no Início ou no Perfil) no celular dela. No iPhone, precisa estar com o app instalado.
+
+Avisos enviados: lembrete 2 horas antes, vaga aberta, reserva feita ou cancelada pela Dra. Thalia, pagamento confirmado e avisos do mural (dentistas); nova reserva, cancelamento, comprovante e problema relatado (Dra. Thalia).
 
 ## Fotos e perguntas frequentes
 No painel, aba **Site**: envie fotos do consultório (aparecem na galeria da página inicial) e escreva as perguntas frequentes.
