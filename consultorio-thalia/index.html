@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Consultório Thalia Santiago · Reservas</title>
 <meta name="description" content="Aluguel por hora do consultório odontológico da Dra. Thalia Santiago no Centro de Ipatinga/MG.">
+<meta name="theme-color" content="#590117">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Consultório Thalia Santiago">
+<meta property="og:title" content="Consultório Thalia Santiago · Aluguel por hora em Ipatinga">
+<meta property="og:description" content="Reserve por hora o consultório odontológico no Centro de Ipatinga. Veja os horários livres e confirme em poucos passos.">
+<meta property="og:url" content="https://cots-consultorio-thalia.vercel.app/">
+<meta property="og:image" content="https://cots-consultorio-thalia.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta name="apple-mobile-web-app-title" content="Thalia Santiago">
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
 <style>
@@ -631,6 +645,67 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
 .side-help b{color:#fff;font:600 1.05rem var(--font-display)}
 .side-help span:last-child{color:#d9bb6f;font-weight:500}
 @media (max-width:820px){.side a.side-help{display:none}}
+
+/* ---------- melhorias v3 ---------- */
+.tb-rr{display:inline-flex;align-items:center;gap:18px}
+.wa-float{position:fixed;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:30;width:58px;height:58px;border-radius:50%;background:#1f7a4d;color:#fff;display:grid;place-items:center;box-shadow:0 16px 32px -12px rgba(31,122,77,.7);text-decoration:none}
+.wa-float svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.wa-float:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:no-preference){.wa-float{transition:transform .15s}}
+.about-cta{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px}
+.cta svg.i{width:18px;height:18px}
+
+.gal-sec{padding-top:0}
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:190px;gap:12px}
+.gal-item{border:0;padding:0;border-radius:18px;overflow:hidden;background:var(--soft);cursor:zoom-in}
+.gal-item img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-item.big{grid-column:span 2;grid-row:span 2}
+@media (prefers-reduced-motion:no-preference){.gal-item img{transition:transform .3s}.gal-item:hover img{transform:scale(1.03)}}
+@media (max-width:860px){.gal{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:150px}}
+.gal.c1{grid-template-columns:minmax(0,1fr);grid-auto-rows:clamp(220px,40vw,440px)}
+.gal.c2{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(160px,28vw,340px)}
+.gal.c1 .big,.gal.c2 .big{grid-column:auto;grid-row:auto}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(20,6,10,.92);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb img{max-width:min(1100px,100%);max-height:84vh;border-radius:12px;display:block}
+.lb button{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:0;width:48px;height:48px;border-radius:50%;font-size:1.6rem;line-height:1}
+.lb-x{top:max(16px,env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
+.lb-p{left:max(12px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
+.lb-n{right:max(12px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
+
+.faq-sec{background:var(--soft)}
+.faq-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:start}
+.faq-grid h2{font-size:clamp(1.9rem,3.6vw,2.6rem);margin:10px 0 14px}
+.faq-grid .lead2{color:var(--muted);margin:0 0 20px}
+@media (max-width:860px){.faq-grid{grid-template-columns:minmax(0,1fr);gap:24px}}
+.faq-list{display:grid;gap:12px}
+.faq-item{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 22px}
+.faq-item summary{cursor:pointer;font:600 1.08rem var(--font-display);list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";font:400 1.4rem var(--font-body);color:var(--gold);flex:none}
+.faq-item[open] summary::after{content:"–"}
+.faq-item p{margin:12px 0 0;color:var(--muted)}
+
+.map iframe{width:100%;height:100%;border:0;display:block}
+
+.cal-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.cal-a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.cal-a svg.i{width:16px;height:16px;color:var(--gold)}
+.next-card .cal-a{color:#fff;border-color:rgba(255,255,255,.3)}
+
+.form2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:480px){.form2{grid-template-columns:minmax(0,1fr)}}
+.primary.sm{padding:9px 16px;font-size:.84rem}
+.danger.sm{padding:6px 12px;font-size:.78rem}
+.upload{display:inline-flex;justify-self:start;cursor:pointer}
+.upload input{position:absolute;width:1px;height:1px;opacity:0}
+.upload span{display:inline-block;border:1px dashed var(--gold);color:var(--accent);background:var(--gold-soft);border-radius:999px;padding:10px 18px;font-size:.88rem;font-weight:500}
+.upload:focus-within span{outline:2px solid var(--gold);outline-offset:3px}
+.sf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sf-item{margin:0;position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;max-width:100%}
+.sf-item img{width:100%;height:100%;object-fit:cover;display:block}
+.sf-item button{position:absolute;right:8px;bottom:8px;background:var(--surface)}
+.ev.bloqueio{background:repeating-linear-gradient(135deg,var(--past) 0 8px,var(--busy-soft) 8px 16px);color:var(--muted);border:1px dashed var(--busy)}
+.dr-title .avatar svg.i{width:22px;height:22px}
 </style>
 </head>
 <body>
@@ -645,7 +720,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
       <span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span data-fill="endcidade"></span></span>
       <span class="hide-md"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span data-fill="hor"></span></span>
     </span>
-    <a class="tb-r" data-href="wa" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/></svg><span data-fill="tel"></span><span class="hide-sm">&nbsp;· WhatsApp</span></a>
+    <span class="tb-rr"><a class="tb-r" data-href="ig" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg><span class="hide-sm" data-fill="igu"></span></a><a class="tb-r" data-href="wa" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/></svg><span data-fill="tel"></span><span class="hide-sm">&nbsp;· WhatsApp</span></a></span>
   </div></div>
 
   <header class="top"><div class="in top-in">
@@ -654,6 +729,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
       <a class="t" href="#como">Como funciona</a>
       <a class="t" href="#sobre">O consultório</a>
       <a class="t" href="#local">Localização</a>
+      <a class="t" href="#perguntas">Dúvidas</a>
     </nav>
     <div class="top-r">
       <a class="t" href="#admin">Administrador</a>
@@ -737,28 +813,23 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
               <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.5 9a4 4 0 010 6"/></svg></span><span><b>Avisos do consultório</b><span>Recados da Dra. Thalia no seu painel</span></span></div>
               <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Lista de espera</b><span>Aviso quando um horário vagar</span></span></div>
             </div>
+            <div class="about-cta"><a class="cta line sm" data-href="ig" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg> Siga <span data-fill="igu"></span></a></div>
           </div>
         </div>
       </section>
 
+      <section class="sec gal-sec" id="fotos" hidden aria-label="Fotos do consultório"><div class="in">
+        <div class="sec-head"><div><p class="eyebrow">Fotos</p><h2>Conheça o espaço</h2></div><p>Toque em uma foto para ver maior.</p></div>
+        <div class="gal" id="gal"></div>
+      </div></section>
+
+      <section class="sec faq-sec" id="perguntas" hidden aria-label="Perguntas frequentes"><div class="in faq-grid">
+        <div><p class="eyebrow">Dúvidas</p><h2>Perguntas frequentes</h2><p class="lead2">Não encontrou sua resposta? Fale com a Dra. Thalia.</p><a class="cta line sm" data-href="wa" target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
+        <div class="faq-list" id="faq-list"></div>
+      </div></section>
+
       <section class="sec loc" id="local" aria-label="Localização"><div class="in"><div class="loc-grid">
-        <div class="map" role="img" aria-label="Ilustração da localização na Rua Juiz de Fora, Centro">
-          <span class="blk" style="left:30px;top:30px;width:180px;height:110px"></span>
-          <span class="blk green" style="left:250px;top:30px;width:150px;height:110px"></span>
-          <span class="blk" style="left:440px;top:30px;width:260px;height:110px"></span>
-          <span class="blk" style="left:30px;top:200px;width:120px;height:150px"></span>
-          <span class="blk" style="left:190px;top:200px;width:210px;height:70px"></span>
-          <span class="blk" style="left:190px;top:300px;width:210px;height:60px"></span>
-          <span class="blk green" style="left:440px;top:200px;width:120px;height:150px"></span>
-          <span class="blk" style="left:600px;top:200px;width:100px;height:150px"></span>
-          <span class="st main" style="left:0;right:0;top:158px;height:26px"></span>
-          <span class="st" style="left:220px;top:0;bottom:0;width:16px"></span>
-          <span class="st" style="left:415px;top:0;bottom:0;width:16px"></span>
-          <span class="st" style="left:572px;top:0;bottom:0;width:16px"></span>
-          <span class="mlabel" style="left:40px;top:164px">Rua Juiz de Fora</span>
-          <span class="mlabel" style="left:470px;top:250px">Centro</span>
-          <span class="pin"><span class="bub"><b>Consultório Thalia Santiago</b><span data-fill="end"></span></span><span class="pdot"></span></span>
-        </div>
+        <div class="map"><iframe id="gmap" title="Mapa: Rua Juiz de Fora, Centro, Ipatinga/MG" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
         <div class="loc-info">
           <p class="eyebrow">Localização</p>
           <h2>No Centro de Ipatinga</h2>
@@ -787,6 +858,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
         <label>Nome completo<input id="f-nome" autocomplete="name" required></label>
         <label><span>CRO <em>(opcional)</em></span><input id="f-cro" autocomplete="off" placeholder="Ex.: CRO-MG 12345"></label>
         <label>Telefone (WhatsApp)<input id="f-tel" inputmode="tel" autocomplete="tel" placeholder="(31) 90000-0000" required></label>
+        <label><span>E-mail <em>(opcional, para receber a confirmação e o lembrete)</em></span><input id="f-email" type="email" inputmode="email" autocomplete="email"></label>
         <div id="data-fb" role="status"></div>
         <div class="nav"><button class="ghost" type="button" data-go="welcome">Voltar</button><button class="primary" type="submit">Continuar</button></div>
       </form>
@@ -863,6 +935,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
       <div class="step">
         <div class="thanks"><p class="eyebrow">Tudo certo</p><h2>Reserva confirmada</h2><p class="lead" id="done-text"></p></div>
         <div class="summary" id="done-sum"></div>
+        <div style="display:grid;gap:8px;justify-items:center"><span class="hint">Coloque na sua agenda, com lembrete 2 horas antes:</span><div class="cal-btns" id="done-cal"></div></div>
         <div style="display:grid;gap:10px;justify-items:center">
           <a class="wa" id="done-wa" target="_blank" rel="noopener">Enviar confirmação no WhatsApp</a>
           <span class="hint">Toque no botão para abrir o WhatsApp com a mensagem pronta e enviar.</span>
@@ -921,11 +994,13 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
     <div id="dl-fb" role="status"></div>
     <a class="link" href="#">Voltar ao início</a>
   </section>
+  <a class="wa-float" data-href="wa" target="_blank" rel="noopener" aria-label="Falar com a Dra. Thalia no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/><path d="M9.3 9.2c.2-.5.6-.6.9-.6.3 0 .5.4.7.9.2.5-.4.8-.2 1.2.4.8 1 1.4 1.8 1.8.4.2.7-.4 1.2-.2.5.2.9.4.9.7 0 .3-.1.7-.6.9-1.6.6-4.6-2.3-4.7-3.9z" fill="currentColor" stroke="none"/></svg></a>
+  <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto ampliada"><button type="button" class="lb-x" id="lb-x" aria-label="Fechar">×</button><button type="button" class="lb-p" id="lb-p" aria-label="Foto anterior">‹</button><img id="lb-img" alt="Foto do consultório"><button type="button" class="lb-n" id="lb-n" aria-label="Próxima foto">›</button></div>
   <footer class="site-foot"><div class="in">
     <div class="fcols">
       <div><img src="assets/logo-dourado.webp" alt="Consultório Odontológico Thalia Santiago" width="520" height="254"><p>Aluguel por hora de consultório odontológico no Centro de Ipatinga/MG.</p></div>
       <div><h4>Consultório</h4><ul><li data-fill="end"></li><li data-fill="cidade"></li><li data-fill="hor"></li></ul></div>
-      <div><h4>Contato</h4><ul><li data-fill="tel"></li><li><a data-href="wa" target="_blank" rel="noopener">WhatsApp</a></li><li data-fill="dentista"></li></ul></div>
+      <div><h4>Contato</h4><ul><li data-fill="tel"></li><li><a data-href="wa" target="_blank" rel="noopener">WhatsApp</a></li><li><a data-href="ig" target="_blank" rel="noopener">Instagram <span data-fill="igu"></span></a></li><li data-fill="dentista"></li></ul></div>
       <div><h4>Acesso</h4><ul><li><button type="button" class="flink" data-start>Agendar horário</button></li><li><a href="#dentista">Área do dentista</a></li><li><a href="#admin">Administrador</a></li></ul></div>
     </div>
     <div class="fbase"><span>© <span data-fill="ano"></span> Consultório Odontológico Thalia Santiago</span><span><span data-fill="end"></span> · <span data-fill="cidade"></span></span></div>
@@ -947,6 +1022,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
       <button type="button" data-tab="agenda"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 9.500h17M8 3v4M16 3v4"/></svg>Agenda</button>
       <button type="button" data-tab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
       <button type="button" data-tab="mural"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.500 9a4 4 0 010 6M19 6.500a7.500 7.500 0 010 11"/></svg>Mural<span class="badge" id="mural-badge" hidden>0</span></button>
+      <button type="button" data-tab="site"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8"/></svg>Site</button>
       <button type="button" data-tab="ajustes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3.500v2.200M12 18.300v2.200M3.500 12h2.200M18.300 12h2.200M6 6l1.600 1.600M16.400 16.400L18 18M6 18l1.600-1.600M16.400 7.600L18 6"/></svg>Ajustes</button>
       <div class="side-foot">
         <a href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5.500H4.500V6H10"/></svg>Ver site</a>
@@ -991,6 +1067,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
         <div class="page-head">
           <h2>Agenda</h2>
           <div class="tb">
+            <button class="ghost sm" id="a-block" type="button">Bloquear horários</button><button class="primary sm" id="a-new" type="button">+ Nova reserva</button>
             <div class="tb" id="a-nav">
               <button class="ghost sm" id="a-today" type="button">Hoje</button>
               <button class="icon-btn" id="a-prev" type="button" aria-label="Anterior">‹</button>
@@ -1015,7 +1092,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
       <section id="t-financeiro" class="tab" hidden aria-label="Financeiro">
         <div class="page-head">
           <h2>Financeiro</h2>
-          <div class="tb"><button class="icon-btn" id="f-prev" type="button" aria-label="Mês anterior">‹</button><span class="a-range cap" id="f-month"></span><button class="icon-btn" id="f-next" type="button" aria-label="Próximo mês">›</button></div>
+          <div class="tb"><button class="ghost sm" id="f-csv" type="button">Baixar planilha</button><button class="icon-btn" id="f-prev" type="button" aria-label="Mês anterior">‹</button><span class="a-range cap" id="f-month"></span><button class="icon-btn" id="f-next" type="button" aria-label="Próximo mês">›</button></div>
         </div>
         <div class="kpis" id="f-kpis"></div>
         <div class="card">
@@ -1047,6 +1124,30 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
         <div class="card"><div class="card-head"><h3>Lista de espera</h3><span class="hint">Dentistas que querem um horário já reservado</span></div><div class="mini" id="m-espera"></div></div>
       </section>
 
+      <!-- SITE -->
+      <section id="t-site" class="tab" hidden aria-label="Site">
+        <div class="page-head"><div><p class="eyebrow">Conteúdo da página inicial</p><h2>Site</h2></div><a class="ghost" href="#" style="text-decoration:none">Ver site</a></div>
+        <div class="card">
+          <div class="card-head"><h3>Fotos do consultório</h3><span class="hint" id="sf-count"></span></div>
+          <p class="hint">Aparecem na galeria da página inicial. Envie fotos da sala, da recepção e dos equipamentos. A primeira foto aparece maior.</p>
+          <label class="upload"><input type="file" id="sf-file" accept="image/*" multiple><span>+ Adicionar fotos</span></label>
+          <div id="sf-fb" role="status"></div>
+          <div class="sf-grid" id="sf-grid"></div>
+        </div>
+        <div class="grid2">
+          <div class="card"><div class="card-head"><h3 id="fq-title">Nova pergunta</h3></div>
+            <form id="fq-form" novalidate>
+              <label>Pergunta<input id="fq-p" placeholder="Ex.: O que está incluso no aluguel?"></label>
+              <label>Resposta<textarea id="fq-r" rows="4"></textarea></label>
+              <div id="fq-fb" role="status"></div>
+              <div class="nav end"><button class="ghost" type="button" id="fq-cancel" hidden>Cancelar edição</button><button class="primary" type="submit">Salvar pergunta</button></div>
+            </form>
+            <p class="hint">Ainda faltam respostas suas para: “O que está incluso?”, “Posso levar meu auxiliar?” e “Como funciona o pagamento?”.</p>
+          </div>
+          <div class="card"><div class="card-head"><h3>Perguntas publicadas</h3></div><div class="mini" id="fq-list"></div></div>
+        </div>
+      </section>
+
       <!-- AJUSTES -->
       <section id="t-ajustes" class="tab" hidden aria-label="Ajustes">
         <div class="page-head"><h2>Ajustes</h2></div>
@@ -1058,6 +1159,29 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
             <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="escuro"><span class="pv dark"><u></u><i></i><em></em></span><b>Escuro</b><small>Fundo escuro, confortável à noite</small></button>
             <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="auto"><span class="pv auto"><u></u><i></i><em></em></span><b>Automático</b><small>Segue o tema do seu aparelho</small></button>
           </div>
+        </div>
+                <div class="card" id="aj-email">
+          <div class="card-head"><h3>E-mails automáticos</h3><span class="tag pend" id="em-status">Carregando</span></div>
+          <p class="hint">Confirmação de reserva e lembrete 2 horas antes para os dentistas, aviso de vaga aberta para a lista de espera, e um e-mail para você a cada reserva nova, cancelamento e problema relatado. Usa o plano gratuito do Brevo (até 300 e-mails por dia).</p>
+          <p class="msg err" id="em-ext" hidden>Ative as extensões <b>pg_net</b> e <b>pg_cron</b> no Supabase (Database → Extensions) e rode o arquivo schema.sql de novo. Sem elas, os e-mails não saem.</p>
+          <form id="em-form" novalidate>
+            <div class="form2">
+              <label>Seu e-mail (recebe os avisos)<input id="em-admin" type="email" autocomplete="email"></label>
+              <label>E-mail remetente (confirmado no Brevo)<input id="em-from" type="email"></label>
+              <label>Nome do remetente<input id="em-nome"></label>
+              <label>Chave da API do Brevo<input id="em-key" type="password" autocomplete="off"></label>
+            </div>
+            <div id="em-fb" role="status"></div>
+            <div class="nav end"><button class="ghost" type="button" id="em-test">Enviar e-mail de teste</button><button class="primary" type="submit">Salvar</button></div>
+          </form>
+          <details class="rd"><summary>Como conseguir a chave do Brevo (grátis)</summary>
+            <ol class="rules">
+              <li>Crie uma conta grátis em brevo.com.</li>
+              <li>Cadastre e confirme o e-mail que vai aparecer como remetente (no Brevo, em Remetentes / Senders).</li>
+              <li>Gere uma chave de API (no Brevo, em SMTP e API → Chaves de API) e cole no campo acima.</li>
+              <li>Salve e toque em “Enviar e-mail de teste”.</li>
+            </ol>
+          </details>
         </div>
         <div class="grid2">
           <div class="card"><div class="card-head"><h3>Funcionamento</h3></div><div class="kv" id="aj-func"></div><p class="hint">Esses dados ficam na configuração do site.</p></div>
@@ -1133,6 +1257,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
       <section id="c-nova" class="tab" hidden aria-label="Nova reserva">
         <div class="page-head"><div><p class="eyebrow">Nova reserva</p><h2>Escolha a data e o horário</h2></div></div>
         <div class="card" id="cn-pick">
+          <div class="stack" id="cn-top"></div>
           <div class="cols">
             <div class="col" aria-label="Calendário">
               <div class="cal-head">
@@ -1159,7 +1284,7 @@ button.slot:hover{background:#d9bb6f;color:#3f0010;border-color:#d9bb6f}
         <div class="card" id="cn-opts" hidden>
           <div class="card-head"><h3>Detalhes da reserva</h3></div>
           <div class="summary" id="cn-sum"></div>
-          <label>Repetir no mesmo dia da semana e horário
+          <label id="cn-weeks-wrap">Repetir no mesmo dia da semana e horário
             <select id="cn-weeks">
               <option value="1">Não repetir</option><option value="2">Por 2 semanas</option><option value="3">Por 3 semanas</option><option value="4">Por 4 semanas</option>
               <option value="6">Por 6 semanas</option><option value="8">Por 8 semanas</option>
@@ -1279,6 +1404,12 @@ const CFG = {
   mesesAFrente: 3,
   whatsapp: '553185825564',     // número que recebe a confirmação (DDI 55 + DDD 31 + número)
   valorHora: null,             // valor cobrado por hora (ex.: 80). null = ainda não definido
+  instagram: 'https://www.instagram.com/dra.thaliasantiago/',
+  instagramUser: '@dra.thaliasantiago',
+  precos: {                    // preços diferentes (opcional). Ex.: porDia: { 6: 90 } = sábado R$ 90/h;
+    porDia: {},                // porHora: [{ de: 18, ate: 20, valor: 100 }] = das 18h às 20h R$ 100/h
+    porHora: []
+  },
   prazoCancelamentoH: 24,      // até quantas horas antes o dentista pode cancelar pelo site
   pix: '',                     // chave Pix exibida na área do dentista
   pacotes: [],                 // ex.: [{ horas: 10, valor: 700 }, { horas: 20, valor: 1300 }]
@@ -1350,7 +1481,12 @@ function localAdapter() {
     async get(n, id) { mem = load(); const v = ((mem.cols || {})[n] || {})[id]; return v ? { ...v } : null; },
     async put(n, id, data) { mem = load(); col(n)[id] = data; save(); },
     async patch(n, id, data) { mem = load(); const c = col(n); if (!c[id]) throw new Error('missing'); c[id] = { ...c[id], ...data }; save(); },
-    async remove(n, id) { mem = load(); delete col(n)[id]; save(); }
+    async remove(n, id) { mem = load(); delete col(n)[id]; save(); },
+    async block() { throw new Error('Configure o Supabase'); },
+    async rpc() { throw new Error('Configure o Supabase'); },
+    async uploadFile() { throw new Error('Configure o Supabase'); },
+    async removeFile() { throw new Error('Configure o Supabase'); },
+    async signedUrl() { return null; }
   };
 }
 
@@ -1359,7 +1495,7 @@ const today = new Date();
 const S = {
   store: null, slots: {}, bookings: [],
   step: 'welcome',
-  form: { nome: '', cro: '', tel: '', primeira: null },
+  form: { nome: '', cro: '', tel: '', email: '', primeira: null },
   month: new Date(today.getFullYear(), today.getMonth(), 1),
   date: null, start: null, end: null,
   canWrite: true, isAdmin: false, localMode: true, busy: false,
@@ -1395,10 +1531,11 @@ const STATUS_LABEL = { agendado: 'Agendado', andamento: 'Em atendimento', conclu
 function fillInfo() {
   const d = CFG.diasAbertos, a = DIAS_LONGOS[d[0]].replace('-feira', ''), z = DIAS_LONGOS[d[d.length - 1]].replace('-feira', '');
   const dias = `${a[0].toUpperCase() + a.slice(1)} a ${z}`;
-  const V = { end: CFG.endereco, cidade: CFG.cidade, endcidade: `${CFG.endereco} · ${CFG.cidade}`, tel: CFG.telefone, dentista: CFG.dentista,
+  const V = { end: CFG.endereco, cidade: CFG.cidade, endcidade: `${CFG.endereco} · ${CFG.cidade}`, tel: CFG.telefone, dentista: CFG.dentista, igu: CFG.instagramUser,
     dias, horas: `Das ${CFG.abre}h às ${CFG.fecha}h`, hor: `${dias}, ${CFG.abre}h às ${CFG.fecha}h`, ano: String(new Date().getFullYear()) };
   document.querySelectorAll('[data-fill]').forEach(el => { const v = V[el.dataset.fill]; if (v != null) el.textContent = v; });
-  const H = { wa: `https://wa.me/${CFG.whatsapp}`, map: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CFG.mapa) };
+  const H = { wa: `https://wa.me/${CFG.whatsapp}`, ig: CFG.instagram, map: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CFG.mapa) };
+  const gm = $('gmap'); if (gm && !gm.src) gm.src = 'https://www.google.com/maps?q=' + encodeURIComponent(CFG.mapa) + '&output=embed';
   document.querySelectorAll('[data-href]').forEach(el => { if (H[el.dataset.href]) el.href = H[el.dataset.href]; });
 }
 document.addEventListener('click', e => {
@@ -1460,7 +1597,9 @@ $('f-data').addEventListener('submit', e => {
   if (nome.length < 2) return msgIn($('data-fb'), 'err', 'Informe o nome completo.');
   if (tel.replace(/\D/g, '').length < 10) return msgIn($('data-fb'), 'err', 'Informe um telefone com DDD.');
   $('data-fb').innerHTML = '';
-  S.form.nome = nome; S.form.tel = tel; S.form.cro = $('f-cro').value.trim();
+  const email = $('f-email').value.trim();
+  if (email && !/^\S+@\S+\.\S+$/.test(email)) return msgIn($('data-fb'), 'err', 'Confira o e-mail ou deixe em branco.');
+  S.form.nome = nome; S.form.tel = tel; S.form.cro = $('f-cro').value.trim(); S.form.email = email;
   go('first');
 });
 
@@ -1594,7 +1733,7 @@ $('confirm-btn').addEventListener('click', async () => {
   if (S.busy || S.start == null) return;
   if (!rangeFree(S.date, S.start, S.end)) return msgIn($('confirm-fb'), 'err', 'Esse horário acabou de ser ocupado. Volte e escolha outro.');
   const keys = []; for (let h = S.start; h <= S.end; h++) keys.push(keyOf(S.date, h));
-  const b = { id: newId(), nome: S.form.nome, cro: S.form.cro, tel: S.form.tel, primeira: S.form.primeira === true, date: S.date, from: S.start, to: S.end + 1, keys, status: 'ativo', criadoEm: new Date().toISOString() };
+  const b = { id: newId(), nome: S.form.nome, cro: S.form.cro, tel: S.form.tel, primeira: S.form.primeira === true, email: S.form.email || undefined, date: S.date, from: S.start, to: S.end + 1, keys, status: 'ativo', criadoEm: new Date().toISOString() };
   S.busy = true; $('confirm-btn').disabled = true;
   try {
     await S.store.create(b);
@@ -1602,6 +1741,7 @@ $('confirm-btn').addEventListener('click', async () => {
     $('done-text').textContent = 'O consultório fica reservado para você até o fim do horário marcado.';
     $('done-sum').innerHTML = summaryHtml(S.form, b.date, b.from, b.to);
     $('done-wa').href = waLink(b);
+    $('done-cal').innerHTML = calButtons(b);
     S.start = S.end = null;
     go('done');
   } catch (_) {
@@ -1610,8 +1750,8 @@ $('confirm-btn').addEventListener('click', async () => {
   } finally { S.busy = false; }
 });
 $('again').addEventListener('click', () => {
-  S.form = { nome: '', cro: '', tel: '', primeira: null }; S.date = null; S.start = S.end = null;
-  $('f-nome').value = ''; $('f-tel').value = ''; $('f-cro').value = '';
+  S.form = { nome: '', cro: '', tel: '', email: '', primeira: null }; S.date = null; S.start = S.end = null;
+  $('f-nome').value = ''; $('f-tel').value = ''; $('f-cro').value = ''; $('f-email').value = '';
   go('welcome');
 });
 
@@ -1729,7 +1869,7 @@ function miniDent(d) {
 }
 
 /* Abas */
-const TABS = [['resumo', 'Resumo'], ['dentistas', 'Dentistas'], ['agenda', 'Agenda'], ['financeiro', 'Financeiro'], ['mural', 'Mural'], ['ajustes', 'Ajustes']];
+const TABS = [['resumo', 'Resumo'], ['dentistas', 'Dentistas'], ['agenda', 'Agenda'], ['financeiro', 'Financeiro'], ['mural', 'Mural'], ['site', 'Site'], ['ajustes', 'Ajustes']];
 function setTab(t) {
   S.tab = t; try { sessionStorage.setItem('aba', t); } catch (_) {}
   closeDrawer(); renderAdmin();
@@ -1737,7 +1877,8 @@ function setTab(t) {
 }
 function renderAdmin() {
   if (!TABS.some(t => t[0] === S.tab)) S.tab = 'resumo';
-  S.cache = { all: live(), dents: null };
+  const L = live();
+  S.cache = { all: L.filter(x => x.b.origem !== 'bloqueio'), blocks: L.filter(x => x.b.origem === 'bloqueio' && x.st !== 'cancelado'), dents: null };
   document.querySelectorAll('.side [data-tab]').forEach(b => b.setAttribute('aria-current', b.dataset.tab === S.tab ? 'page' : 'false'));
   TABS.forEach(([k]) => { $('t-' + k).hidden = k !== S.tab; });
   $('crumb').textContent = TABS.find(t => t[0] === S.tab)[1];
@@ -1745,7 +1886,7 @@ function renderAdmin() {
   badge.hidden = !due.length; badge.textContent = due.length;
   const ab = Object.values(S.cols.problemas || {}).filter(p => p.status !== 'resolvido').length;
   $('mural-badge').hidden = !ab; $('mural-badge').textContent = ab;
-  ({ resumo: renderResumo, dentistas: renderDentistas, agenda: renderAgenda, financeiro: renderFinanceiro, mural: renderMural, ajustes: renderAjustes })[S.tab]();
+  ({ resumo: renderResumo, dentistas: renderDentistas, agenda: renderAgenda, financeiro: renderFinanceiro, mural: renderMural, site: renderSite, ajustes: renderAjustes })[S.tab]();
   renderDrawer();
 }
 
@@ -1791,12 +1932,12 @@ function renderResumo() {
     return `<div class="bar${s === t ? ' today' : ''}"><span class="bar-v">${h}h</span><div class="bar-track" role="img" aria-label="${DIAS_LONGOS[d.getDay()]}: ${h} de ${hpd} horas"><i style="height:${Math.min(100, h / hpd * 100)}%"></i></div><span class="bar-l">${DIAS[d.getDay()]}</span></div>`;
   }).join('');
 
-  const v = CFG.valorHora;
+  const recMes = sumPrice(mes);
   $('r-fin').innerHTML = [
-    ['Receita prevista', v ? BRL(horasMes * v) : 'A definir'],
+    ['Receita prevista', recMes != null ? BRL(recMes) : 'A definir'],
     ['Horas reservadas', `${horasMes}h`],
     ['Já realizadas', `${sumH(mes.filter(x => x.st === 'concluido'))}h`],
-    ['Valor da hora', v ? BRL(v) : 'Ainda não configurado']
+    ['Valor da hora', temPreco() ? precoTexto() : 'Ainda não configurado']
   ].map(([a, b]) => `<div><span>${a}</span><span>${b}</span></div>`).join('');
 
   $('r-next').innerHTML = prox.length ? prox.slice(0, 5).map(miniBooking).join('') : emptyBox('Nenhuma reserva marcada por enquanto.');
@@ -1852,9 +1993,9 @@ function renderCal() {
     h += `<div class="cal-col${s === t ? ' today' : ''}${dayOpen(d) ? '' : ' closed'}">`;
     if (past > 0) h += `<div class="cal-past" style="height:${past * ROW}px"></div>`;
     if (s === t && past > 0 && past < n) h += `<div class="cal-now" style="top:${past * ROW}px"></div>`;
-    all.filter(x => isActive(x) && x.b.date === s).forEach(({ b, st }) => {
+    [...all.filter(x => isActive(x) && x.b.date === s), ...(S.cache.blocks || []).filter(x => x.b.date === s)].forEach(({ b, st }) => {
       count++;
-      h += `<button type="button" class="ev ${st}" data-bk="${esc(b.id)}" style="top:${(b.from - CFG.abre) * ROW + 2}px;height:${(b.to - b.from) * ROW - 4}px" aria-label="${esc(b.nome)}, ${hh(b.from)} às ${hh(b.to)}"><small>${hh(b.from)} – ${hh(b.to)}</small><b>${esc(b.nome)}</b></button>`;
+      h += `<button type="button" class="ev ${b.origem === 'bloqueio' ? 'bloqueio' : st}" data-bk="${esc(b.id)}" style="top:${(b.from - CFG.abre) * ROW + 2}px;height:${(b.to - b.from) * ROW - 4}px" aria-label="${esc(b.nome)}, ${hh(b.from)} às ${hh(b.to)}"><small>${hh(b.from)} – ${hh(b.to)}</small><b>${esc(b.nome)}</b></button>`;
     });
     h += '</div>';
   });
@@ -1905,21 +2046,21 @@ function adminRow(b, st) {
 
 /* Financeiro */
 function renderFinanceiro() {
-  const m = S.fMonth, ym = iso(m).slice(0, 7), v = CFG.valorHora;
+  const m = S.fMonth, ym = iso(m).slice(0, 7), v = temPreco();
   $('f-month').textContent = `${MESES[m.getMonth()]} de ${m.getFullYear()}`;
   const doMes = S.cache.all.filter(x => x.b.date.startsWith(ym));
   const ok = doMes.filter(isActive), canc = doMes.filter(x => !isActive(x));
   const feitas = ok.filter(x => x.st === 'concluido');
   kpis($('f-kpis'), [
-    { ic: 'money', v: v ? BRL(sumH(ok) * v) : 'A definir', l: 'Receita prevista', s: v ? `${BRL(v)} por hora` : 'Valor da hora ainda não configurado' },
+    { ic: 'money', v: sumPrice(ok) != null ? BRL(sumPrice(ok)) : 'A definir', l: 'Receita prevista', s: v ? precoTexto() : 'Valor da hora ainda não configurado' },
     { ic: 'chart', v: `${sumH(ok)}h`, l: 'Horas reservadas', s: `${sumH(feitas)}h já realizadas` },
     { ic: 'cal', v: ok.length, l: 'Reservas', s: `${ok.length - feitas.length} a realizar` },
     { ic: 'x', v: canc.length, l: 'Cancelamentos', s: `${sumH(canc)}h liberadas` }
   ]);
   const g = new Map();
-  ok.forEach(x => { const k = keyOfB(x.b); const r = g.get(k) || { k, nome: x.b.nome, n: 0, h: 0, f: 0 }; r.n++; r.h += hoursOf(x.b); if (x.st === 'concluido') r.f += hoursOf(x.b); g.set(k, r); });
+  ok.forEach(x => { const k = keyOfB(x.b); const r = g.get(k) || { k, nome: x.b.nome, n: 0, h: 0, f: 0, items: [] }; r.n++; r.h += hoursOf(x.b); r.items.push(x); if (x.st === 'concluido') r.f += hoursOf(x.b); g.set(k, r); });
   const rows = [...g.values()].sort((a, b) => b.h - a.h);
-  $('f-body').innerHTML = rows.map(r => `<tr data-dent="${esc(r.k)}" tabindex="0"><td><span class="who2"><span class="avatar">${esc(initials(r.nome))}</span><b>${esc(r.nome)}</b></span></td><td class="num">${r.n}</td><td class="num">${r.h}h</td><td class="num hide-sm">${r.f}h</td><td class="num">${v ? BRL(r.h * v) : '—'}</td></tr>`).join('');
+  $('f-body').innerHTML = rows.map(r => `<tr data-dent="${esc(r.k)}" tabindex="0"><td><span class="who2"><span class="avatar">${esc(initials(r.nome))}</span><b>${esc(r.nome)}</b></span></td><td class="num">${r.n}</td><td class="num">${r.h}h</td><td class="num hide-sm">${r.f}h</td><td class="num">${sumPrice(r.items) != null ? BRL(sumPrice(r.items)) : '—'}</td></tr>`).join('');
   $('f-empty').hidden = !!rows.length;
   if (!rows.length) $('f-empty').innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${ICON.tooth}</svg><span>Nenhuma reserva neste mês.</span>`;
   $('f-pending').hidden = !!v;
@@ -1945,8 +2086,9 @@ function renderAjustes() {
     ['Horário', `${CFG.abre}h às ${CFG.fecha}h`],
     ['Endereço', `${CFG.endereco}, ${CFG.cidade}`],
     ['WhatsApp do consultório', CFG.telefone],
-    ['Valor da hora', CFG.valorHora ? BRL(CFG.valorHora) : 'A definir']
+    ['Valor da hora', precoTexto()]
   ].map(([k, v]) => `<div><span>${k}</span><span>${esc(v)}</span></div>`).join('');
+  if (!S.emLoaded) { S.emLoaded = true; loadEmailStatus(); }
 }
 document.querySelectorAll('.theme-opt').forEach(b => b.addEventListener('click', () => setTema(b.dataset.tema, b.dataset.scope || 'painel')));
 
@@ -1959,10 +2101,14 @@ function closeDrawer() {
 }
 function renderDrawer() {
   if (!S.drawer) { $('drawer').hidden = true; $('scrim').hidden = true; return; }
+  if (S.drawer.type === 'form') {
+    if (!S.drawer.rendered) { $('dr-kind').textContent = S.drawer.kind; $('dr-body').replaceChildren(S.drawer.build()); S.drawer.rendered = true; }
+    $('drawer').hidden = false; $('scrim').hidden = false; return;
+  }
   let node = null;
   if (S.drawer.type === 'booking') {
-    const x = S.cache.all.find(x => x.b.id === S.drawer.id);
-    if (x) { $('dr-kind').textContent = 'Reserva'; node = bookingDetail(x); }
+    const x = S.cache.all.find(x => x.b.id === S.drawer.id) || (S.cache.blocks || []).find(x => x.b.id === S.drawer.id);
+    if (x) { $('dr-kind').textContent = x.b.origem === 'bloqueio' ? 'Bloqueio' : 'Reserva'; node = x.b.origem === 'bloqueio' ? blockDetail(x) : bookingDetail(x); }
   } else {
     const d = getDents().find(d => d.key === S.drawer.key);
     if (d) { $('dr-kind').textContent = 'Dentista'; node = dentistDetail(d); }
@@ -1980,6 +2126,7 @@ function bookingDetail({ b, st }) {
       <div><span>Horário</span><span>${hh(b.from)} às ${hh(b.to)} (${hoursOf(b)}h)</span></div>
       <div><span>CRO</span><span>${esc(b.cro || 'Não informado')}</span></div>
       <div><span>WhatsApp</span><span>${esc(b.tel)}</span></div>
+      ${b.email ? `<div><span>E-mail</span><span>${esc(b.email)}</span></div>` : ''}
       <div><span>Primeira vez</span><span>${b.primeira ? 'Sim' : 'Não'}</span></div>
       <div><span>Confirmação</span><span>${b.confAbertaEm ? 'Enviada em ' + fmtDT(b.confAbertaEm) : 'Ainda não enviada'}</span></div>
       <div><span>Reservado em</span><span>${b.criadoEm ? fmtDT(b.criadoEm) : '—'}${b.origem === 'area-dentista' ? ' · pela área do dentista' : ''}</span></div>
@@ -1996,6 +2143,12 @@ function bookingDetail({ b, st }) {
     pg.textContent = b.pago ? 'Desmarcar pagamento' : 'Marcar como pago';
     pg.addEventListener('click', async e => { e.stopPropagation(); pg.disabled = true; try { await S.store.mark(b, { pago: !b.pago, pagoEm: b.pago ? null : new Date().toISOString() }); } catch (_) { pg.disabled = false; } });
     acts.appendChild(pg);
+  }
+  if (b.comprovantePath) {
+    const cv = document.createElement('a'); cv.className = 'ghost'; cv.textContent = 'Ver comprovante'; cv.target = '_blank'; cv.rel = 'noopener'; cv.style.textDecoration = 'none';
+    cv.addEventListener('click', e => { e.stopPropagation(); if (!cv.getAttribute('href')) e.preventDefault(); });
+    acts.appendChild(cv);
+    S.store.signedUrl('comprovantes', b.comprovantePath).then(u => { if (u) cv.href = u; }).catch(() => {});
   }
   const hist = document.createElement('button'); hist.type = 'button'; hist.className = 'ghost'; hist.textContent = 'Ver histórico do dentista';
   hist.dataset.dent = keyOfB(b); acts.appendChild(hist);
@@ -2059,12 +2212,13 @@ function logout() {
 /* ---------- Supabase: banco de dados e login ---------- */
 let SB = null;
 function sbAdapter(sb) {
-  const BMAP = { from: 'h_from', to: 'h_to', criadoEm: 'criado_em', confAbertaEm: 'conf_aberta_em', comprovanteEm: 'comprovante_em', pagoEm: 'pago_em', dentistId: 'dentist_id' };
+  const BMAP = { from: 'h_from', to: 'h_to', criadoEm: 'criado_em', confAbertaEm: 'conf_aberta_em', comprovanteEm: 'comprovante_em', comprovantePath: 'comprovante_path', pagoEm: 'pago_em', dentistId: 'dentist_id', lembreteEm: 'lembrete_em' };
   const COLMAP = {
     dentists: { tel: 'whatsapp', regrasAceitasEm: 'regras_aceitas_em', criadoEm: 'criado_em' },
     problemas: { dentKey: 'dentist_id', desc: 'descricao', criadoEm: 'criado_em', resolvidoEm: 'resolvido_em' },
     espera: { dentKey: 'dentist_id', from: 'h_from', to: 'h_to', criadoEm: 'criado_em' },
-    avisos: { criadoEm: 'criado_em' }
+    avisos: { criadoEm: 'criado_em' },
+    faq: { criadoEm: 'criado_em' }
   };
   const toDb = (map, o) => { const r = {}; for (const [k, v] of Object.entries(o)) { if (k === 'id' || v === undefined) continue; r[map[k] || k] = v; } return r; };
   const fromDb = (map, row) => { const inv = {}; for (const [k, v] of Object.entries(map)) inv[v] = k; const r = {}; for (const [k, v] of Object.entries(row)) r[inv[k] || k] = v; return r; };
@@ -2082,12 +2236,18 @@ function sbAdapter(sb) {
       const cols = {};
       for (const n of Object.keys(colCbs)) {
         cols[n] = {};
-        if (S.uid) ok(await sb.from(n).select('*')).forEach(r => { cols[n][r.id] = { id: r.id, ...fromDb(COLMAP[n], r) }; });
+        if (S.uid || n === 'faq') { try { ok(await sb.from(n).select('*')).forEach(r => { cols[n][r.id] = { id: r.id, ...fromDb(COLMAP[n], r) }; }); } catch (_) {} }
       }
+      try { S.fotos = await listFotos(); } catch (_) { S.fotos = []; }
       for (const n of Object.keys(colCbs)) colCbs[n](cols[n], true);
       cb(slots, bks);
     })();
     try { await loading; } finally { loading = null; }
+  }
+  async function listFotos() {
+    const r = await sb.storage.from('fotos').list('', { limit: 100, sortBy: { column: 'name', order: 'asc' } });
+    if (r.error) return [];
+    return (r.data || []).filter(f => f.name && !f.name.startsWith('.')).map(f => ({ name: f.name, url: sb.storage.from('fotos').getPublicUrl(f.name).data.publicUrl }));
   }
   const refresh = () => { clearTimeout(timer); timer = setTimeout(() => loadAll().catch(() => {}), 300); };
   return {
@@ -2097,7 +2257,7 @@ function sbAdapter(sb) {
     subscribe() { sb.channel('agenda').on('postgres_changes', { event: '*', schema: 'public' }, refresh).subscribe(); },
     async create(b) {
       const id = ok(await sb.rpc('reservar', { p_nome: b.nome, p_cro: b.cro || '', p_tel: b.tel, p_date: b.date, p_from: b.from, p_to: b.to,
-        p_primeira: !!b.primeira, p_pedido: b.pedido || null, p_serie: b.serie || null, p_origem: b.origem || 'site' }));
+        p_primeira: !!b.primeira, p_pedido: b.pedido || null, p_serie: b.serie || null, p_origem: b.origem || 'site', p_email: b.email || null, p_dentist: b.dentistId || null }));
       b.id = id; refresh(); return id;
     },
     async close(b) { ok(await sb.rpc('cancelar', { p_id: b.id })); refresh(); },
@@ -2105,7 +2265,12 @@ function sbAdapter(sb) {
     async get(n, id) { const d = ok(await sb.from(n).select('*').eq('id', id).maybeSingle()); return d ? fromDb(COLMAP[n], d) : null; },
     async put(n, id, d) { ok(await sb.from(n).insert(toDb(COLMAP[n], d))); refresh(); },
     async patch(n, id, d) { ok(await sb.from(n).update(toDb(COLMAP[n], d)).eq('id', id)); refresh(); },
-    async remove(n, id) { ok(await sb.from(n).delete().eq('id', id)); refresh(); }
+    async remove(n, id) { ok(await sb.from(n).delete().eq('id', id)); refresh(); },
+    async block(date, from, to, motivo) { ok(await sb.rpc('bloquear', { p_date: date, p_from: from, p_to: to, p_motivo: motivo })); refresh(); },
+    async rpc(n, a) { return ok(await sb.rpc(n, a || {})); },
+    async uploadFile(bucket, path, blob, type) { ok(await sb.storage.from(bucket).upload(path, blob, { contentType: type, upsert: false })); },
+    async removeFile(bucket, path) { ok(await sb.storage.from(bucket).remove([path])); refresh(); },
+    async signedUrl(bucket, path) { const d = ok(await sb.storage.from(bucket).createSignedUrl(path, 3600)); return d && d.signedUrl; }
   };
 }
 function errText(e, fallback) {
@@ -2116,6 +2281,7 @@ function errText(e, fallback) {
     DIA_FECHADO: 'O consultório não abre nesse dia.',
     HORARIO_INVALIDO: 'Horário fora do funcionamento do consultório.',
     TELEFONE_INVALIDO: 'Informe um telefone com DDD.',
+    EMAIL_INVALIDO: 'Confira o e-mail informado.',
     NOME_INVALIDO: 'Informe o nome completo.',
     DATA_DISTANTE: 'Essa data ainda não está aberta para reservas.',
     FORA_DO_PRAZO: `O prazo para cancelar pelo site já passou. Fale com a ${CFG.dentista}.`,
@@ -2275,7 +2441,7 @@ function funcText() {
   return `${a[0].toUpperCase() + a.slice(1)} a ${z}, ${CFG.abre}h às ${CFG.fecha}h`;
 }
 function payInfo(b) {
-  const v = CFG.valorHora ? hoursOf(b) * CFG.valorHora : null;
+  const v = priceOf(b);
   if (b.status === 'cancelado') return { v, tag: 'cancelado', label: 'Cancelada' };
   if (b.pago) return { v, tag: 'pago', label: 'Pago' };
   if (b.comprovanteEm) return { v, tag: 'pend', label: 'Comprovante enviado' };
@@ -2348,7 +2514,7 @@ function renderCInicio(al) {
   const now = new Date(), mine = S.cc.mine, d0 = me();
   $('ci-date').textContent = `${DIAS_LONGOS[now.getDay()]}, ${now.getDate()} de ${MESES[now.getMonth()]}`;
   $('ci-hello').textContent = `Olá, ${firstName(myName())}`;
-  $('ci-alerts').innerHTML = al.join('');
+  $('ci-alerts').innerHTML = quickBookHtml() + al.join('');
   const up = mine.filter(x => x.st === 'agendado' || x.st === 'andamento').sort(asc), nx = up[0];
   if (nx) {
     const d = new Date(nx.b.date + 'T12:00');
@@ -2430,9 +2596,14 @@ function cBookingDetail({ b, st }) {
       ['Horário', `${hh(b.from)} às ${hh(b.to)} (${hoursOf(b)}h)`],
       ['Local', `${CFG.endereco}, ${CFG.cidade}`],
       ['Valor', pi.v != null ? BRL(pi.v) : 'A definir'],
-      ...(CFG.valorHora && st !== 'cancelado' ? [['Pagamento', pi.label]] : []),
+      ...(temPreco() && st !== 'cancelado' ? [['Pagamento', pi.label]] : []),
       ['Reservado em', b.criadoEm ? fmtDT(b.criadoEm) : '—']
     ])}</div>`;
+  if (st === 'agendado' || st === 'andamento') h += `<div class="block"><h4>Lembrete no celular</h4><p class="hint">Salve na sua agenda com alerta 2 horas antes.</p><div class="dr-actions">${calButtons(b)}</div></div>`;
+  if (st !== 'cancelado') {
+    if (b.pago) h += `<div class="block"><h4>Pagamento</h4><p style="margin:0">Pagamento confirmado${b.pagoEm ? ' em ' + fmtDT(b.pagoEm) : ''}.</p></div>`;
+    else h += `<div class="block"><h4>Comprovante de pagamento</h4><p class="hint">${b.comprovantePath ? `Enviado em ${fmtDT(b.comprovanteEm)}. A Dra. Thalia confirma o pagamento pelo painel.` : 'Pagou por Pix? Anexe a foto ou o PDF do comprovante.'}</p><label class="upload"><input type="file" accept="image/*,application/pdf" data-comp="${esc(b.id)}"><span>${b.comprovantePath ? 'Enviar outro comprovante' : 'Anexar comprovante'}</span></label><span class="hint" id="cd-cfb"></span></div>`;
+  }
   if (st === 'agendado') {
     const val = dr.pedido != null ? dr.pedido : (b.pedido || '');
     h += `<div class="block"><h4>Pedido especial</h4><p class="hint">Precisa de algum material, equipamento ou preparo? A Dra. Thalia vê o pedido no painel dela.</p>
@@ -2462,7 +2633,7 @@ function cBookingDetail({ b, st }) {
   h += `<div class="block"><h4>Ações</h4><div class="dr-actions" id="cd-acts"></div><div id="cd-fb" role="status"></div></div>`;
   w.innerHTML = h;
   const acts = w.querySelector('#cd-acts');
-  if (canCancel) acts.appendChild(cancelButton(b));
+  if (canCancel) { acts.insertAdjacentHTML('beforeend', btnHtml('Remarcar', `data-remarcar="${esc(b.id)}"`, 'ghost')); acts.appendChild(cancelButton(b)); }
   else if (st === 'agendado') {
     const p = document.createElement('p'); p.className = 'hint'; p.style.margin = '0 0 4px'; p.style.flexBasis = '100%';
     p.textContent = `Faltam menos de ${CFG.prazoCancelamentoH} horas. Para cancelar ou remarcar, fale com a Dra. Thalia.`;
@@ -2480,7 +2651,7 @@ function receiptHtml(b) {
   const row = (k, v) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`;
   return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Comprovante de reserva</title><style>body{font-family:Georgia,serif;color:#24161a;max-width:640px;margin:40px auto;padding:0 20px}h1{color:#590117;font-weight:600;margin:0 0 4px}p{color:#7a6a6e;margin:0 0 24px}table{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px}th,td{padding:10px 0;border-bottom:1px solid #efe6e6;text-align:left}th{color:#7a6a6e;font-weight:normal;width:40%}footer{margin-top:28px;font:12px Arial,sans-serif;color:#7a6a6e}</style></head><body>
 <h1>Comprovante de reserva</h1><p>${esc(CFG.nome)} · ${esc(CFG.dentista)}</p>
-<table>${row('Profissional', d0.nome || b.nome)}${row('CRO', d0.cro || b.cro || 'Não informado')}${row('Data', `${DIAS_LONGOS[d.getDay()]}, ${br(b.date)}`)}${row('Horário', `${hh(b.from)} às ${hh(b.to)} (${hoursOf(b)}h)`)}${row('Local', `${CFG.endereco}, ${CFG.cidade}`)}${row('Valor', pi.v != null ? BRL(pi.v) : 'A definir')}${CFG.valorHora ? row('Pagamento', pi.label) : ''}${row('Código da reserva', b.id)}</table>
+<table>${row('Profissional', d0.nome || b.nome)}${row('CRO', d0.cro || b.cro || 'Não informado')}${row('Data', `${DIAS_LONGOS[d.getDay()]}, ${br(b.date)}`)}${row('Horário', `${hh(b.from)} às ${hh(b.to)} (${hoursOf(b)}h)`)}${row('Local', `${CFG.endereco}, ${CFG.cidade}`)}${row('Valor', pi.v != null ? BRL(pi.v) : 'A definir')}${temPreco() ? row('Pagamento', pi.label) : ''}${row('Código da reserva', b.id)}</table>
 <footer>Emitido em ${fmtDT(new Date().toISOString())} pela área do dentista.</footer></body></html>`;
 }
 
@@ -2507,6 +2678,8 @@ function renderCNova() {
   const c = cnState();
   $('cn-pick').hidden = !!c.done; $('cn-done').hidden = !c.done;
   if (c.done) { $('cn-opts').hidden = true; renderCNDone(c.done); return; }
+  if (c.remarcar) c.weeks = 1;
+  renderCNTop();
   $('cn-dow').innerHTML = DIAS.map(d => `<span>${d}</span>`).join('');
   $('cn-month').textContent = `${MESES[c.month.getMonth()]} de ${c.month.getFullYear()}`;
   const first = new Date(c.month), last = new Date(first.getFullYear(), first.getMonth() + 1, 0);
@@ -2562,7 +2735,7 @@ function renderCNOpts() {
   const c = S.cn; $('cn-opts').hidden = c.start == null;
   if (c.start == null) return;
   const d = new Date(c.date + 'T12:00');
-  $('cn-sum').innerHTML = `<span><b>${DIAS_LONGOS[d.getDay()]}, ${br(c.date)}</b></span><span><b>${hh(c.start)}</b> às <b>${hh(c.end + 1)}</b> (${c.end - c.start + 1}h)</span>${CFG.valorHora ? `<span class="hint">Valor: ${BRL((c.end - c.start + 1) * CFG.valorHora)} por data</span>` : ''}`;
+  $('cn-sum').innerHTML = `<span><b>${DIAS_LONGOS[d.getDay()]}, ${br(c.date)}</b></span><span><b>${hh(c.start)}</b> às <b>${hh(c.end + 1)}</b> (${c.end - c.start + 1}h)</span>${(() => { const v = priceOf({ date: c.date, from: c.start, to: c.end + 1 }); return v != null ? `<span class="hint">Valor: ${BRL(v)} por data</span>` : ''; })()}`;
   $('cn-weeks').value = String(c.weeks);
   const ds = seriesDates(c);
   $('cn-check').innerHTML = c.weeks > 1 ? ds.map(x => {
@@ -2588,14 +2761,22 @@ async function cnConfirm() {
     try { await S.store.create(b); ok.push(b); } catch (_) { fail.push(s); }
   }
   S.busy = false; $('cn-pedido').value = ''; $('cn-fb2').innerHTML = '';
-  c.done = { ok, fail };
+  let rem = null;
+  if (c.remarcar && ok.length) {
+    const old = S.bookings.find(x => x.id === c.remarcar);
+    rem = { ok: false, err: '' };
+    if (old) { try { await S.store.close(old); rem.ok = true; } catch (err) { rem.err = errText(err); } }
+  }
+  c.done = { ok, fail, rem };
   renderDent();
 }
-function renderCNDone({ ok, fail }) {
+function renderCNDone({ ok, fail, rem }) {
   const txt = [`Olá Dra. Thalia, aqui é ${myName()}. Acabei de reservar o consultório:`, ...ok.map(b => `• ${br(b.date)}, das ${hh(b.from)} às ${hh(b.to)}`)].join('\n');
   $('cn-done').innerHTML = ok.length
-    ? `<div class="thanks"><p class="eyebrow">Tudo certo</p><h2>${ok.length === 1 ? 'Reserva confirmada' : `${ok.length} reservas confirmadas`}</h2><p class="lead">Os horários ficam reservados para você até o fim de cada atendimento.</p></div>
+    ? `<div class="thanks"><p class="eyebrow">Tudo certo</p><h2>${rem && rem.ok ? 'Reserva remarcada' : ok.length === 1 ? 'Reserva confirmada' : `${ok.length} reservas confirmadas`}</h2><p class="lead">${rem && rem.ok ? 'A reserva antiga foi cancelada e o novo horário já é seu.' : 'Os horários ficam reservados para você até o fim de cada atendimento.'}</p></div>
+       ${rem && !rem.ok ? `<div class="msg err">A nova reserva foi feita, mas a antiga não pôde ser cancelada${rem.err ? ': ' + esc(rem.err) : ''}. Cancele pela tela Minhas reservas ou fale com a Dra. Thalia.</div>` : ''}
        <div class="mini">${ok.map(b => cRow({ b, st: 'agendado' })).join('')}</div>
+       ${ok.length === 1 ? `<div style="display:grid;gap:8px;justify-items:center"><span class="hint">Coloque na sua agenda, com lembrete 2 horas antes:</span><div class="cal-btns">${calButtons(ok[0])}</div></div>` : '<p class="hint" style="text-align:center">Para colocar cada data na sua agenda, abra a reserva em Minhas reservas.</p>'}
        ${fail.length ? `<div class="msg err">Não foi possível reservar: ${fail.map(br).join(', ')}. Esses horários estavam ocupados ou fechados.</div>` : ''}
        <div class="dr-actions" style="justify-content:center"><a class="wa" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(txt)}">Avisar a Dra. Thalia no WhatsApp</a></div>
        <div class="nav"><button class="ghost" type="button" data-ctab="reservas">Ver minhas reservas</button><button class="ghost" type="button" data-act2="again">Fazer outra reserva</button></div>`
@@ -2604,15 +2785,15 @@ function renderCNDone({ ok, fail }) {
 
 /* Financeiro do dentista */
 function renderCFin() {
-  const m = S.cfMonth, ym = iso(m).slice(0, 7), v = CFG.valorHora;
+  const m = S.cfMonth, ym = iso(m).slice(0, 7), v = temPreco();
   $('cf-month').textContent = `${MESES[m.getMonth()]} de ${m.getFullYear()}`;
   const mes = S.cc.mine.filter(x => x.b.date.startsWith(ym)).sort(asc), ok = mes.filter(isActive);
   const pagos = ok.filter(x => x.b.pago), pend = ok.filter(x => !x.b.pago);
   kpis($('cf-kpis'), [
     { ic: 'chart', v: `${sumH(ok)}h`, l: 'Horas reservadas', s: `${sumH(ok.filter(x => x.st === 'concluido'))}h realizadas` },
-    { ic: 'money', v: v ? BRL(sumH(ok) * v) : 'A definir', l: 'Total do mês', s: v ? `${BRL(v)} por hora` : 'Valor da hora ainda não definido' },
-    { ic: 'cal', v: v ? BRL(sumH(pagos) * v) : pagos.length, l: v ? 'Pago' : 'Reservas pagas', s: plural(pagos.length, 'reserva', 'reservas') },
-    { ic: 'clock', v: v ? BRL(sumH(pend) * v) : pend.length, l: v ? 'Em aberto' : 'Reservas em aberto', s: plural(pend.length, 'reserva', 'reservas') }
+    { ic: 'money', v: sumPrice(ok) != null ? BRL(sumPrice(ok)) : 'A definir', l: 'Total do mês', s: v ? precoTexto() : 'Valor da hora ainda não definido' },
+    { ic: 'cal', v: v && sumPrice(pagos) != null ? BRL(sumPrice(pagos)) : pagos.length, l: v ? 'Pago' : 'Reservas pagas', s: plural(pagos.length, 'reserva', 'reservas') },
+    { ic: 'clock', v: v && sumPrice(pend) != null ? BRL(sumPrice(pend)) : pend.length, l: v ? 'Em aberto' : 'Reservas em aberto', s: plural(pend.length, 'reserva', 'reservas') }
   ]);
   $('cf-list').innerHTML = mes.length ? mes.map(({ b, st }) => {
     const d = new Date(b.date + 'T12:00'), pi = payInfo(b);
@@ -2843,6 +3024,442 @@ document.addEventListener('click', e => {
   }
 });
 
+/* ---------- Melhorias: preços, agenda do celular, reserva rápida, remarcar, comprovante, painel ---------- */
+const IC = {
+  ig: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg>',
+  cal: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M12 12.5v5M9.5 15h5"/></svg>',
+  lock: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/></svg>',
+  plus: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+  dl: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/></svg>'
+};
+
+/* Preços: CFG.valorHora + regras por dia da semana e por faixa de horário (CFG.precos). */
+function priceHour(date, h) {
+  const p = CFG.precos || {}, dow = new Date(date + 'T12:00').getDay();
+  const r = (p.porHora || []).find(x => h >= x.de && h < x.ate && (!x.dias || x.dias.includes(dow)));
+  if (r) return r.valor;
+  if (p.porDia && p.porDia[dow] != null) return p.porDia[dow];
+  return CFG.valorHora;
+}
+function priceOf(b) { let t = 0; for (let h = b.from; h < b.to; h++) { const v = priceHour(b.date, h); if (v == null) return null; t += v; } return t; }
+function sumPrice(arr) { let t = 0; for (const x of arr) { const v = priceOf(x.b); if (v == null) return null; t += v; } return t; }
+const temPreco = () => CFG.valorHora != null || Object.keys((CFG.precos || {}).porDia || {}).length > 0 || ((CFG.precos || {}).porHora || []).length > 0;
+function precoTexto() {
+  if (!temPreco()) return 'A definir';
+  const extra = Object.keys((CFG.precos || {}).porDia || {}).length || ((CFG.precos || {}).porHora || []).length;
+  return CFG.valorHora != null ? `${BRL(CFG.valorHora)} por hora${extra ? ' (varia por dia ou horário)' : ''}` : 'Varia por dia ou horário';
+}
+
+/* Arquivos para baixar */
+function downloadFile(name, data, type) {
+  const url = URL.createObjectURL(new Blob([data], { type }));
+  const a = document.createElement('a'); a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
+}
+
+/* Agenda do celular: Google Agenda e arquivo .ics com alerta 2 horas antes */
+const calStamp = (date, h) => date.replace(/-/g, '') + 'T' + pad(h) + '0000';
+function gcalLink(b) {
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Consultório Thalia Santiago')
+    + '&dates=' + calStamp(b.date, b.from) + '/' + calStamp(b.date, b.to) + '&ctz=America/Sao_Paulo'
+    + '&location=' + encodeURIComponent(CFG.mapa) + '&details=' + encodeURIComponent('Reserva do consultório · ' + CFG.dentista);
+}
+function icsFor(b) {
+  const now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Consultorio Thalia Santiago//PT', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
+    `UID:${b.id}@consultorio-thalia`, `DTSTAMP:${now}`, `DTSTART;TZID=America/Sao_Paulo:${calStamp(b.date, b.from)}`, `DTEND;TZID=America/Sao_Paulo:${calStamp(b.date, b.to)}`,
+    'SUMMARY:Consultório Thalia Santiago', `LOCATION:${CFG.mapa.replace(/,/g, '\\,')}`, `DESCRIPTION:Reserva do consultório · ${CFG.dentista}`,
+    'BEGIN:VALARM', 'TRIGGER:-PT2H', 'ACTION:DISPLAY', 'DESCRIPTION:Sua reserva do consultório começa em 2 horas', 'END:VALARM',
+    'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+}
+S.icsMap = {};
+function calButtons(b) {
+  S.icsMap[b.id] = { id: b.id, date: b.date, from: b.from, to: b.to };
+  return `<a class="ghost sm cal-a" target="_blank" rel="noopener" href="${gcalLink(b)}">${IC.cal} Google Agenda</a><button type="button" class="ghost sm cal-a" data-ics="${esc(b.id)}">${IC.dl} Agenda do celular</button>`;
+}
+document.addEventListener('click', e => {
+  const el = e.target.closest && e.target.closest('[data-ics]');
+  if (!el) return;
+  e.stopPropagation();
+  const b = S.icsMap[el.dataset.ics]; if (!b) return;
+  downloadFile(`reserva-consultorio-${b.date}.ics`, icsFor(b), 'text/calendar;charset=utf-8');
+}, true);
+
+/* Horário favorito do dentista e próxima data livre nele */
+function favoriteSlot() {
+  const mine = ((S.cc && S.cc.mine) || []).filter(isActive);
+  if (!mine.length) return null;
+  const cnt = new Map();
+  mine.forEach(x => { const k = `${new Date(x.b.date + 'T12:00').getDay()}|${x.b.from}|${x.b.to}`; cnt.set(k, (cnt.get(k) || 0) + 1); });
+  let best = null; for (const [k, n] of cnt) if (!best || n > best.n) best = { k, n };
+  let dow, from, to, fav = false;
+  if (best && best.n >= 2) { [dow, from, to] = best.k.split('|').map(Number); fav = true; }
+  else { const last = [...mine].sort(desc)[0].b; dow = new Date(last.date + 'T12:00').getDay(); from = last.from; to = last.to; }
+  let d = new Date(); d.setHours(12, 0, 0, 0);
+  for (let i = 0; i < 56; i++, d = addDays(d, 1)) {
+    if (d.getDay() !== dow || !dayOpen(d)) continue;
+    const s = iso(d);
+    if (rangeFree(s, from, to - 1)) return { date: s, from, to, dow, fav };
+  }
+  return null;
+}
+function quickBookHtml() {
+  const q = favoriteSlot();
+  if (S.qbMsg) return notice('wine', S.qbMsg, [btnHtml('Ver minhas reservas', 'data-ctab="reservas"')]);
+  if (!q) return '';
+  const lbl = q.fav ? 'no seu horário de sempre' : 'no mesmo horário da última reserva';
+  return notice('gold', `<b>Reserva rápida</b> ${lbl}: ${DIAS_LONGOS[q.dow]}, ${br(q.date).slice(0, 5)}, das ${hh(q.from)} às ${hh(q.to)}.`,
+    [btnHtml(S.qbArm ? 'Confirmar reserva' : 'Reservar agora', `data-qb="${q.date}|${q.from}|${q.to}"`, 'primary'), btnHtml('Escolher outro dia', `data-qbedit="${q.date}|${q.from}|${q.to}"`, 'link')]);
+}
+async function quickBook(date, from, to) {
+  const d0 = me() || {}, keys = [];
+  for (let h = from; h < to; h++) keys.push(keyOf(date, h));
+  const b = clean({ id: newId(), nome: d0.nome || myName(), cro: d0.cro || '', tel: d0.tel || '', primeira: false, date, from, to, keys, status: 'ativo', criadoEm: new Date().toISOString(), origem: 'area-dentista' });
+  try {
+    await S.store.create(b);
+    S.qbMsg = `<b>Reserva confirmada:</b> ${DIAS_LONGOS[new Date(date + 'T12:00').getDay()]}, ${br(date)}, das ${hh(from)} às ${hh(to)}.`;
+    setTimeout(() => { S.qbMsg = null; if (!$('view-dent').hidden) renderDent(); }, 8000);
+  } catch (err) { S.qbMsg = `<b>Não foi possível reservar.</b> ${esc(errText(err))}`; setTimeout(() => { S.qbMsg = null; if (!$('view-dent').hidden) renderDent(); }, 6000); }
+  S.qbArm = false; renderDent();
+}
+function renderCNTop() {
+  const c = S.cn, box = $('cn-top');
+  $('cn-weeks-wrap').hidden = !!c.remarcar;
+  if (c.remarcar) {
+    const old = S.bookings.find(b => b.id === c.remarcar);
+    box.innerHTML = old ? notice('wine', `<b>Remarcando</b> a reserva de ${DIAS_LONGOS[new Date(old.date + 'T12:00').getDay()]}, ${br(old.date)}, das ${hh(old.from)} às ${hh(old.to)}. Escolha o novo dia e horário; a reserva antiga é cancelada quando a nova for confirmada.`, [btnHtml('Desistir de remarcar', 'data-act2="norem"', 'link')]) : '';
+    return;
+  }
+  const q = favoriteSlot();
+  box.innerHTML = q && !(c.date === q.date && c.start === q.from && c.end === q.to - 1)
+    ? notice('', `<b>${q.fav ? 'Seu horário de sempre' : 'Sua última reserva'}:</b> ${DIAS_LONGOS[q.dow]}, das ${hh(q.from)} às ${hh(q.to)}. Próxima data livre: ${br(q.date).slice(0, 5)}.`, [btnHtml('Usar este horário', `data-qbedit="${q.date}|${q.from}|${q.to}"`)])
+    : '';
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest || $('view-dent').hidden) return;
+  let el;
+  if ((el = e.target.closest('[data-qb]'))) {
+    e.stopPropagation();
+    if (!S.qbArm) { S.qbArm = true; renderDent(); setTimeout(() => { if (S.qbArm) { S.qbArm = false; if (!$('view-dent').hidden) renderDent(); } }, 6000); return; }
+    const [d, f, t] = el.dataset.qb.split('|'); el.disabled = true; quickBook(d, +f, +t); return;
+  }
+  if ((el = e.target.closest('[data-qbedit]'))) { e.stopPropagation(); const [d, f, t] = el.dataset.qbedit.split('|'); const rem = S.cn && S.cn.remarcar; cnPrefill(d, +f, +t); if (rem) { S.cn.remarcar = rem; renderDent(); } return; }
+  if ((el = e.target.closest('[data-remarcar]'))) {
+    e.stopPropagation();
+    const b = S.bookings.find(x => x.id === el.dataset.remarcar); if (!b) return;
+    S.cn = { month: new Date(today.getFullYear(), today.getMonth(), 1), date: null, start: null, end: null, weeks: 1, want: null, done: null, remarcar: b.id };
+    setCTab('nova'); return;
+  }
+  if ((el = e.target.closest('[data-act2="norem"]'))) { e.stopPropagation(); if (S.cn) S.cn.remarcar = null; renderDent(); }
+}, true);
+
+/* Comprovante de pagamento (foto ou PDF) */
+async function shrinkTo(file, max, q) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
+    const k = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+    const cv = document.createElement('canvas'); cv.width = Math.round(img.naturalWidth * k); cv.height = Math.round(img.naturalHeight * k);
+    cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+    return await new Promise(res => cv.toBlob(res, 'image/jpeg', q));
+  } finally { URL.revokeObjectURL(url); }
+}
+$('c-drawer').addEventListener('change', async e => {
+  const inp = e.target.closest && e.target.closest('input[data-comp]');
+  if (!inp || !inp.files || !inp.files[0]) return;
+  const b = S.bookings.find(x => x.id === inp.dataset.comp), f = inp.files[0], fb = $('cd-cfb');
+  if (!b) return;
+  fb.textContent = 'Enviando…';
+  try {
+    let blob = f, ext = 'pdf', type = 'application/pdf';
+    if (f.type.startsWith('image/')) { blob = await shrinkTo(f, 1600, 0.8); ext = 'jpg'; type = 'image/jpeg'; }
+    else if (f.type !== 'application/pdf') throw new Error('Envie uma foto ou um PDF.');
+    if (blob.size > 5 * 1024 * 1024) throw new Error('Arquivo muito grande. O limite é 5 MB.');
+    const path = `${S.uid}/${b.id}-${Date.now()}.${ext}`;
+    await S.store.uploadFile('comprovantes', path, blob, type);
+    await S.store.mark(b, { comprovantePath: path, comprovanteEm: new Date().toISOString() });
+    fb.textContent = 'Comprovante enviado. A Dra. Thalia confirma pelo painel.';
+    renderCDrawer(true);
+  } catch (err) { fb.textContent = err && err.message && !/[A-Z_]{6,}/.test(err.message) ? err.message : 'Não foi possível enviar o comprovante. Tente de novo.'; }
+});
+
+/* ---------- Painel: formulários na gaveta ---------- */
+function openForm(kind, build) { S.drawer = { type: 'form', kind, build, rendered: false }; S.lastFocus = document.activeElement; renderDrawer(); }
+const hourOpts = (from, to, sel) => { let o = ''; for (let h = from; h <= to; h++) o += `<option value="${h}"${h === sel ? ' selected' : ''}>${hh(h)}</option>`; return o; };
+function twoTap(label, confirmLabel, cls, fn) {
+  const btn = document.createElement('button'); btn.type = 'button'; btn.className = cls; btn.textContent = label;
+  let armed = false;
+  btn.addEventListener('click', async e => {
+    e.stopPropagation();
+    if (!armed) { armed = true; btn.textContent = confirmLabel; btn.classList.add('sure'); setTimeout(() => { if (armed && btn.isConnected) { armed = false; btn.textContent = label; btn.classList.remove('sure'); } }, 4000); return; }
+    btn.disabled = true;
+    try { await fn(); } catch (_) { btn.disabled = false; btn.textContent = 'Falhou. Tentar de novo'; armed = false; }
+  });
+  return btn;
+}
+function blockDetail({ b }) {
+  const w = document.createElement('div'); w.style.cssText = 'display:grid;gap:20px';
+  const d = new Date(b.date + 'T12:00');
+  w.innerHTML = `<div class="dr-title"><span class="avatar">${IC.lock}</span><div><h3>Horário bloqueado</h3><span class="tag cancelado">${esc(b.nome)}</span></div></div>
+    <div class="kv">${kvHtml([['Data', `${DIAS_LONGOS[d.getDay()]}, ${br(b.date)}`], ['Horário', `${hh(b.from)} às ${hh(b.to)} (${hoursOf(b)}h)`], ['Motivo', b.nome]])}</div>
+    <p class="hint">Enquanto estiver bloqueado, esse horário aparece como ocupado para os dentistas.</p>`;
+  const acts = document.createElement('div'); acts.className = 'dr-actions';
+  acts.appendChild(twoTap('Desbloquear horário', 'Confirmar desbloqueio', 'danger', async () => { await S.store.close(b); closeDrawer(); }));
+  w.appendChild(acts);
+  return w;
+}
+function freeRuns(date, a, z) {
+  const runs = []; let cur = null, busy = 0;
+  for (let h = a; h < z; h++) {
+    const ok = !isBusy(date, h) && !isPast(date, h);
+    if (isBusy(date, h)) busy++;
+    if (ok) { if (cur && cur[1] === h) cur[1] = h + 1; else { cur = [h, h + 1]; runs.push(cur); } } else cur = null;
+  }
+  return { runs, busy };
+}
+function blockForm() {
+  const f = document.createElement('form'); f.noValidate = true; f.style.cssText = 'display:grid;gap:16px';
+  const t = iso(new Date());
+  f.innerHTML = `<div class="dr-title"><span class="avatar">${IC.lock}</span><div><h3>Bloquear horários</h3><span class="hint">Férias, feriado, manutenção ou uso próprio</span></div></div>
+    <label>Motivo<input id="bf-mot" placeholder="Ex.: Férias"></label>
+    <div class="form2"><label>De<input type="date" id="bf-d1" min="${t}" value="${t}"></label><label>Até<input type="date" id="bf-d2" min="${t}" value="${t}"></label></div>
+    <label class="check"><input type="checkbox" id="bf-all" checked><span>Dia inteiro</span></label>
+    <div class="form2" id="bf-hours" hidden><label>Das<select id="bf-h1">${hourOpts(CFG.abre, CFG.fecha - 1, CFG.abre)}</select></label><label>Até<select id="bf-h2">${hourOpts(CFG.abre + 1, CFG.fecha, CFG.fecha)}</select></label></div>
+    <p class="hint" id="bf-prev"></p><div id="bf-fb" role="status"></div>
+    <div class="dr-actions"><button class="primary" type="submit" id="bf-go">Bloquear</button></div>`;
+  const plan = () => {
+    const d1 = f.querySelector('#bf-d1').value, d2 = f.querySelector('#bf-d2').value || d1, all = f.querySelector('#bf-all').checked;
+    const a = all ? CFG.abre : +f.querySelector('#bf-h1').value, z = all ? CFG.fecha : +f.querySelector('#bf-h2').value;
+    const out = []; let busy = 0, days = 0;
+    if (!d1 || d2 < d1 || z <= a) return { out, busy, days, err: 'Confira as datas e os horários.' };
+    for (let d = new Date(d1 + 'T12:00'), i = 0; iso(d) <= d2 && i < 120; d = addDays(d, 1), i++) {
+      if (!dayOpen(d)) continue;
+      const s = iso(d), r = freeRuns(s, a, z); busy += r.busy;
+      if (r.runs.length) days++;
+      r.runs.forEach(([x, y]) => out.push({ date: s, from: x, to: y }));
+    }
+    return { out, busy, days };
+  };
+  const prev = () => {
+    f.querySelector('#bf-hours').hidden = f.querySelector('#bf-all').checked;
+    const p = plan();
+    f.querySelector('#bf-prev').textContent = p.err || (p.out.length
+      ? `Serão bloqueadas ${p.out.reduce((s, r) => s + r.to - r.from, 0)}h em ${plural(p.days, 'dia', 'dias')}.${p.busy ? ` ${plural(p.busy, 'hora já reservada continua', 'horas já reservadas continuam')} com os dentistas.` : ''}`
+      : 'Não há horas livres para bloquear nesse período.');
+    f.querySelector('#bf-go').disabled = !p.out.length;
+  };
+  f.addEventListener('input', prev); f.addEventListener('change', prev);
+  f.addEventListener('submit', async e => {
+    e.preventDefault();
+    const p = plan(), mot = f.querySelector('#bf-mot').value.trim() || 'Horário bloqueado';
+    if (!p.out.length) return;
+    const go = f.querySelector('#bf-go'); go.disabled = true; go.textContent = 'Bloqueando…';
+    let ok = 0, fail = 0;
+    for (const r of p.out) { try { await S.store.block(r.date, r.from, r.to, mot); ok++; } catch (_) { fail++; } }
+    go.textContent = 'Bloquear';
+    msgIn(f.querySelector('#bf-fb'), fail ? 'err' : 'ok', fail ? `${plural(ok, 'período bloqueado', 'períodos bloqueados')}; ${fail} não puderam ser bloqueados porque foram reservados agora.` : `Pronto: ${plural(ok, 'período bloqueado', 'períodos bloqueados')}.`);
+    setTimeout(prev, 600);
+  });
+  setTimeout(prev, 0);
+  return f;
+}
+function newBookingForm() {
+  const f = document.createElement('form'); f.noValidate = true; f.style.cssText = 'display:grid;gap:16px';
+  const t = iso(new Date());
+  const dents = Object.values(S.cols.dentists || {}).sort((a, b) => String(a.nome).localeCompare(String(b.nome)));
+  f.innerHTML = `<div class="dr-title"><span class="avatar">${IC.plus}</span><div><h3>Nova reserva</h3><span class="hint">Para um dentista que pediu por telefone ou WhatsApp</span></div></div>
+    <label>Dentista<select id="nf-dent"><option value="">Profissional sem cadastro</option>${dents.map(d => `<option value="${esc(d.id)}">${esc(d.nome)}${d.cro ? ' · ' + esc(d.cro) : ''}</option>`).join('')}</select></label>
+    <div id="nf-novo" style="display:grid;gap:16px">
+      <label>Nome completo<input id="nf-nome" autocomplete="off"></label>
+      <div class="form2"><label>WhatsApp<input id="nf-tel" inputmode="tel" placeholder="(31) 90000-0000"></label><label><span>CRO <em>(opcional)</em></span><input id="nf-cro"></label></div>
+      <label><span>E-mail <em>(opcional, recebe confirmação e lembrete)</em></span><input id="nf-email" type="email"></label>
+    </div>
+    <label>Data<input type="date" id="nf-date" min="${t}"></label>
+    <div class="form2"><label>Das<select id="nf-h1"></select></label><label>Até<select id="nf-h2"></select></label></div>
+    <p class="hint" id="nf-busy">Escolha a data para ver os horários livres.</p>
+    <label><span>Pedido especial <em>(opcional)</em></span><textarea id="nf-ped" rows="2"></textarea></label>
+    <div id="nf-fb" role="status"></div>
+    <div class="dr-actions"><button class="primary" type="submit" id="nf-go">Reservar</button></div>`;
+  const q = s => f.querySelector(s);
+  const hours = () => {
+    const d = q('#nf-date').value, h1 = q('#nf-h1'), h2 = q('#nf-h2');
+    if (!d) { h1.innerHTML = h2.innerHTML = ''; return; }
+    const day = new Date(d + 'T12:00');
+    if (!dayOpen(day)) { h1.innerHTML = h2.innerHTML = ''; q('#nf-busy').textContent = 'O consultório não abre nesse dia.'; return; }
+    const livres = []; for (let h = CFG.abre; h < CFG.fecha; h++) if (!isBusy(d, h) && !isPast(d, h)) livres.push(h);
+    const keep = +h1.value;
+    h1.innerHTML = livres.map(h => `<option value="${h}">${hh(h)}</option>`).join('');
+    if (livres.includes(keep)) h1.value = String(keep);
+    const a = +h1.value; let z = a; while (z < CFG.fecha && !isBusy(d, z) && !isPast(d, z)) z++;
+    const keep2 = +h2.value;
+    h2.innerHTML = livres.length ? hourOpts(a + 1, z, a + 1) : '';
+    if (keep2 > a && keep2 <= z) h2.value = String(keep2);
+    const oc = []; for (let h = CFG.abre; h < CFG.fecha; h++) if (isBusy(d, h)) oc.push(hh(h));
+    q('#nf-busy').textContent = !livres.length ? 'Não há horas livres nesse dia.' : oc.length ? `Ocupado nesse dia: ${oc.join(', ')}.` : 'Dia todo livre.';
+  };
+  q('#nf-dent').addEventListener('change', () => { q('#nf-novo').hidden = !!q('#nf-dent').value; });
+  q('#nf-date').addEventListener('change', hours); q('#nf-h1').addEventListener('change', hours);
+  f.addEventListener('submit', async e => {
+    e.preventDefault();
+    const id = q('#nf-dent').value, d0 = id ? (S.cols.dentists || {})[id] : null;
+    const nome = d0 ? d0.nome : q('#nf-nome').value.trim(), tel = d0 ? d0.tel : q('#nf-tel').value.trim();
+    const email = d0 ? '' : q('#nf-email').value.trim(), date = q('#nf-date').value, from = +q('#nf-h1').value, to = +q('#nf-h2').value;
+    if (!d0 && nome.length < 3) return msgIn(q('#nf-fb'), 'err', 'Informe o nome completo.');
+    if (!d0 && String(tel).replace(/\D/g, '').length < 10) return msgIn(q('#nf-fb'), 'err', 'Informe o WhatsApp com DDD.');
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) return msgIn(q('#nf-fb'), 'err', 'Confira o e-mail.');
+    if (!date || !(to > from)) return msgIn(q('#nf-fb'), 'err', 'Escolha a data e o horário.');
+    const keys = []; for (let h = from; h < to; h++) keys.push(keyOf(date, h));
+    const b = clean({ id: newId(), nome, cro: d0 ? d0.cro || '' : q('#nf-cro').value.trim(), tel, email: email || undefined, dentistId: id || undefined,
+      date, from, to, keys, status: 'ativo', criadoEm: new Date().toISOString(), origem: 'painel', pedido: q('#nf-ped').value.trim() || undefined });
+    q('#nf-go').disabled = true;
+    try {
+      await S.store.create(b);
+      msgIn(q('#nf-fb'), 'ok', `Reserva criada: ${nome}, ${br(date)}, das ${hh(from)} às ${hh(to)}.`);
+      q('#nf-date').value = ''; hours();
+    } catch (err) { msgIn(q('#nf-fb'), 'err', errText(err)); }
+    finally { q('#nf-go').disabled = false; }
+  });
+  return f;
+}
+$('a-block').addEventListener('click', () => openForm('Bloqueio', blockForm));
+$('a-new').addEventListener('click', () => openForm('Nova reserva', newBookingForm));
+
+/* Planilha do mês (CSV, abre no Excel e no Google Planilhas) */
+$('f-csv').addEventListener('click', () => {
+  const m = S.fMonth, ym = iso(m).slice(0, 7);
+  const rows = S.cache.all.filter(x => x.b.date.startsWith(ym)).sort(asc);
+  const q = v => { const s = String(v == null ? '' : v); return /[;"\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const ORI = { site: 'Site', 'area-dentista': 'Área do dentista', painel: 'Painel' };
+  const lines = [['Data', 'Dia', 'Início', 'Fim', 'Horas', 'Profissional', 'CRO', 'WhatsApp', 'E-mail', 'Situação', 'Pagamento', 'Valor (R$)', 'Origem']];
+  rows.forEach(({ b, st }) => {
+    const v = priceOf(b), d = new Date(b.date + 'T12:00'), dd = b.dentistId && (S.cols.dentists || {})[b.dentistId];
+    lines.push([br(b.date), DIAS_LONGOS[d.getDay()], hh(b.from), hh(b.to), hoursOf(b), b.nome, b.cro || '', b.tel, b.email || (dd && dd.email) || '', STATUS_LABEL[st],
+      st === 'cancelado' ? '' : b.pago ? 'Pago' : b.comprovanteEm ? 'Comprovante enviado' : 'Pendente', v != null && st !== 'cancelado' ? v.toFixed(2).replace('.', ',') : '', ORI[b.origem] || b.origem || '']);
+  });
+  const ok = rows.filter(isActive), tot = sumPrice(ok);
+  lines.push([]); lines.push(['Total', '', '', '', sumH(ok), plural(ok.length, 'reserva', 'reservas'), '', '', '', '', '', tot != null ? tot.toFixed(2).replace('.', ',') : '', '']);
+  downloadFile(`reservas-${ym}.csv`, '﻿' + lines.map(r => r.map(q).join(';')).join('\r\n'), 'text/csv;charset=utf-8');
+});
+
+/* E-mails automáticos (Ajustes) */
+async function loadEmailStatus() {
+  const st = $('em-status');
+  if (!SB) { st.className = 'tag pend'; st.textContent = 'Indisponível'; return; }
+  try { S.emStatus = await S.store.rpc('status_email'); } catch (_) { S.emStatus = null; }
+  const s = S.emStatus || {};
+  if (!S.emFilled) {
+    $('em-admin').value = s.email_admin || S.email || ''; $('em-from').value = s.email_remetente || ''; $('em-nome').value = s.nome_remetente || 'Consultório Thalia Santiago';
+    S.emFilled = true;
+  }
+  const ativo = s.chave && s.email_remetente && s.email_admin && s.pg_net;
+  st.className = 'tag ' + (ativo ? 'pago' : 'pend'); st.textContent = ativo ? 'Ativo' : 'Configurar';
+  $('em-key').placeholder = s.chave ? 'Chave salva. Cole uma nova só se quiser trocar.' : 'Cole aqui a chave da API do Brevo';
+  $('em-ext').hidden = !!(s.pg_net && s.pg_cron) || !S.emStatus;
+}
+$('em-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (needSB($('em-fb'))) return;
+  const a = $('em-admin').value.trim(), f = $('em-from').value.trim();
+  if (!/^\S+@\S+\.\S+$/.test(a) || !/^\S+@\S+\.\S+$/.test(f)) return msgIn($('em-fb'), 'err', 'Confira os dois e-mails.');
+  try {
+    await S.store.rpc('salvar_config_email', { p_email_admin: a, p_email_remetente: f, p_nome_remetente: $('em-nome').value.trim(), p_site_url: location.origin + location.pathname.replace(/index\.html$/, '').replace(/\/$/, ''), p_chave: $('em-key').value.trim() || null });
+    $('em-key').value = ''; msgIn($('em-fb'), 'ok', 'Configuração salva.'); loadEmailStatus();
+  } catch (err) { msgIn($('em-fb'), 'err', errText(err)); }
+});
+$('em-test').addEventListener('click', async () => {
+  if (needSB($('em-fb'))) return;
+  try {
+    const ok = await S.store.rpc('testar_email');
+    msgIn($('em-fb'), ok ? 'ok' : 'err', ok ? `E-mail de teste enviado para ${$('em-admin').value}. Se não chegar em alguns minutos, confira a caixa de spam.` : 'O e-mail não foi enviado. Salve a chave do Brevo, o e-mail remetente e o seu e-mail, e confira se as extensões estão ativas.');
+  } catch (err) { msgIn($('em-fb'), 'err', errText(err)); }
+});
+
+/* Aba Site: fotos e perguntas frequentes */
+function renderSite() {
+  const fotos = S.fotos || [];
+  $('sf-count').textContent = plural(fotos.length, 'foto', 'fotos');
+  $('sf-grid').innerHTML = fotos.length ? fotos.map(p => `<figure class="sf-item"><img src="${esc(p.url)}" alt="Foto do consultório" loading="lazy"><button type="button" class="danger sm" data-fdel="${esc(p.name)}">Excluir</button></figure>`).join('')
+    : emptyBox('Nenhuma foto ainda. As fotos enviadas aparecem na página inicial.');
+  const fq = S.faq || [];
+  $('fq-list').innerHTML = fq.length ? fq.map(x => `<div class="mini-row static top"><span class="txt"><b>${esc(x.pergunta)}</b><p>${esc(x.resposta)}</p></span><span class="end acts"><button type="button" class="ghost sm" data-fqedit="${esc(x.id)}">Editar</button><button type="button" class="link" data-fqdel="${esc(x.id)}">Excluir</button></span></div>`).join('')
+    : emptyBox('Nenhuma pergunta publicada.');
+}
+$('sf-file').addEventListener('change', async e => {
+  const files = [...(e.target.files || [])]; if (!files.length) return;
+  if (needSB($('sf-fb'))) return;
+  let ok = 0;
+  for (let i = 0; i < files.length; i++) {
+    msgIn($('sf-fb'), 'ok', `Enviando ${i + 1} de ${files.length}…`);
+    try { const blob = await shrinkTo(files[i], 1800, 0.82); await S.store.uploadFile('fotos', `${Date.now()}-${i}.jpg`, blob, 'image/jpeg'); ok++; } catch (_) {}
+  }
+  e.target.value = '';
+  msgIn($('sf-fb'), ok === files.length ? 'ok' : 'err', ok === files.length ? `${plural(ok, 'foto enviada', 'fotos enviadas')}.` : `${ok} de ${files.length} fotos enviadas. Tente de novo as que faltaram.`);
+  await S.store.loadAll().catch(() => {});
+});
+$('fq-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (needSB($('fq-fb'))) return;
+  const pergunta = $('fq-p').value.trim(), resposta = $('fq-r').value.trim();
+  if (pergunta.length < 5 || resposta.length < 2) return msgIn($('fq-fb'), 'err', 'Escreva a pergunta e a resposta.');
+  try {
+    if (S.fqEdit) await S.store.patch('faq', S.fqEdit, { pergunta, resposta });
+    else await S.store.put('faq', null, { pergunta, resposta, ordem: (S.faq || []).reduce((m, x) => Math.max(m, x.ordem || 0), 0) + 1 });
+    $('fq-form').reset(); msgIn($('fq-fb'), 'ok', S.fqEdit ? 'Pergunta atualizada.' : 'Pergunta publicada no site.');
+    S.fqEdit = null; $('fq-title').textContent = 'Nova pergunta'; $('fq-cancel').hidden = true;
+  } catch (err) { msgIn($('fq-fb'), 'err', errText(err)); }
+});
+$('fq-cancel').addEventListener('click', () => { S.fqEdit = null; $('fq-form').reset(); $('fq-title').textContent = 'Nova pergunta'; $('fq-cancel').hidden = true; });
+document.addEventListener('click', async e => {
+  if (!e.target.closest || $('view-admin').hidden) return;
+  let el;
+  if ((el = e.target.closest('[data-fqedit]'))) {
+    const x = (S.faq || []).find(y => y.id === el.dataset.fqedit); if (!x) return;
+    S.fqEdit = x.id; $('fq-p').value = x.pergunta; $('fq-r').value = x.resposta; $('fq-title').textContent = 'Editar pergunta'; $('fq-cancel').hidden = false; $('fq-p').focus(); return;
+  }
+  if ((el = e.target.closest('[data-fqdel]'))) {
+    if (!el.dataset.armed) { el.dataset.armed = '1'; el.textContent = 'Confirmar exclusão'; return; }
+    S.store.remove('faq', el.dataset.fqdel).catch(() => {}); return;
+  }
+  if ((el = e.target.closest('[data-fdel]'))) {
+    if (!el.dataset.armed) { el.dataset.armed = '1'; el.textContent = 'Confirmar'; return; }
+    el.disabled = true; await S.store.removeFile('fotos', el.dataset.fdel).catch(() => {}); S.store.loadAll().catch(() => {});
+  }
+});
+
+/* ---------- Página inicial: perguntas, galeria e foto ampliada ---------- */
+function renderFAQ() {
+  const fq = S.faq || [], sig = JSON.stringify(fq.map(x => [x.id, x.pergunta, x.resposta]));
+  $('perguntas').hidden = !fq.length;
+  if (sig === S.faqSig) return; S.faqSig = sig;
+  $('faq-list').innerHTML = fq.map((x, i) => `<details class="faq-item"${i === 0 ? ' open' : ''}><summary>${esc(x.pergunta)}</summary><p>${esc(x.resposta)}</p></details>`).join('');
+}
+function renderGallery() {
+  const fotos = S.fotos || [], sig = fotos.map(p => p.name).join('|');
+  $('fotos').hidden = !fotos.length;
+  if (sig === S.galSig) return; S.galSig = sig;
+  $('gal').className = 'gal c' + Math.min(fotos.length, 3);
+  $('gal').innerHTML = fotos.slice(0, 9).map((p, i) => `<button type="button" class="gal-item${i === 0 ? ' big' : ''}" data-foto="${i}" aria-label="Ver foto ${i + 1} ampliada"><img src="${esc(p.url)}" alt="Foto do consultório ${i + 1}" loading="lazy"></button>`).join('');
+}
+function lbShow(i) {
+  const fotos = S.fotos || []; if (!fotos.length) return;
+  S.lbI = (i + fotos.length) % fotos.length;
+  $('lb-img').src = fotos[S.lbI].url; $('lb').hidden = false;
+}
+document.addEventListener('click', e => {
+  const el = e.target.closest && e.target.closest('[data-foto]');
+  if (el) lbShow(+el.dataset.foto);
+});
+$('lb-x').addEventListener('click', () => { $('lb').hidden = true; });
+$('lb-p').addEventListener('click', () => lbShow(S.lbI - 1));
+$('lb-n').addEventListener('click', () => lbShow(S.lbI + 1));
+$('lb').addEventListener('click', e => { if (e.target === $('lb')) $('lb').hidden = true; });
+document.addEventListener('keydown', e => {
+  if ($('lb').hidden) return;
+  if (e.key === 'Escape') $('lb').hidden = true;
+  if (e.key === 'ArrowLeft') lbShow(S.lbI - 1);
+  if (e.key === 'ArrowRight') lbShow(S.lbI + 1);
+});
+
 /* ---------- Rotas e render ---------- */
 function route() {
   const h = location.hash, wantAdmin = h === '#admin', wantDent = h === '#dentista';
@@ -2862,7 +3479,7 @@ function render() {
   if (location.hash === '#dentista') { if (S.dent) renderDent(); }
   else if (location.hash === '#admin') { if (S.isAdmin) renderAdmin(); }
   else if (S.step === 'when') renderWhen();
-  else if (S.step === 'welcome') renderFree();
+  else if (S.step === 'welcome') { renderFree(); renderFAQ(); renderGallery(); }
 }
 window.addEventListener('hashchange', route);
 document.addEventListener('click', e => {
@@ -2886,10 +3503,12 @@ setInterval(render, 60000); // atualiza status e horas que passaram
 /* ---------- Inicialização ---------- */
 (async function init() {
   try { S.tab = sessionStorage.getItem('aba') || 'resumo'; S.ctab = sessionStorage.getItem('cab') || 'inicio'; } catch (_) {}
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
   const wire = st => {
     st.watch((sl, bk) => { S.slots = sl; S.bookings = bk; render(); });
-    ['dentists', 'avisos', 'problemas', 'espera'].forEach(n => st.watchCol(n, (o, quiet) => {
+    ['dentists', 'avisos', 'problemas', 'espera', 'faq'].forEach(n => st.watchCol(n, (o, quiet) => {
       S.cols[n] = o;
+      if (n === 'faq') S.faq = Object.values(o).sort((a, b) => (a.ordem || 0) - (b.ordem || 0) || String(a.criadoEm).localeCompare(String(b.criadoEm)));
       if (n === 'dentists') { S.phoneUid = {}; Object.values(o).forEach(d => { const k = dkey(d.tel); if (k) S.phoneUid[k] = d.id; }); }
       if (!quiet) render();
     }));

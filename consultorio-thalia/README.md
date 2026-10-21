@@ -33,9 +33,10 @@ O servidor de e-mail que vem com o Supabase só envia **2 e-mails por hora**. Po
 > Mais tarde, para a recuperação de senha funcionar bem com muitos dentistas, configure um envio de e-mail próprio (Brevo ou Resend têm plano grátis) em **Authentication → Emails → SMTP Settings**.
 
 ### 4. Criar o banco de dados
-1. No menu lateral, abra **SQL Editor → New query**.
-2. Abra o arquivo `supabase/schema.sql`, copie **tudo**, cole no editor e clique em **Run**.
-3. Deve aparecer "Success". Se rodar de novo, não tem problema.
+1. Em **Database → Extensions**, procure e ative **pg_net** e **pg_cron** (usadas pelos e-mails automáticos).
+2. No menu lateral, abra **SQL Editor → New query**.
+3. Abra o arquivo `supabase/schema.sql`, copie **tudo**, cole no editor e clique em **Run**.
+4. Deve aparecer "Success". Se rodar de novo, não tem problema.
 
 ### 5. Criar o acesso da Dra. Thalia (administradora)
 1. Vá em **Authentication → Users → Add user → Create new user**.
@@ -74,8 +75,17 @@ Sem este passo, os links de recuperação de senha não voltam para o site.
 
 ---
 
+## E-mails automáticos (grátis)
+Confirmação de reserva, lembrete 2 horas antes, aviso de vaga aberta e avisos para a Dra. Thalia.
+1. Crie uma conta grátis em **brevo.com** (até 300 e-mails por dia).
+2. No Brevo, cadastre e confirme o e-mail remetente (Remetentes / Senders) e gere uma chave de API (SMTP e API → Chaves de API).
+3. No painel do site, vá em **Ajustes → E-mails automáticos**, preencha os campos, cole a chave e toque em **Salvar**. Depois, **Enviar e-mail de teste**.
+
+## Fotos e perguntas frequentes
+No painel, aba **Site**: envie fotos do consultório (aparecem na galeria da página inicial) e escreva as perguntas frequentes.
+
 ## Como mudar algo depois
-- **Textos, regras de uso, checklist, valor da hora, chave Pix, pacotes, informações do espaço:** ficam no começo do código dentro de `index.html`, no bloco `const CFG = { ... }`. Edite pelo GitHub (lápis) e a Vercel publica sozinha em 1 minuto.
+- **Textos, regras de uso, checklist, valor da hora, preços por dia ou horário (`precos`), chave Pix, pacotes, Instagram, informações do espaço:** ficam no começo do código dentro de `index.html`, no bloco `const CFG = { ... }`. Edite pelo GitHub (lápis) e a Vercel publica sozinha em 1 minuto.
 - **Horário de funcionamento, dias abertos e prazo de cancelamento:** mude no `CFG` do `index.html` **e também** no começo do `supabase/schema.sql` (funções `cfg_abre`, `cfg_fecha`, `cfg_dias`, `cfg_prazo_cancelamento`). Depois rode o `schema.sql` de novo no SQL Editor.
 
 ## Segurança
