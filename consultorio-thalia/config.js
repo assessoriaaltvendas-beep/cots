@@ -8,6 +8,7 @@
 // NUNCA coloque aqui a chave "service_role".
 // =====================================================================
 window.APP_CONFIG = {
-  supabaseUrl: 'COLE_AQUI_O_PROJECT_URL',
-  supabaseAnonKey: 'COLE_AQUI_A_CHAVE_ANON_PUBLIC'
+  supabaseUrl: 'https://jnhinkneolzacfdbivyw.supabase.co',
+  supabaseAnonKey: 'sb_publishable_8cWlzrBnbv5ov_c83O5WGg_Ytwk89OZ'
+
 };
