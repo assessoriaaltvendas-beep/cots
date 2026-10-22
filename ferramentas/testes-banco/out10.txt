@@ -1,0 +1,14 @@
+C1 completo dados|1|f|array
+C1 completo salvar|
+C1 liberada ignorada|f
+C1 log|1
+C2 add lucas agenda|t
+psql:test10.sql:22: ERROR:  SEM_PERMISSAO
+psql:test10.sql:23: ERROR:  SEM_PERMISSAO
+C3 agenda log|0
+psql:test10.sql:28: ERROR:  SEM_PERMISSAO
+psql:test10.sql:29: ERROR:  SEM_PERMISSAO
+C4 dentista log|0
+psql:test10.sql:34: ERROR:  permission denied for function calc_dados
+C6 promove lucas|
+C6 lucas completo dados|1

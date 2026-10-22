@@ -1,6 +1,6 @@
 # Consultório Thalia Santiago · site de reservas
 
-Site de aluguel por hora do consultório, com área do dentista, painel da administração e calculadora clínica.
+Site de aluguel por hora do consultório, com área do dentista, painel da administração e calculadora clínica (só para o administrador completo).
 
 - `index.html`: o site inteiro
 - `config.js`: onde entram os dados do Supabase (passo 6)
@@ -122,13 +122,21 @@ O recibo do mês em PDF fica em Financeiro (dentista) e nos detalhes de cada den
 - Em **Ajustes → Conta**, cada administrador pode mudar o nome que aparece no painel.
 
 ## Calculadora
-Aba **Calculadora** no painel e na área do dentista:
+Aba **Calculadora** no painel, **só para o administrador completo** (dentistas e administradores da agenda não veem a aba, e o banco recusa o acesso):
 - **Medicamentos:** dose por peso e idade (dipirona, paracetamol, ibuprofeno, amoxicilina, azitromicina), em mg, mL e gotas, com intervalo e máximo por dia.
 - **Anestésico:** dose máxima em mg e em tubetes (lidocaína, mepivacaína, articaína, prilocaína, bupivacaína), com o limite de epinefrina para cardiopatas.
 - **Profilaxia** de endocardite (esquema da AHA 2021) e **Conversões** (mg → mL/gotas e diluição, como a do hipoclorito).
 - Cada item mostra a fonte (bula ou referência) e a data da conferência. Sem peso e idade, abaixo da idade/peso da bula ou fora da tabela, a calculadora não mostra número.
-- A lista começa **oculta para os dentistas**: a Dra. Thalia revisa no painel e toca em **Revisei, liberar**. Ela pode editar, desativar ou incluir itens; tudo fica no histórico.
+- A Dra. Thalia pode editar, desativar ou incluir itens; tudo fica no histórico.
 - É uma ferramenta de apoio: a decisão e a prescrição são do profissional.
+
+## Uso no dia a dia (v10)
+- **Avisos:** confirmações aparecem num aviso rápido na parte de baixo da tela.
+- **Desfazer:** depois de cancelar uma reserva ou excluir algo, aparece **Desfazer** por 5 segundos. Se tocar, nada é gravado.
+- **Sem internet:** uma faixa vermelha avisa no topo; quando a conexão volta, os dados são atualizados.
+- **App no celular:** puxe a tela para baixo (no topo) para atualizar. No Android, o celular vibra de leve ao confirmar uma reserva.
+- **Entrar:** o site lembra o último e-mail usado neste aparelho.
+- Quem prefere menos movimento (opção de acessibilidade do celular ou computador) vê o site sem animações.
 
 ## Pacientes da Dra. Thalia
 No painel, aba **Pacientes** (só administrador completo vê):

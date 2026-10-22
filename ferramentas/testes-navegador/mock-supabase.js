@@ -1,4 +1,6 @@
 // Simulação do supabase-js v2 para testes locais (somente o que o site usa), com regras de acesso parecidas com o schema.sql.
+// Nos testes, "Desfazer" grava na hora, a menos que o teste defina window.UNDO_MS antes.
+if (window.UNDO_MS == null) window.UNDO_MS = 0;
 (function () {
   const LS = k => { try { return JSON.parse(localStorage.getItem(k)); } catch (_) { return null; } };
   const SV = (k, v) => localStorage.setItem(k, JSON.stringify(v));
@@ -126,8 +128,8 @@
       if (name === 'mudar_nivel_admin') { if (!isComp()) return ERR('SEM_PERMISSAO'); if (a.p_id === uid()) return ERR('NAO_PODE_SI_MESMA'); if (!db.admins.includes(a.p_id)) return ERR('ADMIN_NAO_ENCONTRADO'); const antes = nivelDe(a.p_id); if (antes === a.p_nivel) return OK(); if (antes === 'completo' && db.admins.filter(u => nivelDe(u) === 'completo').length <= 1) return ERR('ULTIMO_COMPLETO'); db.adm[a.p_id] = Object.assign(db.adm[a.p_id] || {}, { nivel: a.p_nivel }); logA(userEmail(a.p_id), 'mudou o nível', NIV[antes] + ' → ' + NIV[a.p_nivel]); save(); return OK(); }
       if (name === 'remover_admin') { if (!isComp()) return ERR('SEM_PERMISSAO'); if (a.p_id === uid()) return ERR('NAO_PODE_SI_MESMA'); if (!db.admins.includes(a.p_id)) return ERR('ADMIN_NAO_ENCONTRADO'); const nv = nivelDe(a.p_id); db.admins = db.admins.filter(u => u !== a.p_id); delete db.adm[a.p_id]; logA(userEmail(a.p_id), 'removeu', NIV[nv]); save(); return OK(); }
       if (name === 'salvar_meu_nome_admin') { if (!isAdmin()) return ERR('SEM_PERMISSAO'); db.adm[uid()] = Object.assign(db.adm[uid()] || {}, { nome: a.p_nome.trim() }); save(); return OK(); }
-      if (name === 'calc_dados') { if (!uid()) return ERR('SEM_PERMISSAO'); const dn = db.dentists.find(d => d.id === uid()); if (!isAdmin() && !(dn && (dn.status || 'liberado') === 'liberado')) return ERR('SEM_PERMISSAO'); const c = db.calc; return OK({ liberada: c.liberada, base: c.base, atualizadaEm: c.em || null, atualizadaPor: c.por || null, itens: (isAdmin() || c.liberada) ? c.itens : null, log: isAdmin() ? c.log.slice(0, 30) : null }); }
-      if (name === 'salvar_calc') { if (!isComp()) return ERR('SEM_PERMISSAO'); const c = db.calc; if (a.p_itens != null && !Array.isArray(a.p_itens)) return ERR('DADOS_INVALIDOS'); if (a.p_liberada && a.p_itens == null && c.itens == null) return ERR('DADOS_INVALIDOS'); if (a.p_itens != null) c.itens = a.p_itens; if (a.p_liberada != null) c.liberada = a.p_liberada; if (a.p_base != null) c.base = a.p_base; c.em = new Date().toISOString(); c.por = nomeDe(uid()); c.log.unshift({ quando: c.em, autor: c.por, acao: a.p_acao }); save(); return OK(); }
+      if (name === 'calc_dados') { if (!uid() || !isComp()) return ERR('SEM_PERMISSAO'); const c = db.calc; return OK({ base: c.base, atualizadaEm: c.em || null, atualizadaPor: c.por || null, itens: c.itens, log: c.log.slice(0, 30) }); }
+      if (name === 'salvar_calc') { if (!isComp()) return ERR('SEM_PERMISSAO'); const c = db.calc; if (a.p_itens != null && !Array.isArray(a.p_itens)) return ERR('DADOS_INVALIDOS'); if (a.p_itens != null) c.itens = a.p_itens; c.liberada = false; if (a.p_base != null) c.base = a.p_base; c.em = new Date().toISOString(); c.por = nomeDe(uid()); c.log.unshift({ quando: c.em, autor: c.por, acao: a.p_acao }); save(); return OK(); }
       if (name === 'reservar') {
         const start = new Date(`${a.p_date}T${String(a.p_from).padStart(2, '0')}:00`);
         if (start <= now()) return { data: null, error: { message: 'HORARIO_PASSADO' } };

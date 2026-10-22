@@ -36,8 +36,9 @@ A usuária trabalha com os dois:
   - `config.js`: URL e chave pública do Supabase (não mexer).
   - `supabase/schema.sql`: banco inteiro, **idempotente** (rodar de novo não estraga). Cada versão é um bloco no fim ("-- vN ..."), antes da seção "Arquivos: fotos do consultório".
   - `supabase/functions/push/index.ts`: função Edge `push` (Web Push com VAPID e agenda .ics). Precisa de "Enforce JWT verification" desligado.
-  - `sw.js` (cache `thalia-v5`; aumente a versão a cada publicação), `manifest.webmanifest`, `assets/`, `README.md` (guia da usuária).
+  - `sw.js` (cache `thalia-v6`; aumente a versão a cada publicação), `manifest.webmanifest`, `assets/`, `README.md` (guia da usuária).
 - `docs/`: `proximas-melhorias.md` (lista de pedidos e histórico) e `termos-de-uso.md` (texto da versão 1 dos termos).
+- `docs/fotos-dra-thalia/`: fotos da Dra. Thalia para trabalhos com a imagem dela (site, apresentação, cartaz, redes). Leia o `LEIA-ME.md` da pasta antes de usar. **Não vão para o site (nem para nenhum material) sem a usuária escolher qual foto usar**; antes de publicar, otimizar (WebP, até 1200 px). Nunca usar em modelos de outros clientes.
 - `ferramentas/`: testes e geradores dos PDFs (não vão para o site).
 
 ## Como o sistema funciona (resumo)
@@ -47,6 +48,8 @@ A usuária trabalha com os dois:
 - Status de reserva: `ativo`, `cancelado`, `credito` (dia de plano liberado), `taxa` (cancelada com taxa); falta registrada em `falta`.
 - Termos de uso: aceite obrigatório no cadastro (rolagem até o fim), novas versões pedem novo aceite.
 - Login único (v9): um botão "Entrar"; quem é admin vai para `#admin`, dentista para `#dentista`. Níveis de admin: `completo` e `agenda`.
+- Calculadora (v10): só o administrador completo vê a aba; `calc_dados` recusa os outros. Não existe mais "liberar para os dentistas" (`calc_liberada` fica sem uso).
+- v10 (bloco "v10: efeitos, avisos e qualidade de vida" no `index.html`): `toast()`, `comDesfazer()` (cancelar/excluir esperam 5 s com "Desfazer"; `window.UNDO_MS` muda o prazo), `skelHtml()` no lugar de "Carregando…", botões de enviar com `.is-loading`, `entrarAba()` (transição e KPIs contando), faixa de sem internet, puxar para atualizar no app, vibração ao reservar e último e-mail lembrado. Efeitos em JS só rodam com `MOV` (sem "reduzir movimento" e fora de testes automáticos, `navigator.webdriver`). Espaçamento em `--s1..--s6` (4/8/12/16/24/32 px) e cores de status em `--st-*` (claro e escuro).
 - Notificações do painel vão para todos os admins; e-mails para o "e-mail da administradora" em Ajustes → E-mails.
 
 ## Testes (rode antes de entregar qualquer mudança)
@@ -54,18 +57,21 @@ A usuária trabalha com os dois:
 ```bash
 sudo pg_ctlcluster 16 main start        # se o Postgres estiver parado
 cd ferramentas/testes-banco
-bash rodar.sh t9 ../../consultorio-thalia/supabase/schema.sql pre9.sql test9.sql   # instalação + testes v9
+bash rodar.sh t9 ../../consultorio-thalia/supabase/schema.sql pre9.sql   # instalação; depois rode test9.sql e test10.sql com psql (abaixo)
+sudo -u postgres psql -q -d t9 -f test10.sql 2>&1 | grep -E '^C[0-9]|ERROR'   # compare com out10.txt (calculadora v10)
 bash rodar.sh f9 ../../consultorio-thalia/supabase/schema.sql ../../consultorio-thalia/supabase/schema.sql   # rodar 2x sem erro
 ```
-`stub*.sql` simulam `auth`, `storage`, `vault`, `net`. Compare a saída do test9 com `out9.txt`. Teste sempre: instalação do zero, rodar o schema duas vezes e permissões (admin completo, admin da agenda, dentista, visitante).
+`stub*.sql` simulam `auth`, `storage`, `vault`, `net`. Compare a saída do test9 com `out9.txt` (já com as regras da v10) usando só as linhas `N…` e `ERROR`. Teste sempre: instalação do zero, rodar o schema duas vezes e permissões (admin completo, admin da agenda, dentista, visitante).
 
 ### Navegador (Playwright + Chromium, supabase-js simulado)
 ```bash
 cd consultorio-thalia && python3 -m http.server 8765 &
-cd ferramentas/testes-navegador && python3 e2e9.py     # deve terminar com "FALHAS: 0" e "erros JS: []"
+cd ferramentas/testes-navegador && python3 e2e10.py    # deve terminar com "FALHAS: 0" e "erros JS: []" (e2e10.py v8 = banco antigo)
+python3 e2e10_visual.py   # efeitos, Desfazer, login, temas claro/escuro, 390 px e computador (liga as animações)
 ```
 - `mock-supabase.js` simula o supabase-js (tabelas, RLS, RPCs). Se criar tabela ou função nova, implemente no mock também.
-- Os `r9_e2e*.py` são testes de regressão das versões anteriores.
+- Os `r9_e2e*.py` são testes de regressão das versões anteriores. O `e2e9.py` ficou desatualizado (calculadora da v9); use o `e2e10.py`.
+- O mock grava o "Desfazer" na hora (`window.UNDO_MS = 0`), a menos que o teste defina outro valor antes.
 - Os scripts acham os arquivos sozinhos a partir da própria pasta (mock em `testes-navegador/mock-supabase.js`, termos no `schema.sql`). Prints e PDFs dos testes vão para `/tmp/cots-testes` (troque com a variável `COTS_SAIDA`).
 - Preparar o ambiente: `pip install playwright==1.56.0 opencv-python-headless` (essa versão usa o Chromium já instalado em `/opt/pw-browsers`; não rode `playwright install`).
 - `rodar.sh` mostra só as últimas linhas; para comparar com `out9.txt`, rode o `test9.sql` com `psql` num banco novo (schema + pre9) e compare as linhas `N…` e `ERROR`. `test7.sql`/`test8.sql` dependem de dados de preparo que não estão no repositório.
