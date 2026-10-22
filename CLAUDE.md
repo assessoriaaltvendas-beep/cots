@@ -36,7 +36,7 @@ A usuária trabalha com os dois:
   - `config.js`: URL e chave pública do Supabase (não mexer).
   - `supabase/schema.sql`: banco inteiro, **idempotente** (rodar de novo não estraga). Cada versão é um bloco no fim ("-- vN ..."), antes da seção "Arquivos: fotos do consultório".
   - `supabase/functions/push/index.ts`: função Edge `push` (Web Push com VAPID e agenda .ics). Precisa de "Enforce JWT verification" desligado.
-  - `sw.js` (cache `thalia-v6`; aumente a versão a cada publicação), `manifest.webmanifest`, `assets/`, `README.md` (guia da usuária).
+  - `sw.js` (cache `thalia-v7`; aumente a versão a cada publicação), `manifest.webmanifest`, `assets/`, `README.md` (guia da usuária).
 - `docs/`: `proximas-melhorias.md` (lista de pedidos e histórico) e `termos-de-uso.md` (texto da versão 1 dos termos).
 - `docs/fotos-dra-thalia/`: fotos da Dra. Thalia para trabalhos com a imagem dela (site, apresentação, cartaz, redes). Leia o `LEIA-ME.md` da pasta antes de usar. **Não vão para o site (nem para nenhum material) sem a usuária escolher qual foto usar**; antes de publicar, otimizar (WebP, até 1200 px). Nunca usar em modelos de outros clientes.
 - `ferramentas/`: testes e geradores dos PDFs (não vão para o site).
