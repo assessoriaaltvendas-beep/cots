@@ -2102,6 +2102,7 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
 .tour figcaption{position:absolute;left:12px;top:12px;padding:6px 12px;border-radius:999px;background:rgba(61,0,15,.78);color:#fff;font:600 .78rem var(--font-body);pointer-events:none}
 .gal-item{box-shadow:var(--shadow-sm)}
 @media (max-width:860px){.gal-wrap{grid-template-columns:minmax(0,1fr)}.tour{width:100%;max-width:300px;justify-self:center;aspect-ratio:464/832}}
+@media (min-width:961px){.hero-media .agenda{left:auto;right:-14px}.price-card{right:auto;left:calc(100% - min(100%,540px) - 14px)}}
 @keyframes rdMenu{from{opacity:0;transform:translateY(-6px) scale(.97)}to{opacity:1;transform:none}}
 @keyframes rdSheet{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:no-preference){
@@ -2162,7 +2163,7 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
           </div>
           <div class="hero-media">
             <figure class="hero-photo tem-foto" id="hero-photo">
-              <img src="assets/consultorio/consultorio-topo.webp" alt="Cadeira odontológica e bancada do consultório" width="1086" height="1448" fetchpriority="high">
+              <img src="assets/consultorio/consultorio-sala.webp" alt="Sala de atendimento do consultório" width="1086" height="1448" fetchpriority="high">
             </figure>
             <aside class="agenda" aria-label="Próximos horários livres">
               <div class="agenda-head"><p class="eyebrow"><i class="live" aria-hidden="true"></i>Agenda ao vivo</p><h3>Próximos horários</h3></div>
@@ -4965,7 +4966,7 @@ const FOTOS_PADRAO = [
   { url: 'assets/consultorio/consultorio-mesa.webp', alt: 'Mesa de atendimento com duas cadeiras' },
   { url: 'assets/consultorio/consultorio-autoclave.webp', alt: 'Bancada com pia e autoclave' }
 ];
-const FOTO_TOPO = { url: 'assets/consultorio/consultorio-topo.webp', alt: 'Cadeira odontológica e bancada do consultório' };
+const FOTO_TOPO = { url: 'assets/consultorio/consultorio-sala.webp', alt: 'Sala de atendimento do consultório' };
 const FOTO_LOGIN = 'assets/consultorio/consultorio-equipo.webp';
 const fotosSite = () => (S.fotos && S.fotos.length ? S.fotos : FOTOS_PADRAO);
 // Foto do topo da página e do login.
