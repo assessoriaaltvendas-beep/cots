@@ -2041,6 +2041,69 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
   .tab-enter .h-ic,.tab-enter .ph-icw{animation:rdPop .5s var(--ease) both}
   .app .greet .gdeco{animation:rdPhoto 1s var(--ease) .15s both}
 }
+/* ---------- redesign v10 (4): estrutura do painel ---------- */
+/* cabeçalho: recolher menu, atalho principal e menu da conta */
+.side-toggle{width:40px;height:40px;flex:none;display:grid;place-items:center;border:1px solid rgba(232,207,152,.3);border-radius:12px;background:rgba(255,255,255,.06);color:#fff;padding:0}
+.side-toggle svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.side-toggle:hover{background:rgba(255,255,255,.14)}
+.top-acao{margin-left:auto;display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:9px 18px 9px 14px;border-radius:999px;border:1px solid rgba(232,207,152,.45);background:rgba(255,255,255,.08);color:#fff;font:600 .9rem var(--font-body)}
+.top-acao svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.top-acao:hover{background:var(--hi);border-color:var(--hi);color:#3d000f}
+.who-wrap{position:relative;margin-left:14px;flex:none}
+.who-wrap .who{margin-left:0;display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#fff;font:500 .92rem var(--font-body);padding:4px 8px 4px 14px;border-radius:999px}
+.who-wrap .who:hover,.who-wrap.aberto .who{background:rgba(255,255,255,.1)}
+.who-chev{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.who-wrap.aberto .who-chev{transform:rotate(180deg)}
+.who-menu{position:absolute;right:0;top:calc(100% + 10px);z-index:45;min-width:240px;display:grid;gap:2px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);transform-origin:top right}
+.who-menu[hidden]{display:none}
+.who-papel{margin:4px 12px 6px;font:600 .66rem var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink)}
+.who-menu > button,.who-menu > a{display:flex;align-items:center;width:100%;padding:11px 14px;border:0;border-radius:12px;background:transparent;color:var(--ink);font:500 .95rem var(--font-body);text-decoration:none;text-align:left}
+.who-menu > button:hover,.who-menu > a:hover{background:var(--accent-soft);color:var(--accent)}
+.who-menu .who-sair{color:var(--danger);border-top:1px solid var(--line);border-radius:0 0 12px 12px;margin-top:4px}
+@media (max-width:820px){
+  .side-toggle,.top-acao{display:none}
+  .who-wrap{margin-left:auto}
+  .who-wrap .who{padding:4px}
+  .who-chev{display:none}
+}
+/* menu lateral por grupos */
+.side-gt{margin:16px 16px 6px;font:600 .66rem var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink);white-space:nowrap;overflow:hidden}
+.side > .side-gt:first-of-type{margin-top:0}
+@media (max-width:820px){.side-gt{display:none}}
+/* menu recolhido (computador) */
+@media (min-width:821px){
+  body.menu-recolhido .app-body{grid-template-columns:86px minmax(0,1fr)}
+  body.menu-recolhido .side{padding:20px 12px}
+  body.menu-recolhido .side > button,body.menu-recolhido .side-foot > a,body.menu-recolhido .side-foot > button{font-size:0;gap:0;justify-content:center;padding:13px 0}
+  body.menu-recolhido .side .ic{width:22px;height:22px}
+  body.menu-recolhido .side .badge{position:absolute;top:4px;right:8px;margin:0;font-size:.62rem;min-width:17px;height:17px}
+  body.menu-recolhido .side-gt{font-size:0;height:1px;margin:10px 10px;background:var(--line)}
+  body.menu-recolhido .side > .side-gt:first-of-type{display:none}
+  body.menu-recolhido .side a.side-help{display:none}
+  body.menu-recolhido .side-ind::before{left:-12px}
+}
+/* "Mais" do celular como painel inferior com ícones */
+@media (max-width:820px){
+  .side .more-sheet:not([hidden]){position:fixed;left:10px;right:10px;bottom:calc(86px + env(safe-area-inset-bottom,0px));min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px;border-radius:24px;box-shadow:0 0 0 100vmax rgba(34,21,26,.38),var(--shadow-lg)}
+  .side .more-sheet > *{flex-direction:column!important;align-items:flex-start!important;gap:10px!important;padding:14px!important;background:var(--bg)!important;border-radius:16px!important;font-size:.92rem!important;font-weight:500;min-height:84px}
+  .side .more-sheet > * svg{width:22px;height:22px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:1}
+  .side .more-sheet > [aria-current="page"]{background:var(--accent-soft)!important;color:var(--accent)}
+  .side .more-sheet > [data-logout],.side .more-sheet > [data-dlogout]{color:var(--danger)}
+  .side .more-sheet > [data-logout] svg,.side .more-sheet > [data-dlogout] svg{stroke:var(--danger)}
+}
+.crumb{min-width:0;overflow:hidden}
+.crumb b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:360px){.app-top img{width:84px}.app-top-in{gap:10px}}
+@keyframes rdMenu{from{opacity:0;transform:translateY(-6px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes rdSheet{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .app-body{transition:grid-template-columns .35s var(--ease)}
+  .who-menu:not([hidden]){animation:rdMenu .22s var(--ease)}
+  .who-chev,.side-toggle,.top-acao{transition:transform .3s var(--ease),background-color .2s,color .2s,border-color .2s}
+  .top-acao:hover{transform:translateY(-1px)}
+  .side .more-sheet:not([hidden]){animation:rdSheet .3s var(--ease)}
+  .side .more-sheet > *{transition:background-color .2s}
+}
 </style>
 </head>
 <body>
@@ -2336,21 +2399,24 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
 <!-- PAINEL DO ADMINISTRADOR -->
 <div id="view-admin" class="app" hidden>
   <header class="app-top"><div class="app-top-in">
+    <button type="button" class="side-toggle" aria-label="Recolher menu" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button>
     <img class="lg-claro" src="assets/logo-vinho.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413"><img class="lg-escuro" src="assets/logo-dourado.webp?v=7" alt="" width="900" height="413">
     <span class="crumb"><span class="hide-xs">Painel</span><span class="hide-xs" aria-hidden="true">›</span><b id="crumb">Resumo</b></span>
-    <div class="who"><span class="who-name"></span><span class="avatar"></span></div>
+    <button type="button" class="top-acao" data-novareserva><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nova reserva</button>
+    <div class="who-wrap"><button type="button" class="who" aria-haspopup="true" aria-expanded="false" aria-label="Menu da conta"><span class="who-name"></span><span class="avatar"></span><svg class="who-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="who-menu" hidden><p class="who-papel">Administração</p><button type="button" data-tab="ajustes">Ajustes</button><a href="#dentista" class="so-dent">Minha área de dentista</a><a href="#">Ver site</a><button type="button" class="who-sair" data-logout>Sair</button></div></div>
   </div></header>
 
   <div class="app-body">
     <nav class="side" aria-label="Seções do painel">
-      <button type="button" data-tab="resumo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l5-6 4 3 7-8"/><path d="M4 20.500h16"/></svg>Resumo<span class="badge" id="due-badge" hidden>0</span></button>
-      <button type="button" data-tab="dentistas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Dentistas</button>
+      <p class="side-gt" aria-hidden="true">Visão geral</p><button type="button" data-tab="resumo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l5-6 4 3 7-8"/><path d="M4 20.500h16"/></svg>Resumo<span class="badge" id="due-badge" hidden>0</span></button>
+      <p class="side-gt" aria-hidden="true">Gestão</p><button type="button" data-tab="dentistas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Dentistas</button>
       <button type="button" data-tab="agenda"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 9.500h17M8 3v4M16 3v4"/></svg>Agenda</button>
       <button type="button" data-tab="pacientes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8M16 4.8a3 3 0 010 6M18 14.4c1.4.6 2.4 2 2.8 4.6"/></svg>Pacientes</button>
       <button type="button" data-tab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
-      <button type="button" data-tab="mural"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.500 9a4 4 0 010 6M19 6.500a7.500 7.500 0 010 11"/></svg>Mural<span class="badge" id="mural-badge" hidden>0</span></button>
+      <p class="side-gt" aria-hidden="true">Comunicação</p><button type="button" data-tab="mural"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.500 9a4 4 0 010 6M19 6.500a7.500 7.500 0 010 11"/></svg>Mural<span class="badge" id="mural-badge" hidden>0</span></button>
       <button type="button" data-tab="site"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8"/></svg>Site</button>
-      <button type="button" data-tab="calc" class="so-completo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8 7.5h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>Calculadora</button>
+      <p class="side-gt" aria-hidden="true">Ferramentas</p><button type="button" data-tab="calc" class="so-completo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8 7.5h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>Calculadora</button>
       <button type="button" data-tab="ajustes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3.500v2.200M12 18.300v2.200M3.500 12h2.200M18.300 12h2.200M6 6l1.600 1.600M16.400 16.400L18 18M6 18l1.600-1.600M16.400 7.600L18 6"/></svg>Ajustes</button>
       <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
       <div class="more-sheet" hidden><button type="button" data-tab="financeiro">Financeiro</button><button type="button" data-tab="mural">Mural</button><button type="button" data-tab="site">Site</button><button type="button" data-tab="calc" class="so-completo">Calculadora</button><button type="button" data-tab="ajustes">Ajustes</button><a href="#dentista" class="so-dent">Minha área de dentista</a><a href="#">Ver site</a><button type="button" data-logout>Sair</button></div>
@@ -2567,18 +2633,21 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
 <!-- ÁREA DO DENTISTA -->
 <div id="view-dent" class="app" hidden>
   <header class="app-top"><div class="app-top-in">
+    <button type="button" class="side-toggle" aria-label="Recolher menu" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button>
     <img class="lg-claro" src="assets/logo-vinho.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413"><img class="lg-escuro" src="assets/logo-dourado.webp?v=7" alt="" width="900" height="413">
     <span class="crumb"><span class="hide-xs">Área do dentista</span><span class="hide-xs" aria-hidden="true">›</span><b id="c-crumb">Início</b></span>
-    <div class="who"><span class="who-name" id="c-who"></span><span class="avatar" id="c-av"></span></div>
+    <button type="button" class="top-acao" data-ctab="nova"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Reservar horário</button>
+    <div class="who-wrap"><button type="button" class="who" aria-haspopup="true" aria-expanded="false" aria-label="Menu da conta"><span class="who-name" id="c-who"></span><span class="avatar" id="c-av"></span><svg class="who-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="who-menu" hidden><p class="who-papel">Área do dentista</p><button type="button" data-ctab="perfil">Meu perfil</button><a href="#admin" class="so-adm">Painel da administração</a><a href="#">Ver site</a><button type="button" class="who-sair" data-dlogout>Sair</button></div></div>
   </div></header>
 
   <div class="app-body">
     <nav class="side" aria-label="Seções da área do dentista">
-      <button type="button" data-ctab="inicio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.500L12 4l8 6.500V20H14.500v-5h-5v5H4z"/></svg>Início<span class="badge" id="c-badge" hidden>0</span></button>
+      <p class="side-gt" aria-hidden="true">Minha área</p><button type="button" data-ctab="inicio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.500L12 4l8 6.500V20H14.500v-5h-5v5H4z"/></svg>Início<span class="badge" id="c-badge" hidden>0</span></button>
       <button type="button" data-ctab="reservas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 9.500h17M8 3v4M16 3v4M8 13.500h5M8 16.500h8"/></svg>Reservas</button>
       <button type="button" data-ctab="nova"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M12 8v8M8 12h8"/></svg>Reservar</button>
       <button type="button" data-ctab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
-      <button type="button" data-ctab="consultorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-2.500 0-4 1-5.500 1C4.500 4 3 5.500 3 8c0 3 1.500 4.500 2 7 .5 3 1 6 2.500 6 1.700 0 1.500-4 2.500-6 .4-.9 1-1.500 2-1.500s1.600.6 2 1.500c1 2 .8 6 2.500 6 1.500 0 2-3 2.500-6 .5-2.500 2-4 2-7 0-2.500-1.500-4-3.500-4C16 4 14.500 3 12 3z"/></svg>Consultório</button>
+      <p class="side-gt" aria-hidden="true">Consultório e conta</p><button type="button" data-ctab="consultorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-2.500 0-4 1-5.500 1C4.500 4 3 5.500 3 8c0 3 1.500 4.500 2 7 .5 3 1 6 2.500 6 1.700 0 1.500-4 2.500-6 .4-.9 1-1.500 2-1.500s1.600.6 2 1.500c1 2 .8 6 2.500 6 1.500 0 2-3 2.500-6 .5-2.500 2-4 2-7 0-2.500-1.500-4-3.500-4C16 4 14.500 3 12 3z"/></svg>Consultório</button>
       <button type="button" data-ctab="perfil"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Perfil</button>
       <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
       <div class="more-sheet" hidden><button type="button" data-ctab="consultorio">O consultório</button><button type="button" data-ctab="perfil">Meu perfil</button><a href="#admin" class="so-adm">Painel da administração</a><a href="#">Ver site</a><button type="button" data-dlogout>Sair</button></div>
@@ -7807,6 +7876,41 @@ function decorarCards(raiz) {
   const raiz = $(id); let fila = false;
   new MutationObserver(() => { if (fila) return; fila = true; requestAnimationFrame(() => { fila = false; decorarCards(raiz); }); }).observe(raiz, { childList: true, subtree: true });
   decorarCards(raiz);
+});
+/* Estrutura do painel: menu da conta no topo, atalho "Nova reserva", menu lateral recolhível e "Mais" com ícones. */
+function menuConta(abrir, wrap) {
+  document.querySelectorAll('.who-wrap').forEach(w => {
+    const on = !!abrir && w === wrap, m = w.querySelector('.who-menu'), b = w.querySelector('.who');
+    m.hidden = !on; b.setAttribute('aria-expanded', String(on)); w.classList.toggle('aberto', on);
+  });
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  const b = e.target.closest('.who'), w = b && b.closest('.who-wrap');
+  if (w) { menuConta(w.querySelector('.who-menu').hidden, w); return; }
+  menuConta(false); // qualquer outro clique (inclusive numa opção do menu) fecha
+  if (e.target.closest('[data-novareserva]') && !$('view-admin').hidden) { setTab('agenda'); setTimeout(() => { const n = $('a-new'); if (n) n.click(); }, 0); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const w = document.querySelector('.who-wrap.aberto'); if (w) { menuConta(false); w.querySelector('.who').focus(); }
+});
+const menuRecolhido = v => { try { if (v === undefined) return localStorage.getItem('cots_menu') === '1'; localStorage.setItem('cots_menu', v ? '1' : '0'); } catch (_) {} return false; };
+function aplicarMenu(rec) {
+  document.body.classList.toggle('menu-recolhido', rec);
+  document.querySelectorAll('.side-toggle').forEach(b => { b.setAttribute('aria-pressed', String(rec)); b.setAttribute('aria-label', rec ? 'Expandir menu' : 'Recolher menu'); });
+  requestAnimationFrame(indicadores); setTimeout(indicadores, 420); // depois da transição da largura
+}
+document.querySelectorAll('.side-toggle').forEach(b => b.addEventListener('click', () => { const r = !document.body.classList.contains('menu-recolhido'); menuRecolhido(r); aplicarMenu(r); }));
+aplicarMenu(menuRecolhido());
+document.querySelectorAll('.app .side').forEach(side => {
+  // nome da aba como dica quando o menu está recolhido
+  side.querySelectorAll(':scope > button, .side-foot > a, .side-foot > button').forEach(x => { if (!x.title) x.title = [...x.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim(); });
+  // ícones no "Mais" do celular, os mesmos do menu
+  side.querySelectorAll('.more-sheet > *').forEach(it => {
+    const k = it.dataset.tab ? `[data-tab="${it.dataset.tab}"]` : it.dataset.ctab ? `[data-ctab="${it.dataset.ctab}"]` : it.hasAttribute('data-logout') ? '[data-logout]' : it.hasAttribute('data-dlogout') ? '[data-dlogout]' : `a[href="${it.getAttribute('href')}"]`;
+    const o = side.querySelector(`:scope > ${k} svg, .side-foot ${k} svg`); if (o && !it.querySelector('svg')) it.prepend(o.cloneNode(true));
+  });
 });
 function ajustesShell() {
   const sh = ajShell(); if (!sh) return;
