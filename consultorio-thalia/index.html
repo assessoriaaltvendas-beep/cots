@@ -1914,6 +1914,133 @@ label.sw b{font-weight:600}
   .app .page-head.greet{animation:rdUp .6s var(--ease) both}
 }
 @keyframes rdPop{from{opacity:0;transform:scale(.8) rotate(-8deg)}to{opacity:1;transform:none}}
+/* ---------- redesign v10 (3): área interna no padrão da referência ---------- */
+:root{--title-ink:color-mix(in srgb,var(--accent) 52%,var(--ink));
+  --ic-info:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M12 11v5M12 8h.01'/%3E%3C/svg%3E");
+  --ic-seta:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+  --ic-baixar:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v11M7.5 10.5L12 15l4.5-4.5M4.5 16.5v3h15v-3'/%3E%3C/svg%3E");
+}
+/* topo vinho com logo dourado */
+.app-top{background:linear-gradient(90deg,#45000f,#5b0419 55%,#590117);border-bottom:0;color:#fff}
+.app-top .lg-claro{display:none!important}
+.app-top .lg-escuro{display:block!important}
+.app-top img{width:104px}
+.crumb{color:rgba(255,255,255,.72);border-left-color:rgba(232,207,152,.32)}
+.crumb b{color:#fff}
+.who{color:#fff;gap:12px}
+.who-name{font-weight:500}
+.who .avatar{width:40px;height:40px;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(232,207,152,.4)}
+body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
+/* menu lateral */
+.side{gap:4px;padding:22px 16px}
+.side a,.side button{padding:12px 16px;font-size:.98rem;color:var(--ink)}
+.side .ic{width:22px;height:22px;opacity:.85}
+.side [aria-current="page"],.side.tem-ind > [aria-current="page"]{color:var(--accent);font-weight:600}
+.side-ind::before{left:-16px}
+@media (max-width:820px){.side a,.side button,.side .more-btn{font-size:.68rem;padding:6px 2px}.side .ic{width:20px;height:20px}.side-ind::before{left:30%}}
+/* cabeçalho das abas */
+.page-head h2{display:flex;align-items:center;gap:14px;color:var(--title-ink)}
+.ph-icw{width:48px;height:48px;border-radius:15px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 12%,transparent)}
+.ph-ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* boas-vindas clara com ilustração */
+.app .page-head.greet{position:relative;overflow:hidden;align-items:center;padding:30px 36px;color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow);
+  background:radial-gradient(760px 280px at 88% 0%,var(--accent-soft),transparent 70%),linear-gradient(180deg,var(--surface),color-mix(in srgb,var(--surface) 70%,var(--bg)))}
+.app .greet .eyebrow{color:var(--muted-2);letter-spacing:.16em}
+.app .greet h2{color:var(--title-ink);font:600 clamp(2rem,3.4vw,3rem)/1.1 var(--font-display);letter-spacing:-.01em}
+.greet-sub{margin:8px 0 0;color:var(--muted);font-size:1rem}
+.app .greet .gdeco,.app .greet .gdots{position:absolute!important}
+.kpis.band-k .kpi > div{min-width:0}
+.kpis.band-k .kpi > div > span,.kpis.band-k .kpi small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kv > div.kv-dest > span:first-child{flex:none;white-space:nowrap}
+@media (max-width:560px){.kv > div.kv-dest{flex-direction:column;gap:6px}.kv > div.kv-dest > span:last-child{text-align:left}}
+.app .next-card .primary,.app .next-card .chip-s{background:var(--hi);color:#3d000f;box-shadow:none}
+.app .next-card .primary:hover:not(:disabled){background:#f2dfb3}
+.app .next-card .ghost,.app .next-card .cal-a{background:transparent;border-color:rgba(255,255,255,.35);color:#fff;box-shadow:none}
+.app .next-card .ghost:hover:not(:disabled){background:rgba(255,255,255,.08);border-color:var(--hi);color:var(--hi)}
+.app .greet .gdeco{display:block;right:300px!important;top:50%!important;width:118px!important;transform:translateY(-50%) rotate(-6deg)!important;color:var(--gold);opacity:.55;stroke-width:.45}
+.app .greet .gdots{display:block;right:400px;top:22px;width:150px;height:110px;opacity:.4}
+.app .greet .primary{background:linear-gradient(180deg,#71102a,#4a0012);color:#fff;min-height:56px;padding:14px 30px;font-size:1.02rem;box-shadow:0 16px 30px -14px rgba(89,1,23,.7),inset 0 1px 0 rgba(255,255,255,.18)}
+.app .greet .primary:hover:not(:disabled){background:linear-gradient(180deg,#80173a,#590117)}
+@media (max-width:1100px){.app .greet .gdeco,.app .greet .gdots{display:none}}
+@media (max-width:560px){.app .page-head.greet{padding:22px 20px}.greet-sub{font-size:.92rem}.app .greet .primary{width:100%}}
+/* faixa vinho de indicadores */
+.app .kpis.band-k{gap:0;border:0;border-radius:22px;overflow:hidden;background:linear-gradient(115deg,#45000f,#6a0a22 55%,#590117);box-shadow:0 30px 60px -34px rgba(61,0,15,.85)}
+.app .kpis.band-k .kpi{width:100%;margin:0;align-items:center;text-align:left;font:inherit;cursor:pointer;background:transparent;border:0;border-left:1px solid rgba(255,255,255,.12);border-radius:0;box-shadow:none;color:#fff;padding:22px 18px;gap:14px}
+.app .kpis.band-k .kpi:first-child{border-left:0}
+.kpis.band-k .kpi .ico{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid rgba(232,207,152,.28);color:var(--hi)}
+.kpis.band-k .kpi .ico svg{width:26px;height:26px}
+.kpis.band-k .kpi b{color:#fff;font-weight:500}
+.kpis.band-k .kpi span{color:#fff;font-weight:500}
+.kpis.band-k .kpi small{color:rgba(255,255,255,.7)}
+.kpi .go{margin-left:auto;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.65);display:grid;place-items:center;flex:none;color:#fff}
+.kpi .go svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app .kpis.band-k .kpi:hover{background:rgba(255,255,255,.06);transform:none;box-shadow:none}
+.kpis.band-k .kpi:hover .ico{background:rgba(232,207,152,.18);color:var(--hi)}
+.kpis.band-k .kpi:hover .go{background:#fff;color:var(--accent);border-color:#fff}
+.kpis.band-k .kpi::after{background:var(--hi);height:2px}
+.kpis.band-k .kpi:focus-visible{outline:2px solid var(--hi);outline-offset:-4px}
+@media (max-width:820px){
+  .app .kpis.band-k .kpi{padding:16px;gap:10px;align-items:flex-start}
+  .kpi .go{position:absolute;right:12px;top:12px;width:24px;height:24px}
+  .kpi .go svg{width:12px;height:12px}
+}
+/* gráfico: dias que passaram em dourado, hoje em vinho */
+.bar-track{max-width:54px;border:0;border-radius:12px;background:color-mix(in srgb,var(--bg) 70%,var(--line))}
+.bar-track i{border-radius:10px;background:var(--outline)}
+.bar.past .bar-track i{background:linear-gradient(180deg,#dcc59c,#c4a26e)}
+.bar.today .bar-track i{background:linear-gradient(180deg,#7d1432,#590117);box-shadow:0 10px 20px -10px rgba(89,1,23,.6)}
+.bar-v{font-weight:500}
+/* títulos dos cards com ícone, links com seta */
+.card-head h3,.block > h4{display:flex;align-items:center;gap:12px;color:var(--title-ink)}
+.card-head h3{font:600 1.32rem/1.25 var(--font-display)}
+.h-ic{width:24px;height:24px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.app .card > .card-head:first-child{padding-bottom:14px;border-bottom:1px solid var(--line)}
+.card-head .link::after{content:"";display:inline-block;width:14px;height:14px;margin-left:6px;vertical-align:-2px;background:currentColor;-webkit-mask:var(--ic-seta) center/contain no-repeat;mask:var(--ic-seta) center/contain no-repeat}
+.app .card-head .link{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;background:none}
+/* linhas de valores com ícone (Financeiro do mês) */
+.kv > div > span:first-child{display:inline-flex;align-items:center;gap:12px}
+.kv-ic{width:20px;height:20px;flex:none;fill:none;stroke:var(--muted-2);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.kv > div.kv-dest{margin-top:6px;padding:14px 16px;border:0;border-radius:14px;background:color-mix(in srgb,var(--gold-soft) 70%,var(--surface))}
+.kv > div.kv-dest > span:first-child{color:var(--ink);font-weight:600}
+.kv > div.kv-dest .kv-ic{stroke:var(--gold-ink)}
+/* avisos com ícone e botão escuro */
+.notice{position:relative;background:color-mix(in srgb,var(--gold-soft) 45%,var(--surface));border:1px solid color-mix(in srgb,var(--gold) 28%,transparent);border-radius:18px}
+.notice.gold,.notice.wine{padding-left:60px}
+.notice.gold::before,.notice.wine::before{content:"";position:absolute;left:20px;top:50%;width:24px;height:24px;margin-top:-12px;background:var(--gold-ink);-webkit-mask:var(--ic-info) center/contain no-repeat;mask:var(--ic-info) center/contain no-repeat}
+.notice.wine{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 22%,transparent)}
+.notice.wine::before{background:var(--accent)}
+.notice .primary,.alert .primary{background:linear-gradient(180deg,#5e0619,#3d000f);color:#fff}
+[data-backup]::before{content:"";display:inline-block;width:16px;height:16px;margin-right:8px;vertical-align:-3px;background:currentColor;-webkit-mask:var(--ic-baixar) center/contain no-repeat;mask:var(--ic-baixar) center/contain no-repeat}
+@media (max-width:560px){.notice.gold,.notice.wine{padding-left:52px}.notice.gold::before,.notice.wine::before{left:16px;top:18px;margin-top:0}}
+/* estados vazios */
+.empty{padding:28px 12px;gap:10px}
+.empty svg{box-sizing:content-box;width:26px;height:26px;padding:14px;border-radius:50%;background:var(--accent-soft);color:var(--accent);stroke-width:1.4;opacity:1}
+.empty span{color:var(--muted);max-width:36ch}
+/* tabelas */
+.app .tbl thead th{background:color-mix(in srgb,var(--bg) 80%,var(--surface));color:var(--muted-2);font-weight:600;border-bottom:1px solid var(--line)}
+.app .tbl td{border-bottom-color:var(--line)}
+.app .tbl .who2 .avatar{background:var(--accent-soft);color:var(--accent)}
+/* agenda */
+.cal-h.today{background:var(--accent)}
+.cal-h.today b,.cal-h.today span,.cal-h.today small{color:var(--accent-ink)}
+.cal-now,.cal-now::before{background:var(--gold)}
+.ev.agendado{border-color:color-mix(in srgb,var(--accent) 45%,transparent);border-left:3px solid var(--accent)}
+/* gavetas e janelas */
+.dr-head{background:linear-gradient(90deg,var(--accent-soft),transparent 70%)}
+.dr-head .eyebrow{color:var(--accent)}
+.dr-title .avatar{background:var(--accent);color:var(--accent-ink)}
+.tm-head{padding-bottom:12px;border-bottom:1px solid var(--line)}
+.wait-card{background:radial-gradient(500px 200px at 100% 0%,var(--accent-soft),transparent 70%),var(--surface)}
+.wait-ic{background:var(--accent);color:var(--accent-ink)}
+.r-dec{color:var(--title-ink);display:flex;align-items:center;gap:10px}
+.r-dec::before{content:"";width:22px;height:22px;background:var(--accent);-webkit-mask:var(--ic-info) center/contain no-repeat;mask:var(--ic-info) center/contain no-repeat}
+@media (max-width:560px){.ph-icw{width:40px;height:40px;border-radius:12px}.ph-ic{width:20px;height:20px}.card-head h3{font-size:1.18rem}}
+@media (prefers-reduced-motion:no-preference){
+  .kpi .go{transition:background-color .25s var(--ease),color .25s,transform .3s var(--ease),border-color .25s}
+  .kpis.band-k .kpi:hover .go{transform:translateX(3px)}
+  .tab-enter .h-ic,.tab-enter .ph-icw{animation:rdPop .5s var(--ease) both}
+  .app .greet .gdeco{animation:rdPhoto 1s var(--ease) .15s both}
+}
 </style>
 </head>
 <body>
@@ -2238,10 +2365,10 @@ label.sw b{font-weight:600}
       <!-- RESUMO -->
       <section id="t-resumo" class="tab" aria-label="Resumo">
         <div class="page-head greet"><svg class="gdeco" style="right:-30px;top:-46px;width:170px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span class="gdots" aria-hidden="true"></span>
-          <div><p class="eyebrow" id="r-date"></p><h2 id="r-hello">Olá</h2></div>
-          <button class="primary" type="button" data-tab="agenda">Abrir agenda</button>
+          <div><p class="eyebrow" id="r-date"></p><h2 id="r-hello">Olá</h2><p class="greet-sub">Aqui está um resumo da movimentação do seu consultório.</p></div>
+          <button class="primary" type="button" data-tab="agenda">Abrir agenda <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
-        <div class="kpis" id="r-kpis"></div>
+        <div class="kpis band-k" id="r-kpis"></div>
         <div class="stack" id="r-app"></div>
         <section class="alert" id="due" hidden aria-label="Confirmações a enviar"></section>
         <div class="grid2">
@@ -2468,8 +2595,8 @@ label.sw b{font-weight:600}
       <section id="c-wait" class="tab" hidden aria-label="Aguardando liberação"></section>
       <section id="c-inicio" class="tab" aria-label="Início">
         <div class="page-head greet"><svg class="gdeco" style="right:-30px;top:-46px;width:170px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span class="gdots" aria-hidden="true"></span>
-          <div><p class="eyebrow" id="ci-date"></p><h2 id="ci-hello">Olá!</h2></div>
-          <button class="primary" type="button" data-ctab="nova">Reservar horário</button>
+          <div><p class="eyebrow" id="ci-date"></p><h2 id="ci-hello">Olá!</h2><p class="greet-sub">Acompanhe suas reservas, pagamentos e avisos do consultório.</p></div>
+          <button class="primary" type="button" data-ctab="nova">Reservar horário <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
         <div class="stack" id="ci-alerts"></div>
         <div class="grid2">
@@ -3109,7 +3236,10 @@ function dueList() {
   return S.cache.all.filter(x => x.st === 'agendado' && !x.b.confAbertaEm && (new Date(`${x.b.date}T${pad(x.b.from)}:00`) - now) <= 2 * 3600 * 1000).sort(asc);
 }
 function kpis(el, items) {
-  el.innerHTML = items.map(k => `<div class="kpi"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k.ic]}</svg></span><div><b>${esc(k.v)}</b><span>${esc(k.l)}</span><small>${esc(k.s)}</small></div></div>`).join('');
+  // com "tab", o indicador vira atalho para a aba correspondente (seta no canto)
+  el.innerHTML = items.map(k => k.tab
+    ? `<button type="button" class="kpi kpi-go" data-tab="${k.tab}" aria-label="${esc(k.l)}: ${esc(k.v)}. Abrir ${esc(k.tab)}"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k.ic]}</svg></span><div><b>${esc(k.v)}</b><span>${esc(k.l)}</span><small>${esc(k.s)}</small></div><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>`
+    : `<div class="kpi"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k.ic]}</svg></span><div><b>${esc(k.v)}</b><span>${esc(k.l)}</span><small>${esc(k.s)}</small></div></div>`).join('');
 }
 function miniBooking({ b, st }) {
   const d = new Date(b.date + 'T12:00');
@@ -3175,10 +3305,10 @@ function renderResumo() {
   const novos = dents.filter(d => d.primeira.startsWith(ym)).length;
   const p = prox[0];
   kpis($('r-kpis'), [
-    { ic: 'cal', v: hoje.length, l: 'Reservas hoje', s: `${sumH(hoje)}h reservadas` },
-    { ic: 'clock', v: prox.length, l: 'Próximas reservas', s: p ? `Próxima: ${br(p.b.date).slice(0, 5)} às ${hh(p.b.from)}` : 'Nenhuma marcada' },
-    { ic: 'chart', v: `${horasMes}h`, l: `Horas em ${MESES[now.getMonth()]}`, s: `${cap ? Math.round(horasMes / cap * 100) : 0}% de ocupação do mês` },
-    { ic: 'user', v: dents.length, l: 'Dentistas', s: `${plural(novos, 'novo', 'novos')} este mês` }
+    { ic: 'cal', v: hoje.length, l: 'Reservas hoje', s: `${sumH(hoje)}h reservadas`, tab: 'agenda' },
+    { ic: 'clock', v: prox.length, l: 'Próximas reservas', s: p ? `Próxima: ${br(p.b.date).slice(0, 5)} às ${hh(p.b.from)}` : 'Nenhuma marcada', tab: 'agenda' },
+    { ic: 'chart', v: `${horasMes}h`, l: `Horas em ${MESES[now.getMonth()]}`, s: `${cap ? Math.round(horasMes / cap * 100) : 0}% de ocupação do mês`, tab: 'financeiro' },
+    { ic: 'user', v: dents.length, l: 'Dentistas', s: `${plural(novos, 'novo', 'novos')} este mês`, tab: 'dentistas' }
   ]);
   renderDue();
 
@@ -3188,16 +3318,16 @@ function renderResumo() {
   $('r-week').textContent = `${br(iso(days[0])).slice(0, 5)} a ${br(iso(days[days.length - 1])).slice(0, 5)} · de ${hpd}h por dia`;
   $('r-bars').innerHTML = days.map(d => {
     const s = iso(d); const h = sumH(all.filter(x => isActive(x) && !['credito', 'taxa'].includes(x.st) && x.b.date === s));
-    return `<div class="bar${s === t ? ' today' : ''}"><span class="bar-v">${h}h</span><div class="bar-track" role="img" aria-label="${DIAS_LONGOS[d.getDay()]}: ${h} de ${hpd} horas"><i style="height:${Math.min(100, h / hpd * 100)}%"></i></div><span class="bar-l">${DIAS[d.getDay()]}</span></div>`;
+    return `<div class="bar${s === t ? ' today' : s < t ? ' past' : ''}"><span class="bar-v">${h}h</span><div class="bar-track" role="img" aria-label="${DIAS_LONGOS[d.getDay()]}: ${h} de ${hpd} horas"><i style="height:${Math.min(100, h / hpd * 100)}%"></i></div><span class="bar-l">${DIAS[d.getDay()]}</span></div>`;
   }).join('');
 
   const recMes = sumPrice(mes);
   $('r-fin').innerHTML = [
-    ['Receita prevista', recMes != null ? BRL(recMes) : 'A definir'],
-    ['Horas reservadas', `${horasMes}h`],
-    ['Já realizadas', `${sumH(mes.filter(x => x.st === 'concluido'))}h`],
-    ['Valor da hora', temPreco() ? precoTexto() : 'Ainda não configurado']
-  ].map(([a, b]) => `<div><span>${a}</span><span>${b}</span></div>`).join('');
+    ['Receita prevista', recMes != null ? BRL(recMes) : 'A definir', 'cal'],
+    ['Horas reservadas', `${horasMes}h`, 'clock'],
+    ['Já realizadas', `${sumH(mes.filter(x => x.st === 'concluido'))}h`, 'chart'],
+    ['Valor da hora', temPreco() ? precoTexto() : 'Ainda não configurado', 'money']
+  ].map(([a, b, ic], i) => `<div class="${i === 3 ? 'kv-dest' : ''}"><span><svg class="kv-ic" viewBox="0 0 24 24" aria-hidden="true">${ICON[ic]}</svg>${a}</span><span>${b}</span></div>`).join('');
 
   $('r-next').innerHTML = prox.length ? prox.slice(0, 5).map(miniBooking).join('') : emptyBox('Nenhuma reserva marcada por enquanto.');
   const rec = dents.filter(d => d.ultima).sort((a, b) => ultKey(b).localeCompare(ultKey(a))).slice(0, 5);
@@ -7638,6 +7768,46 @@ function ajAbrir(k) {
   d.open = true;
   if (!ajLargo()) try { $('t-ajustes').scrollIntoView({ block: 'start' }); } catch (_) {}
 }
+/* Ícones padronizados: título de cada card ganha um ícone pelo assunto e o título de cada aba, o ícone do menu. */
+const ICO2 = {
+  star: '<path d="M12 3.8l2.5 5.1 5.6.8-4 3.9 1 5.6-5.1-2.7-5 2.7.9-5.6-4-3.9 5.6-.8z"/>',
+  voz: '<path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.5 9a4 4 0 010 6"/>',
+  img: '<rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8"/>',
+  ajuda: '<circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.5a2.5 2.5 0 014.8 1c0 1.7-2.4 2-2.4 3.5M12 17h.01"/>',
+  cad: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/>',
+  doc: '<path d="M7 3.5h7l4 4V20a.5.5 0 01-.5.5h-10A1.5 1.5 0 016 19V5a1.5 1.5 0 011-1.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h6"/>',
+  alerta: '<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/>',
+  pin: '<path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  equipe: '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8M16 4.8a3 3 0 010 6M18 14.4c1.4.6 2.4 2 2.8 4.6"/>',
+  pix: '<rect x="3" y="6" width="18" height="12.5" rx="2"/><path d="M3 10h18M7 15h4"/>',
+  raio: '<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',
+  lua: '<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17A8.5 8.5 0 0012 3.5z" fill="currentColor"/>',
+  cel: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
+  plano: '<path d="M4 12a8 8 0 0113.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 01-13.7 5.6L4 15.5M4 20v-4.5h4.5"/>'
+};
+const CARD_IC = [[/ocupa|semana|relat/i, 'chart'], [/financ|valor|extrato|pagament|receita|or[cç]amento|pre[cç]o|pacote/i, 'money'], [/pix/i, 'pix'], [/avalia/i, 'star'],
+  [/paciente|ficha/i, 'user'], [/dentista|administrador/i, 'equipe'], [/reserva|consulta|agenda|hor[aá]rio|datas|bloque/i, 'cal'], [/mural|aviso|publicar|problema/i, 'voz'],
+  [/espera|chegada|sa[ií]da|funcionamento/i, 'clock'], [/foto/i, 'img'], [/pergunta/i, 'ajuda'], [/senha|acesso/i, 'cad'], [/regra|termo|documento|evolu|receit|atestado/i, 'doc'],
+  [/localiza|contato/i, 'pin'], [/plano/i, 'plano'], [/atalho|r[aá]pid/i, 'raio'], [/apar[eê]ncia|tema/i, 'lua'], [/app|celular|notifica/i, 'cel'], [/perfil|dados|conta|novo no|n[ií]vel|frequente/i, 'user']];
+function decorarCards(raiz) {
+  raiz.querySelectorAll('.card-head > h3, .block > h4').forEach(h => {
+    if (h.firstElementChild && h.firstElementChild.classList.contains('h-ic')) return;
+    const t = h.textContent, m = CARD_IC.find(([re]) => re.test(t)), k = m ? m[1] : 'tooth';
+    h.insertAdjacentHTML('afterbegin', `<svg class="h-ic" viewBox="0 0 24 24" aria-hidden="true">${ICON[k] || ICO2[k]}</svg>`);
+  });
+  raiz.querySelectorAll('.tab .page-head:not(.greet) h2').forEach(h => {
+    const tab = h.closest('.tab'); if (!tab || h.querySelector('.ph-icw')) return;
+    const k = tab.id.replace(/^[tc]-/, ''), b = document.querySelector(tab.id[0] === 't' ? `#view-admin .side > [data-tab="${k}"] svg` : `#view-dent .side > [data-ctab="${k}"] svg`);
+    if (!b) return;
+    const s = b.cloneNode(true); s.setAttribute('class', 'ph-ic'); s.setAttribute('aria-hidden', 'true');
+    const w = document.createElement('span'); w.className = 'ph-icw'; w.appendChild(s); h.prepend(w);
+  });
+}
+['view-admin', 'view-dent'].forEach(id => {
+  const raiz = $(id); let fila = false;
+  new MutationObserver(() => { if (fila) return; fila = true; requestAnimationFrame(() => { fila = false; decorarCards(raiz); }); }).observe(raiz, { childList: true, subtree: true });
+  decorarCards(raiz);
+});
 function ajustesShell() {
   const sh = ajShell(); if (!sh) return;
   if (ajLargo() && !sh.querySelector('.acc[open]')) {
