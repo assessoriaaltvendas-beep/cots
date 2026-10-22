@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Cartaz QR</title>
+<style>
+@page{size:210mm 297mm;margin:0}
+:root{--w:#590117;--w3:#3d000f;--g:#d9bb6f;--g2:#a8852f;--gs:#f8f1df}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font:400 11pt/1.5 Inter,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+/* sem box-shadow/blur: o leitor de PDF do iPhone desenha sombras como tarjas escuras */
+.pg{width:210mm;height:297mm;position:relative;overflow:hidden;background:linear-gradient(180deg,#6c0d24 0%,var(--w) 40%,var(--w3) 100%);color:#fff;padding:13mm 15mm 0}
+.frame{position:absolute;left:7mm;right:7mm;top:7mm;bottom:7mm;border:0.5mm solid #a8852f;border-radius:5mm}
+.head{text-align:center;position:relative}
+.logo{width:44mm;display:block;margin:0 auto}
+.eye{font:600 8.5pt Inter;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-top:5mm}
+h1{font:600 29pt/1.06 Lora,serif;margin:2.5mm 0 0;letter-spacing:-.01em}
+h1 em{color:var(--g)}
+.sub{font-size:11.5pt;color:#ecd9dd;margin:3mm auto 0}
+
+.mid{display:grid;grid-template-columns:86mm 1fr;gap:6mm;margin-top:8mm;align-items:center;position:relative}
+.phones{position:relative;height:104mm}
+.ph{position:absolute;width:40mm;border-radius:5.5mm;border:1.6mm solid #16070a;outline:0.4mm solid #a8852f;overflow:hidden;background:#fff}
+.ph img{display:block;width:100%;height:84mm;object-fit:cover;object-position:top}
+.ph.a{left:0;top:14mm;transform:rotate(-7deg)}
+.ph.b{left:23mm;top:0;z-index:2}
+.ph.c{left:46mm;top:14mm;transform:rotate(7deg)}
+.ph .tag{position:absolute;left:0;right:0;bottom:0;background:var(--w);color:var(--g);font:600 6.5pt Inter;letter-spacing:.12em;text-transform:uppercase;text-align:center;padding:1.4mm 0}
+
+.ben{list-style:none;margin:0;padding:0;display:grid;gap:3.6mm}
+.ben li{display:grid;grid-template-columns:8mm 1fr;gap:3mm;align-items:start}
+.ben i{width:8mm;height:8mm;border-radius:50%;background:var(--g);display:grid;place-items:center}
+.ben i svg{width:4.6mm;height:4.6mm}
+.ben b{display:block;font:600 11.5pt/1.25 Lora,serif;color:#fff}
+.ben span{display:block;font-size:8.8pt;line-height:1.4;color:#e4cfd3;margin-top:.6mm}
+
+.qrband{margin-top:7mm;background:var(--gs);border-radius:5mm;display:grid;grid-template-columns:52mm 1fr;gap:6mm;padding:5mm;align-items:center;color:#3a1a22}
+.qrbox{background:#fff;border-radius:3.5mm;padding:2.5mm 2.5mm 1.5mm;border:0.6mm solid var(--g)}
+.qrbox svg{display:block;width:100%;height:auto}
+.qrbox div{font:600 6.6pt Inter;color:var(--w);text-align:center;margin-top:.6mm;letter-spacing:.02em}
+.qrband h2{font:italic 600 17pt Lora,serif;color:var(--w);margin:0 0 3mm}
+.qrband ol{list-style:none;margin:0;padding:0;display:grid;gap:2.4mm;counter-reset:s}
+.qrband li{display:grid;grid-template-columns:6.5mm 1fr;gap:2.5mm;font-size:9.4pt;line-height:1.35;counter-increment:s}
+.qrband li::before{content:counter(s);width:6.5mm;height:6.5mm;border-radius:50%;background:var(--w);color:var(--g);font:700 9pt Lora;display:grid;place-items:center}
+.qrband li b{color:var(--w)}
+.price{margin-top:3.5mm;font-size:9pt;color:#6f6064}
+.price b{font:600 12pt Lora;color:var(--w)}
+
+.bot{position:absolute;left:0;right:0;bottom:0;background:#2b0009;color:#fff;padding:5.5mm 15mm 6mm;display:grid;grid-template-columns:1fr 22mm;gap:6mm;align-items:center}
+.bot h3{font:600 11.5pt Lora;margin:0 0 1mm;color:var(--g)}
+.bot p{margin:0;font-size:9pt;line-height:1.55;color:#ecd9dd}
+.bot p b{color:#fff}
+.bot .wa{background:#fff;border-radius:2mm;padding:1mm}
+.bot .wa svg{display:block;width:100%;height:auto}
+.bot small{display:block;font-size:6.5pt;text-align:center;color:var(--g);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-top:.8mm}
+</style></head><body>
+<section class="pg">
+  <div class="frame"></div>
+  <div class="head">
+    <img class="logo" src="logo-dourado.webp" alt="">
+    <div class="eye">Para dentistas · Centro de Ipatinga</div>
+    <h1>Alugue este consultório<br><em>por hora ou período</em></h1>
+    <p class="sub">Tudo pelo celular: agenda, reserva, pagamento e lembretes.</p>
+  </div>
+
+  <div class="mid">
+    <div class="phones">
+      <div class="ph a"><img src="shots/nova_dia.png" alt=""><div class="tag">Reservar</div></div>
+      <div class="ph b"><img src="shots/inicio.png" alt=""><div class="tag">Sua área</div></div>
+      <div class="ph c"><img src="shots/fin_pix.png" alt=""><div class="tag">Pix</div></div>
+    </div>
+    <ul class="ben">
+      <li><i>%CK%</i><div><b>Horários livres em tempo real</b><span>Veja a agenda e reserve na hora, 24h por dia.</span></div></li>
+      <li><i>%CK%</i><div><b>Por hora, período ou plano mensal</b><span>Plano 1x por semana com desconto, renovado todo mês.</span></div></li>
+      <li><i>%CK%</i><div><b>Pagamento com Pix</b><span>QR Code ou copia e cola, com recibo do mês em PDF.</span></div></li>
+      <li><i>%CK%</i><div><b>Lembrete no celular</b><span>Aviso 2 horas antes e alerta de vaga na lista de espera.</span></div></li>
+      <li><i>%CK%</i><div><b>Remarque pelo app</b><span>Mude ou cancele até 4 horas antes, sem ligação.</span></div></li>
+      <li><i>%CK%</i><div><b>Calculadora clínica</b><span>Doses por peso, anestésico em tubetes e profilaxia, com a fonte da bula.</span></div></li>
+    </ul>
+  </div>
+
+  <div class="qrband">
+    <div class="qrbox">%QRSITE%<div>dra-thalia-santiago.vercel.app</div></div>
+    <div>
+      <h2>Aponte a câmera do celular</h2>
+      <ol>
+        <li><span><b>Abra o site</b> pelo QR Code.</span></li>
+        <li><span><b>Crie sua conta</b> em “Entrar → Criar conta”. A Dra. Thalia libera o seu acesso.</span></li>
+        <li><span><b>Baixe o app:</b> no Android, menu ⋮ → Instalar app. No iPhone, Safari → Compartilhar → Adicionar à Tela de Início.</span></li>
+      </ol>
+      <div class="price">A partir de <b>R$ 50</b> por hora</div>
+    </div>
+  </div>
+
+  <div class="bot">
+    <div>
+      <h3>Consultório Odontológico Dra. Thalia Santiago</h3>
+      <p>Rua Juiz de Fora, 52, Galeria Êxito, sala 208, Centro, Ipatinga/MG<br>WhatsApp <b>(31) 99574-5413</b> · Instagram <b>@dra.thaliasantiago</b></p>
+    </div>
+    <div><div class="wa">%QRWA%</div><small>WhatsApp</small></div>
+  </div>
+</section>
+</body></html>

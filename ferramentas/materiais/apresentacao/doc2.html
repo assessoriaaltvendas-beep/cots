@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Site de reservas · Funcionalidades</title>
+<style>
+@page{size:297mm 210mm;margin:0}
+:root{--w:#590117;--w2:#7a1a30;--g:#d9bb6f;--g2:#b8953f;--gs:#f8f1df;--ink:#2a1a1e;--mu:#6f6064;--ln:#ece4e1;--soft:#fbf8f6}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font:400 10.5pt/1.5 Inter,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pg{width:297mm;height:210mm;position:relative;overflow:hidden;page-break-after:always;padding:16mm 18mm 18mm}
+.pg:last-child{page-break-after:auto}
+h1,h2,h3{font-family:Lora,serif;font-weight:600;margin:0;color:var(--ink)}
+h2{font-size:25pt;line-height:1.1;letter-spacing:-.01em}
+h2 em{font-style:italic;color:var(--w)}
+h3{font-size:12.5pt;margin-bottom:2mm}
+.eye{font:600 7.5pt Inter;letter-spacing:.18em;text-transform:uppercase;color:var(--g2);margin-bottom:3mm}
+.lead{color:var(--mu);font-size:11pt;margin:4mm 0 0;max-width:120mm}
+.foot{position:absolute;left:18mm;right:18mm;bottom:8mm;display:flex;justify-content:space-between;font-size:7.5pt;color:#a49498;border-top:1px solid var(--ln);padding-top:3mm}
+.foot b{color:var(--w);font-weight:600}
+.split{display:grid;grid-template-columns:96mm 1fr;gap:12mm;margin-top:8mm;align-items:start}
+ul.f{list-style:none;padding:0;margin:0;display:grid;gap:3.2mm}
+ul.f li{position:relative;padding-left:7mm}
+ul.f li::before{content:"";position:absolute;left:0;top:1.9mm;width:3mm;height:3mm;border-radius:50%;background:var(--gs);border:1.3pt solid var(--g)}
+ul.f b{font-weight:600;color:var(--ink)}
+ul.f span{color:var(--mu)}
+.shot{border-radius:3mm;overflow:hidden;border:1px solid var(--ln);box-shadow:0 6mm 14mm -8mm rgba(89,1,23,.35);background:#fff}
+.shot img{display:block;width:100%}
+.cap{font-size:8pt;color:var(--mu);margin-top:2mm}
+.badge{display:inline-block;font:600 7pt Inter;letter-spacing:.08em;text-transform:uppercase;background:var(--w);color:var(--g);padding:1mm 2.6mm;border-radius:99px;margin-left:2mm;vertical-align:3pt}
+.new{background:var(--gs);color:var(--w2)}
+
+/* capa */
+.cover{background:var(--w);color:#fff;padding:0;display:grid;grid-template-columns:1.05fr 1fr}
+.cover .l{padding:22mm 0 18mm 22mm;display:flex;flex-direction:column}
+.cover .l img{width:62mm}
+.cover h1{color:#fff;font-size:36pt;line-height:1.05;margin-top:auto}
+.cover h1 em{color:var(--g)}
+.cover p{color:#e9d6da;font-size:11.5pt;max-width:115mm;margin:6mm 0 0}
+.cover .meta{margin-top:10mm;font-size:8.5pt;color:var(--g);letter-spacing:.14em;text-transform:uppercase}
+.cover .r{position:relative}
+.cover .r .shot{position:absolute;border:0;box-shadow:0 10mm 24mm -6mm rgba(0,0,0,.55)}
+.cover .r .s1{left:6mm;top:26mm;width:150mm}
+.cover .r .s2{left:72mm;top:100mm;width:40mm;border-radius:4mm}
+.cover .arc{position:absolute;right:-40mm;top:-30mm;width:150mm;height:150mm;border-radius:50%;border:1px solid rgba(217,187,111,.25)}
+
+/* visão geral */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:7mm;margin-top:9mm}
+.card{border:1px solid var(--ln);border-radius:3.5mm;padding:7mm 7mm 6mm;background:#fff}
+.card .n{font:600 26pt Lora;color:var(--g);line-height:1}
+.card h3{margin-top:3mm;font-size:14pt}
+.card p{color:var(--mu);margin:2mm 0 4mm;font-size:9.5pt}
+.card ul{margin:0;padding-left:4.5mm;font-size:9.2pt;display:grid;gap:1.2mm}
+.card ul li::marker{color:var(--g2)}
+.band{margin-top:7mm;background:var(--soft);border-radius:3.5mm;padding:5mm 7mm;display:grid;grid-template-columns:repeat(4,1fr);gap:6mm}
+.band div b{display:block;font:600 15pt Lora;color:var(--w)}
+.band div span{font-size:8.5pt;color:var(--mu)}
+
+/* passos */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm;margin-top:8mm}
+.steps .k{display:flex;align-items:center;gap:2.5mm;margin:3.5mm 0 1mm}
+.steps .k i{font:600 9pt Inter;font-style:normal;width:6mm;height:6mm;border-radius:50%;background:var(--w);color:var(--g);display:grid;place-items:center}
+.steps .k b{font-family:Lora;font-size:11.5pt}
+.steps p{margin:0;font-size:8.8pt;color:var(--mu)}
+.steps .shot img{height:46mm;object-fit:cover;object-position:top}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9mm;margin-top:7mm}
+.two .shot img{height:68mm;object-fit:cover;object-position:top left}
+.mini{margin-top:7mm}
+
+/* tabela emails */
+table{width:100%;border-collapse:collapse;font-size:9.4pt;margin-top:7mm}
+th{text-align:left;font:600 7.5pt Inter;letter-spacing:.12em;text-transform:uppercase;color:var(--g2);padding:0 4mm 2.5mm 0;border-bottom:1.3pt solid var(--g)}
+td{padding:2.8mm 4mm 2.8mm 0;border-bottom:1px solid var(--ln);vertical-align:top}
+td:first-child{font-weight:600;width:62mm}
+td.who{color:var(--mu);width:52mm}
+.note{margin-top:6mm;border-left:2.5pt solid var(--g);background:var(--soft);padding:4mm 6mm;border-radius:0 3mm 3mm 0;font-size:9.4pt;color:var(--mu)}
+.note b{color:var(--ink)}
+
+.cost{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm;margin-top:7mm}
+.cost div{border:1px solid var(--ln);border-radius:3mm;padding:5mm}
+.cost b{display:block;font:600 11.5pt Lora}
+.cost .p{font:600 16pt Lora;color:var(--w);margin:1mm 0}
+.cost span{font-size:8.6pt;color:var(--mu)}
+.sec3{display:grid;grid-template-columns:1fr 1fr;gap:10mm;margin-top:8mm}
+ol.nx{margin:0;padding:0;list-style:none;counter-reset:n;display:grid;gap:3mm}
+ol.nx li{counter-increment:n;position:relative;padding-left:9mm}
+ol.nx li::before{content:counter(n);position:absolute;left:0;top:0;width:6mm;height:6mm;border-radius:50%;background:var(--gs);color:var(--w);font:600 8.5pt Inter;display:grid;place-items:center}
+.end{background:var(--w);color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.end img{width:70mm;margin-bottom:10mm}
+.end h2{color:#fff;font-size:30pt}
+.end h2 em{color:var(--g)}
+.end p{color:#e9d6da;margin:5mm 0 0}
+.end .c{margin-top:10mm;display:flex;gap:10mm;font-size:9.5pt;color:var(--g)}
+.pg:not(.cover):not(.end){display:flex;flex-direction:column}
+.split{flex:1;align-items:center;margin:4mm 0 12mm;grid-template-columns:92mm 1fr}
+.two{flex:1;align-content:center;margin-bottom:12mm}
+.two .shot img{height:80mm}
+.steps{flex:1;align-content:center;margin-bottom:14mm}
+.steps .shot img{height:62mm}
+.cost>div{border:1px solid var(--ln);border-radius:3mm;padding:5mm}
+.cost div.p{border:0;padding:0;border-radius:0}
+.cost,.sec3{margin-top:9mm}
+ul.f{gap:3.8mm}
+.app-phones{display:flex;gap:7mm;justify-content:center;align-items:flex-start}
+.phone{border:2mm solid #1f1416;border-radius:7mm;overflow:hidden;box-shadow:0 8mm 16mm -9mm rgba(89,1,23,.45);background:#fff}
+.phone img{display:block;height:122mm;width:auto}
+.phone.b{margin-top:10mm}
+.nts{display:grid;gap:2.5mm;margin-top:6mm}
+.nt{display:grid;grid-template-columns:8mm 1fr;gap:3mm;align-items:start;background:#f5f1f0;border:1px solid var(--ln);border-radius:4mm;padding:3mm 4mm}
+.nt img{width:8mm;height:8mm;border-radius:2mm}
+.nt small{display:block;font-size:6.8pt;color:#9a8b8f;letter-spacing:.04em;text-transform:uppercase}
+.nt b{display:block;font-size:9pt}
+.nt span{font-size:8.6pt;color:var(--mu)}
+.cost{grid-template-columns:repeat(5,1fr)!important}
+.tt td{padding:2.3mm 4mm 2.3mm 0}
+.tt td:first-child{width:56mm}
+.tt td.who{width:56mm}
+</style></head><body>
+<!-- CAPA -->
+<section class="pg cover">
+  <div class="l">
+    <img src="logo-dourado.webp" alt="">
+    <h1>Site de reservas do <em>consultório</em></h1>
+    <p>Aluguel por hora do consultório para outros dentistas, com agenda ao vivo, app no celular, Pix integrado e um painel completo para a Dra. Thalia.</p>
+    <div class="meta">Apresentação das funcionalidades · Outubro de 2026</div>
+  </div>
+  <div class="r"><div class="arc"></div>
+    <div class="shot s1"><img src="shots2/home.png" alt=""></div>
+    <div class="shot s2"><img src="shots2/mob_home.png" alt=""></div>
+  </div>
+</section>
+
+<!-- VISÃO GERAL -->
+<section class="pg">
+  <div class="eye">Visão geral</div>
+  <h2>Um site, <em>três áreas</em></h2>
+  <p class="lead">Cada pessoa vê só o que precisa. Só reserva quem tem conta liberada pela Dra. Thalia, e o banco de dados impede que duas pessoas reservem o mesmo horário.</p>
+  <div class="three">
+    <div class="card"><div class="n">01</div><h3>Página inicial</h3><p>Vitrine do consultório para dentistas que querem conhecer e alugar.</p>
+      <ul><li>Informações, fotos, mapa e dúvidas</li><li>Horários livres em tempo real</li><li>Cadastro para reservar</li></ul></div>
+    <div class="card"><div class="n">02</div><h3>Área do dentista</h3><p>Conta própria, liberada pela Dra. Thalia.</p>
+      <ul><li>Reservar, remarcar e cancelar</li><li>Pix com QR Code e recibo em PDF</li><li>App com notificações no celular</li></ul></div>
+    <div class="card"><div class="n">03</div><h3>Painel da Dra. Thalia</h3><p>Acesso exclusivo da administradora.</p>
+      <ul><li>Liberação de cadastros e agenda</li><li>Financeiro, cobrança e relatório</li><li>Valores, horários e regras editáveis</li></ul></div>
+  </div>
+  <div class="band">
+    <div><b>Por hora</b><span>Reserva a partir de 1 hora, nos dias e horários definidos pela Dra. Thalia</span></div>
+    <div><b>Seguro</b><span>Só reserva quem foi liberado; horário reservado fica bloqueado na hora</span></div>
+    <div><b>App</b><span>Instala no celular e recebe notificações, sem loja de aplicativos</span></div>
+    <div><b>R$ 0</b><span>Hospedagem, banco, e-mails e notificações em planos gratuitos</span></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>2</span></div>
+</section>
+
+<!-- PÁGINA INICIAL -->
+<section class="pg">
+  <div class="eye">01 · Página inicial</div>
+  <h2>A vitrine do <em>consultório</em></h2>
+  <div class="split">
+    <ul class="f">
+      <li><b>Agenda ao vivo.</b> <span>Mostra os próximos horários livres do consultório.</span></li>
+      <li><b>Informações do consultório.</b> <span>Endereço, funcionamento, telefone e a dentista responsável.</span></li>
+      <li><b>Galeria e dúvidas.</b> <span>Fotos e perguntas frequentes, editáveis pelo painel.</span></li>
+      <li><b>Mapa do Google.</b> <span>Localização real, com botão para abrir no Google Maps.</span></li>
+      <li><b>Instagram e WhatsApp.</b> <span>Link para @dra.thaliasantiago e botão flutuante do WhatsApp.</span></li>
+      <li><b>Agendar horário.</b> <span>Leva para entrar na conta ou criar o cadastro.</span></li>
+    </ul>
+    <div><div class="shot"><img src="shots2/home.png" alt=""></div></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>3</span></div>
+</section>
+
+<!-- CADASTRO -->
+<section class="pg">
+  <div class="eye">01 · Página inicial</div>
+  <h2>Do cadastro à <em>reserva</em></h2>
+  <p class="lead">Ninguém reserva sem passar pela Dra. Thalia. Assim, só profissionais conferidos usam a agenda.</p>
+  <div class="steps">
+    <div><div class="shot"><img src="shots2/p_reg.png" alt=""></div><div class="k"><i>1</i><b>Cria a conta</b></div><p>Nome, CRO, WhatsApp, e-mail e aceite das regras de uso.</p></div>
+    <div><div class="shot"><img src="shots2/p_wait.png" alt=""></div><div class="k"><i>2</i><b>Aguarda</b></div><p>A tela mostra que o cadastro foi recebido e está em análise.</p></div>
+    <div><div class="shot"><img src="shots2/a_dentistas.png" alt=""></div><div class="k"><i>3</i><b>Dra. Thalia libera</b></div><p>Ela recebe notificação e e-mail e toca em Liberar ou Bloquear.</p></div>
+    <div><div class="shot"><img src="shots2/d_nova.png" alt=""></div><div class="k"><i>4</i><b>Reserva</b></div><p>O dentista recebe um e-mail e já escolhe dia e horário livres.</p></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>4</span></div>
+</section>
+
+<!-- DENTISTA INICIO -->
+<section class="pg">
+  <div class="eye">02 · Área do dentista</div>
+  <h2>Tudo do dentista <em>num lugar só</em></h2>
+  <div class="split">
+    <ul class="f">
+      <li><b>Início.</b> <span>Próxima reserva em destaque e os dois avisos mais importantes; o resto fica em “ver mais”.</span></li>
+      <li><b>Reserva rápida.</b> <span>O site aprende o horário de sempre e oferece reservar de novo com dois toques.</span></li>
+      <li><b>Níveis de fidelidade.</b> <span>Novo no consultório, Frequente (10h) e Parceiro da casa (40h).</span></li>
+      <li><b>Mural.</b> <span>Avisos publicados pela Dra. Thalia, com notificação no celular.</span></li>
+      <li><b>Consultório.</b> <span>Endereço, regras de uso, chegada e saída, equipamentos e o que levar.</span></li>
+      <li><b>Perfil.</b> <span>Dados profissionais, senha, tema claro ou escuro e o app no celular.</span></li>
+    </ul>
+    <div><div class="shot"><img src="shots2/d_inicio.png" alt=""></div></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>5</span></div>
+</section>
+
+<!-- DENTISTA RESERVAS -->
+<section class="pg">
+  <div class="eye">02 · Área do dentista</div>
+  <h2>Reservar, remarcar e <em>pagar</em></h2>
+  <div class="two">
+    <div><div class="shot"><img src="shots2/d_nova.png" alt=""></div>
+      <ul class="f mini">
+        <li><b>Reservar.</b> <span>Calendário com horários livres e o horário favorito sugerido no topo.</span></li>
+        <li><b>Repetir toda semana e lista de espera.</b> <span>Reserva em série e aviso quando um horário ocupado vagar.</span></li>
+        <li><b>Remarcar.</b> <span>Escolhe o novo horário e a reserva antiga é cancelada sozinha.</span></li>
+      </ul></div>
+    <div><div class="shot"><img src="shots2/d_drawer_pix.png" alt=""></div>
+      <ul class="f mini">
+        <li><b>Pix de cada reserva.</b> <span>QR Code e Pix copia e cola já com o valor certo.</span></li>
+        <li><b>Comprovante.</b> <span>Envia a foto ou o PDF do pagamento direto na reserva.</span></li>
+        <li><b>Lembrete no celular.</b> <span>Agenda do celular ou Google Agenda, com alarme 2 horas antes.</span></li>
+      </ul></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>6</span></div>
+</section>
+
+<!-- DENTISTA FIN -->
+<section class="pg">
+  <div class="eye">02 · Área do dentista</div>
+  <h2>Financeiro e <em>recibo do mês</em></h2>
+  <div class="split">
+    <ul class="f">
+      <li><b>Extrato do mês.</b> <span>Cada reserva com valor e situação: paga, em aberto ou comprovante enviado.</span></li>
+      <li><b>Pix do total em aberto.</b> <span>Um QR Code com a soma do mês, ou o Pix de cada reserva nos detalhes dela.</span></li>
+      <li><b>Recibo em PDF.</b> <span>Recibo do mês com as reservas pagas, pronto para guardar ou enviar.</span></li>
+      <li><b>Lembrete de pagamento.</b> <span>E-mail e notificação automáticos enquanto houver pagamento pendente.</span></li>
+      <li><b>Depois do uso.</b> <span>Checklist de saída, aviso de problema e avaliação do consultório.</span></li>
+      <li><b>Pacotes de horas.</b> <span>Ofertas definidas pela Dra. Thalia, com o valor por hora calculado.</span></li>
+    </ul>
+    <div><div class="shot"><img src="shots2/d_fin_pix.png" alt=""></div></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>7</span></div>
+</section>
+
+<!-- ADMIN RESUMO -->
+<section class="pg">
+  <div class="eye">03 · Painel da Dra. Thalia</div>
+  <h2>O consultório <em>num relance</em></h2>
+  <div class="split">
+    <ul class="f">
+      <li><b>Acesso exclusivo.</b> <span>Só a Dra. Thalia entra no painel, com e-mail e senha.</span></li>
+      <li><b>Resumo.</b> <span>Reservas de hoje, próximas reservas, horas do mês e dentistas novos.</span></li>
+      <li><b>Cadastros para liberar.</b> <span>Aparecem no topo, com os botões Liberar e Bloquear.</span></li>
+      <li><b>Ocupação e financeiro.</b> <span>Gráfico da semana e receita prevista do mês.</span></li>
+      <li><b>Avaliações.</b> <span>Nota média do consultório e os últimos comentários dos dentistas.</span></li>
+    </ul>
+    <div><div class="shot"><img src="shots2/a_resumo.png" alt=""></div></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>8</span></div>
+</section>
+
+<!-- ADMIN DENTISTAS -->
+<section class="pg">
+  <div class="eye">03 · Painel da Dra. Thalia</div>
+  <h2>Quem pode <em>reservar</em></h2>
+  <div class="split">
+    <ul class="f">
+      <li><b>Aviso de cadastro novo.</b> <span>Notificação no celular e e-mail com nome, CRO e WhatsApp.</span></li>
+      <li><b>Liberar.</b> <span>Um toque e o dentista recebe um e-mail avisando que já pode reservar.</span></li>
+      <li><b>Bloquear.</b> <span>Impede novas reservas a qualquer momento; as já marcadas continuam na agenda.</span></li>
+      <li><b>Histórico de cada dentista.</b> <span>Reservas, horas, cancelamentos, avaliação média e contato.</span></li>
+      <li><b>Recibo do mês.</b> <span>PDF por dentista, direto da ficha dele.</span></li>
+    </ul>
+    <div><div class="shot"><img src="shots2/a_dent_drawer.png" alt=""></div></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>9</span></div>
+</section>
+
+<!-- ADMIN AGENDA -->
+<section class="pg">
+  <div class="eye">03 · Painel da Dra. Thalia</div>
+  <h2>Agenda <em>completa</em></h2>
+  <div class="two">
+    <div><div class="shot"><img src="shots2/a_agenda.png" alt=""></div>
+      <ul class="f mini">
+        <li><b>Semana, dia ou lista.</b> <span>Todas as reservas, com filtros por situação.</span></li>
+        <li><b>Confirmar pelo WhatsApp.</b> <span>Mensagem pronta com nome, data e horário, enviada com um toque.</span></li>
+        <li><b>Pagamento e valor.</b> <span>Marcar como pago e ajustar o valor de uma reserva específica.</span></li>
+      </ul></div>
+    <div><div class="shot"><img src="shots2/a_bloquear.png" alt=""></div>
+      <ul class="f mini">
+        <li><b>Fechar datas e horários.</b> <span>Férias, feriados ou manutenção somem da agenda dos dentistas.</span></li>
+        <li><b>Reservar por um dentista.</b> <span>Para quem pediu por telefone ou WhatsApp.</span></li>
+        <li><b>Ver comprovante.</b> <span>Abre o comprovante do Pix enviado pelo dentista.</span></li>
+      </ul></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>10</span></div>
+</section>
+
+<!-- ADMIN FIN -->
+<section class="pg">
+  <div class="eye">03 · Painel da Dra. Thalia</div>
+  <h2>Financeiro e <em>cobrança</em></h2>
+  <div class="split">
+    <ul class="f">
+      <li><b>Visão do mês.</b> <span>Receita prevista, horas reservadas, reservas e cancelamentos.</span></li>
+      <li><b>Por dentista.</b> <span>Quanto cada um reservou, usou e deve no mês.</span></li>
+      <li><b>Valor gravado.</b> <span>Cada reserva guarda o preço de quando foi feita; mudar a tabela não altera o passado.</span></li>
+      <li><b>Cobrança automática.</b> <span>Lembrete de pagamento a cada 3 dias e, se quiser, bloqueio de novas reservas para quem está em atraso.</span></li>
+      <li><b>Planilha do mês.</b> <span>Exporta para abrir no Excel ou no Google Planilhas.</span></li>
+    </ul>
+    <div><div class="shot"><img src="shots2/a_financeiro.png" alt=""></div></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>11</span></div>
+</section>
+
+<!-- AJUSTES -->
+<section class="pg">
+  <div class="eye">03 · Painel da Dra. Thalia</div>
+  <h2>Ajustes <em>sem mexer em código</em></h2>
+  <div class="two">
+    <div><div class="shot"><img src="shots2/a_valores.png" alt=""></div>
+      <ul class="f mini">
+        <li><b>Valores.</b> <span>Valor da hora, preço por dia da semana, por faixa de horário e pacotes.</span></li>
+        <li><b>Funcionamento.</b> <span>Dias abertos, horário de abrir e fechar e prazo de cancelamento.</span></li>
+        <li><b>Regras e espaço.</b> <span>Regras de uso, checklist de saída, equipamentos e Wi-Fi.</span></li>
+      </ul></div>
+    <div><div class="shot"><img src="shots2/a_pix.png" alt=""></div>
+      <ul class="f mini">
+        <li><b>Chave Pix.</b> <span>Gera o QR Code e o Pix copia e cola de cada reserva, com prévia para testar no banco.</span></li>
+        <li><b>Cobrança.</b> <span>Liga ou desliga o lembrete automático e o bloqueio por atraso.</span></li>
+        <li><b>Tudo em um lugar.</b> <span>Também app no celular, e-mails, aparência e conta.</span></li>
+      </ul></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>12</span></div>
+</section>
+
+<!-- RELATÓRIO E SITE -->
+<section class="pg">
+  <div class="eye">03 · Painel da Dra. Thalia</div>
+  <h2>Relatório, agenda e <em>site</em></h2>
+  <div class="two">
+    <div><div class="shot"><img src="shots2/a_rel.png" alt=""></div>
+      <ul class="f mini">
+        <li><b>Relatório mensal.</b> <span>Todo dia 1º no e-mail: reservas, ocupação, receita, pendências, avaliações e ranking.</span></li>
+        <li><b>Google Agenda.</b> <span>As reservas aparecem na agenda do Google da Dra. Thalia, no computador e no celular.</span></li>
+      </ul></div>
+    <div><div class="shot"><img src="shots2/a_site.png" alt=""></div>
+      <ul class="f mini">
+        <li><b>Site.</b> <span>Fotos da galeria e perguntas frequentes, editadas pelo painel.</span></li>
+        <li><b>Mural.</b> <span>Avisos para todos os dentistas e os problemas relatados.</span></li>
+      </ul></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>13</span></div>
+</section>
+
+<!-- APP -->
+<section class="pg">
+  <div class="eye">App no celular</div>
+  <h2>Um app, <em>sem loja de aplicativos</em></h2>
+  <div class="split">
+    <div>
+      <ul class="f">
+        <li><b>Instala direto do site.</b> <span>No Android, pelo botão “Instalar app”; no iPhone, pelo Safari em Compartilhar → Adicionar à Tela de Início.</span></li>
+        <li><b>Feito para o celular.</b> <span>Barra de abas embaixo, avisos agrupados e o resto em “Mais”.</span></li>
+        <li><b>Notificações gratuitas.</b> <span>Lembretes, vagas, cobranças, cadastros novos e avisos do mural.</span></li>
+        <li><b>Pix no celular.</b> <span>Copia o código e paga no app do banco, sem digitar nada.</span></li>
+      </ul>
+      <div class="nts">
+        <div class="nt"><img src="icon-192.png" alt=""><div><small>Thalia Santiago · agora</small><b>Novo cadastro · Beatriz Lima</b><span>CRO-MG 52.880. Toque para liberar ou bloquear o acesso.</span></div></div>
+        <div class="nt"><img src="icon-192.png" alt=""><div><small>Thalia Santiago · agora</small><b>Sua reserva começa às 14h</b><span>Lembrete do consultório: sex, 30/10, 14h às 16h.</span></div></div>
+      </div>
+    </div>
+    <div class="app-phones">
+      <div class="phone"><img src="shots2/app_inicio.png" alt=""></div>
+      <div class="phone b"><img src="shots2/app_pix.png" alt=""></div>
+    </div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>14</span></div>
+</section>
+
+<!-- AVISOS -->
+<section class="pg">
+  <div class="eye">Avisos automáticos</div>
+  <h2>Ninguém <em>esquece</em> nada</h2>
+  <table class="tt">
+    <tr><th>Quando</th><th>Quem recebe</th><th>Como chega</th></tr>
+    <tr><td>Cadastro novo</td><td class="who">Dra. Thalia</td><td>E-mail e notificação para liberar ou bloquear.</td></tr>
+    <tr><td>Acesso liberado</td><td class="who">Dentista</td><td>E-mail e notificação avisando que já pode reservar.</td></tr>
+    <tr><td>Reserva feita</td><td class="who">Dentista e Dra. Thalia</td><td>E-mail de confirmação com link para a agenda; notificação para a Dra. Thalia.</td></tr>
+    <tr><td>2 horas antes</td><td class="who">Dentista</td><td>E-mail e notificação de lembrete.</td></tr>
+    <tr><td>Cancelamento e vaga aberta</td><td class="who">Dra. Thalia, dentista e lista de espera</td><td>E-mail e notificação; quem esperava o horário é avisado.</td></tr>
+    <tr><td>Pagamentos</td><td class="who">Dra. Thalia e dentista</td><td>Notificação de comprovante enviado e de pagamento confirmado.</td></tr>
+    <tr><td>Pagamento pendente</td><td class="who">Dentista</td><td>E-mail com o Pix e notificação, a cada 3 dias.</td></tr>
+    <tr><td>Mural e problemas</td><td class="who">Dentistas / Dra. Thalia</td><td>Notificação de aviso novo; e-mail e notificação de problema relatado.</td></tr>
+    <tr><td>Relatório do mês</td><td class="who">Dra. Thalia</td><td>E-mail todo dia 1º com o resumo do mês anterior.</td></tr>
+  </table>
+  <div class="note"><b>Tudo automático e sem custo:</b> e-mails e notificações saem sozinhos. No WhatsApp, a confirmação abre pronta e é enviada com um toque; o envio automático pelo WhatsApp exigiria a API paga da Meta.</div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>15</span></div>
+</section>
+
+<!-- CUSTOS -->
+<section class="pg">
+  <div class="eye">Custos e segurança</div>
+  <h2>Operação <em>sem mensalidade</em></h2>
+  <div class="cost">
+    <div><b>Hospedagem</b><div class="p">R$ 0</div><span>Vercel, plano gratuito. Para uso comercial, a alternativa gratuita é o Cloudflare Pages.</span></div>
+    <div><b>Banco e login</b><div class="p">R$ 0</div><span>Supabase gratuito. Um acesso automático semanal evita a pausa por inatividade.</span></div>
+    <div><b>E-mails</b><div class="p">R$ 0</div><span>Brevo gratuito, até 300 e-mails por dia.</span></div>
+    <div><b>Notificações</b><div class="p">R$ 0</div><span>Pelo app instalado, dentro do plano gratuito do Supabase.</span></div>
+    <div><b>Pix</b><div class="p">R$ 0</div><span>QR Code estático do Banco Central, gerado no próprio site.</span></div>
+  </div>
+  <div class="sec3">
+    <div><h3>Segurança</h3>
+      <ul class="f">
+        <li><span>Só reserva quem a Dra. Thalia liberou; o dentista não consegue se liberar sozinho.</span></li>
+        <li><span>Cada dentista vê só as próprias reservas, avisos e comprovantes.</span></li>
+        <li><span>Visitantes veem apenas quais horários estão ocupados, nunca nomes ou telefones.</span></li>
+        <li><span>Só a Dra. Thalia marca pagamentos, muda valores e cancela fora do prazo.</span></li>
+      </ul></div>
+    <div><h3>Próximos passos</h3>
+      <ol class="nx">
+        <li>Definir valores e horários em Ajustes.</li>
+        <li>Cadastrar a chave Pix e testar o QR Code no app do banco.</li>
+        <li>Enviar as fotos e revisar regras, checklist e dúvidas.</li>
+        <li>Instalar o app, ativar as notificações e conectar o Google Agenda.</li>
+        <li>Divulgar o link para os dentistas parceiros.</li>
+      </ol></div>
+  </div>
+  <div class="foot"><span><b>Consultório Odontológico Thalia Santiago</b> · Site de reservas</span><span>16</span></div>
+</section>
+
+<!-- FIM -->
+<section class="pg end">
+  <img src="logo-dourado.webp" alt="">
+  <h2>Pronto para <em>receber reservas</em></h2>
+  <p>cots-consultorio-thalia.vercel.app</p>
+  <div class="c"><span>Rua Juiz de Fora, Centro · Ipatinga/MG</span><span>(31) 8582-5564</span><span>@dra.thaliasantiago</span></div>
+</section>
+</body></html>

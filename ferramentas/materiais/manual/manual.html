@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Manual do Dentista</title>
+<style>
+@page{size:210mm 297mm;margin:0}
+:root{--w:#590117;--w2:#7a1a30;--g:#d9bb6f;--g2:#a8852f;--gs:#f8f1df;--ink:#2a1a1e;--mu:#6f6064;--ln:#ece4e1;--soft:#fbf8f6;--ok:#1f8a4c}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font:400 11pt/1.55 Inter,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pg{width:210mm;height:297mm;position:relative;overflow:hidden;page-break-after:always;padding:16mm 16mm 20mm}
+.pg:last-child{page-break-after:auto}
+h1,h2,h3{font-family:Lora,serif;font-weight:600;margin:0;color:var(--ink)}
+h2{font-size:25pt;line-height:1.1;letter-spacing:-.01em}
+h2 em{font-style:italic;color:var(--w)}
+h3{font-size:13.5pt;margin:0 0 2mm}
+p{margin:0 0 2.5mm}
+.eye{font:600 7.5pt Inter;letter-spacing:.18em;text-transform:uppercase;color:var(--g2);margin-bottom:2.5mm}
+.num{display:inline-grid;place-items:center;width:9mm;height:9mm;border-radius:50%;background:var(--w);color:var(--g);font:600 12pt Lora;margin-right:3mm;vertical-align:middle}
+.lead{color:var(--mu);font-size:11.5pt;margin:3.5mm 0 0}
+.foot{position:absolute;left:16mm;right:16mm;bottom:8mm;display:flex;justify-content:space-between;font-size:7.5pt;color:#a49498;border-top:1px solid var(--ln);padding-top:3mm}
+.foot b{color:var(--w);font-weight:600}
+.row{display:grid;gap:9mm;align-items:start}
+.c2{grid-template-columns:1fr 1fr}
+.cph{grid-template-columns:1fr 66mm}
+.cph2{grid-template-columns:66mm 1fr}
+.ph{border-radius:7mm;border:2.2mm solid #1d0c10;overflow:hidden;background:#fff;position:relative}
+.ph img{display:block;width:100%;object-fit:cover;object-position:top}
+.ph.h1 img{height:150mm}
+.ph.h2 img{height:118mm}
+.ph.h3 img{height:96mm}
+.cap{font-size:7.8pt;color:var(--mu);margin-top:2.5mm;text-align:center}
+ol.st{list-style:none;padding:0;margin:0;display:grid;gap:3.6mm;counter-reset:s}
+ol.st li{position:relative;padding-left:9mm;counter-increment:s}
+ol.st li::before{content:counter(s);position:absolute;left:0;top:.2mm;width:6mm;height:6mm;border-radius:50%;background:var(--gs);border:1pt solid var(--g);color:var(--w);font:600 8pt Inter;display:grid;place-items:center}
+ul.f{list-style:none;padding:0;margin:0;display:grid;gap:3mm}
+ul.f li{position:relative;padding-left:6mm}
+ul.f li::before{content:"";position:absolute;left:0;top:1.7mm;width:2.6mm;height:2.6mm;border-radius:50%;background:var(--gs);border:1.2pt solid var(--g)}
+b{font-weight:600}
+.k{display:inline-block;font:600 8.5pt Inter;background:var(--soft);border:1px solid var(--ln);border-radius:1.5mm;padding:0 1.6mm;color:var(--w);white-space:nowrap}
+.box{background:var(--soft);border:1px solid var(--ln);border-radius:4mm;padding:5mm 5.5mm}
+.box.gold{background:var(--gs);border-color:#ecdcae}
+.box.wine{background:var(--w);border:0;color:#f3e6e8}
+.box.wine h3{color:#fff}
+.box.wine b{color:var(--g)}
+.tip{display:grid;grid-template-columns:7mm 1fr;gap:3mm;align-items:start;font-size:10pt}
+.tip i{width:7mm;height:7mm;border-radius:50%;background:var(--g);color:var(--w);font:700 10pt Lora;font-style:normal;display:grid;place-items:center}
+table.pr{width:100%;border-collapse:collapse;font-size:10.5pt}
+table.pr td{padding:2.6mm 0;border-bottom:1px solid var(--ln);vertical-align:top}
+table.pr td:last-child{text-align:right;font:600 11pt Lora;color:var(--w);white-space:nowrap;padding-left:4mm}
+table.pr tr:last-child td{border-bottom:0}
+table.pr small{color:var(--mu);display:block;font-size:8.8pt}
+.mt{margin-top:8mm}.mt2{margin-top:5mm}
+.os{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.os .box h3{display:flex;align-items:center;gap:2.5mm}
+.os .box h3 span{font:600 7pt Inter;letter-spacing:.1em;text-transform:uppercase;background:var(--w);color:var(--g);padding:.8mm 2.4mm;border-radius:99px}
+
+/* capa */
+.cover{background:var(--w);color:#fff;padding:22mm 20mm}
+.cover .logo{width:58mm}
+.cover h1{color:#fff;font-size:44pt;line-height:1.02;margin-top:40mm}
+.cover h1 em{color:var(--g)}
+.cover .sub{color:#e9d6da;font-size:12.5pt;max-width:92mm;margin-top:6mm}
+.cover .phs{position:absolute;right:-34mm;bottom:58mm;display:flex;gap:6mm;transform:rotate(-6deg)}
+.cover .phs .ph{width:56mm;border-color:#16070a;outline:0.4mm solid #a8852f;}
+.cover .phs .ph img{height:118mm}
+.cover .phs .ph:nth-child(2){margin-top:18mm}
+.cover .bot{position:absolute;left:20mm;bottom:20mm;right:20mm;display:flex;align-items:flex-end;gap:7mm}
+.cover .qr{width:34mm;height:34mm;background:#fff;border-radius:3mm;padding:1.4mm}
+.cover .qr svg{width:100%;height:100%;display:block}
+.cover .bot small{display:block;font-size:8pt;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:2mm}
+.cover .bot p{margin:0;font-size:10pt;color:#f3e6e8;line-height:1.6}
+.cover .bot b{color:#fff}
+.cover .orn{position:absolute;right:20mm;top:22mm;font:italic 10pt Lora;color:var(--g)}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:7mm}
+.stp{background:var(--soft);border:1px solid var(--ln);border-radius:4mm;padding:5mm 4mm}
+.stp .n{width:9mm;height:9mm;border-radius:50%;background:var(--w);color:var(--g);font:600 12pt Lora;display:grid;place-items:center;margin-bottom:3mm}
+.stp b{display:block;font:600 11pt Lora;margin-bottom:1mm}
+.stp span{font-size:9.4pt;color:var(--mu);line-height:1.45;display:block}
+</style></head><body>
+
+<!-- 1. CAPA -->
+<section class="pg cover">
+  <img class="logo" src="logo-dourado.webp" alt="">
+  <div class="orn">Guia rápido</div>
+  <h1>Manual do<br><em>Dentista</em></h1>
+  <p class="sub">Tudo o que você precisa para reservar o consultório da Dra. Thalia Santiago por hora ou por período: cadastro, app no celular, reservas, pagamento, calculadora e o dia do atendimento.</p>
+  <div class="phs">
+    <div class="ph"><img src="shots/inicio.png" alt=""></div>
+    <div class="ph"><img src="shots/nova_dia.png" alt=""></div>
+  </div>
+  <div class="bot">
+    <div class="qr">%QRSITE%</div>
+    <div>
+      <small>Acesse pelo celular</small>
+      <p><b>dra-thalia-santiago.vercel.app</b><br>Rua Juiz de Fora, 52, Galeria Êxito, sala 208<br>Centro, Ipatinga/MG · WhatsApp (31) 99574-5413</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. COMO FUNCIONA + VALORES -->
+<section class="pg">
+  <div class="eye">Boas-vindas</div>
+  <h2>Como <em>funciona</em></h2>
+  <p class="lead">O consultório fica no Centro de Ipatinga, pronto para o seu atendimento. Você escolhe o dia e o horário pelo site ou pelo app, paga com Pix e chega no horário marcado. Tudo em quatro passos:</p>
+  <div class="steps">
+    <div class="stp"><div class="n">1</div><b>Crie sua conta</b><span>Cadastro rápido com nome, CRO, WhatsApp e e-mail.</span></div>
+    <div class="stp"><div class="n">2</div><b>Aguarde a liberação</b><span>A Dra. Thalia confere e libera o seu acesso.</span></div>
+    <div class="stp"><div class="n">3</div><b>Reserve</b><span>Veja os horários livres e confirme por hora ou período.</span></div>
+    <div class="stp"><div class="n">4</div><b>Pague com Pix</b><span>QR Code ou copia e cola, e envie o comprovante.</span></div>
+  </div>
+
+  <div class="row c2 mt">
+    <div>
+      <h3>Valores</h3>
+      <table class="pr">
+        <tr><td><b>Por hora</b><small>Reservas de até 3 horas</small></td><td>R$ 50/h</td></tr>
+        <tr><td><b>Período</b><small>Manhã 8h–13h · Tarde 13h–18h · Noite 18h–22h. Acima de 3 horas dentro do mesmo período, ou o período inteiro</small></td><td>R$ 180</td></tr>
+        <tr><td><b>Dois períodos seguidos</b><small>Ex.: tarde + noite (13h–22h)</small></td><td>R$ 360</td></tr>
+        <tr><td><b>Diária</b><small>Das 8h às 18h</small></td><td>R$ 350</td></tr>
+        <tr><td><b>Dia todo</b><small>Das 8h às 22h</small></td><td>R$ 530</td></tr>
+        <tr><td><b>Plano mensal · diária</b><small>1x por semana, mesmo dia (R$ 250 a diária)</small></td><td>R$ 1.000/mês</td></tr>
+        <tr><td><b>Plano mensal · meio período</b><small>1x por semana, mesmo período (R$ 150 cada)</small></td><td>R$ 600/mês</td></tr>
+      </table>
+      <p style="font-size:8pt;color:var(--mu);margin-top:3mm">Valores vigentes na data deste manual. O site sempre mostra o valor atualizado antes de você confirmar.</p>
+    </div>
+    <div>
+      <div class="box gold">
+        <h3>Mais de 3 horas passando de um período para outro?</h3>
+        <p style="font-size:10.2pt">Exemplo: das 11h às 15h (pega a manhã e a tarde). Esse tipo de reserva não é feito pelo site: combine direto com a Dra. Thalia pelo WhatsApp. O próprio site mostra o botão <span class="k">Falar com a Dra. Thalia</span>.</p>
+      </div>
+      <div class="box mt2">
+        <h3>Funcionamento</h3>
+        <ul class="f" style="font-size:10.2pt">
+          <li>Segunda a sábado, das <b>8h às 22h</b>.</li>
+          <li>Os horários livres aparecem em tempo real.</li>
+          <li>Remarcar ou cancelar pelo site até <b>4 horas antes</b> do início.</li>
+        </ul>
+      </div>
+      <div class="box wine mt2">
+        <h3>Onde fica</h3>
+        <p style="font-size:9.2pt;margin:0">Rua Juiz de Fora, 52, Galeria Êxito, <b>sala 208</b><br>Centro, Ipatinga/MG<br>WhatsApp <b>(31) 99574-5413</b></p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>2</span></div>
+</section>
+
+<!-- 3. CONTA -->
+<section class="pg">
+  <div class="eye">Passo 1 e 2</div>
+  <h2>Crie sua conta e <em>aguarde a liberação</em></h2>
+  <div class="row cph mt">
+    <div>
+      <h3>Criar a conta</h3>
+      <ol class="st">
+        <li>Abra <b>dra-thalia-santiago.vercel.app</b> no celular ou no computador.</li>
+        <li>Toque em <span class="k">Entrar</span> (no topo da página) ou em <span class="k">Agendar horário</span>.</li>
+        <li>Escolha <span class="k">Criar conta</span> e preencha nome completo, CRO, WhatsApp e e-mail. A especialidade é opcional.</li>
+        <li>Crie uma senha com pelo menos <b>8 caracteres</b> e confirme.</li>
+        <li>Leia os <b>termos de uso</b>: role a caixa até o final, marque <span class="k">Li e concordo</span> e toque em <span class="k">Criar conta</span>.</li>
+      </ol>
+      <h3 class="mt">Aguardar a liberação</h3>
+      <p>Para manter a agenda organizada, todo cadastro novo passa pela Dra. Thalia. Ela recebe um aviso na hora e libera o seu acesso.</p>
+      <ul class="f">
+        <li>Enquanto isso, a sua área mostra <b>“Falta só a liberação”</b>.</li>
+        <li>Quer agilizar? Toque em <span class="k">Avisar a Dra. Thalia no WhatsApp</span>.</li>
+        <li>Quando o acesso for liberado, a tela abre a sua área sozinha e você recebe um e-mail.</li>
+      </ul>
+      <h3 class="mt">Entrar nas próximas vezes</h3>
+      <ul class="f">
+        <li>Use o mesmo e-mail e senha em <span class="k">Entrar</span>. O <b>olhinho</b> ao lado da senha mostra o que você digitou.</li>
+        <li>Marque <b>“Lembrar de mim”</b> no seu celular para não precisar entrar toda vez. Em computador compartilhado, deixe desmarcado.</li>
+        <li>Esqueceu a senha? Use <span class="k">Esqueci minha senha</span> e siga o link enviado ao seu e-mail.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="ph h2"><img src="shots/reg_termos.png" alt=""></div>
+      <div class="cap">Termos de uso no cadastro</div>
+      <div class="ph h3" style="margin-top:6mm"><img src="shots/wait.png" alt=""></div>
+      <div class="cap">Aguardando a liberação</div>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>3</span></div>
+</section>
+
+<!-- 4. APP -->
+<section class="pg">
+  <div class="eye">Recomendado</div>
+  <h2>Instale o <em>app</em> no celular</h2>
+  <p class="lead">O site vira um aplicativo na tela inicial do seu celular, sem loja e sem ocupar espaço. Ele abre em tela cheia e avisa você sobre as suas reservas.</p>
+  <div class="os mt">
+    <div class="box"><h3><span>Android</span> No Chrome</h3>
+      <ol class="st" style="font-size:10.2pt">
+        <li>Abra o site no <b>Chrome</b>.</li>
+        <li>Toque no menu <span class="k">⋮</span> no canto superior direito.</li>
+        <li>Toque em <span class="k">Instalar app</span> (ou <span class="k">Adicionar à tela inicial</span>).</li>
+        <li>Confirme. O ícone do consultório aparece com os seus outros apps.</li>
+      </ol>
+      <p style="font-size:8.4pt;color:var(--mu);margin:3mm 0 0">Depois de entrar, você também encontra o botão <span class="k">Instalar app</span> em <b>Mais → Perfil</b>.</p>
+    </div>
+    <div class="box"><h3><span>iPhone</span> No Safari</h3>
+      <ol class="st" style="font-size:10.2pt">
+        <li>Abra o site no <b>Safari</b> (no iPhone precisa ser ele).</li>
+        <li>Toque em <span class="k">Compartilhar</span> (quadrado com a seta para cima).</li>
+        <li>Role e toque em <span class="k">Adicionar à Tela de Início</span>.</li>
+        <li>Toque em <span class="k">Adicionar</span>. Abra o app pelo novo ícone.</li>
+      </ol>
+      <p style="font-size:8.4pt;color:var(--mu);margin:3mm 0 0">No iPhone, o app tem login próprio: entre de novo com o seu e-mail e senha na primeira vez que abrir.</p>
+    </div>
+  </div>
+  <div class="row cph2 mt">
+    <div>
+      <div class="ph h2"><img src="shots/app.png" alt=""></div>
+      <div class="cap">Mais → Perfil: app e notificações</div>
+    </div>
+    <div>
+      <h3>Ative as notificações</h3>
+      <p>Com o app instalado, vá em <b>Mais → Perfil</b> e toque em <span class="k">Ativar notificações</span>. Depois, aceite a pergunta do celular. Você passa a receber:</p>
+      <ul class="f">
+        <li>Confirmação de cada reserva.</li>
+        <li><b>Lembrete 2 horas antes</b> do seu horário.</li>
+        <li>Aviso quando abrir vaga num horário da sua lista de espera.</li>
+        <li>Avisos importantes da Dra. Thalia (feriados, manutenção).</li>
+      </ul>
+      <div class="box gold mt2">
+        <div class="tip"><i>!</i><span>No iPhone, as notificações só funcionam <b>com o app instalado</b> na tela de início (iOS 16.4 ou mais novo).</span></div>
+      </div>
+      <p class="mt2" style="font-size:9.6pt;color:var(--mu)">No Perfil você também escolhe o tema claro ou escuro e atualiza os seus dados.</p>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>4</span></div>
+</section>
+
+<!-- 5. RESERVAR -->
+<section class="pg">
+  <div class="eye">Passo 3</div>
+  <h2>Como <em>reservar</em></h2>
+  <div class="row cph mt">
+    <div>
+      <ol class="st">
+        <li>Na barra de baixo, toque em <span class="k">Reservar</span>.</li>
+        <li>Escolha o <b>dia</b> no calendário. Os dias com horário livre ficam destacados.</li>
+        <li><b>Por hora:</b> toque na hora inicial e depois na hora final. Exemplo: toque em 14:00 e depois em 15:00 para reservar das 14h às 16h.</li>
+        <li><b>Por período:</b> toque em <span class="k">Manhã</span>, <span class="k">Tarde</span>, <span class="k">Noite</span>, <span class="k">Diária</span> ou <span class="k">Dia todo</span>. Os botões apagados já têm algum horário ocupado.</li>
+        <li>Confira os <b>detalhes da reserva</b> e o valor, e toque em <span class="k">Confirmar reserva</span>.</li>
+      </ol>
+      <h3 class="mt">Opções úteis</h3>
+      <ul class="f">
+        <li><b>Repetir toda semana:</b> no campo “Repetir no mesmo dia da semana e horário”, escolha por quantas semanas. O site reserva todas de uma vez e avisa se alguma data estiver ocupada.</li>
+        <li><b>Pedido especial:</b> precisa de algum material ou equipamento preparado? Escreva no campo de pedido especial.</li>
+        <li><b>Reserva rápida:</b> na tela Início, o site sugere o seu horário de sempre. Um toque em <span class="k">Reservar agora</span> e pronto.</li>
+        <li><b>Lista de espera:</b> o horário que você queria está ocupado? Toque nele e entre na lista. Se vagar, você é avisado.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="ph h2"><img src="shots/nova_dia.png" alt=""></div>
+      <div class="cap">Escolha do período ou das horas</div>
+      <div class="ph h3" style="margin-top:6mm"><img src="shots/inicio.png" alt=""></div>
+      <div class="cap">Início com a reserva rápida</div>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>5</span></div>
+</section>
+
+<!-- 6. MINHAS RESERVAS -->
+<section class="pg">
+  <div class="eye">Sua agenda</div>
+  <h2>Minhas reservas, <em>remarcar e cancelar</em></h2>
+  <div class="row cph2 mt">
+    <div>
+      <div class="ph h2"><img src="shots/drawer.png" alt=""></div>
+      <div class="cap">Detalhes de uma reserva</div>
+      <div class="ph h3" style="margin-top:6mm"><img src="shots/nova_cruza.png" alt=""></div>
+      <div class="cap">Mais de 3h entre períodos: fale com a Dra.</div>
+    </div>
+    <div>
+      <p>Em <span class="k">Reservas</span> você vê as <b>próximas</b> e o <b>histórico</b>. Toque numa reserva para abrir os detalhes:</p>
+      <ul class="f">
+        <li><b>Horário, local e valor</b> da reserva, e se o pagamento está pendente ou confirmado.</li>
+        <li><span class="k">Google Agenda</span> ou <span class="k">Agenda do celular</span>: salva o compromisso com alerta 2 horas antes.</li>
+        <li><span class="k">Remarcar</span>: escolha outro dia ou horário livre, até <b>4 horas antes</b> do início. A reserva antiga é liberada automaticamente.</li>
+        <li>Reservas do <b>plano mensal</b> não têm cancelar: veja a página 7 (dia vira crédito).</li>
+        <li><span class="k">Cancelar</span>: disponível até <b>4 horas antes</b> do início. Cancelando dentro desse prazo, você tem direito ao reembolso do valor pago.</li>
+      </ul>
+      <div class="box gold mt2">
+        <div class="tip"><i>!</i><span>Faltam menos de 4 horas? Os botões de remarcar e cancelar somem. Fale direto com a Dra. Thalia pelo WhatsApp <b>(31) 99574-5413</b>: ela pode cancelar cobrando uma taxa (parte ou todo o valor), como dizem os termos. Se você não aparecer, a falta fica registrada e a reserva continua cobrada.</span></div>
+      </div>
+      <h3 class="mt">Reservas que o site não faz sozinho</h3>
+      <p>Se você selecionar mais de 3 horas passando de um período para outro (por exemplo, das 11h às 15h), o site avisa, trava o botão de confirmar e mostra <span class="k">Falar com a Dra. Thalia</span>. É só combinar com ela pelo WhatsApp.</p>
+      <h3 class="mt">Horários ocupados</h3>
+      <p>Horários riscados já estão reservados, seja por outro dentista ou por atendimento da própria Dra. Thalia. Por privacidade, o site não mostra quem está usando.</p>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>6</span></div>
+</section>
+
+<!-- 7. PLANO MENSAL -->
+<section class="pg">
+  <div class="eye">Economize</div>
+  <h2>Plano <em>mensal</em></h2>
+  <p class="lead">Atende toda semana no mesmo dia? Com o plano mensal, o seu horário fica garantido e sai mais barato.</p>
+  <div class="row c2 mt2">
+    <div class="box gold"><h3>Diária, 1x por semana</h3><p style="margin:0"><b style="font:600 18pt Lora;color:var(--w)">R$ 1.000</b> por mês<br><span style="font-size:9.6pt;color:var(--mu)">R$ 250 a diária (avulsa: R$ 350)</span></p></div>
+    <div class="box gold"><h3>Meio período, 1x por semana</h3><p style="margin:0"><b style="font:600 18pt Lora;color:var(--w)">R$ 600</b> por mês<br><span style="font-size:9.6pt;color:var(--mu)">R$ 150 o período (avulso: R$ 180)</span></p></div>
+  </div>
+  <div class="row cph mt">
+    <div>
+      <h3>Como pedir</h3>
+      <ol class="st">
+        <li>Em <span class="k">Reservar</span>, abra o card <b>Plano mensal</b> e toque em <span class="k">Quero um plano</span>.</li>
+        <li>Escolha a modalidade (diária ou manhã, tarde ou noite), o dia da semana e quando começar. As próximas datas aparecem como livres ou ocupadas.</li>
+        <li>Toque em <span class="k">Pedir plano à Dra. Thalia</span>. Quando ela aprovar, as reservas do mês aparecem em <b>Reservas</b>, marcadas como plano mensal.</li>
+      </ol>
+      <h3 class="mt">Como funciona</h3>
+      <ul class="f">
+        <li>O valor do mês é o mesmo com 4 ou 5 semanas. No primeiro mês, você paga só as semanas a partir do início.</li>
+        <li>O plano renova sozinho todo mês. Pague pelo Pix do mês, em <b>Financeiro</b>.</li>
+        <li><b>Não vai poder ir?</b> Avise com pelo menos <b>3 dias</b> de antecedência: abra a reserva e toque em <span class="k">Não vou poder ir: guardar crédito</span>. Depois, escolha outro dia do <b>mesmo mês</b> e toque em <span class="k">Remarcar com o crédito</span>.</li>
+        <li>Com menos de 3 dias, o dia não vira crédito. Crédito não usado no mês vence.</li>
+        <li>Para parar, toque em <span class="k">Encerrar plano</span>: ele vale até o fim do mês.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="ph h3"><img src="shots/plano_form.png" alt="" style="height:80mm"></div>
+      <div class="cap">Pedido de plano</div>
+      <div class="ph h3" style="margin-top:6mm"><img src="shots/credito.png" alt="" style="object-position:bottom;height:80mm"></div>
+      <div class="cap">Dia liberado vira crédito</div>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>7</span></div>
+</section>
+
+<!-- 7. PAGAMENTO -->
+<section class="pg">
+  <div class="eye">Passo 4</div>
+  <h2>Pagamento <em>com Pix</em></h2>
+  <div class="row cph mt">
+    <div>
+      <h3>Pagar uma reserva</h3>
+      <ol class="st">
+        <li>Abra a reserva em <span class="k">Reservas</span> e role até <b>Pagar com Pix</b>.</li>
+        <li>No app do seu banco, escolha <b>Pix → Ler QR Code</b> e aponte para o código. Se estiver no celular, toque em <span class="k">Copiar Pix copia e cola</span> e cole no app do banco.</li>
+        <li>O valor já vem preenchido. Confira e pague.</li>
+        <li>Toque em <span class="k">Anexar comprovante</span> e envie a foto ou o PDF do comprovante.</li>
+      </ol>
+      <h3 class="mt">Pagar o mês todo de uma vez</h3>
+      <p>Em <span class="k">Financeiro</span> você vê as horas do mês, quanto já foi pago e o <b>total em aberto</b>, com um Pix único para quitar tudo. Depois de pagar, envie o comprovante pelo botão de WhatsApp da mesma tela.</p>
+      <h3 class="mt">Recibo</h3>
+      <ul class="f">
+        <li>Em <span class="k">Financeiro</span>, toque em <span class="k">Baixar recibo do mês (PDF)</span> para guardar ou mandar para a sua contabilidade.</li>
+        <li>O recibo de cada reserva paga fica nos detalhes dela.</li>
+      </ul>
+      <div class="box gold mt2">
+        <div class="tip"><i>!</i><span>Se houver pagamento em atraso, <b>novas reservas ficam bloqueadas</b> até regularizar. O Pix para quitar está sempre em Financeiro.</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="ph h2"><img src="shots/drawer_pix.png" alt=""></div>
+      <div class="cap">Pix da reserva</div>
+      <div class="ph h3" style="margin-top:6mm"><img src="shots/fin.png" alt=""></div>
+      <div class="cap">Financeiro do mês</div>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>8</span></div>
+</section>
+
+<!-- 8b. CALCULADORA -->
+<section class="pg">
+  <div class="eye">Apoio clínico</div>
+  <h2>Calculadora <em>de doses</em></h2>
+  <div class="row cph mt">
+    <div>
+      <p>Em <b>Mais → Calculadora</b> você faz as contas do dia a dia a partir do <b>peso</b> e da <b>idade</b> do paciente. Cada resultado mostra a <b>fonte</b> (bula ou referência) e a data em que foi conferida.</p>
+      <h3 class="mt">O que ela calcula</h3>
+      <ul class="f">
+        <li><b>Medicamentos:</b> dose por vez em mg, mL e gotas, intervalo e máximo por dia (dipirona, paracetamol, ibuprofeno, amoxicilina e azitromicina). Acima da idade ou do peso indicados na bula, mostra a dose de adulto.</li>
+        <li><b>Anestésico:</b> dose máxima em mg e em tubetes (lidocaína, mepivacaína, articaína, prilocaína e bupivacaína). Marque <span class="k">Paciente cardiopata</span> para ver o limite de epinefrina.</li>
+        <li><b>Profilaxia</b> de endocardite: dose única antes do procedimento, com as opções para alérgicos à penicilina.</li>
+        <li><b>Conversões:</b> mg para mL e gotas, e diluição (por exemplo, do hipoclorito).</li>
+      </ul>
+      <div class="box gold mt2">
+        <div class="tip"><i>!</i><span>Sem peso e idade, ou fora da faixa da bula, a calculadora <b>não mostra número</b>. Ela é uma ferramenta de apoio: confira a bula do produto que vai prescrever. A decisão e a prescrição são suas.</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="ph h2"><img src="shots/calc_med.png" alt=""></div>
+      <div class="cap">Dose por peso e idade</div>
+      <div class="ph h3" style="margin-top:6mm"><img src="shots/calc_anest.png" alt=""></div>
+      <div class="cap">Anestésico em tubetes</div>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>9</span></div>
+</section>
+
+<!-- 8. NO DIA -->
+<section class="pg">
+  <div class="eye">No consultório</div>
+  <h2>O dia do <em>atendimento</em></h2>
+  <div class="row cph2 mt">
+    <div>
+      <div class="ph h1"><img src="shots/consultorio.png" alt=""></div>
+      <div class="cap">Mais → Consultório: endereço, chegada e saída</div>
+    </div>
+    <div>
+      <h3>Antes de chegar</h3>
+      <ul class="f">
+        <li>Você recebe um <b>lembrete 2 horas antes</b>.</li>
+        <li>Em <b>Mais → Consultório</b> estão o endereço, o mapa, as instruções de chegada e saída e o Wi-Fi.</li>
+        <li>Respeite o horário reservado: o próximo colega pode chegar logo depois.</li>
+      </ul>
+      <h3 class="mt">Ao terminar: checklist de saída</h3>
+      <p>Na tela Início aparece <span class="k">Abrir checklist</span>. Confirme cada item:</p>
+      <ul class="f">
+        <li>Instrumentais esterilizados ou recolhidos.</li>
+        <li>Bancada, cadeira e refletor higienizados.</li>
+        <li>Resíduos descartados corretamente.</li>
+        <li>Equipamentos desligados.</li>
+        <li>Sala organizada e luzes apagadas.</li>
+      </ul>
+      <h3 class="mt">Algum problema?</h3>
+      <p>Equipamento com defeito ou faltando material? Use <span class="k">Avisar um problema</span> e descreva o que aconteceu. A Dra. Thalia recebe na hora.</p>
+      <h3 class="mt">Avalie e fique por dentro</h3>
+      <p>Depois do atendimento você pode dar uma <b>nota</b> para o consultório. Os avisos da Dra. Thalia (feriados, manutenção, novidades) aparecem no <b>mural</b> da tela Início.</p>
+    </div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>10</span></div>
+</section>
+
+<!-- 9. RESUMO -->
+<section class="pg">
+  <div class="eye">Para guardar</div>
+  <h2>Resumo <em>rápido</em></h2>
+  <div class="row c2 mt">
+    <div class="box">
+      <h3>Regras do consultório</h3>
+      <ul class="f" style="font-size:10.4pt">
+        <li>Acesso só com conta liberada pela Dra. Thalia.</li>
+        <li>Até 3 horas: R$ 50 por hora.</li>
+        <li>Acima de 3 horas: período (R$ 180), diária (R$ 350) ou dia todo (R$ 530).</li>
+        <li>Mais de 3 horas entre períodos: combinar com a Dra. Thalia.</li>
+        <li>Remarcar ou cancelar pelo site até 4 horas antes (com reembolso).</li>
+        <li>Plano mensal: dia avisado com 3 dias de antecedência vira crédito no mesmo mês.</li>
+        <li>Termos de uso aceitos no cadastro (e de novo quando mudarem).</li>
+        <li>Pagamento por Pix, com comprovante anexado.</li>
+        <li>Pagamento em atraso bloqueia novas reservas.</li>
+        <li>Checklist de saída ao final de cada uso.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Onde fica cada coisa</h3>
+      <table class="pr" style="font-size:10pt">
+        <tr><td><b>Início</b><small>Próxima reserva, reserva rápida, checklist e mural</small></td><td></td></tr>
+        <tr><td><b>Reservas</b><small>Próximas, histórico, remarcar, cancelar, Pix</small></td><td></td></tr>
+        <tr><td><b>Reservar</b><small>Calendário, horas e períodos, lista de espera, plano mensal</small></td><td></td></tr>
+        <tr><td><b>Financeiro</b><small>Total do mês, Pix único, recibo em PDF</small></td><td></td></tr>
+        <tr><td><b>Mais</b><small>Consultório, calculadora, perfil, app, notificações, sair</small></td><td></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="box wine mt" style="display:grid;grid-template-columns:40mm 1fr 40mm;gap:7mm;align-items:center;padding:7mm">
+    <div style="background:#fff;border-radius:3mm;padding:1.4mm">%QRSITE%</div>
+    <div>
+      <h3 style="font-size:15pt">Dúvidas? Fale com a Dra. Thalia</h3>
+      <p style="margin:2mm 0 0;font-size:10pt;line-height:1.65">WhatsApp <b>(31) 99574-5413</b><br>Instagram <b>@dra.thaliasantiago</b><br>Rua Juiz de Fora, 52, Galeria Êxito, sala 208<br>Centro, Ipatinga/MG</p>
+      <p style="margin:3mm 0 0;font-size:8pt;color:var(--g)">À esquerda: site e app &nbsp;·&nbsp; À direita: WhatsApp</p>
+    </div>
+    <div style="background:#fff;border-radius:3mm;padding:1.4mm">%QRWA%</div>
+  </div>
+  <div class="foot"><span><b>Manual do Dentista</b> · Consultório Dra. Thalia Santiago</span><span>11</span></div>
+</section>
+</body></html>

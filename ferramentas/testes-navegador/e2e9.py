@@ -1,0 +1,219 @@
+import json, datetime as dt, re, os, sys
+from playwright.sync_api import sync_playwright
+S = '/tmp/claude-0/-home-claude/dcc176e0-b17e-526f-b4d8-21aa4df71887/scratchpad'
+O = S + '/app/s9/'; os.makedirs(O, exist_ok=True)
+mock = open(S + '/app/mock9r.js').read()
+V8 = len(sys.argv) > 1 and sys.argv[1] == 'v8'
+if V8: mock = 'window.MOCK_V8=1;\n' + mock
+cfg = "window.APP_CONFIG={supabaseUrl:'https://abcdefghijkl.supabase.co',supabaseAnonKey:'" + 'x' * 60 + "'};"
+t = dt.date.today()
+def d(off):
+    x = t + dt.timedelta(days=off)
+    while x.weekday() == 6: x += dt.timedelta(days=1)
+    return x.isoformat()
+D1 = d(1)
+bk = [{'id': 'f1', 'dentist_id': 'lucas1', 'nome': 'Lucas Andrade', 'cro': 'CRO-MG 41.122', 'tel': '(31) 98841-5460', 'primeira': False, 'date': d(5), 'h_from': 9, 'h_to': 11, 'status': 'ativo', 'origem': 'area-dentista', 'pago': False, 'valor': 100, 'criado_em': '2026-10-01T10:00:00'}]
+slots = [{'date': b['date'], 'hour': h, 'booking_id': b['id']} for b in bk for h in range(b['h_from'], b['h_to'])]
+slots += [{'date': D1, 'hour': 10, 'booking_id': None, 'consulta': True}, {'date': D1, 'hour': 11, 'booking_id': None, 'consulta': True}]
+seed = {'slots': slots, 'bookings': bk, 'cfg': {'valorHora': 50}, 'secret': 'k', 'sent': [], 'admins': ['adm1'], 'adm': {'adm1': {'nivel': 'completo', 'nome': 'Dra. Thalia Santiago'}},
+  'faq': [], 'app_config': [], 'avisos': [], 'problemas': [], 'espera': [],
+  'dentists': [{'id': 'lucas1', 'nome': 'Lucas Andrade', 'cro': 'CRO-MG 41.122', 'whatsapp': '(31) 98841-5460', 'email': 'lucas@x.com', 'status': 'liberado', 'criado_em': '2026-09-01T10:00:00'},
+               {'id': 'mari1', 'nome': 'Mariana Costa', 'cro': 'CRO-MG 50.000', 'whatsapp': '(31) 97777-1111', 'email': 'mari@x.com', 'status': 'liberado', 'criado_em': '2026-09-01T10:00:00'}],
+  'pacientes': [{'id': 'pa1', 'nome': 'Joana Silva', 'telefone': '(31) 98888-7777', 'criado_em': '2026-10-01T10:00:00'}],
+  'consultas': [{'id': 'c2', 'paciente_id': 'pa1', 'data': D1, 'inicio': '10:00', 'fim': '11:30', 'status': 'agendada', 'criado_em': '2026-10-01T10:00:00'}],
+  'users': [{'id': 'adm1', 'email': 't@x.com', 'password': 'senha12345'}, {'id': 'lucas1', 'email': 'lucas@x.com', 'password': 'abc12345'}, {'id': 'mari1', 'email': 'mari@x.com', 'password': 'abc12345'}]}
+init = "if(!localStorage.getItem('mockdb'))localStorage.setItem('mockdb'," + json.dumps(json.dumps(seed)) + ");"
+errs = []
+def chk(name, cond, extra=''):
+    print(('OK  ' if cond else 'FALHA ') + name + ('' if cond else f'  -> {extra}'))
+    if not cond: chk.fail += 1
+chk.fail = 0
+def clk(pg, sel, i=0): pg.query_selector_all(sel)[i].evaluate('e=>e.click()')
+def mockdb(pg): return pg.evaluate("JSON.parse(localStorage.getItem('mockdb'))")
+def txt(pg, sel): return re.sub(r'\s+', ' ', pg.inner_text(sel)).strip()
+def login(pg, email, pw, hash='#dentista'):
+    pg.goto('http://localhost:8765/' + hash); pg.wait_for_timeout(700)
+    pg.fill('#dl-email', email); pg.fill('#dl-pass', pw); clk(pg, '#dl-login button[type=submit]'); pg.wait_for_timeout(1500)
+def sair(pg):
+    if not pg.is_hidden('#view-admin'): pg.evaluate('logout()')
+    else: pg.evaluate('dlogout()')
+    pg.wait_for_timeout(1200)
+def calc(pg, root, sec, **kv):
+    clk(pg, f'{root} [data-csec="{sec}"]'); pg.wait_for_timeout(150)
+    for k, v in kv.items():
+        sel = f'{root} [data-cin="{k}"]'
+        el = pg.query_selector(sel)
+        if el is None: continue
+        tag = el.evaluate('e=>e.tagName')
+        if tag == 'SELECT': pg.select_option(sel, v)
+        elif el.evaluate('e=>e.type') == 'checkbox':
+            if el.is_checked() != v: el.evaluate('e=>e.click()')
+        else: pg.fill(sel, str(v))
+        pg.wait_for_timeout(120)
+    return txt(pg, f'{root} .calc-out')
+with sync_playwright() as p:
+    b = p.chromium.launch()
+    c = b.new_context(viewport={'width': 1280, 'height': 900}, device_scale_factor=1, accept_downloads=True)
+    c.route('**/supabase-js@2.110.1**', lambda r: r.fulfill(status=200, content_type='application/javascript', body=mock))
+    c.route('**/config.js', lambda r: r.fulfill(status=200, content_type='application/javascript', body=cfg))
+    c.route('https://fonts.googleapis.com/**', lambda r: r.abort())
+    c.route('https://www.google.com/**', lambda r: r.fulfill(status=200, body='<html></html>', content_type='text/html'))
+    c.add_init_script(init)
+    pg = c.new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.goto('http://localhost:8765/'); pg.wait_for_timeout(800)
+    top = txt(pg, '.top-r'); foot = pg.inner_text('footer') if pg.query_selector('footer') else ''
+    chk('cabeçalho só com Entrar', top == 'Entrar', top)
+    chk('rodapé sem link Administrador', 'Administrador' not in foot, foot[-200:])
+    pg.goto('http://localhost:8765/#admin'); pg.wait_for_timeout(700)
+    chk('#admin sem login mostra o Entrar único', pg.is_visible('#view-dlogin') and 'Entre na sua conta' in txt(pg, '#dl-title'), txt(pg, '#view-dlogin')[:120])
+    # administradora entra pelo login único
+    pg.fill('#dl-email', 't@x.com'); pg.fill('#dl-pass', 'senha12345'); clk(pg, '#dl-login button[type=submit]'); pg.wait_for_timeout(1500)
+    chk('administradora cai no painel', pg.url.endswith('#admin') and pg.is_visible('#view-admin'), pg.url)
+    if V8:
+        chk('banco antigo: painel completo', pg.evaluate('S.nivel') == 'completo' and pg.is_visible('#view-admin .side [data-tab="pacientes"]'))
+        c.close(); b.close(); print('erros JS:', errs[:6]); print('FALHAS:', chk.fail); sys.exit()
+    chk('saudação com o nome', txt(pg, '#r-hello') == 'Olá, Dra. Thalia' and txt(pg, '#view-admin .who-name') == 'Dra. Thalia Santiago', txt(pg, '#r-hello'))
+    chk('topo do site vira Painel', pg.evaluate("document.querySelector('.top-r .pill').textContent") == 'Painel')
+    # entrar pela área do dentista também leva ao painel
+    sair(pg); login(pg, 't@x.com', 'senha12345', '#dentista')
+    chk('login pela área do dentista leva admin ao painel', pg.url.endswith('#admin') and pg.is_visible('#view-admin'), pg.url)
+    # Ajustes → Administradores
+    clk(pg, '#view-admin .side [data-tab="ajustes"]'); pg.wait_for_timeout(400)
+    pg.evaluate("document.querySelector('details[data-acc=\"admins\"]').open = true"); pg.wait_for_timeout(700)
+    a0 = txt(pg, '#acc-admins')
+    chk('lista de administradores', 'Dra. Thalia Santiago' in a0 and 'você' in a0.lower() and 'Administrador da agenda' in a0, a0[:200])
+    pg.fill('#adm-email', 'ninguem@x.com'); clk(pg, '#adm-add button[type=submit]'); pg.wait_for_timeout(500)
+    chk('e-mail sem conta', 'Não há conta com este e-mail' in txt(pg, '#adm-fb'), txt(pg, '#adm-fb'))
+    pg.fill('#adm-email', 'Lucas@x.com'); pg.select_option('#adm-nivel', 'agenda'); clk(pg, '#adm-add button[type=submit]'); pg.wait_for_timeout(800)
+    a1 = txt(pg, '#acc-admins')
+    chk('adicionou Lucas como agenda', 'Lucas Andrade' in a1 and 'agora é administrador da agenda' in a1 and 'Histórico de alterações (1)' in a1, a1[-300:])
+    chk('não pode mudar o próprio nível', pg.is_disabled('#acc-admins select[data-admnivel="adm1"]') and not pg.query_selector('[data-admdel="adm1"]'))
+    pg.screenshot(path=O + 'admins.png', full_page=False)
+    # Conta
+    pg.evaluate("document.querySelector('details[data-acc=\"conta\"]').open = true"); pg.wait_for_timeout(300)
+    chk('conta mostra nível', 'Administrador completo' in txt(pg, '#conta-kv'))
+    # Calculadora (admin completo, ainda não liberada)
+    clk(pg, '#view-admin .side [data-tab="calc"]'); pg.wait_for_timeout(800)
+    adm = txt(pg, '#calc-a .calc-adm')
+    chk('revisão: ainda não liberada', 'Ainda não liberada' in adm and 'Revisei, liberar' in adm, adm[:200])
+    R = '#calc-a'
+    r = calc(pg, R, 'med', med='dipirona-gotas')
+    chk('sem peso/idade não calcula', 'Sem cálculo' in r and 'Informe o peso e a idade' in r, r)
+    r = calc(pg, R, 'med', peso='18', anos='4', meses='0')
+    chk('dipirona 18 kg: 5 a 15 gotas, máx 60/dia', '5 a 15 gotas' in r and '60 gotas por dia' in r and 'Medley' in r, r)
+    r = calc(pg, R, 'med', peso='4', anos='0', meses='2')
+    chk('dipirona bebê de 2 meses bloqueada', 'Sem cálculo' in r and '3 meses' in r, r)
+    r = calc(pg, R, 'med', peso='70', anos='30', meses='0')
+    chk('dipirona adulto: texto da bula', 'dose de adulto' in r.lower() and '20 a 40 gotas' in r, r)
+    r = calc(pg, R, 'med', med='paracetamol-gotas', peso='20', anos='5', meses='0')
+    chk('paracetamol 20 kg: 200 a 300 mg, 15 a 22 gotas', '200 a 300 mg por vez' in r and '15 a 22 gotas' in r, r)
+    r = calc(pg, R, 'med', peso='40', anos='10')
+    chk('paracetamol 40 kg: limite de 35 gotas', '35 gotas' in r and 'limitada' in r, r)
+    r = calc(pg, R, 'med', med='ibuprofeno-50', peso='12', anos='1', meses='6')
+    chk('ibuprofeno abaixo de 2 anos não calcula', 'Sem cálculo' in r, r)
+    r = calc(pg, R, 'med', peso='15', anos='3', meses='0')
+    chk('ibuprofeno 50 mg/mL 15 kg: 15 a 30 gotas', '75 a 150 mg por vez' in r and '15 a 30 gotas' in r, r)
+    r = calc(pg, R, 'med', med='amoxicilina-susp', peso='20', anos='5')
+    chk('amoxicilina 20 kg: 400 a 1.000 mg/dia, 2,7 a 6,6 mL', '400 a 1.000 mg' in r and '133 a 333 mg por vez' in r and '2,7 a 6,6 mL' in r, r)
+    r = calc(pg, R, 'med', peso='45', anos='14')
+    chk('amoxicilina acima de 40 kg: dose de adulto', 'dose de adulto' in r.lower() and '250 mg de 8 em 8 horas' in r, r)
+    r = calc(pg, R, 'med', med='azitromicina-susp', peso='20', anos='6')
+    chk('azitromicina 20 kg: 200 mg = 5 mL', '200 mg por vez' in r and '5 mL por vez' in r, r)
+    r = calc(pg, R, 'anest', anest='lidocaina', peso='20', anos='5')
+    chk('lidocaína 20 kg: 88 mg, 2,4 tubetes', '88 mg no máximo' in r and '2,4 tubetes' in r, r)
+    r = calc(pg, R, 'anest', peso='80', anos='40', cardio=True)
+    chk('lidocaína 80 kg: 300 mg (8,3 tubetes) e cardiopata 2,2', '300 mg no máximo' in r and '8,3 tubetes' in r and '2,2 tubetes' in r, r)
+    r = calc(pg, R, 'anest', anest='articaina', peso='15', anos='3', cardio=False)
+    chk('articaína abaixo de 4 anos bloqueada', 'Sem cálculo' in r and '4 anos' in r, r)
+    r = calc(pg, R, 'anest', peso='20', anos='6')
+    chk('articaína 20 kg: 140 mg, 1,9 tubete', '140 mg no máximo' in r and '1,9 tubetes' in r, r)
+    r = calc(pg, R, 'prof', peso='20', anos='5', aler=False)
+    chk('profilaxia amoxicilina 20 kg: 1.000 mg', '1.000 mg' in r and 'AHA' in r, r)
+    r = calc(pg, R, 'prof', peso='30', anos='9', aler=True)
+    chk('profilaxia alérgico 30 kg: azitro 450, doxi 66, cefalexina 1.500', '450 mg' in r and '66 mg' in r and '1.500 mg' in r and 'anafilaxia' in r, r)
+    r = calc(pg, R, 'conv', d1='5,25', d2='2,5', dv='100', cmg='250', cconc='50', cgml='')
+    chk('conversões: 5 mL e diluição 47,6 + 52,4', '5 mL' in r and '47,6 mL do produto' in r and '52,4 mL de água' in r, r)
+    pg.screenshot(path=O + 'calc_admin.png', full_page=True)
+    # Lucas (dentista) antes da liberação
+    sair(pg); login(pg, 'mari@x.com', 'abc12345')
+    clk(pg, '#view-dent .side [data-ctab="calc"]'); pg.wait_for_timeout(700)
+    chk('dentista: calculadora em revisão', 'em revisão' in txt(pg, '#calc-d'), txt(pg, '#calc-d')[:150])
+    sair(pg); login(pg, 't@x.com', 'senha12345', '#admin')
+    clk(pg, '#view-admin .side [data-tab="calc"]'); pg.wait_for_timeout(700)
+    # editar um item e liberar
+    clk(pg, '#calc-a [data-calced="dipirona-gotas"]'); pg.wait_for_timeout(400)
+    pg.fill('#dr-body [data-f="obs"]', 'Observação revisada pela Dra.'); clk(pg, '#dr-body button[type=submit]'); pg.wait_for_timeout(900)
+    chk('item editado fecha a gaveta', pg.is_hidden('#drawer'))
+    clk(pg, '#calc-a [data-calcadm="liberar"]'); pg.wait_for_timeout(900)
+    adm = txt(pg, '#calc-a .calc-adm')
+    chk('liberada e histórico', 'Liberada para os dentistas' in adm and 'Histórico de alterações (2)' in adm, adm[:300])
+    clk(pg, '#calc-a [data-calcon="bupivacaina"]'); pg.wait_for_timeout(800)
+    db = mockdb(pg); bup = [i for i in db['calc']['itens'] if i['id'] == 'bupivacaina'][0]
+    chk('desativar item', bup['ativo'] is False and db['calc']['liberada'] is True)
+    clk(pg, '#calc-a [data-calcadm="novo"]'); pg.wait_for_timeout(400)
+    clk(pg, '#dr-body button[type=submit]'); pg.wait_for_timeout(300)
+    chk('novo item exige nome', 'Informe o nome' in txt(pg, '#dr-body .cf-fb'))
+    clk(pg, '#dr-close'); pg.wait_for_timeout(300)
+    sair(pg); login(pg, 'mari@x.com', 'abc12345')
+    clk(pg, '#view-dent .side [data-ctab="calc"]'); pg.wait_for_timeout(700)
+    r = calc(pg, '#calc-d', 'med', med='dipirona-gotas', peso='18', anos='4')
+    chk('dentista usa a calculadora liberada', '5 a 15 gotas' in r and 'Observação revisada pela Dra.' in r, r)
+    opts = pg.evaluate("[...document.querySelectorAll('#calc-d [data-cin=med] option')].map(o=>o.value)")
+    clk(pg, '#calc-d [data-csec="anest"]'); pg.wait_for_timeout(200)
+    an = pg.evaluate("[...document.querySelectorAll('#calc-d [data-cin=anest] option')].map(o=>o.value)")
+    chk('item desativado some para o dentista', 'bupivacaina' not in an and 'lidocaina' in an, an)
+    chk('dentista não vê revisão', pg.query_selector('#calc-d .calc-adm') is None)
+    chk('dentista sem atalho para o painel', not pg.is_visible('#view-dent .side-foot .so-adm'))
+    pg.set_viewport_size({'width': 390, 'height': 844}); pg.wait_for_timeout(400)
+    calc(pg, '#calc-d', 'med', med='amoxicilina-susp', peso='20', anos='5')
+    pg.screenshot(path=O + 'm_calc_dent.png', full_page=True)
+    chk('celular sem rolagem lateral', pg.evaluate('document.documentElement.scrollWidth') <= 391, pg.evaluate('document.documentElement.scrollWidth'))
+    clk(pg, '#view-dent .more-btn'); pg.wait_for_timeout(200)
+    chk('menu Mais do dentista tem Calculadora', 'Calculadora' in txt(pg, '#view-dent .more-sheet'))
+    pg.set_viewport_size({'width': 1280, 'height': 900})
+    # Lucas: administrador da agenda e dentista
+    sair(pg); login(pg, 'lucas@x.com', 'abc12345')
+    chk('admin da agenda cai no painel', pg.url.endswith('#admin') and pg.is_visible('#view-admin'), pg.url)
+    chk('sem aba Pacientes', not pg.is_visible('#view-admin .side [data-tab="pacientes"]'))
+    chk('não carrega dados de pacientes', pg.evaluate("Object.keys(S.cols.pacientes||{}).length + Object.keys(S.cols.consultas||{}).length") == 0)
+    chk('resumo sem pacientes de hoje', not pg.is_visible('#r-pac'))
+    chk('saudação do Lucas', txt(pg, '#r-hello') == 'Olá, Lucas', txt(pg, '#r-hello'))
+    pg.evaluate("S.tab='pacientes'; renderAdmin()"); pg.wait_for_timeout(200)
+    chk('forçar aba pacientes volta ao resumo', pg.evaluate('S.tab') == 'resumo')
+    clk(pg, '#view-admin .side [data-tab="agenda"]'); pg.wait_for_timeout(300)
+    pg.evaluate(f"S.aView='dia'; S.aDate=new Date('{D1}T12:00'); renderAdmin()"); pg.wait_for_timeout(300)
+    g = txt(pg, '#a-grid')
+    chk('agenda mostra só "Ocupado" na consulta', 'Ocupado · consulta' in g and 'Joana' not in g and '10:00 – 12:00' in g, g[:300])
+    chk('sem botão de nova consulta', not pg.is_visible('#a-cons'))
+    pg.screenshot(path=O + 'agenda_agenda.png')
+    clk(pg, '#view-admin .side [data-tab="ajustes"]'); pg.wait_for_timeout(400)
+    chk('ajustes sem Administradores e sem Receitas', not pg.is_visible('details[data-acc="admins"]') and not pg.is_visible('details[data-acc="prof"]'))
+    pg.evaluate("document.querySelector('details[data-acc=\"conta\"]').open = true"); pg.wait_for_timeout(300)
+    chk('conta mostra administrador da agenda', 'Administrador da agenda' in txt(pg, '#conta-kv'))
+    nomes = pg.evaluate("(()=>{let n=null;const o=xlsx;window.xlsx=s=>{n=s.map(x=>x[0]);return new Uint8Array([1])};try{baixarBackup()}catch(e){};window.xlsx=o;return n})()")
+    chk('backup sem planilhas de pacientes', nomes and 'Pacientes' not in nomes and 'Consultas' not in nomes and 'Reservas' in nomes, nomes)
+    clk(pg, '#view-admin .side [data-tab="calc"]'); pg.wait_for_timeout(600)
+    chk('admin da agenda usa a calculadora sem editar', pg.query_selector('#calc-a [data-calced]') is None and pg.is_visible('#calc-a .calc-f'))
+    # alternar para a área de dentista
+    chk('atalho Minha área de dentista visível', pg.is_visible('#view-admin .side-foot .so-dent'))
+    clk(pg, '#view-admin .side-foot .so-dent'); pg.wait_for_timeout(900)
+    chk('abre a área do dentista', pg.url.endswith('#dentista') and pg.is_visible('#view-dent'), pg.url)
+    chk('na área do dentista: atalho para o painel', pg.is_visible('#view-dent .side-foot .so-adm'))
+    chk('reservas do Lucas na área dele', 'Sua próxima reserva' in txt(pg, '#ci-next'))
+    clk(pg, '#view-dent .side-foot .so-adm'); pg.wait_for_timeout(700)
+    chk('volta ao painel', pg.url.endswith('#admin') and pg.is_visible('#view-admin'))
+    # Dra. remove o Lucas
+    sair(pg); login(pg, 't@x.com', 'senha12345', '#admin')
+    clk(pg, '#view-admin .side [data-tab="ajustes"]'); pg.wait_for_timeout(300)
+    pg.evaluate("document.querySelector('details[data-acc=\"admins\"]').open = true"); pg.wait_for_timeout(700)
+    pg.select_option('#acc-admins select[data-admnivel="lucas1"]', 'completo'); pg.wait_for_timeout(800)
+    chk('mudou nível', mockdb(pg)['adm']['lucas1']['nivel'] == 'completo')
+    clk(pg, '[data-admdel="lucas1"]'); pg.wait_for_timeout(200); clk(pg, '[data-admdel="lucas1"]'); pg.wait_for_timeout(900)
+    a2 = re.sub(r'\s+', ' ', pg.text_content('#acc-admins'))
+    chk('removeu Lucas com histórico', 'lucas1' not in mockdb(pg)['admins'] and 'removeu lucas@x.com' in a2 and 'mudou o nível' in a2, a2[-400:])
+    sair(pg); login(pg, 'lucas@x.com', 'abc12345')
+    chk('Lucas removido volta a ser só dentista', pg.url.endswith('#dentista') and pg.is_visible('#view-dent'))
+    pg.goto('http://localhost:8765/#admin'); pg.wait_for_timeout(900)
+    chk('dentista em #admin vai para a área dele', pg.url.endswith('#dentista') and pg.is_visible('#view-dent'), pg.url)
+    c.close(); b.close()
+print('erros JS:', errs[:6]); print('FALHAS:', chk.fail)

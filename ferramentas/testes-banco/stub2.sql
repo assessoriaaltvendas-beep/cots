@@ -1,0 +1,13 @@
+create schema vault;
+create table vault.secrets (id uuid primary key default gen_random_uuid(), name text unique, secret text, description text);
+create view vault.decrypted_secrets as select id, name, secret as decrypted_secret from vault.secrets;
+create function vault.create_secret(s text, n text, d text default null) returns uuid language sql as $$ insert into vault.secrets(name,secret,description) values (n,s,d) returning id $$;
+create function vault.update_secret(i uuid, s text) returns void language sql as $$ update vault.secrets set secret = s where id = i $$;
+create schema net;
+create table net.calls (id serial, url text, headers jsonb, body jsonb);
+create function net.http_post(url text, body jsonb default '{}', params jsonb default '{}', headers jsonb default '{}', timeout_milliseconds int default 5000) returns bigint language sql as $$ insert into net.calls(url,headers,body) values (url,headers,body) returning id $$;
+create schema storage;
+create table storage.buckets (id text primary key, name text, public boolean);
+create table storage.objects (id uuid primary key default gen_random_uuid(), bucket_id text, name text);
+alter table storage.objects enable row level security;
+create function storage.foldername(name text) returns text[] language sql as $$ select string_to_array(name, '/') $$;

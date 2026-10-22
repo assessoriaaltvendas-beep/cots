@@ -1,0 +1,59 @@
+/* ===== versão retrato (A4 em pé), melhor para ler no celular ===== */
+@page{size:210mm 297mm;margin:0}
+body{font-size:11pt}
+.pg{width:210mm!important;height:297mm!important;padding:16mm 14mm 20mm!important}
+.foot{left:14mm;right:14mm;bottom:9mm;font-size:8pt}
+h2{font-size:26pt}
+.lead{max-width:none;font-size:11.5pt}
+ul.f{gap:3.4mm}
+ul.f li{font-size:11pt}
+.split,.split.r{display:flex!important;flex-direction:column;gap:7mm;margin:6mm 0 10mm!important;align-items:stretch!important;flex:1;justify-content:center}
+.split>div{min-width:0}
+.split .shot img{width:100%}
+.split.r>:first-child{order:2}
+.two{grid-template-columns:1fr!important;gap:6mm!important;margin-top:5mm;align-content:center}
+.two>div{display:grid;grid-template-columns:96mm 1fr;gap:5mm;align-items:start}
+.two .shot img{height:auto!important;width:100%}
+.two ul.f.mini{margin-top:0}
+.two ul.f li{font-size:10pt}
+.three{grid-template-columns:1fr!important;gap:5mm;margin-top:7mm}
+.three.four{grid-template-columns:1fr 1fr!important}
+.card{padding:6mm 7mm 5mm}
+.band{grid-template-columns:1fr 1fr!important;gap:5mm}
+.steps{grid-template-columns:1fr 1fr!important;gap:6mm}
+.steps .shot img{height:70mm!important}
+.cost{grid-template-columns:1fr 1fr!important}
+.cost>div:last-child{grid-column:1 / -1}
+.sec3{grid-template-columns:1fr!important;gap:8mm}
+.price{grid-template-columns:repeat(3,1fr)}
+td:first-child,.tt td:first-child{width:42mm}
+td.who,.tt td.who{width:36mm}
+table{font-size:9.6pt}
+.app-phones,.ph-row{flex-wrap:wrap;gap:6mm}
+.phone img,.ph-row .phone img{height:112mm!important}
+/* capa */
+.cover{display:flex!important;flex-direction:column;padding:0!important}
+.cover .l{padding:20mm 18mm 8mm}
+.cover .l img{width:58mm}
+.cover h1{margin-top:22mm;font-size:38pt}
+.cover p{max-width:none;font-size:12.5pt}
+.cover .r{flex:1;min-height:0}
+.cover .r .s1{left:18mm;top:6mm;width:150mm}
+.cover .r .s2{left:140mm;top:44mm;width:44mm}
+.cover .arc{right:-50mm;top:20mm}
+.end .c{flex-direction:column;gap:3mm;align-items:center}
+/* ajustes finos do retrato */
+.three{gap:4mm;margin-top:5mm}
+.three .card{padding:4.5mm 6mm 4mm;display:grid;grid-template-columns:52mm 1fr;column-gap:6mm;align-items:start}
+.three .card .n{grid-column:1;font-size:20pt}
+.three .card h3{grid-column:1;margin-top:1mm}
+.three .card p{grid-column:1;margin:1mm 0 0}
+.three .card ul{grid-column:2;grid-row:1 / span 3;align-self:center;font-size:9.6pt}
+.band{margin-top:5mm;padding:4mm 6mm}
+.split[style*="70mm"]{display:grid!important;grid-template-columns:62mm 1fr!important;gap:6mm!important;align-items:start!important}
+.split[style*="70mm"]>ul{grid-column:1 / -1}
+.split[style*="70mm"] .phone img{height:118mm!important}
+.split[style*="62mm"]{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6mm!important;align-items:start!important}
+.split[style*="62mm"]>div:last-child{grid-column:1 / -1;display:grid;grid-template-columns:70mm 1fr;gap:6mm;align-items:center}
+.split[style*="62mm"] .pdfprev img{height:98mm;width:auto;max-width:100%;object-fit:cover;object-position:top}
+.split[style*="62mm"] ul.f li{font-size:10pt}

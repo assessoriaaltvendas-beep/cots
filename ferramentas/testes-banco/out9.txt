@@ -1,0 +1,49 @@
+on
+N0 nivel padrao|completo
+N1 acesso|{"nome": null, "admin": true, "nivel": "completo", "dentista": false}
+N1 completo|t
+psql:test9.sql:17: ERROR:  CONTA_NAO_ENCONTRADA
+psql:test9.sql:18: ERROR:  DADOS_INVALIDOS
+N2 add lucas agenda|t
+psql:test9.sql:20: ERROR:  JA_ADMIN
+psql:test9.sql:21: ERROR:  NAO_PODE_SI_MESMA
+psql:test9.sql:22: ERROR:  NAO_PODE_SI_MESMA
+N4 lista|2|1
+N4 lucas|agenda|true|thalia@x.com
+N5 acesso lucas|{"nome": "Lucas Andrade", "admin": true, "nivel": "agenda", "dentista": true}
+N5 is_admin|t|f
+N5 ve pacientes|0|0|0
+N5 insere paciente
+psql:test9.sql:31: ERROR:  new row violates row-level security policy for table "pacientes"
+N5 ve slots consulta|1
+psql:test9.sql:33: ERROR:  SEM_PERMISSAO
+psql:test9.sql:34: ERROR:  SEM_PERMISSAO
+psql:test9.sql:35: ERROR:  SEM_PERMISSAO
+psql:test9.sql:36: ERROR:  SEM_PERMISSAO
+N5 cfg taxa|
+N5 ve dentistas|2
+N5 bloquear|t
+psql:test9.sql:40: ERROR:  SEM_PERMISSAO
+N5 calc dados|false
+N5 nome|
+N6 acesso mari|{"nome": "Mariana", "admin": false, "nivel": null, "dentista": true}
+N6 calc antes|false|null
+psql:test9.sql:48: ERROR:  SEM_PERMISSAO
+N6 log|0
+psql:test9.sql:53: ERROR:  DADOS_INVALIDOS
+N7 salvar|
+N7 liberar|
+N7 dados|true|1|2|thalia@x.com
+psql:test9.sql:57: ERROR:  DADOS_INVALIDOS
+N8 lucas completo|
+N8 lucas ve pacientes|1
+N8 lucas rebaixa thalia|
+N8 thalia (agenda) ve pacientes|0
+psql:test9.sql:66: ERROR:  SEM_PERMISSAO
+N9 ultimo completo rebaixar|
+N9 volta thalia|
+N9 remove lucas|
+N9 log|adicionou:administrador da agenda | mudou o nível:administrador da agenda → administrador completo | mudou o nível:administrador completo → administrador da agenda | mudou o nível:administrador da agenda → administrador completo | removeu:administrador completo
+N10 mari calc|true|1|null
+psql:test9.sql:80: ERROR:  permission denied for function calc_dados
+psql:test9.sql:81: ERROR:  permission denied for function meu_acesso
