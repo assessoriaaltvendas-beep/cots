@@ -7,7 +7,7 @@ Memória do projeto para o Claude Code. Leia este arquivo inteiro antes de mexer
 - Tudo precisa ser **gratuito** (planos free).
 - Cliente: Dra. Thalia Santiago, que aluga o consultório por hora para outros dentistas.
   - Site: https://www.drathaliasantiago.com.br (domínio da Hostinger apontado para a Vercel: A @ 216.198.79.1 e CNAME www; o endereço sem www redireciona para o com www; o endereço antigo https://dra-thalia-santiago.vercel.app continua funcionando)
-  - WhatsApp (31) 99574-5413 (5531995745413) · Instagram @dra.thaliasantiago
+  - Telefone (31) 99574-5413 · botões de WhatsApp vão para 553195745413 (31 9574-5413, pedido da usuária em 22/10/2026) · Instagram @dra.thaliasantiago
   - Rua Juiz de Fora, 52, Galeria Êxito, sala 208, Centro, Ipatinga/MG
 
 ## Jeito de trabalhar (combinado com a usuária)
