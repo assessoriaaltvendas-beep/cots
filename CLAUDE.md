@@ -6,7 +6,7 @@ Memória do projeto para o Claude Code. Leia este arquivo inteiro antes de mexer
 - A usuária é da assessoria que cuida do site (não é programadora). Fale sempre em **português do Brasil**, simples e direto, com passo a passo detalhado quando ela precisar clicar em algo (Supabase, GitHub, Vercel).
 - Tudo precisa ser **gratuito** (planos free).
 - Cliente: Dra. Thalia Santiago, que aluga o consultório por hora para outros dentistas.
-  - Site: https://dra-thalia-santiago.vercel.app
+  - Site: https://drathaliasantiago.com.br (domínio comprado na Hostinger, apontado para a Vercel; o endereço antigo https://dra-thalia-santiago.vercel.app continua funcionando)
   - WhatsApp (31) 99574-5413 (5531995745413) · Instagram @dra.thaliasantiago
   - Rua Juiz de Fora, 52, Galeria Êxito, sala 208, Centro, Ipatinga/MG
 
