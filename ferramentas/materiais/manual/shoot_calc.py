@@ -1,7 +1,7 @@
 import json
 from playwright.sync_api import sync_playwright
-S='/tmp/claude-0/-home-claude/dcc176e0-b17e-526f-b4d8-21aa4df71887/scratchpad'; O=S+'/manual/shots/'
-mock=open(S+'/app/mock9r.js').read()
+import os; AQUI = os.path.dirname(os.path.abspath(__file__)); RAIZ = os.path.abspath(AQUI + '/../../..'); O = AQUI + '/shots/'
+mock='window.MOCK_TERMOS_OK=1;\n' + open(RAIZ + '/ferramentas/testes-navegador/mock-supabase.js').read()
 cfg="window.APP_CONFIG={supabaseUrl:'https://abcdefghijkl.supabase.co',supabaseAnonKey:'"+'x'*60+"'};"
 seed={'slots':[],'bookings':[],'cfg':{'valorHora':50},'secret':'k','sent':[],'admins':['adm1'],'adm':{'adm1':{'nivel':'completo','nome':'Dra. Thalia Santiago'}},'faq':[],'app_config':[],'avisos':[],'problemas':[],'espera':[],
  'dentists':[{'id':'lucas1','nome':'Lucas Andrade','cro':'CRO-MG 41.122','whatsapp':'(31) 98841-5460','email':'lucas@x.com','status':'liberado','criado_em':'2026-09-01T10:00:00'}],

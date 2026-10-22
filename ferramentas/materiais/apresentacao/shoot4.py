@@ -1,10 +1,10 @@
 import json, datetime as dt, random, subprocess, os
 from playwright.sync_api import sync_playwright
-S = '/tmp/claude-0/-home-claude/dcc176e0-b17e-526f-b4d8-21aa4df71887/scratchpad'; O = S + '/pdf/shots4/'
+import os; AQUI = os.path.dirname(os.path.abspath(__file__)); RAIZ = os.path.abspath(AQUI + '/../../..'); O = AQUI + '/shots4/'
 os.makedirs(O, exist_ok=True)
-mock = open(S + '/app/mock9r.js').read()
+mock = 'window.MOCK_TERMOS_OK=1;\n' + open(RAIZ + '/ferramentas/testes-navegador/mock-supabase.js').read()
 cfg = "window.APP_CONFIG={supabaseUrl:'https://abcdefghijkl.supabase.co',supabaseAnonKey:'" + 'x' * 60 + "'};"
-T1 = open(S + '/app/v7.sql').read().split('$TERMOS$')[1]
+T1 = open(RAIZ + '/consultorio-thalia/supabase/schema.sql').read().split('$TERMOS$')[1]
 T2 = T1.replace('4 (quatro) horas', '6 (seis) horas')
 t = dt.date.today(); random.seed(3)
 ds = [('lucas1', 'Lucas Andrade', 'CRO-MG 41.122', '(31) 98841-5460', 'lucas@x.com'), ('mari', 'Mariana Costa', 'CRO-MG 38.910', '(31) 99712-3301', 'mari@x.com'), ('rafa', 'Rafael Nunes', 'CRO-MG 45.077', '(31) 98620-1188', 'rafa@x.com'), ('julia', 'Júlia Prado', 'CRO-MG 50.231', '(31) 99155-0042', 'ju@x.com')]

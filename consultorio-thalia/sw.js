@@ -1,5 +1,5 @@
 // App do consultório: abre mesmo com a internet instável e mostra as notificações no celular.
-const CACHE = 'thalia-v5';
+const CACHE = 'thalia-v6';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', 'assets/logo-vinho.webp?v=7', 'assets/logo-dourado.webp?v=7', 'assets/icon-192.png?v=7'])).catch(() => {}));
   self.skipWaiting();

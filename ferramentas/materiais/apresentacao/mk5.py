@@ -1,5 +1,5 @@
 from playwright.sync_api import sync_playwright
-S='/tmp/claude-0/-home-claude/dcc176e0-b17e-526f-b4d8-21aa4df71887/scratchpad/pdf/'
+import os; S = os.path.dirname(os.path.abspath(__file__)) + '/'
 with sync_playwright() as p:
     b=p.chromium.launch(); pg=b.new_page(); pg.goto('file://'+S+'doc5.html'); pg.wait_for_timeout(1200)
     pg.pdf(path=S+'out5.pdf',width='210mm',height='297mm',print_background=True,prefer_css_page_size=True); b.close()

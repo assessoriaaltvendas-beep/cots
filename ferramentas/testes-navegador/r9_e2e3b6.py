@@ -1,8 +1,10 @@
 import json, datetime as dt, io
 from playwright.sync_api import sync_playwright
 from PIL import Image
-S='/tmp/claude-0/-home-claude/dcc176e0-b17e-526f-b4d8-21aa4df71887/scratchpad'
-mock=open(S+'/app/mock9r.js').read()
+import os; AQUI = os.path.dirname(os.path.abspath(__file__)); RAIZ = os.path.abspath(AQUI + '/../..')
+S = os.environ.get('COTS_SAIDA', '/tmp/cots-testes')  # pasta de saída (prints, PDFs)
+os.makedirs(S + '/v3/', exist_ok=True)
+mock='window.MOCK_TERMOS_OK=1;\n' + open(AQUI + '/mock-supabase.js').read()
 cfg="window.APP_CONFIG={supabaseUrl:'https://abcdefghijkl.supabase.co',supabaseAnonKey:'"+'x'*60+"'};"
 t=dt.date.today()
 def wd(off):

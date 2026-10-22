@@ -2526,6 +2526,49 @@ end $$;
 revoke execute on function public.salvar_calc(jsonb, boolean, int, text) from public, anon;
 grant execute on function public.salvar_calc(jsonb, boolean, int, text) to authenticated;
 
+-- =====================================================================
+-- v10 (out/2026): calculadora só para administrador completo
+-- =====================================================================
+-- Dentistas e administradores da agenda não acessam mais a calculadora.
+-- A opção "liberar para os dentistas" deixou de existir (a coluna calc_liberada fica sem uso).
+create or replace function public.calc_dados() returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare c public.app_config;
+begin
+  if auth.uid() is null or not public.is_admin_completo() then raise exception 'SEM_PERMISSAO'; end if;
+  select * into c from public.app_config where id = 1;
+  return jsonb_build_object('base', c.calc_base,
+    'atualizadaEm', c.calc_atualizada_em, 'atualizadaPor', c.calc_atualizada_por,
+    'itens', c.calc_itens,
+    'log', coalesce((select jsonb_agg(jsonb_build_object('quando', l.quando, 'autor', l.autor_nome, 'acao', l.acao) order by l.quando desc)
+                 from (select * from public.calc_log order by quando desc limit 30) l), '[]'::jsonb));
+end $$;
+revoke execute on function public.calc_dados() from public, anon;
+grant execute on function public.calc_dados() to authenticated;
+
+drop policy if exists "calc_log: admin" on public.calc_log;
+drop policy if exists "calc_log: completo" on public.calc_log;
+create policy "calc_log: completo" on public.calc_log for select using (public.is_admin_completo());
+
+-- O parâmetro p_liberada continua na assinatura por compatibilidade, mas é ignorado.
+create or replace function public.salvar_calc(p_itens jsonb, p_liberada boolean, p_base int, p_acao text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not public.is_admin_completo() then raise exception 'SEM_PERMISSAO'; end if;
+  if p_itens is not null and (jsonb_typeof(p_itens) <> 'array' or jsonb_array_length(p_itens) > 200 or length(p_itens::text) > 200000) then raise exception 'DADOS_INVALIDOS'; end if;
+  update public.app_config set
+    calc_itens = coalesce(p_itens, calc_itens),
+    calc_liberada = false,
+    calc_base = coalesce(p_base, calc_base),
+    calc_atualizada_em = now(), calc_atualizada_por = public.admin_nome(auth.uid())
+  where id = 1;
+  insert into public.calc_log (autor, autor_nome, acao) values (auth.uid(), public.admin_nome(auth.uid()), left(coalesce(nullif(trim(p_acao), ''), 'alterou a calculadora'), 300));
+end $$;
+revoke execute on function public.salvar_calc(jsonb, boolean, int, text) from public, anon;
+grant execute on function public.salvar_calc(jsonb, boolean, int, text) to authenticated;
+
+update public.app_config set calc_liberada = false where id = 1 and calc_liberada;
+
 -- ---------- Arquivos: fotos do consultório (públicas) e comprovantes (privados) ----------
 do $$
 begin
