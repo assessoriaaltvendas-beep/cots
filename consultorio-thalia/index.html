@@ -2094,6 +2094,13 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
 .crumb{min-width:0;overflow:hidden}
 .crumb b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (max-width:360px){.app-top img{width:84px}.app-top-in{gap:10px}}
+/* galeria com o vídeo do tour */
+.gal-wrap{display:grid;grid-template-columns:minmax(0,1fr) 236px;gap:12px;align-items:stretch}
+.tour{position:relative;margin:0;border-radius:20px;overflow:hidden;background:var(--deep);box-shadow:var(--shadow)}
+.tour video{display:block;width:100%;height:100%;object-fit:cover;background:var(--deep)}
+.tour figcaption{position:absolute;left:12px;top:12px;padding:6px 12px;border-radius:999px;background:rgba(61,0,15,.78);color:#fff;font:600 .78rem var(--font-body);pointer-events:none}
+.gal-item{box-shadow:var(--shadow-sm)}
+@media (max-width:860px){.gal-wrap{grid-template-columns:minmax(0,1fr)}.tour{width:100%;max-width:300px;justify-self:center;aspect-ratio:464/832}}
 @keyframes rdMenu{from{opacity:0;transform:translateY(-6px) scale(.97)}to{opacity:1;transform:none}}
 @keyframes rdSheet{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:no-preference){
@@ -2153,8 +2160,8 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
             </div>
           </div>
           <div class="hero-media">
-            <figure class="hero-photo" id="hero-photo">
-              <div class="ph" role="img" aria-label="Foto do consultório em breve"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span>Foto do consultório em breve</span></div>
+            <figure class="hero-photo tem-foto" id="hero-photo">
+              <img src="assets/consultorio/consultorio-sala.webp" alt="Sala de atendimento do consultório" width="1086" height="1448" fetchpriority="high">
             </figure>
             <aside class="agenda" aria-label="Próximos horários livres">
               <div class="agenda-head"><p class="eyebrow"><i class="live" aria-hidden="true"></i>Agenda ao vivo</p><h3>Próximos horários</h3></div>
@@ -2183,8 +2190,11 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
 
       <section class="sec about" id="sobre" aria-label="O consultório"><div class="in">
         <div class="sec-head"><div><p class="eyebrow">O consultório</p><h2>Estrutura pronta para você <em>atender com tranquilidade</em></h2></div><p>Um espaço odontológico no Centro de Ipatinga para profissionais que querem atender sem o custo de manter um consultório próprio.</p></div>
-        <div id="fotos" hidden>
-          <div class="gal" id="gal"></div>
+        <div id="fotos">
+          <div class="gal-wrap">
+            <div class="gal" id="gal"></div>
+            <figure class="tour"><video controls preload="none" playsinline poster="assets/consultorio/tour-capa.webp" width="464" height="832" aria-label="Vídeo: tour pelo consultório"><source src="assets/consultorio/tour.mp4" type="video/mp4"></video><figcaption>Tour pelo consultório</figcaption></figure>
+          </div>
           <p class="hint gal-hint">Toque em uma foto para ver maior.</p>
         </div>
         <div class="gal-ph" aria-label="Fotos do consultório">
@@ -2547,7 +2557,7 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
         <div class="page-head"><div><p class="eyebrow">Conteúdo da página inicial</p><h2>Site</h2></div><a class="ghost" href="#" style="text-decoration:none">Ver site</a></div>
         <div class="card">
           <div class="card-head"><h3>Fotos do consultório</h3><span class="hint" id="sf-count"></span></div>
-          <p class="hint">Aparecem na galeria da página inicial. Envie fotos da sala, da recepção e dos equipamentos. A primeira foto aparece maior.</p>
+          <p class="hint">Aparecem na galeria da página inicial. Envie fotos da sala, da recepção e dos equipamentos. A primeira foto aparece maior e também vai para o topo da página. Enquanto nenhuma foto for enviada aqui, o site mostra as fotos do consultório que já vêm com ele.</p>
           <label class="upload"><input type="file" id="sf-file" accept="image/*" multiple><span>+ Adicionar fotos</span></label>
           <div id="sf-fb" role="status"></div>
           <div class="sf-grid" id="sf-grid"></div>
@@ -3835,7 +3845,7 @@ function renderDLogin() {
   $('dl-eyebrow').textContent = st === 'new' ? 'Nova senha' : 'Área do dentista';
   if (location.hash === '#admin' && st === 'login') { $('dl-eyebrow').textContent = 'Acesso'; $('dl-title').textContent = 'Entre na sua conta'; $('dl-lead').textContent = 'Use o e-mail e a senha da sua conta. Quem é administrador vai direto para o painel.'; }
   if (st === 'reg') renderTermosReg();
-  if (S.fotos && S.fotos.length) fotoDestaque(S.fotos);
+  fotoDestaque();
 }
 document.querySelectorAll('#dl-seg [data-dl]').forEach(b => b.addEventListener('click', () => { S.dl.stage = b.dataset.dl; $('dl-fb').innerHTML = ''; renderDLogin(); }));
 $('dl-login').addEventListener('submit', async e => {
@@ -4946,13 +4956,23 @@ function renderFAQ() {
   $('faq-list').innerHTML = fq.length ? fq.map((x, i) => `<details class="faq-item"${i === 0 ? ' open' : ''}><summary>${esc(x.pergunta)}</summary><p>${esc(x.resposta)}</p></details>`).join('')
     : '<div class="faq-empty"><b>As perguntas frequentes serão publicadas em breve.</b><span>Enquanto isso, tire suas dúvidas direto com a Dra. Thalia pelo WhatsApp.</span></div>';
 }
-// Foto real do consultório (galeria do Supabase) no topo da página e no login; sem foto, fica o aviso "em breve".
-function fotoDestaque(fotos) {
-  const f = fotos[0], hp = $('hero-photo'), dl = $('dl-img');
-  hp.classList.toggle('tem-foto', !!f);
-  hp.innerHTML = f ? `<img src="${esc(f.url)}" alt="Foto do consultório" width="1200" height="900" fetchpriority="high">`
-    : '<div class="ph" role="img" aria-label="Foto do consultório em breve"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span>Foto do consultório em breve</span></div>';
-  if (dl) dl.style.backgroundImage = f ? `url("${encodeURI(f.url)}")` : '';
+// Fotos do consultório que vêm com o site. As enviadas pela aba Site (Supabase) têm prioridade sobre elas.
+const FOTOS_PADRAO = [
+  { url: 'assets/consultorio/consultorio-panorama.webp', alt: 'Sala de atendimento com cadeira odontológica, bancada e armários' },
+  { url: 'assets/consultorio/consultorio-cadeira.webp', alt: 'Cadeira odontológica e refletor' },
+  { url: 'assets/consultorio/consultorio-bancada.webp', alt: 'Bancada com cuba e espelho dourado' },
+  { url: 'assets/consultorio/consultorio-mesa.webp', alt: 'Mesa de atendimento com duas cadeiras' },
+  { url: 'assets/consultorio/consultorio-autoclave.webp', alt: 'Bancada com pia e autoclave' }
+];
+const FOTO_TOPO = { url: 'assets/consultorio/consultorio-sala.webp', alt: 'Sala de atendimento do consultório' };
+const FOTO_LOGIN = 'assets/consultorio/consultorio-equipo.webp';
+const fotosSite = () => (S.fotos && S.fotos.length ? S.fotos : FOTOS_PADRAO);
+// Foto do topo da página e do login.
+function fotoDestaque() {
+  const proprias = !!(S.fotos && S.fotos.length), f = proprias ? S.fotos[0] : FOTO_TOPO, hp = $('hero-photo'), dl = $('dl-img');
+  const img = hp.querySelector('img');
+  if (!img || img.getAttribute('src') !== f.url) hp.innerHTML = `<img src="${esc(f.url)}" alt="${esc(f.alt || 'Foto do consultório')}" width="1086" height="1448" fetchpriority="high">`;
+  if (dl) dl.style.backgroundImage = `url("${encodeURI(proprias ? f.url : FOTO_LOGIN)}")`;
 }
 // Card "A partir de R$ … por hora": só aparece com valor configurado nos Ajustes.
 function renderPrecoTopo() {
@@ -4963,17 +4983,16 @@ function renderPrecoTopo() {
   $('hp-t').textContent = CFG.pix ? ' por hora · Pix' : ' por hora';
 }
 function renderGallery() {
-  const fotos = S.fotos || [], sig = fotos.map(p => p.name).join('|');
-  $('fotos').hidden = !fotos.length;
+  const fotos = fotosSite(), sig = fotos.map(p => p.name || p.url).join('|');
   if (sig === S.galSig) return; S.galSig = sig;
-  fotoDestaque(fotos);
+  fotoDestaque();
   $('gal').className = 'gal c' + Math.min(fotos.length, 3);
-  $('gal').innerHTML = fotos.slice(0, 9).map((p, i) => `<button type="button" class="gal-item${i === 0 ? ' big' : ''}" data-foto="${i}" aria-label="Ver foto ${i + 1} ampliada"><img src="${esc(p.url)}" alt="Foto do consultório ${i + 1}" loading="lazy"></button>`).join('');
+  $('gal').innerHTML = fotos.slice(0, 9).map((p, i) => `<button type="button" class="gal-item${i === 0 ? ' big' : ''}" data-foto="${i}" aria-label="Ver foto ${i + 1} ampliada"><img src="${esc(p.url)}" alt="${esc(p.alt || `Foto do consultório ${i + 1}`)}" loading="lazy"></button>`).join('');
 }
 function lbShow(i) {
-  const fotos = S.fotos || []; if (!fotos.length) return;
+  const fotos = fotosSite(); if (!fotos.length) return;
   S.lbI = (i + fotos.length) % fotos.length;
-  $('lb-img').src = fotos[S.lbI].url; $('lb').hidden = false;
+  $('lb-img').src = fotos[S.lbI].url; $('lb-img').alt = fotos[S.lbI].alt || 'Foto do consultório'; $('lb').hidden = false;
 }
 document.addEventListener('click', e => {
   const el = e.target.closest && e.target.closest('[data-foto]');
