@@ -11,8 +11,9 @@
 <meta property="og:site_name" content="Consultório Thalia Santiago">
 <meta property="og:title" content="Consultório Thalia Santiago · Aluguel por hora em Ipatinga">
 <meta property="og:description" content="Reserve por hora o consultório odontológico no Centro de Ipatinga. Veja os horários livres e confirme em poucos passos.">
-<meta property="og:url" content="https://dra-thalia-santiago.vercel.app/">
-<meta property="og:image" content="https://dra-thalia-santiago.vercel.app/assets/og.png?v=7">
+<meta property="og:url" content="https://drathaliasantiago.com.br/">
+<link rel="canonical" href="https://drathaliasantiago.com.br/">
+<meta property="og:image" content="https://drathaliasantiago.com.br/assets/og.png?v=7">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -1295,6 +1296,823 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
   .rv.rv-in{opacity:1;transform:none}
   .top,.app-top{transition:box-shadow .2s}
 }
+/* ---------- redesign v10: sistema visual (cores, formas, sombras e movimento) ---------- */
+:root{
+  --bg:#faf6f3; --soft:#f5eeea; --surface:#ffffff; --line:#ece2dc; --line-strong:#e2d4cd;
+  --ink:#22151a; --muted:#6c5c61; --muted-2:#5d4c51;
+  --accent:#590117; --accent-h:#6d0d26; --accent-ink:#ffffff; --accent-soft:#f6ebee; --outline:#c9a7ad;
+  --gold:#b48d48; --gold-soft:#f5ecdc; --gold-ink:#8a6a2a; --hi:#e8cf98; --deep:#3d000f;
+  --app-bg:#faf6f3; --band:#590117; --band-ink:#e8cf98;
+  --busy:#a3979a; --busy-soft:#ebe4e1; --past:#f3eeeb; --danger:#b3261e; --ok:#1f7a4d; --ok-soft:#e7f4ec;
+  --st-ok:#1f7a4d; --st-ok-bg:#e7f4ec; --st-pend:#7a4a00; --st-pend-bg:#fbf0dd; --st-comp:#3b4a9a; --st-comp-bg:#eef0fb;
+  --st-busy:#a3979a; --st-busy-bg:#ebe4e1; --st-canc:#b3261e; --st-canc-bg:#fbeceb;
+  --ring:rgba(89,1,23,.14);
+  --shadow:0 1px 2px rgba(34,21,26,.05),0 18px 40px -24px rgba(89,1,23,.3);
+  --shadow-sm:0 1px 2px rgba(34,21,26,.05),0 8px 20px -14px rgba(89,1,23,.25);
+  --shadow-lg:0 1px 2px rgba(34,21,26,.06),0 30px 60px -28px rgba(89,1,23,.45);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --r-card:22px; --r-field:14px;
+  --gold-ink-d:#8a6a2a;
+}
+body.tema-escuro{
+  --outline:#6b3b49; --accent-h:#ecd59f; --deep:#12060a; --muted-2:#cdb9be; --st-comp:#b4bdff; --st-comp-bg:#1f2442;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 18px 40px -24px rgba(0,0,0,.65);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3),0 8px 20px -14px rgba(0,0,0,.55);
+  --shadow-lg:0 1px 2px rgba(0,0,0,.35),0 30px 60px -28px rgba(0,0,0,.7);
+}
+body{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+h1,h2,h3{font-weight:500;letter-spacing:-.01em}
+h1 em,h2 em{font-style:italic;color:var(--accent);font-weight:500}
+.eyebrow{font-weight:600;letter-spacing:.16em;font-size:.72rem}
+::selection{background:var(--accent-soft);color:var(--accent)}
+svg.i.arr{width:18px;height:18px}
+
+/* botões: pílula, vinho nas ações */
+.cta{min-height:50px;padding:14px 26px;background:var(--accent);color:var(--accent-ink);font:600 .95rem/1.2 var(--font-body);letter-spacing:0;box-shadow:var(--shadow-sm)}
+.cta:hover{background:var(--accent-h)}
+.cta.line{background:var(--surface);color:var(--ink);border:1px solid var(--outline);box-shadow:none}
+.cta.line:hover{border-color:var(--accent);color:var(--accent);background:var(--surface)}
+.cta.gold{background:var(--hi);color:var(--deep);box-shadow:none}
+.cta.gold:hover{background:#f0dcae}
+.cta.ghostw{background:transparent;color:#fff;border:1px solid rgba(232,207,152,.45);box-shadow:none}
+.cta.ghostw:hover{background:rgba(255,255,255,.08);border-color:var(--hi)}
+.cta.sm{min-height:44px;padding:11px 20px;font-size:.9rem}
+.primary{min-height:46px;padding:12px 24px;background:var(--accent);font:600 .92rem var(--font-body);letter-spacing:0}
+.primary:hover:not(:disabled){background:var(--accent-h)}
+.primary.sm{min-height:38px;padding:8px 16px;font-size:.85rem}
+.ghost{background:var(--surface);border-color:var(--outline);color:var(--ink);font-weight:500;min-height:42px}
+.ghost:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.ghost.sm{min-height:36px}
+.pill{background:var(--surface);border-color:var(--outline);color:var(--accent);font-weight:600;padding:10px 22px;font-size:.9rem}
+.pill:hover{border-color:var(--accent);background:var(--accent-soft)}
+.danger{border-color:color-mix(in srgb,var(--danger) 50%,transparent);color:var(--danger);font-weight:500}
+.go-gold{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font:600 .88rem var(--font-body)}
+.go-gold svg.i.arr{width:16px;height:16px}
+.link{color:var(--muted-2)}
+.link:hover{color:var(--accent)}
+.icon-btn{border-color:var(--line-strong);background:var(--surface);color:var(--ink)}
+.icon-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+
+/* campos */
+input,textarea,select{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-field);color:var(--ink)}
+input:not([type=checkbox]):not([type=radio]):not([type=file]),select{min-height:46px}
+input::placeholder,textarea::placeholder{color:#a3979a;opacity:1}
+input:hover:not(:disabled):not(:focus):not(.inv),textarea:hover:not(:focus):not(.inv),select:hover:not(:focus){border-color:var(--outline)}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 4px var(--ring)}
+label{color:var(--muted-2);font-size:.82rem;font-weight:500;letter-spacing:0}
+input.inv,textarea.inv,select.inv{border-color:var(--danger)!important;background:var(--surface)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--danger) 14%,transparent)!important}
+.f-err{display:flex;align-items:flex-start;gap:6px;color:var(--danger);font:500 .8rem/1.4 var(--font-body);letter-spacing:0;margin-top:-2px}
+.f-err::before{content:"!";flex:none;width:16px;height:16px;border-radius:50%;background:var(--danger);color:#fff;font:700 .66rem/16px var(--font-body);text-align:center;margin-top:1px}
+.msg{border-radius:var(--r-field)}
+.msg.err{background:var(--st-canc-bg);color:var(--danger)}
+.check input,label.sw input{accent-color:var(--accent)}
+
+/* selos de status */
+.tag{font:600 .68rem/1 var(--font-body);letter-spacing:.06em;padding:6px 10px;border-radius:999px;background:var(--past);color:var(--muted-2)}
+.tag.pago{background:var(--st-ok-bg);color:var(--st-ok)}
+.tag.pend{background:var(--st-pend-bg);color:var(--st-pend)}
+.tag.comp{background:var(--st-comp-bg);color:var(--st-comp)}
+.tag.cancelado,.tag.taxa{background:var(--st-canc-bg);color:var(--st-canc)}
+.tag.agendado,.tag.plano{background:var(--accent-soft);color:var(--accent)}
+.tag.andamento{background:var(--accent);color:var(--accent-ink)}
+.tag.concluido{background:var(--past);color:var(--muted)}
+.tag.nova,.tag.credito{background:var(--gold-soft);color:var(--gold-ink)}
+
+/* superfícies */
+.card{border-radius:var(--r-card);border-color:var(--line);box-shadow:var(--shadow)}
+.sheet{border-radius:24px;border-color:var(--line);box-shadow:var(--shadow)}
+.summary{background:var(--bg);border-color:var(--line);border-radius:16px}
+.notice{border-radius:18px;border-color:var(--line)}
+.notice.gold,.alert{background:var(--gold-soft);border-color:color-mix(in srgb,var(--gold) 35%,transparent)}
+.alert{border-radius:20px}
+.empty svg{color:var(--gold)}
+.chip{border-color:var(--line-strong);background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.seg{background:var(--soft);border-color:var(--line);padding:4px}
+.seg button{padding:8px 16px;font-weight:500;color:var(--muted-2)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent);font-weight:600;box-shadow:var(--shadow-sm)}
+body.tema-escuro .seg button[aria-pressed="true"]{background:var(--accent-soft)}
+
+/* ---------- site público ---------- */
+.topbar{background:var(--deep);color:#ecdcc3}
+.topbar .in{min-height:40px}
+.topbar svg.i{color:var(--hi)}
+.tb-r{color:#ecdcc3}
+.top{background:rgba(250,246,243,.84);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.top{background:var(--bg)}}
+body.rolou .top{border-bottom-color:var(--line);box-shadow:0 12px 30px -24px rgba(89,1,23,.4)}
+.top-in{min-height:76px;gap:16px}
+.top .logo img{width:132px}
+.mainnav{gap:2px;margin-left:auto}
+.top .mainnav .t{padding:9px 14px;border-radius:999px;color:var(--muted-2);font-weight:500;font-size:.92rem}
+.top .mainnav .t:hover{color:var(--accent);background:var(--accent-soft)}
+.top-r{gap:12px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);place-items:center;padding:0;flex:none}
+.menu-btn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.menu-btn path{transform-origin:12px 12px}
+.top.menu-open .menu-btn .m1{transform:translateY(4.5px) rotate(45deg)}
+.top.menu-open .menu-btn .m2{opacity:0}
+.top.menu-open .menu-btn .m3{transform:translateY(-4.5px) rotate(-45deg)}
+@media (max-width:960px){
+  .menu-btn{display:grid}
+  .top-r{margin-left:auto}
+  .mainnav{display:grid;position:absolute;left:12px;right:12px;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:8px;box-shadow:var(--shadow-lg);gap:2px;opacity:0;visibility:hidden;transform:translateY(-6px);pointer-events:none}
+  .top.menu-open .mainnav{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+  .top .mainnav{display:grid}
+  .top .mainnav .t{display:block;padding:14px 16px;font-size:1rem;color:var(--ink);border-radius:14px}
+}
+@media (max-width:560px){
+  .top-in{min-height:66px}.top .logo img{width:108px}.pill{padding:9px 16px}
+  .topbar .tb-l{display:none}
+  .topbar .in{justify-content:flex-end}
+}
+
+/* hero */
+.hero2{overflow:visible;background:radial-gradient(900px 480px at 88% -8%,var(--accent-soft),transparent 62%),var(--bg);padding-block:clamp(32px,5.5vw,76px) clamp(56px,7vw,100px)}
+.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"text media" "ben media";gap:32px clamp(32px,5vw,80px);align-items:center}
+.hero-text{grid-area:text;align-self:end}
+.hero-media{grid-area:media;position:relative;min-width:0;padding:0 0 28px 0}
+.benefits{grid-area:ben;align-self:start}
+.hero2 h1{font-size:clamp(2.3rem,3.9vw,3.55rem);line-height:1.06;margin:18px 0 20px;font-weight:500;letter-spacing:-.02em}
+.hero-photo .ph{align-content:start;padding-top:18%}
+.est-sec + .loc{padding-top:0}
+.hero2 h1 .br{display:block}
+.hero2 .lead{font-size:1.1rem;line-height:1.65;color:var(--muted);max-width:32em}
+.hero2 .btns{margin:30px 0 0;gap:12px}
+.benefits{list-style:none;margin:6px 0 0;padding:24px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.benefits li{display:grid;gap:10px;align-content:start;font-size:.86rem;color:var(--muted);line-height:1.45;min-width:0}
+.benefits .ic{width:40px;height:40px;border-radius:12px;background:var(--gold-soft);color:var(--gold-ink);display:grid;place-items:center}
+.benefits .ic svg.i{width:20px;height:20px}
+.benefits b{display:block;color:var(--ink);font-weight:600;font-size:.93rem;margin-bottom:2px}
+.hero-photo{margin:0 0 0 auto;width:min(100%,540px);aspect-ratio:4/5;max-height:640px;border-radius:28px;overflow:hidden;background:var(--soft);box-shadow:var(--shadow)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ph{width:100%;height:100%;display:grid;place-items:center;align-content:center;gap:12px;text-align:center;color:var(--gold-ink);padding:20px;border-radius:inherit;border:1px dashed #dcc8b6;
+  background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(180,141,72,.07) 14px 15px),linear-gradient(160deg,#f7eee7,#efe3da)}
+.ph svg{width:52px;height:52px;fill:none;stroke:currentColor;stroke-width:.9;opacity:.55}
+.ph span{font:500 .84rem var(--font-body);letter-spacing:.03em}
+.hero-media .agenda{position:absolute;left:0;bottom:0;top:auto;right:auto;width:min(370px,74%);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow-lg);gap:12px}
+.agenda .eyebrow{color:var(--gold-ink);display:flex;align-items:center;gap:8px}
+.live{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px var(--ok-soft);display:inline-block}
+.hero-media .agenda h3{color:var(--ink);font-size:1.3rem;margin:4px 0 0}
+#free-list{gap:14px}
+.agenda .lbl{font-size:.8rem}
+.agenda .lbl b{font-weight:600;color:var(--ink)}
+.agenda .lbl span{color:var(--muted)}
+.agenda .slots{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.agenda .slot{border:1px solid var(--outline);color:var(--ink);background:var(--surface);border-radius:999px;padding:5px 0;font:500 .72rem var(--font-body);text-align:center;min-width:0}
+.agenda button.slot:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.agenda .slot.off{color:var(--busy);background:var(--busy-soft);border-color:transparent;text-decoration:line-through}
+.agenda .hint{color:var(--muted)}
+.agenda-foot{margin-top:2px;border-top:1px solid var(--line);padding-top:12px;font-size:.78rem;color:var(--muted)}
+.lg{display:inline-flex;align-items:center;gap:6px}
+.lg i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.lg-free{border:1px solid var(--outline);background:var(--surface)}
+.lg-busy{background:var(--busy-soft);margin-left:8px}
+.price-card{position:absolute;right:-14px;top:32px;z-index:1;background:var(--deep);color:#fff;border-radius:18px;padding:14px 18px;display:flex;gap:12px;align-items:center;box-shadow:0 24px 48px -24px rgba(61,0,15,.75)}
+.price-card[hidden]{display:none}
+.price-card .ic{width:38px;height:38px;border-radius:12px;background:rgba(232,207,152,.14);color:var(--hi);display:grid;place-items:center;flex:none}
+.price-card small{display:block;color:#d9c2c6;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
+.price-card b{font:500 1.4rem/1.1 var(--font-display);color:var(--hi)}
+.price-card span span{font-size:.86rem;color:#f1e4e6}
+@media (max-width:1100px){.price-card{right:0}}
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"text" "media" "ben";gap:28px}
+  .hero-text{align-self:auto}
+  .hero-media{padding:0}
+  .hero-photo{width:100%;aspect-ratio:4/3;max-height:none;margin:0}
+  .hero-media .agenda{position:relative;left:auto;bottom:auto;width:auto;margin:-56px 16px 0}
+  .price-card{top:16px;right:16px}
+  .benefits{margin:0}
+}
+@media (max-width:560px){
+  .hero2{padding-top:24px}
+  .hero2 h1{margin:14px 0 16px}
+  .hero2 .btns{margin-top:24px}
+  .hero-photo{aspect-ratio:5/4;border-radius:22px}
+  .hero-media .agenda{margin:-44px 10px 0;padding:16px}
+  .price-card{top:12px;right:12px;padding:10px 14px;gap:10px}
+  .price-card .ic{display:none}
+  .price-card b{font-size:1.15rem}
+  .benefits{grid-template-columns:minmax(0,1fr);gap:14px;padding-top:20px}
+  .benefits li{grid-template-columns:auto minmax(0,1fr);align-items:center;gap:14px}
+}
+
+/* seções */
+.sec{padding-block:clamp(64px,9vw,112px)}
+.sec-head{margin-bottom:clamp(28px,4vw,48px)}
+.sec-head h2,.faq-grid h2,.loc-info h2,.cta-band h2{font-weight:500;line-height:1.12}
+.sec-head h2,.faq-grid h2{font-size:clamp(2rem,3.6vw,2.75rem)}
+.sec-head p,.faq-grid .lead2{color:var(--muted)}
+.steps4::before{border-top:1px dashed var(--outline);top:51px}
+.step4{background:var(--surface);border-color:var(--line);border-radius:22px;box-shadow:var(--shadow);padding:26px 24px}
+.step4 .n{background:var(--accent-soft);color:var(--accent);box-shadow:0 0 0 8px var(--surface);font-weight:500}
+.step4 h3{font-size:1.3rem}
+.tag4{background:var(--gold-soft);color:var(--gold-ink)}
+.about{background:var(--surface);border-block:1px solid var(--line);overflow:visible}
+.about-grid{grid-template-columns:minmax(0,1.45fr) minmax(0,.55fr);gap:16px;align-items:stretch;margin-top:16px}
+.feat{gap:14px}
+.feat > div{background:var(--bg);border-color:var(--line);border-radius:20px;padding:20px}
+.feat .ic{background:var(--accent-soft);color:var(--accent)}
+.sig-card{position:relative;overflow:hidden;background:var(--deep);border-radius:24px;padding:28px;display:grid;gap:16px;align-content:center;justify-items:start;color:#f1e4e6;background-image:radial-gradient(400px 220px at 100% 0%,rgba(232,207,152,.16),transparent 70%)}
+.sig-card img{width:min(190px,70%);height:auto}
+.sig-card p{margin:0;display:grid;gap:2px}
+.sig-card b{font:500 1.25rem var(--font-display);color:#fff}
+.sig-card span{font-size:.85rem;color:#d9c2c6}
+.gal-ph{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-rows:repeat(2,clamp(150px,17vw,220px));gap:12px}
+.gal-ph .big{grid-row:span 2}
+.gal-ph .ph{border-radius:20px}
+#fotos:not([hidden]) ~ .gal-ph{display:none}
+.gal{gap:12px}
+.gal-item{border-radius:20px}
+.gal-hint{margin-top:10px}
+@media (max-width:960px){.about-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.gal-ph{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:180px 120px}.gal-ph .big{grid-column:1/-1;grid-row:auto}.sig-card{padding:22px}}
+/* valores */
+.est-sec .in{display:block}
+.est-pz{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.pz{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;gap:10px;box-shadow:var(--shadow);align-content:start}
+.pz span{font:600 .72rem var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink)}
+.pz b{font:500 clamp(1.7rem,2.6vw,2.1rem)/1.1 var(--font-display);color:var(--ink);white-space:nowrap}
+.pz b i{font:400 .88rem var(--font-body);color:var(--muted);font-style:normal;margin-left:4px}
+.pz small{color:var(--muted);font-size:.86rem;line-height:1.45}
+.pz.dest{background:var(--accent);border-color:var(--accent)}
+.pz.dest span{color:var(--hi)}
+.pz.dest b{color:#fff}
+.pz.dest b i,.pz.dest small{color:#ecd7da}
+.est-eq{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px}
+.est-cta{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+@media (max-width:1100px){.est-pz{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.est-pz{grid-template-columns:minmax(0,1fr)}.est-cta .cta{flex:1 1 100%}}
+/* localização */
+.loc{padding-bottom:clamp(64px,9vw,112px)}
+.loc-grid{border-color:var(--line);border-radius:28px;box-shadow:var(--shadow)}
+.map{background:var(--soft)}
+.loc-info h2{font-size:clamp(1.8rem,3vw,2.3rem)}
+.row2 .ic{background:var(--gold-soft);color:var(--gold-ink)}
+/* dúvidas */
+.faq-sec{background:var(--surface);border-top:1px solid var(--line)}
+.faq-item{background:var(--bg);border-color:var(--line);border-radius:18px;padding:0}
+.faq-item summary{padding:18px 20px 18px 22px;font:500 1.08rem/1.35 var(--font-display);border-radius:18px}
+.faq-item summary::after{content:"";width:30px;height:30px;border-radius:50%;border:1px solid var(--line-strong);flex:none;
+  background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 6v12M6 12h12' fill='none' stroke='%23590117' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/13px no-repeat}
+.faq-item[open] summary::after{content:"";transform:rotate(45deg)}
+.faq-item[open]{background:var(--surface);border-color:var(--outline)}
+.faq-item p{margin:0;padding:0 22px 20px}
+.faq-empty{border:1px dashed var(--outline);border-radius:20px;padding:24px;display:grid;gap:6px;background:var(--bg)}
+.faq-empty span{color:var(--muted);font-size:.92rem}
+/* faixa de chamada e rodapé */
+.cta-band{margin-top:clamp(56px,8vw,96px);background:var(--accent);border-radius:32px;background-image:radial-gradient(640px 320px at 92% -10%,rgba(232,207,152,.2),transparent 62%)}
+.cta-band .eyebrow{color:var(--hi);margin-bottom:10px}
+.cta-band h2 em{color:var(--hi)}
+.cta-band p{color:#ecd7da}
+.site-foot{background:var(--deep);color:#dcc6ca}
+.site-foot h4{color:var(--hi)}
+@media (max-width:760px){
+  .site-foot .fcols{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}
+  .site-foot .fcols>div:first-child{grid-column:1/-1}
+  .site-foot .fcols>div:nth-child(2){display:block}
+}
+@media (max-width:380px){.site-foot .fcols{grid-template-columns:minmax(0,1fr)}}
+/* passos antigos da reserva pública */
+#view-public > .sheet{margin:40px auto 56px}
+
+/* login e criar conta: tela dividida */
+#site > #view-dlogin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;max-width:none;margin:0;padding:0;border:0;border-radius:0;background:var(--bg);box-shadow:none;min-height:calc(100svh - 116px);gap:0}
+#site:has(> #view-dlogin:not([hidden])) .site-foot{display:none}
+.dl-side{position:relative;overflow:hidden;background:var(--deep);color:#f1e4e6;display:grid;align-items:end;padding:clamp(32px,5vw,64px)}
+.dl-img{position:absolute;inset:0;background:center/cover no-repeat;opacity:.42;
+  background-image:radial-gradient(520px 320px at 85% 10%,rgba(232,207,152,.35),transparent 70%),repeating-linear-gradient(135deg,transparent 0 22px,rgba(232,207,152,.08) 22px 23px)}
+.dl-side::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(61,0,15,.1) 0%,rgba(61,0,15,.88) 85%);pointer-events:none}
+.dl-side-in{position:relative;z-index:1;display:grid;gap:22px;max-width:460px}
+.dl-side-in img{width:150px;height:auto}
+.dl-side-t{margin:0;font:500 clamp(1.9rem,3vw,2.6rem)/1.12 var(--font-display);color:#fff;letter-spacing:-.01em}
+.dl-side-t em{color:var(--hi);font-style:italic;display:block}
+.dl-ben{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.dl-ben li{display:flex;gap:12px;align-items:center;font-size:.93rem;color:#ecdde0}
+.dl-ben svg.i{width:34px;height:34px;padding:7px;border-radius:50%;border:1px solid rgba(232,207,152,.4);color:var(--hi)}
+.dl-main{display:grid;place-items:center;padding:clamp(28px,5vw,64px) 20px;min-width:0}
+.dl-box{width:min(440px,100%);display:grid;gap:16px}
+.dl-box h2{font-size:clamp(1.8rem,3vw,2.3rem)}
+.dl-box > .hint{font-size:.92rem}
+.dl-tabs:not([hidden]){display:grid;grid-template-columns:1fr 1fr;width:100%}
+.dl-tabs button{padding:10px;font-size:.92rem}
+#view-dlogin form{gap:14px}
+#view-dlogin form .primary{width:100%;min-height:50px;margin-top:4px}
+.dl-back{justify-self:center}
+#dl-login .primary.is-loading::after{content:"Entrando…";left:0;right:0;top:50%;width:auto;height:auto;margin:0;transform:translateY(-50%);border:0;border-radius:0;text-align:center;font:600 .92rem var(--font-body);color:var(--accent-ink);-webkit-text-fill-color:var(--accent-ink);animation:none!important}
+@media (max-width:860px){
+  #site > #view-dlogin{grid-template-columns:minmax(0,1fr);min-height:0}
+  .dl-side{min-height:230px;padding:24px 20px 64px;align-items:end}
+  .dl-side-in{gap:12px}
+  .dl-side-in img{width:110px}
+  .dl-side-t{font-size:1.6rem}
+  .dl-ben{display:none}
+  .dl-main{position:relative;z-index:2;margin-top:-36px;background:var(--bg);border-radius:28px 28px 0 0;padding:28px 16px 40px;place-items:start center}
+}
+
+/* ---------- área do dentista e painel ---------- */
+.app{background:var(--app-bg)}
+.app-top{background:var(--surface);background-image:none;color:var(--ink);border-bottom:1px solid var(--line)}
+.app-top-in{min-height:72px;padding-block:8px;gap:18px}
+.app-top img{width:112px}
+.app-top .lg-escuro,body.tema-escuro .app-top .lg-claro{display:none}
+body.tema-escuro .app-top .lg-escuro{display:block}
+.crumb{color:var(--muted);border-left-color:var(--line)}
+.crumb b{color:var(--ink);font-weight:600}
+.who{color:var(--muted-2)}
+.who .avatar{background:var(--accent-soft);color:var(--accent)}
+body.rolou .app-top{box-shadow:0 12px 30px -24px rgba(89,1,23,.4)}
+.app-body{grid-template-columns:256px minmax(0,1fr)}
+.side{padding:20px 14px;gap:2px;background:var(--surface);border-right-color:var(--line)}
+.side a,.side button{border-radius:12px;padding:11px 14px;font-weight:500;color:var(--muted-2)}
+.side .ic{color:currentColor;opacity:.75}
+.side button:hover,.side a:hover{background:var(--bg);color:var(--ink)}
+.side [aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.side [aria-current="page"] .ic{opacity:1}
+.side > [aria-current="page"]::before{content:"";position:absolute;left:-14px;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+.side-foot{border-top-color:var(--line)}
+.side a.side-help{background:var(--deep);color:#f1e4e6}
+.side-help span:last-child{color:var(--hi)}
+.badge{background:var(--accent);color:var(--accent-ink)}
+@media (max-width:820px){
+  .app-body{grid-template-columns:minmax(0,1fr)}
+  .app-top-in{min-height:60px}
+  .app-top img{width:92px}
+  .side{min-height:calc(72px + env(safe-area-inset-bottom,0px));align-items:stretch;border-top-color:var(--line);box-shadow:0 -12px 30px -24px rgba(89,1,23,.35)}
+  .side button,.side .more-btn{justify-content:center;border-radius:14px;color:var(--muted-2)}
+  .side > [aria-current="page"]::before{left:28%;right:28%;top:-8px;bottom:auto;width:auto;height:3px;border-radius:0 0 3px 3px}
+  .app-main{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+}
+.page-head h2{font-size:clamp(1.75rem,2.6vw,2.3rem);font-weight:500}
+.page-head.greet,.greet{background:var(--surface);background-image:radial-gradient(700px 240px at 100% 0%,var(--accent-soft),transparent 70%);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.greet .gdeco{opacity:.1}
+.greet .gdots{display:none}
+.app .card{padding:20px 22px}
+.card-head h3{font-size:1.3rem;font-weight:500}
+.r-dec{font:500 1.3rem var(--font-display);margin:4px 0 -4px}
+.kpi{border-color:var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.kpi .ico{width:42px;height:42px;border-radius:12px;background:var(--accent-soft);color:var(--accent)}
+.kpi b{font-weight:500}
+.kpi span{color:var(--muted-2);font-weight:500}
+.mini-row .date{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.mini-row .date small{color:var(--accent);opacity:.75}
+button.mini-row{border-radius:0}
+button.mini-row:hover{background:color-mix(in srgb,var(--bg) 70%,transparent)}
+.bar-track{background:var(--bg);border-color:var(--line);border-radius:10px}
+.bar-track i{background:var(--outline);opacity:1;border-radius:8px 8px 0 0;transform-origin:bottom}
+.bar.today .bar-track i{background:var(--accent)}
+.tbl th{color:var(--muted)}
+.tbl tbody tr[data-dent]:hover td{background:var(--bg)}
+.acc{border-color:var(--line);border-radius:20px;box-shadow:var(--shadow-sm)}
+.acc>summary:hover{background:var(--bg)}
+.app .acc-ic,.app .app-ic,.app .pl-ic,.app .wait-ic,.app .tl-date{background:var(--accent-soft);color:var(--accent)}
+.wait-card{border-color:var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.next-card{background:var(--band)}
+.next-card .eyebrow,.next-card a{color:var(--hi)}
+.next-card .chip-s,.next-card .primary{background:var(--hi);color:var(--deep)}
+.next-card .ghost,.next-card .cal-a{background:transparent;border-color:rgba(255,255,255,.32);color:#fff}
+.next-card .ghost:hover:not(:disabled){border-color:var(--hi);color:var(--hi)}
+.quick > *{border-color:var(--line);border-radius:16px}
+.quick > *:hover{border-color:var(--outline);box-shadow:var(--shadow-sm)}
+.theme-opt{border-radius:18px}
+/* calendário e horários */
+.day{font-weight:500}
+.day:hover:not(:disabled){background:var(--accent-soft);color:var(--accent)}
+.day.today{box-shadow:inset 0 0 0 1px var(--outline)}
+.day.sel{background:var(--accent);color:var(--accent-ink)}
+.day .dot{background:var(--gold)}
+.hours{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}
+.hour{border:1px solid var(--outline);border-radius:14px;background:var(--surface);min-height:52px;align-content:center}
+.hour:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.hour.in{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.hour.busy{border-color:transparent;text-decoration:line-through}
+.hour.past{border-color:transparent;background:var(--past)}
+.legend span:nth-child(2) i{background:var(--busy-soft)!important;border:0!important}
+.legend span:nth-child(3) i{border-color:var(--outline)!important;background:var(--surface)}
+.cn-mode{margin-bottom:18px;justify-self:start}
+.cn-mode[hidden]{display:none}
+#cn-pick[data-modo="hora"] #cn-per{display:none}
+#cn-pick[data-modo="periodo"] #cn-hours,#cn-pick[data-modo="periodo"] #cn-hint{display:none}
+.per-chips{gap:10px}
+.per-chips>p{display:none}
+.per-chips button{border-color:var(--outline);border-radius:16px;padding:12px 16px;min-width:150px;flex:1 1 150px}
+.per-chips button:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.per-chips button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.per-chips button.on small{color:inherit;opacity:.85}
+#cn-opts .summary{background:var(--accent-soft);border-color:transparent}
+#cn-opts .summary .hint{color:var(--accent);font-weight:600;font-size:.95rem}
+#cn-confirm{min-width:200px}
+/* gavetas, janelas e avisos */
+.scrim{background:rgba(34,21,26,.32)}
+.drawer{border-radius:24px 0 0 24px;border-left:1px solid var(--line);box-shadow:-30px 0 60px -30px rgba(34,21,26,.4)}
+@media (max-width:480px){.drawer{border-radius:0}}
+.dr-head{min-height:64px;border-bottom-color:var(--line)}
+.tm-in{border-radius:24px;box-shadow:var(--shadow-lg)}
+.more-sheet:not([hidden]){border-radius:20px;box-shadow:var(--shadow-lg)}
+.toast{border-radius:16px;box-shadow:0 20px 40px -18px rgba(34,21,26,.55)}
+.toast.err{background:var(--danger)}
+.pixbox,.pl-box,.val-edit,.ajrow{border-radius:16px}
+
+/* movimento: entrada com fade e 10 px, escalonada; respeita "reduzir movimento" */
+@keyframes rdUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes rdPhoto{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+@keyframes rdGrow{from{transform:scaleY(0)}to{transform:none}}
+@keyframes v10card{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:no-preference){
+  .primary,.cta,.pill,.ghost,.danger,.wa,.wa-sm,.chip,.chip-b,.seg button,.icon-btn,.go-gold,.menu-btn,.hour,.day,.per-chips button,.slot,.pz,.quick > *,.side button,.side a,.faq-item{transition:transform .25s var(--ease),background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease),box-shadow .3s var(--ease)}
+  .primary:hover:not(:disabled),.cta:hover,.pill:hover,.ghost:hover:not(:disabled),.wa:hover,.wa-sm:hover,.danger:hover{filter:none;transform:translateY(-1px)}
+  :is(button,.cta,.pill,.wa,.wa-sm,.quick > *):active:not(:disabled){transform:scale(.985);transition-duration:.08s}
+  svg.arr{transition:transform .3s var(--ease)}
+  :is(.cta,.go-gold,.primary,.cta.line):hover svg.arr{transform:translateX(3px)}
+  .menu-btn path{transition:transform .3s var(--ease),opacity .2s}
+  .mainnav{transition:opacity .2s var(--ease),transform .3s var(--ease),visibility 0s .3s}
+  .top.menu-open .mainnav{transition:opacity .2s var(--ease),transform .3s var(--ease)}
+  .top{transition:box-shadow .3s var(--ease),border-color .3s}
+  .hero-text > *,.benefits li{animation:rdUp .6s var(--ease) both}
+  .hero-text > :nth-child(2){animation-delay:.08s}
+  .hero-text > :nth-child(3){animation-delay:.16s}
+  .hero-text > :nth-child(4){animation-delay:.24s}
+  .benefits li:nth-child(1){animation-delay:.34s}
+  .benefits li:nth-child(2){animation-delay:.42s}
+  .benefits li:nth-child(3){animation-delay:.5s}
+  .hero-photo{animation:rdPhoto .7s var(--ease) .1s both}
+  .hero-media .agenda{animation:rdUp .6s var(--ease) .32s both}
+  .price-card{animation:rdUp .6s var(--ease) .44s both}
+  .rv{opacity:0;transform:translateY(10px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  .rv.rv-in{opacity:1;transform:none}
+  .faq-item[open] p{animation:rdUp .35s var(--ease)}
+  .faq-item summary::after{transition:transform .3s var(--ease)}
+  #view-dlogin:not([hidden]) .dl-box{animation:rdUp .6s var(--ease) .05s both}
+  #view-dlogin:not([hidden]) .dl-side-in > *{animation:rdUp .6s var(--ease) both}
+  #view-dlogin:not([hidden]) .dl-side-in > :nth-child(2){animation-delay:.08s}
+  #view-dlogin:not([hidden]) .dl-side-in > :nth-child(3){animation-delay:.16s}
+  .f-err{animation:rdUp .25s var(--ease)}
+  .tab-enter .bar-track i{animation:rdGrow .8s var(--ease) both}
+  .tab-enter .bar:nth-child(2) .bar-track i{animation-delay:.05s}
+  .tab-enter .bar:nth-child(3) .bar-track i{animation-delay:.1s}
+  .tab-enter .bar:nth-child(4) .bar-track i{animation-delay:.15s}
+  .tab-enter .bar:nth-child(5) .bar-track i{animation-delay:.2s}
+  .tab-enter .bar:nth-child(6) .bar-track i{animation-delay:.25s}
+  .tab-enter .bar:nth-child(7) .bar-track i{animation-delay:.3s}
+  .tab-enter > *,.tab-enter > .tabin > *,.tab-enter .kpis > .kpi{animation-name:rdUp;animation-duration:.6s;animation-timing-function:var(--ease)}
+  .drawer:not([hidden]){animation:v10slide .4s var(--ease)}
+  .toast{animation:v10toast .35s var(--ease)}
+  .skel{animation:v10shimmer 1.4s linear infinite}
+}
+/* ---------- redesign v10 (2): painéis mais vivos e Ajustes repaginado ---------- */
+/* botões do painel e da área do dentista */
+.app .primary,#view-dlogin .primary{position:relative;overflow:hidden;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 82%,#fff 18%),var(--accent) 60%);color:var(--accent-ink);border:0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 1px 2px rgba(34,21,26,.12),0 10px 22px -12px color-mix(in srgb,var(--accent) 70%,transparent)}
+.app .primary:hover:not(:disabled),#view-dlogin .primary:hover:not(:disabled){background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 72%,#fff 28%),var(--accent-h) 60%);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 2px 4px rgba(34,21,26,.12),0 16px 30px -14px color-mix(in srgb,var(--accent) 75%,transparent)}
+.app .primary:disabled{box-shadow:none}
+.app .ghost{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line-strong);box-shadow:0 1px 2px rgba(34,21,26,.06)}
+.app .ghost:hover:not(:disabled){background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 40%,transparent);color:var(--accent)}
+.app .danger{position:relative;overflow:hidden;background:var(--st-canc-bg);border:1px solid transparent;color:var(--danger)}
+.app .danger:hover:not(:disabled){background:var(--danger);color:#fff}
+.app .chip-b{position:relative;overflow:hidden}
+.app .link{text-decoration:none;color:var(--accent);font-weight:500;background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;padding-bottom:1px}
+.app .link:hover{background-size:100% 1.5px}
+.app .icon-btn{border-radius:12px}
+.app .side > button{overflow:hidden}
+.app .quick > *,.app .theme-opt{position:relative;overflow:hidden}
+.onda{position:absolute;border-radius:50%;background:currentColor;opacity:.16;transform:scale(0);pointer-events:none;animation:onda .65s var(--ease) forwards}
+@keyframes onda{to{transform:scale(1);opacity:0}}
+
+/* menu lateral com destaque deslizante */
+.side-ind{position:absolute;left:0;top:0;z-index:0;border-radius:12px;background:var(--accent-soft);pointer-events:none;opacity:0}
+.side-ind::before{content:"";position:absolute;left:-14px;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+.side > button,.side > a,.side > .side-foot{z-index:1}
+.side.tem-ind > [aria-current="page"]{background:transparent}
+.side.tem-ind > [aria-current="page"]::before{display:none}
+.side > button:hover:not([aria-current="page"]) .ic{transform:translateX(2px)}
+@media (max-width:820px){
+  .side-ind{border-radius:14px}
+  .side-ind::before{left:30%;right:30%;top:-8px;bottom:auto;width:auto;height:3px;border-radius:0 0 3px 3px}
+}
+
+/* cabeçalho de boas-vindas em vinho */
+.app .page-head.greet{background:var(--band);border:0;color:#fff;padding:28px 30px;
+  background-image:radial-gradient(620px 280px at 100% 0%,rgba(232,207,152,.24),transparent 64%),repeating-linear-gradient(135deg,transparent 0 22px,rgba(232,207,152,.05) 22px 23px);
+  box-shadow:0 30px 60px -36px rgba(61,0,15,.75)}
+.app .greet .eyebrow{color:var(--hi)}
+.app .greet h2{color:#fff;font-size:clamp(1.8rem,3vw,2.5rem)}
+.app .greet .gdeco{color:var(--hi);opacity:.2}
+.app .greet .primary{background:var(--hi);color:#3d000f;box-shadow:0 10px 24px -12px rgba(0,0,0,.5)}
+.app .greet .primary:hover:not(:disabled){background:#f2dfb3}
+@media (max-width:560px){.app .page-head.greet{padding:22px 20px}}
+
+/* cartões que respondem ao toque */
+.kpi{position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--gold));transform:scaleX(0);transform-origin:left}
+.kpi:hover::after{transform:none}
+.kpi:hover .ico{background:var(--accent);color:var(--accent-ink)}
+.quick > * svg{color:var(--accent)}
+.quick > *:hover{border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.tbl tbody tr td:first-child{box-shadow:inset 3px 0 0 transparent}
+.tbl tbody tr[data-dent]:hover td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+.ev{box-shadow:0 1px 2px rgba(34,21,26,.06)}
+.ev:hover{box-shadow:var(--shadow-sm)}
+.app .card-head h3{position:relative}
+
+/* ---------- Ajustes ---------- */
+.aj-shell{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;align-items:start}
+.aj-nav{position:sticky;top:calc(var(--apph,72px) + 16px);display:grid;gap:12px;align-content:start;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:14px;box-shadow:var(--shadow-sm);max-height:calc(100vh - var(--apph,72px) - 32px);overflow:auto;overscroll-behavior:contain}
+.aj-busca{position:relative;display:block}
+.aj-busca svg.i{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+.aj-busca input{padding-left:40px;min-height:44px;background:var(--bg)}
+.aj-grp{display:grid;gap:2px}
+.aj-gt{margin:6px 10px 4px;font:600 .68rem var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink)}
+.aj-item{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:transparent;border-radius:14px;padding:8px 10px;color:var(--ink);font:inherit}
+.aj-item .acc-ic{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent)}
+.aj-item .acc-ic svg.i{width:18px;height:18px}
+.aj-tx{display:grid;min-width:0;flex:1}
+.aj-tx b{font-weight:500;font-size:.93rem;line-height:1.3}
+.aj-tx small{display:none;color:var(--muted);font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aj-chev{width:16px!important;height:16px!important;color:var(--muted);opacity:0;transform:translateX(-4px);flex:none}
+.aj-item:hover{background:var(--bg)}
+.aj-item:hover .aj-chev{opacity:1;transform:none}
+.aj-item[aria-current="true"]{background:var(--accent-soft);color:var(--accent)}
+.aj-item[aria-current="true"] b{font-weight:600}
+.aj-item[aria-current="true"] .acc-ic{background:var(--accent);color:var(--accent-ink)}
+.aj-item[aria-current="true"] .aj-chev{opacity:1;transform:none;color:var(--accent)}
+.aj-shell .accs{display:grid;gap:0;min-width:0}
+.aj-shell .acc:not([open]){display:none}
+.aj-shell .acc{border-radius:24px;box-shadow:var(--shadow);overflow:visible;border-color:var(--line)}
+.aj-shell .acc > summary{cursor:default;padding:26px 28px 22px;gap:18px;border-bottom:1px solid var(--line);border-radius:24px 24px 0 0;
+  background:radial-gradient(520px 200px at 100% 0%,var(--accent-soft),transparent 70%),var(--surface)}
+.aj-shell .acc > summary:hover{background:radial-gradient(520px 200px at 100% 0%,var(--accent-soft),transparent 70%),var(--surface)}
+.aj-shell .acc > summary::after{display:none}
+.aj-shell .accs .acc-ic{width:52px;height:52px;border-radius:16px;background:var(--accent);color:var(--accent-ink);box-shadow:0 10px 22px -12px color-mix(in srgb,var(--accent) 70%,transparent)}
+.aj-shell .accs .acc-ic svg.i{width:24px;height:24px}
+.aj-shell .acc-t{gap:4px}
+.aj-shell .acc-t b{font:500 clamp(1.35rem,2vw,1.65rem)/1.2 var(--font-display)}
+.aj-shell .acc-t small{white-space:normal;font-size:.9rem;line-height:1.45}
+.aj-shell .acc-b{border-top:0;padding:24px 28px 28px;gap:20px}
+.aj-shell .acc-b .ajsec{padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--bg) 60%,var(--surface))}
+.aj-shell .acc-b > .hint:first-child{font-size:.92rem}
+.aj-shell .acc-b .nav.end,.aj-shell .acc-b .nav{padding-top:4px}
+.aj-voltar{display:none;align-items:center;gap:6px;justify-self:start;margin:0 0 14px;padding:9px 16px 9px 10px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface);color:var(--accent);font:600 .9rem var(--font-body);box-shadow:var(--shadow-sm)}
+.aj-voltar svg.i{width:18px;height:18px}
+/* interruptores (liga/desliga) */
+label.sw{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);cursor:pointer}
+label.sw:hover{border-color:var(--outline)}
+label.sw input{order:2;-webkit-appearance:none;appearance:none;width:46px;height:28px;margin:0;padding:0;border:0;border-radius:999px;background:var(--line-strong);position:relative;cursor:pointer;flex:none;box-shadow:inset 0 1px 2px rgba(34,21,26,.15)}
+label.sw input::before{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(34,21,26,.35)}
+label.sw input:checked{background:var(--accent)}
+label.sw input:checked::before{transform:translateX(18px)}
+label.sw input:focus{box-shadow:0 0 0 4px var(--ring)}
+label.sw b{font-weight:600}
+.chip2 span{border-color:var(--line-strong)}
+.chip2 span:hover{border-color:var(--accent);color:var(--accent)}
+.theme-opt[aria-checked="true"]{box-shadow:0 0 0 2px var(--accent),var(--shadow-sm)}
+@media (max-width:900px){
+  .aj-shell{grid-template-columns:minmax(0,1fr);gap:16px}
+  .aj-nav{position:static;max-height:none;overflow:visible;background:transparent;border:0;box-shadow:none;padding:0;gap:14px}
+  .aj-grp{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:6px;box-shadow:var(--shadow-sm)}
+  .aj-gt{margin:10px 12px 4px}
+  .aj-item{padding:11px 10px;min-height:56px}
+  .aj-item .acc-ic{width:40px;height:40px;border-radius:12px}
+  .aj-tx small{display:block}
+  .aj-chev{opacity:1;transform:none}
+  .aj-item[aria-current="true"]{background:transparent;color:var(--ink)}
+  .aj-item[aria-current="true"] .acc-ic{background:var(--accent-soft);color:var(--accent)}
+  .aj-shell.aj-aberto .aj-nav{display:none}
+  .aj-shell:not(.aj-aberto) .accs{display:none}
+  .aj-voltar{display:inline-flex}
+  .aj-shell .acc > summary{padding:20px 18px 18px;gap:14px}
+  .aj-shell .accs .acc-ic{width:44px;height:44px;border-radius:14px}
+  .aj-shell .acc-b{padding:18px 16px 20px}
+  .aj-shell .acc-b .ajsec{padding:14px}
+}
+
+/* movimento do segundo pacote */
+@media (prefers-reduced-motion:no-preference){
+  .side-ind.pronto{transition:transform .45s var(--ease),width .45s var(--ease),opacity .2s}
+  .side .ic{transition:transform .25s var(--ease)}
+  .app .link{transition:background-size .3s var(--ease),color .2s}
+  .kpi{transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+  .kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .kpi::after{transition:transform .5s var(--ease)}
+  .kpi .ico{transition:background-color .3s var(--ease),color .3s var(--ease)}
+  .quick > *,.theme-opt{transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+  .quick > *:hover,.theme-opt:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+  button.mini-row{transition:background-color .2s,padding .3s var(--ease)}
+  button.mini-row:hover{padding-left:10px}
+  .tbl tbody tr td,.tbl tbody tr td:first-child{transition:background-color .2s,box-shadow .25s var(--ease)}
+  .ev{transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+  .ev:hover{transform:translateY(-1px)}
+  .aj-item,.aj-chev,.aj-item .acc-ic{transition:background-color .2s var(--ease),color .2s,transform .3s var(--ease),opacity .2s}
+  .aj-shell .acc.aj-entra > summary,.aj-shell .acc.aj-entra > .acc-b > *{animation:rdUp .5s var(--ease) both}
+  .aj-shell .acc.aj-entra > .acc-b > :nth-child(2){animation-delay:.05s}
+  .aj-shell .acc.aj-entra > .acc-b > :nth-child(3){animation-delay:.1s}
+  .aj-shell .acc.aj-entra > .acc-b > :nth-child(n+4){animation-delay:.15s}
+  .aj-shell .acc.aj-entra .acc-ic{animation:rdPop .5s var(--ease) both}
+  label.sw input,label.sw input::before{transition:background-color .25s var(--ease),transform .3s var(--ease)}
+  .drawer.dr-entra #dr-body > *,.drawer.dr-entra #c-dr-body > *{animation:rdUp .5s var(--ease) both}
+  .drawer.dr-entra #dr-body > :nth-child(2),.drawer.dr-entra #c-dr-body > :nth-child(2){animation-delay:.06s}
+  .drawer.dr-entra #dr-body > :nth-child(3),.drawer.dr-entra #c-dr-body > :nth-child(3){animation-delay:.12s}
+  .drawer.dr-entra #dr-body > :nth-child(n+4),.drawer.dr-entra #c-dr-body > :nth-child(n+4){animation-delay:.18s}
+  .app .page-head.greet{animation:rdUp .6s var(--ease) both}
+}
+@keyframes rdPop{from{opacity:0;transform:scale(.8) rotate(-8deg)}to{opacity:1;transform:none}}
+/* ---------- redesign v10 (3): área interna no padrão da referência ---------- */
+:root{--title-ink:color-mix(in srgb,var(--accent) 52%,var(--ink));
+  --ic-info:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M12 11v5M12 8h.01'/%3E%3C/svg%3E");
+  --ic-seta:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+  --ic-baixar:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v11M7.5 10.5L12 15l4.5-4.5M4.5 16.5v3h15v-3'/%3E%3C/svg%3E");
+}
+/* topo vinho com logo dourado */
+.app-top{background:linear-gradient(90deg,#45000f,#5b0419 55%,#590117);border-bottom:0;color:#fff}
+.app-top .lg-claro{display:none!important}
+.app-top .lg-escuro{display:block!important}
+.app-top img{width:104px}
+.crumb{color:rgba(255,255,255,.72);border-left-color:rgba(232,207,152,.32)}
+.crumb b{color:#fff}
+.who{color:#fff;gap:12px}
+.who-name{font-weight:500}
+.who .avatar{width:40px;height:40px;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(232,207,152,.4)}
+body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
+/* menu lateral */
+.side{gap:4px;padding:22px 16px}
+.side a,.side button{padding:12px 16px;font-size:.98rem;color:var(--ink)}
+.side .ic{width:22px;height:22px;opacity:.85}
+.side [aria-current="page"],.side.tem-ind > [aria-current="page"]{color:var(--accent);font-weight:600}
+.side-ind::before{left:-16px}
+@media (max-width:820px){.side a,.side button,.side .more-btn{font-size:.68rem;padding:6px 2px}.side .ic{width:20px;height:20px}.side-ind::before{left:30%}}
+/* cabeçalho das abas */
+.page-head h2{display:flex;align-items:center;gap:14px;color:var(--title-ink)}
+.ph-icw{width:48px;height:48px;border-radius:15px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 12%,transparent)}
+.ph-ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* boas-vindas clara com ilustração */
+.app .page-head.greet{position:relative;overflow:hidden;align-items:center;padding:30px 36px;color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow);
+  background:radial-gradient(760px 280px at 88% 0%,var(--accent-soft),transparent 70%),linear-gradient(180deg,var(--surface),color-mix(in srgb,var(--surface) 70%,var(--bg)))}
+.app .greet .eyebrow{color:var(--muted-2);letter-spacing:.16em}
+.app .greet h2{color:var(--title-ink);font:600 clamp(2rem,3.4vw,3rem)/1.1 var(--font-display);letter-spacing:-.01em}
+.greet-sub{margin:8px 0 0;color:var(--muted);font-size:1rem}
+.app .greet .gdeco,.app .greet .gdots{position:absolute!important}
+.kpis.band-k .kpi > div{min-width:0}
+.kpis.band-k .kpi > div > span,.kpis.band-k .kpi small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kv > div.kv-dest > span:first-child{flex:none;white-space:nowrap}
+@media (max-width:560px){.kv > div.kv-dest{flex-direction:column;gap:6px}.kv > div.kv-dest > span:last-child{text-align:left}}
+.app .next-card .primary,.app .next-card .chip-s{background:var(--hi);color:#3d000f;box-shadow:none}
+.app .next-card .primary:hover:not(:disabled){background:#f2dfb3}
+.app .next-card .ghost,.app .next-card .cal-a{background:transparent;border-color:rgba(255,255,255,.35);color:#fff;box-shadow:none}
+.app .next-card .ghost:hover:not(:disabled){background:rgba(255,255,255,.08);border-color:var(--hi);color:var(--hi)}
+.app .greet .gdeco{display:block;right:300px!important;top:50%!important;width:118px!important;transform:translateY(-50%) rotate(-6deg)!important;color:var(--gold);opacity:.55;stroke-width:.45}
+.app .greet .gdots{display:block;right:400px;top:22px;width:150px;height:110px;opacity:.4}
+.app .greet .primary{background:linear-gradient(180deg,#71102a,#4a0012);color:#fff;min-height:56px;padding:14px 30px;font-size:1.02rem;box-shadow:0 16px 30px -14px rgba(89,1,23,.7),inset 0 1px 0 rgba(255,255,255,.18)}
+.app .greet .primary:hover:not(:disabled){background:linear-gradient(180deg,#80173a,#590117)}
+@media (max-width:1100px){.app .greet .gdeco,.app .greet .gdots{display:none}}
+@media (max-width:560px){.app .page-head.greet{padding:22px 20px}.greet-sub{font-size:.92rem}.app .greet .primary{width:100%}}
+/* faixa vinho de indicadores */
+.app .kpis.band-k{gap:0;border:0;border-radius:22px;overflow:hidden;background:linear-gradient(115deg,#45000f,#6a0a22 55%,#590117);box-shadow:0 30px 60px -34px rgba(61,0,15,.85)}
+.app .kpis.band-k .kpi{width:100%;margin:0;align-items:center;text-align:left;font:inherit;cursor:pointer;background:transparent;border:0;border-left:1px solid rgba(255,255,255,.12);border-radius:0;box-shadow:none;color:#fff;padding:22px 18px;gap:14px}
+.app .kpis.band-k .kpi:first-child{border-left:0}
+.kpis.band-k .kpi .ico{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid rgba(232,207,152,.28);color:var(--hi)}
+.kpis.band-k .kpi .ico svg{width:26px;height:26px}
+.kpis.band-k .kpi b{color:#fff;font-weight:500}
+.kpis.band-k .kpi span{color:#fff;font-weight:500}
+.kpis.band-k .kpi small{color:rgba(255,255,255,.7)}
+.kpi .go{margin-left:auto;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.65);display:grid;place-items:center;flex:none;color:#fff}
+.kpi .go svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app .kpis.band-k .kpi:hover{background:rgba(255,255,255,.06);transform:none;box-shadow:none}
+.kpis.band-k .kpi:hover .ico{background:rgba(232,207,152,.18);color:var(--hi)}
+.kpis.band-k .kpi:hover .go{background:#fff;color:var(--accent);border-color:#fff}
+.kpis.band-k .kpi::after{background:var(--hi);height:2px}
+.kpis.band-k .kpi:focus-visible{outline:2px solid var(--hi);outline-offset:-4px}
+@media (max-width:820px){
+  .app .kpis.band-k .kpi{padding:16px;gap:10px;align-items:flex-start}
+  .kpi .go{position:absolute;right:12px;top:12px;width:24px;height:24px}
+  .kpi .go svg{width:12px;height:12px}
+}
+/* gráfico: dias que passaram em dourado, hoje em vinho */
+.bar-track{max-width:54px;border:0;border-radius:12px;background:color-mix(in srgb,var(--bg) 70%,var(--line))}
+.bar-track i{border-radius:10px;background:var(--outline)}
+.bar.past .bar-track i{background:linear-gradient(180deg,#dcc59c,#c4a26e)}
+.bar.today .bar-track i{background:linear-gradient(180deg,#7d1432,#590117);box-shadow:0 10px 20px -10px rgba(89,1,23,.6)}
+.bar-v{font-weight:500}
+/* títulos dos cards com ícone, links com seta */
+.card-head h3,.block > h4{display:flex;align-items:center;gap:12px;color:var(--title-ink)}
+.card-head h3{font:600 1.32rem/1.25 var(--font-display)}
+.h-ic{width:24px;height:24px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.app .card > .card-head:first-child{padding-bottom:14px;border-bottom:1px solid var(--line)}
+.card-head .link::after{content:"";display:inline-block;width:14px;height:14px;margin-left:6px;vertical-align:-2px;background:currentColor;-webkit-mask:var(--ic-seta) center/contain no-repeat;mask:var(--ic-seta) center/contain no-repeat}
+.app .card-head .link{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;background:none}
+/* linhas de valores com ícone (Financeiro do mês) */
+.kv > div > span:first-child{display:inline-flex;align-items:center;gap:12px}
+.kv-ic{width:20px;height:20px;flex:none;fill:none;stroke:var(--muted-2);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.kv > div.kv-dest{margin-top:6px;padding:14px 16px;border:0;border-radius:14px;background:color-mix(in srgb,var(--gold-soft) 70%,var(--surface))}
+.kv > div.kv-dest > span:first-child{color:var(--ink);font-weight:600}
+.kv > div.kv-dest .kv-ic{stroke:var(--gold-ink)}
+/* avisos com ícone e botão escuro */
+.notice{position:relative;background:color-mix(in srgb,var(--gold-soft) 45%,var(--surface));border:1px solid color-mix(in srgb,var(--gold) 28%,transparent);border-radius:18px}
+.notice.gold,.notice.wine{padding-left:60px}
+.notice.gold::before,.notice.wine::before{content:"";position:absolute;left:20px;top:50%;width:24px;height:24px;margin-top:-12px;background:var(--gold-ink);-webkit-mask:var(--ic-info) center/contain no-repeat;mask:var(--ic-info) center/contain no-repeat}
+.notice.wine{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 22%,transparent)}
+.notice.wine::before{background:var(--accent)}
+.notice .primary,.alert .primary{background:linear-gradient(180deg,#5e0619,#3d000f);color:#fff}
+[data-backup]::before{content:"";display:inline-block;width:16px;height:16px;margin-right:8px;vertical-align:-3px;background:currentColor;-webkit-mask:var(--ic-baixar) center/contain no-repeat;mask:var(--ic-baixar) center/contain no-repeat}
+@media (max-width:560px){.notice.gold,.notice.wine{padding-left:52px}.notice.gold::before,.notice.wine::before{left:16px;top:18px;margin-top:0}}
+/* estados vazios */
+.empty{padding:28px 12px;gap:10px}
+.empty svg{box-sizing:content-box;width:26px;height:26px;padding:14px;border-radius:50%;background:var(--accent-soft);color:var(--accent);stroke-width:1.4;opacity:1}
+.empty span{color:var(--muted);max-width:36ch}
+/* tabelas */
+.app .tbl thead th{background:color-mix(in srgb,var(--bg) 80%,var(--surface));color:var(--muted-2);font-weight:600;border-bottom:1px solid var(--line)}
+.app .tbl td{border-bottom-color:var(--line)}
+.app .tbl .who2 .avatar{background:var(--accent-soft);color:var(--accent)}
+/* agenda */
+.cal-h.today{background:var(--accent)}
+.cal-h.today b,.cal-h.today span,.cal-h.today small{color:var(--accent-ink)}
+.cal-now,.cal-now::before{background:var(--gold)}
+.ev.agendado{border-color:color-mix(in srgb,var(--accent) 45%,transparent);border-left:3px solid var(--accent)}
+/* gavetas e janelas */
+.dr-head{background:linear-gradient(90deg,var(--accent-soft),transparent 70%)}
+.dr-head .eyebrow{color:var(--accent)}
+.dr-title .avatar{background:var(--accent);color:var(--accent-ink)}
+.tm-head{padding-bottom:12px;border-bottom:1px solid var(--line)}
+.wait-card{background:radial-gradient(500px 200px at 100% 0%,var(--accent-soft),transparent 70%),var(--surface)}
+.wait-ic{background:var(--accent);color:var(--accent-ink)}
+.r-dec{color:var(--title-ink);display:flex;align-items:center;gap:10px}
+.r-dec::before{content:"";width:22px;height:22px;background:var(--accent);-webkit-mask:var(--ic-info) center/contain no-repeat;mask:var(--ic-info) center/contain no-repeat}
+@media (max-width:560px){.ph-icw{width:40px;height:40px;border-radius:12px}.ph-ic{width:20px;height:20px}.card-head h3{font-size:1.18rem}}
+@media (prefers-reduced-motion:no-preference){
+  .kpi .go{transition:background-color .25s var(--ease),color .25s,transform .3s var(--ease),border-color .25s}
+  .kpis.band-k .kpi:hover .go{transform:translateX(3px)}
+  .tab-enter .h-ic,.tab-enter .ph-icw{animation:rdPop .5s var(--ease) both}
+  .app .greet .gdeco{animation:rdPhoto 1s var(--ease) .15s both}
+}
+/* ---------- redesign v10 (4): estrutura do painel ---------- */
+/* cabeçalho: recolher menu, atalho principal e menu da conta */
+.side-toggle{width:40px;height:40px;flex:none;display:grid;place-items:center;border:1px solid rgba(232,207,152,.3);border-radius:12px;background:rgba(255,255,255,.06);color:#fff;padding:0}
+.side-toggle svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.side-toggle:hover{background:rgba(255,255,255,.14)}
+.top-acao{margin-left:auto;display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:9px 18px 9px 14px;border-radius:999px;border:1px solid rgba(232,207,152,.45);background:rgba(255,255,255,.08);color:#fff;font:600 .9rem var(--font-body)}
+.top-acao svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.top-acao:hover{background:var(--hi);border-color:var(--hi);color:#3d000f}
+.who-wrap{position:relative;margin-left:14px;flex:none}
+.who-wrap .who{margin-left:0;display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#fff;font:500 .92rem var(--font-body);padding:4px 8px 4px 14px;border-radius:999px}
+.who-wrap .who:hover,.who-wrap.aberto .who{background:rgba(255,255,255,.1)}
+.who-chev{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.who-wrap.aberto .who-chev{transform:rotate(180deg)}
+.who-menu{position:absolute;right:0;top:calc(100% + 10px);z-index:45;min-width:240px;display:grid;gap:2px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);transform-origin:top right}
+.who-menu[hidden]{display:none}
+.who-papel{margin:4px 12px 6px;font:600 .66rem var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink)}
+.who-menu > button,.who-menu > a{display:flex;align-items:center;width:100%;padding:11px 14px;border:0;border-radius:12px;background:transparent;color:var(--ink);font:500 .95rem var(--font-body);text-decoration:none;text-align:left}
+.who-menu > button:hover,.who-menu > a:hover{background:var(--accent-soft);color:var(--accent)}
+.who-menu .who-sair{color:var(--danger);border-top:1px solid var(--line);border-radius:0 0 12px 12px;margin-top:4px}
+@media (max-width:820px){
+  .side-toggle,.top-acao{display:none}
+  .who-wrap{margin-left:auto}
+  .who-wrap .who{padding:4px}
+  .who-chev{display:none}
+}
+/* menu lateral por grupos */
+.side-gt{margin:16px 16px 6px;font:600 .66rem var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink);white-space:nowrap;overflow:hidden}
+.side > .side-gt:first-of-type{margin-top:0}
+@media (max-width:820px){.side-gt{display:none}}
+/* menu recolhido (computador) */
+@media (min-width:821px){
+  body.menu-recolhido .app-body{grid-template-columns:86px minmax(0,1fr)}
+  body.menu-recolhido .side{padding:20px 12px}
+  body.menu-recolhido .side > button,body.menu-recolhido .side-foot > a,body.menu-recolhido .side-foot > button{font-size:0;gap:0;justify-content:center;padding:13px 0}
+  body.menu-recolhido .side .ic{width:22px;height:22px}
+  body.menu-recolhido .side .badge{position:absolute;top:4px;right:8px;margin:0;font-size:.62rem;min-width:17px;height:17px}
+  body.menu-recolhido .side-gt{font-size:0;height:1px;margin:10px 10px;background:var(--line)}
+  body.menu-recolhido .side > .side-gt:first-of-type{display:none}
+  body.menu-recolhido .side a.side-help{display:none}
+  body.menu-recolhido .side-ind::before{left:-12px}
+}
+/* "Mais" do celular como painel inferior com ícones */
+@media (max-width:820px){
+  .side .more-sheet:not([hidden]){position:fixed;left:10px;right:10px;bottom:calc(86px + env(safe-area-inset-bottom,0px));min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:12px;border-radius:24px;box-shadow:0 0 0 100vmax rgba(34,21,26,.38),var(--shadow-lg)}
+  .side .more-sheet > *{flex-direction:column!important;align-items:flex-start!important;gap:10px!important;padding:14px!important;background:var(--bg)!important;border-radius:16px!important;font-size:.92rem!important;font-weight:500;min-height:84px}
+  .side .more-sheet > * svg{width:22px;height:22px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:1}
+  .side .more-sheet > [aria-current="page"]{background:var(--accent-soft)!important;color:var(--accent)}
+  .side .more-sheet > [data-logout],.side .more-sheet > [data-dlogout]{color:var(--danger)}
+  .side .more-sheet > [data-logout] svg,.side .more-sheet > [data-dlogout] svg{stroke:var(--danger)}
+}
+.crumb{min-width:0;overflow:hidden}
+.crumb b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:360px){.app-top img{width:84px}.app-top-in{gap:10px}}
+/* galeria com o vídeo do tour */
+.gal-wrap{display:grid;grid-template-columns:minmax(0,1fr) 236px;gap:12px;align-items:stretch}
+.tour{position:relative;margin:0;border-radius:20px;overflow:hidden;background:var(--deep);box-shadow:var(--shadow)}
+.tour video{display:block;width:100%;height:100%;object-fit:cover;background:var(--deep)}
+.tour figcaption{position:absolute;left:12px;top:12px;padding:6px 12px;border-radius:999px;background:rgba(61,0,15,.78);color:#fff;font:600 .78rem var(--font-body);pointer-events:none}
+.gal-item{box-shadow:var(--shadow-sm)}
+@media (max-width:860px){.gal-wrap{grid-template-columns:minmax(0,1fr)}.tour{width:100%;max-width:300px;justify-self:center;aspect-ratio:464/832}}
+@media (min-width:961px){.hero-media .agenda{left:auto;right:-14px}.price-card{right:auto;left:calc(100% - min(100%,540px) - 14px)}}
+@keyframes rdMenu{from{opacity:0;transform:translateY(-6px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes rdSheet{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .app-body{transition:grid-template-columns .35s var(--ease)}
+  .who-menu:not([hidden]){animation:rdMenu .22s var(--ease)}
+  .who-chev,.side-toggle,.top-acao{transition:transform .3s var(--ease),background-color .2s,color .2s,border-color .2s}
+  .top-acao:hover{transform:translateY(-1px)}
+  .side .more-sheet:not([hidden]){animation:rdSheet .3s var(--ease)}
+  .side .more-sheet > *{transition:background-color .2s}
+}
 </style>
 </head>
 <body>
@@ -1314,7 +2132,7 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
 
   <header class="top"><div class="in top-in">
     <a class="logo" href="#" aria-label="Início"><img src="assets/logo-vinho.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413"></a>
-    <nav class="mainnav">
+    <nav class="mainnav" id="mainnav" aria-label="Menu principal">
       <a class="t" href="#como">Como funciona</a>
       <a class="t" href="#sobre">O consultório</a>
       <a class="t" href="#estrutura">Valores</a>
@@ -1324,6 +2142,7 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
     <div class="top-r">
       <a class="pill" href="#dentista">Entrar</a>
     </div>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="mainnav" aria-label="Abrir menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="m1" d="M4 7.5h16"/><path class="m2" d="M4 12h16"/><path class="m3" d="M4 16.5h16"/></svg></button>
   </div></header>
   <div class="in"><h1 hidden id="clinic-name">Consultório Odontológico</h1><div class="mode" id="mode" hidden></div></div>
 
@@ -1332,50 +2151,37 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
     <!-- 0. INÍCIO -->
     <div id="v-welcome">
       <section class="hero2" aria-label="Apresentação">
-        <svg class="deco" style="left:-70px;top:50px;width:260px" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
-        <svg class="deco" style="left:40px;bottom:-40px;width:150px;transform:rotate(-14deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
-        <svg class="deco" style="right:-80px;top:140px;width:280px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
-        <svg class="deco" style="right:70px;top:20px;width:90px;transform:rotate(-8deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
-        <span class="dots" style="left:24px;top:330px" aria-hidden="true"></span>
-        <span class="dots" style="right:20px;bottom:40px" aria-hidden="true"></span>
         <div class="in hero-grid">
           <div class="hero-text">
-            <p class="eyebrow">Aluguel de consultório odontológico · Ipatinga/MG</p>
-            <h1 class="hero-title">Um consultório pronto para <em>o seu atendimento</em></h1>
-            <p class="lead">Reserve por hora o consultório da Dra. Thalia Santiago, no Centro de Ipatinga. Escolha o dia, veja os horários livres e confirme em poucos passos.</p>
+            <p class="eyebrow">Locação de consultório odontológico · Ipatinga/MG</p>
+            <h1 class="hero-title">Seu consultório pronto. <span class="br">Sua agenda, <em>do seu jeito.</em></span></h1>
+            <p class="lead">Atenda seus pacientes em um consultório odontológico equipado no Centro de Ipatinga. Reserve por hora, com praticidade e flexibilidade para a sua rotina profissional.</p>
             <div class="btns">
-              <button class="cta" id="start" type="button">Agendar horário <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <button class="cta" id="start" type="button">Consultar horários e valores <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
               <a class="cta line" href="#sobre">Conhecer o consultório</a>
             </div>
-            <div class="trust">
-              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Reserva por hora</b>A partir de 1 hora</span></div>
-              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg></span><span><b>Agenda ao vivo</b>Só horários livres</span></div>
-              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/></svg></span><span><b>Confirmação</b>Pelo WhatsApp</span></div>
-            </div>
           </div>
-          <div class="stage">
+          <div class="hero-media">
+            <figure class="hero-photo tem-foto" id="hero-photo">
+              <img src="assets/consultorio/consultorio-sala.webp" alt="Sala de atendimento do consultório" width="1086" height="1448" fetchpriority="high">
+            </figure>
             <aside class="agenda" aria-label="Próximos horários livres">
-              <p class="eyebrow">Agenda ao vivo</p>
-              <h3>Próximos horários livres</h3>
-              <div id="free-list"></div>
-              <div class="agenda-foot"><span>Toque num horário livre para começar</span><button type="button" class="go-gold" data-start>Reservar →</button></div>
+              <div class="agenda-head"><p class="eyebrow"><i class="live" aria-hidden="true"></i>Agenda ao vivo</p><h3>Próximos horários</h3></div>
+              <div id="free-list"><div class="skel-wrap" aria-busy="true" aria-label="Carregando"><span class="skel" style="width:60%"></span><span class="skel" style="width:92%"></span><span class="skel" style="width:76%"></span></div></div>
+              <div class="agenda-foot"><span class="lg"><i class="lg-free" aria-hidden="true"></i>Livre<i class="lg-busy" aria-hidden="true"></i>Ocupado</span><button type="button" class="go-gold" data-start>Reservar <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
             </aside>
-            <div class="float f2" aria-hidden="true"><span class="ic"><svg class="i" viewBox="0 0 24 24"><use href="#tooth"/></svg></span><span><b>Sala odontológica</b> no Centro</span></div>
-            <div class="float f1" aria-hidden="true"><span class="ok"><svg class="i" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span><small>Reservou, está garantido</small><b>Horário bloqueado na hora</b></span></div>
-            <div class="float f3" aria-hidden="true"><span class="ic wine"><svg class="i" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0113.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 01-13.7 5.6L4 15.5M4 20v-4.5h4.5"/></svg></span><span><b>Repetir toda semana</b><br>no mesmo horário</span></div>
+            <div class="price-card" id="hero-price" hidden><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><small>A partir de</small><b id="hp-v"></b><span id="hp-t"> por hora</span></span></div>
           </div>
+          <ul class="benefits">
+            <li><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Locação por hora</b>Reserve conforme sua necessidade.</span></li>
+            <li><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><b>Centro de Ipatinga</b>Galeria Êxito, Rua Juiz de Fora.</span></li>
+            <li><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg></span><span><b>Consultório equipado</b>Estrutura pronta para você atender.</span></li>
+          </ul>
         </div>
       </section>
 
-      <section class="band" aria-label="Destaques"><div class="in band-grid">
-        <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Reserva por hora</b>Use só o tempo que precisar</span></div>
-        <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg></span><span><b data-fill="dias"></b><span data-fill="horas"></span></span></div>
-        <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><b>Centro de Ipatinga</b><span data-fill="end"></span></span></div>
-        <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0113.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 01-13.7 5.6L4 15.5M4 20v-4.5h4.5"/></svg></span><span><b>Plano mensal</b>Desconto para 1x por semana</span></div>
-      </div></section>
-
       <section class="sec" id="como" aria-label="Como funciona"><div class="in">
-        <div class="sec-head"><div><p class="eyebrow">Como funciona</p><h2>Do cadastro à reserva em quatro passos</h2></div><p>Tudo pelo site, sem ligação. Os horários ocupados aparecem riscados e voltam a ficar livres quando uma reserva é cancelada.</p></div>
+        <div class="sec-head"><div><p class="eyebrow">Como funciona</p><h2>Do cadastro à reserva em <em>quatro passos</em></h2></div><p>Tudo pelo site, sem ligação. Os horários ocupados aparecem riscados e voltam a ficar livres quando uma reserva é cancelada.</p></div>
         <div class="steps4">
           <div class="step4"><span class="n">1</span><h3>Crie sua conta</h3><p>Nome, CRO, WhatsApp e e-mail.</p><span class="tag4">1 minuto</span></div>
           <div class="step4"><span class="n">2</span><h3>Liberação</h3><p>A Dra. Thalia confere o cadastro e libera seu acesso.</p><span class="tag4">Aviso por e-mail</span></div>
@@ -1384,58 +2190,57 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
         </div>
       </div></section>
 
-      <section class="sec about" id="sobre" aria-label="O consultório">
-        <svg class="deco" style="right:-60px;top:-40px;width:230px" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
-        <div class="in about-grid">
-          <div class="brandpanel">
-            <span class="ring" style="width:420px;height:420px" aria-hidden="true"></span><span class="ring" style="width:560px;height:560px" aria-hidden="true"></span>
-            <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413">
-            <div class="sig"><span data-fill="dentista"></span><span>Cirurgiã-dentista responsável</span></div>
+      <section class="sec about" id="sobre" aria-label="O consultório"><div class="in">
+        <div class="sec-head"><div><p class="eyebrow">O consultório</p><h2>Estrutura pronta para você <em>atender com tranquilidade</em></h2></div><p>Um espaço odontológico no Centro de Ipatinga para profissionais que querem atender sem o custo de manter um consultório próprio.</p></div>
+        <div id="fotos">
+          <div class="gal-wrap">
+            <div class="gal" id="gal"></div>
+            <figure class="tour"><video controls muted preload="none" playsinline poster="assets/consultorio/tour-capa.webp" width="464" height="832" aria-label="Vídeo: tour pelo consultório"><source src="assets/consultorio/tour.mp4" type="video/mp4"></video><figcaption>Tour pelo consultório</figcaption></figure>
           </div>
-          <div class="about-text">
-            <p class="eyebrow">O consultório</p>
-            <h2>Estrutura pronta para você atender com tranquilidade</h2>
-            <p class="lead">Um espaço odontológico no Centro de Ipatinga para profissionais que querem atender sem o custo de manter um consultório próprio.</p>
-            <div class="feat">
-              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg></span><span><b>Sala odontológica</b><span>Reserve só as horas que precisar</span></span></div>
-              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1-3.5 3.8-5 7-5s6 1.5 7 5"/></svg></span><span><b>Área do dentista</b><span>Reservas, histórico e comprovantes</span></span></div>
-              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.5 9a4 4 0 010 6"/></svg></span><span><b>Avisos do consultório</b><span>Recados da Dra. Thalia no seu painel</span></span></div>
-              <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Lista de espera</b><span>Aviso quando um horário vagar</span></span></div>
-            </div>
-            <div class="about-cta"><a class="cta line sm" data-href="ig" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg> Siga <span data-fill="igu"></span></a></div>
+          <p class="hint gal-hint">Toque em uma foto para ver maior.</p>
+        </div>
+        <div class="gal-ph" aria-label="Fotos do consultório">
+          <div class="ph big"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span>Foto do consultório em breve</span></div>
+          <div class="ph"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span>Foto do consultório em breve</span></div>
+          <div class="ph"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span>Foto do consultório em breve</span></div>
+        </div>
+        <div class="about-grid">
+          <div class="feat">
+            <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg></span><span><b>Sala odontológica</b><span>Reserve só as horas que precisar</span></span></div>
+            <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1-3.5 3.8-5 7-5s6 1.5 7 5"/></svg></span><span><b>Área do dentista</b><span>Reservas, histórico e comprovantes</span></span></div>
+            <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.5 9a4 4 0 010 6"/></svg></span><span><b>Avisos do consultório</b><span>Recados da Dra. Thalia no seu painel</span></span></div>
+            <div><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b>Lista de espera</b><span>Aviso quando um horário vagar</span></span></div>
+          </div>
+          <div class="sig-card">
+            <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413" loading="lazy">
+            <p><b data-fill="dentista"></b><span>Cirurgiã-dentista responsável</span></p>
+            <a class="cta ghostw sm" data-href="ig" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg> Siga <span data-fill="igu"></span></a>
           </div>
         </div>
-      </section>
-
-      <section class="sec gal-sec" id="fotos" hidden aria-label="Fotos do consultório"><div class="in">
-        <div class="sec-head"><div><p class="eyebrow">Fotos</p><h2>Conheça o espaço</h2></div><p>Toque em uma foto para ver maior.</p></div>
-        <div class="gal" id="gal"></div>
       </div></section>
 
-      <section class="sec est-sec" id="estrutura" hidden aria-label="Estrutura e valores"><div class="in"></div></section>
-
-      <section class="sec faq-sec" id="perguntas" hidden aria-label="Perguntas frequentes"><div class="in faq-grid">
-        <div><p class="eyebrow">Dúvidas</p><h2>Perguntas frequentes</h2><p class="lead2">Não encontrou sua resposta? Fale com a Dra. Thalia.</p><a class="cta line sm" data-href="wa" target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
-        <div class="faq-list" id="faq-list"></div>
-      </div></section>
+      <section class="sec est-sec" id="estrutura" hidden aria-label="Valores"><div class="in"></div></section>
 
       <section class="sec loc" id="local" aria-label="Localização"><div class="in"><div class="loc-grid">
         <div class="map"><iframe id="gmap" title="Mapa: Rua Juiz de Fora, 52, Galeria Êxito, Centro, Ipatinga/MG" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
         <div class="loc-info">
           <p class="eyebrow">Localização</p>
-          <h2>No Centro de Ipatinga</h2>
+          <h2>No <em>Centro</em> de Ipatinga</h2>
           <div class="row2"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><b data-fill="end"></b><span data-fill="cidade"></span></span></div>
           <div class="row2"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/></svg></span><span><b data-fill="tel"></b><a data-href="wa" target="_blank" rel="noopener">Chamar no WhatsApp</a></span></div>
           <div class="row2"><span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span><b data-fill="dias"></b><span data-fill="horas"></span></span></div>
-          <a class="cta line sm" data-href="map" target="_blank" rel="noopener">Abrir no Google Maps</a>
+          <a class="cta line sm" data-href="map" target="_blank" rel="noopener">Abrir no Google Maps <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div></div></section>
 
+      <section class="sec faq-sec" id="perguntas" aria-label="Perguntas frequentes"><div class="in faq-grid">
+        <div><p class="eyebrow">Dúvidas</p><h2>Perguntas <em>frequentes</em></h2><p class="lead2">Não encontrou sua resposta? Fale com a Dra. Thalia.</p><a class="cta line sm" data-href="wa" target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
+        <div class="faq-list" id="faq-list"></div>
+      </div></section>
+
       <div class="in"><div class="cta-band">
-        <svg class="deco" style="right:280px;top:-60px;width:220px" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
-        <svg class="deco" style="right:-30px;bottom:-70px;width:200px;transform:rotate(14deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>
-        <div class="cta-t"><h2>Pronto para reservar <em>o seu horário?</em></h2><p>Veja a agenda ao vivo e confirme em poucos passos.</p></div>
-        <div class="cta-b"><button class="cta gold" type="button" data-start>Agendar horário</button><a class="cta ghostw" href="#dentista">Área do dentista</a></div>
+        <div class="cta-t"><p class="eyebrow">Agenda ao vivo</p><h2>Pronto para reservar <em>o seu horário?</em></h2><p>Veja os horários livres e reserve em poucos passos.</p></div>
+        <div class="cta-b"><button class="cta gold" type="button" data-start>Consultar horários <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><a class="cta ghostw" href="#dentista">Área do dentista</a></div>
       </div></div>
     </div>
 
@@ -1539,10 +2344,23 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
 
   <!-- ACESSO DO DENTISTA -->
   <section class="sheet login" id="view-dlogin" hidden aria-label="Acesso do dentista">
+    <aside class="dl-side">
+      <div class="dl-img" id="dl-img" aria-hidden="true"></div>
+      <div class="dl-side-in">
+        <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413">
+        <p class="dl-side-t">Seu consultório pronto. <em>Sua agenda, do seu jeito.</em></p>
+        <ul class="dl-ben">
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Reserve por hora, só o tempo que precisar</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Veja os horários livres da agenda ao vivo</li>
+          <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 01-.5.5h-10A1.5 1.5 0 016 19V5a1.5 1.5 0 011-1.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h6"/></svg>Reservas, comprovantes e avisos em um só lugar</li>
+        </ul>
+      </div>
+    </aside>
+    <div class="dl-main"><div class="dl-box">
     <p class="eyebrow" id="dl-eyebrow">Área do dentista</p>
     <h2 id="dl-title">Acesse suas reservas</h2>
     <p class="hint" id="dl-lead"></p>
-    <div class="seg" id="dl-seg" style="justify-self:start"><button type="button" data-dl="login">Entrar</button><button type="button" data-dl="reg">Criar conta</button></div>
+    <div class="seg dl-tabs" id="dl-seg" role="group" aria-label="Entrar ou criar conta"><button type="button" data-dl="login">Entrar</button><button type="button" data-dl="reg">Criar conta</button></div>
     <form id="dl-login" novalidate>
       <label>E-mail<input id="dl-email" type="email" autocomplete="email" inputmode="email"></label>
       <label>Senha<input id="dl-pass" type="password" autocomplete="current-password"></label>
@@ -1572,7 +2390,8 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
       <button class="primary" type="submit">Salvar nova senha</button>
     </form>
     <div id="dl-fb" role="status"></div>
-    <a class="link" href="#">Voltar ao início</a>
+    <a class="link dl-back" href="#">Voltar ao início</a>
+    </div></div>
   </section>
   <a class="wa-float" data-href="wa" target="_blank" rel="noopener" aria-label="Falar com a Dra. Thalia no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.5A7.5 7.5 0 1112 19.5a7.4 7.4 0 01-3.5-.9z"/><path d="M9.3 9.2c.2-.5.6-.6.9-.6.3 0 .5.4.7.9.2.5-.4.8-.2 1.2.4.8 1 1.4 1.8 1.8.4.2.7-.4 1.2-.2.5.2.9.4.9.7 0 .3-.1.7-.6.9-1.6.6-4.6-2.3-4.7-3.9z" fill="currentColor" stroke="none"/></svg></a>
   <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto ampliada"><button type="button" class="lb-x" id="lb-x" aria-label="Fechar">×</button><button type="button" class="lb-p" id="lb-p" aria-label="Foto anterior">‹</button><img id="lb-img" alt="Foto do consultório"><button type="button" class="lb-n" id="lb-n" aria-label="Próxima foto">›</button></div>
@@ -1592,21 +2411,24 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
 <!-- PAINEL DO ADMINISTRADOR -->
 <div id="view-admin" class="app" hidden>
   <header class="app-top"><div class="app-top-in">
-    <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413">
+    <button type="button" class="side-toggle" aria-label="Recolher menu" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button>
+    <img class="lg-claro" src="assets/logo-vinho.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413"><img class="lg-escuro" src="assets/logo-dourado.webp?v=7" alt="" width="900" height="413">
     <span class="crumb"><span class="hide-xs">Painel</span><span class="hide-xs" aria-hidden="true">›</span><b id="crumb">Resumo</b></span>
-    <div class="who"><span class="who-name"></span><span class="avatar"></span></div>
+    <button type="button" class="top-acao" data-novareserva><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nova reserva</button>
+    <div class="who-wrap"><button type="button" class="who" aria-haspopup="true" aria-expanded="false" aria-label="Menu da conta"><span class="who-name"></span><span class="avatar"></span><svg class="who-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="who-menu" hidden><p class="who-papel">Administração</p><button type="button" data-tab="ajustes">Ajustes</button><a href="#dentista" class="so-dent">Minha área de dentista</a><a href="#">Ver site</a><button type="button" class="who-sair" data-logout>Sair</button></div></div>
   </div></header>
 
   <div class="app-body">
     <nav class="side" aria-label="Seções do painel">
-      <button type="button" data-tab="resumo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l5-6 4 3 7-8"/><path d="M4 20.500h16"/></svg>Resumo<span class="badge" id="due-badge" hidden>0</span></button>
-      <button type="button" data-tab="dentistas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Dentistas</button>
+      <p class="side-gt" aria-hidden="true">Visão geral</p><button type="button" data-tab="resumo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l5-6 4 3 7-8"/><path d="M4 20.500h16"/></svg>Resumo<span class="badge" id="due-badge" hidden>0</span></button>
+      <p class="side-gt" aria-hidden="true">Gestão</p><button type="button" data-tab="dentistas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Dentistas</button>
       <button type="button" data-tab="agenda"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 9.500h17M8 3v4M16 3v4"/></svg>Agenda</button>
       <button type="button" data-tab="pacientes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8M16 4.8a3 3 0 010 6M18 14.4c1.4.6 2.4 2 2.8 4.6"/></svg>Pacientes</button>
       <button type="button" data-tab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
-      <button type="button" data-tab="mural"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.500 9a4 4 0 010 6M19 6.500a7.500 7.500 0 010 11"/></svg>Mural<span class="badge" id="mural-badge" hidden>0</span></button>
+      <p class="side-gt" aria-hidden="true">Comunicação</p><button type="button" data-tab="mural"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.500 9a4 4 0 010 6M19 6.500a7.500 7.500 0 010 11"/></svg>Mural<span class="badge" id="mural-badge" hidden>0</span></button>
       <button type="button" data-tab="site"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8"/></svg>Site</button>
-      <button type="button" data-tab="calc" class="so-completo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8 7.5h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>Calculadora</button>
+      <p class="side-gt" aria-hidden="true">Ferramentas</p><button type="button" data-tab="calc" class="so-completo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8 7.5h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>Calculadora</button>
       <button type="button" data-tab="ajustes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3.500v2.200M12 18.300v2.200M3.500 12h2.200M18.300 12h2.200M6 6l1.600 1.600M16.400 16.400L18 18M6 18l1.600-1.600M16.400 7.600L18 6"/></svg>Ajustes</button>
       <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
       <div class="more-sheet" hidden><button type="button" data-tab="financeiro">Financeiro</button><button type="button" data-tab="mural">Mural</button><button type="button" data-tab="site">Site</button><button type="button" data-tab="calc" class="so-completo">Calculadora</button><button type="button" data-tab="ajustes">Ajustes</button><a href="#dentista" class="so-dent">Minha área de dentista</a><a href="#">Ver site</a><button type="button" data-logout>Sair</button></div>
@@ -1621,8 +2443,8 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
       <!-- RESUMO -->
       <section id="t-resumo" class="tab" aria-label="Resumo">
         <div class="page-head greet"><svg class="gdeco" style="right:-30px;top:-46px;width:170px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span class="gdots" aria-hidden="true"></span>
-          <div><p class="eyebrow" id="r-date"></p><h2 id="r-hello">Olá</h2></div>
-          <button class="primary" type="button" data-tab="agenda">Abrir agenda</button>
+          <div><p class="eyebrow" id="r-date"></p><h2 id="r-hello">Olá</h2><p class="greet-sub">Aqui está um resumo da movimentação do seu consultório.</p></div>
+          <button class="primary" type="button" data-tab="agenda">Abrir agenda <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
         <div class="kpis band-k" id="r-kpis"></div>
         <div class="stack" id="r-app"></div>
@@ -1737,7 +2559,7 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
         <div class="page-head"><div><p class="eyebrow">Conteúdo da página inicial</p><h2>Site</h2></div><a class="ghost" href="#" style="text-decoration:none">Ver site</a></div>
         <div class="card">
           <div class="card-head"><h3>Fotos do consultório</h3><span class="hint" id="sf-count"></span></div>
-          <p class="hint">Aparecem na galeria da página inicial. Envie fotos da sala, da recepção e dos equipamentos. A primeira foto aparece maior.</p>
+          <p class="hint">Aparecem na galeria da página inicial. Envie fotos da sala, da recepção e dos equipamentos. A primeira foto aparece maior e também vai para o topo da página. Enquanto nenhuma foto for enviada aqui, o site mostra as fotos do consultório que já vêm com ele.</p>
           <label class="upload"><input type="file" id="sf-file" accept="image/*" multiple><span>+ Adicionar fotos</span></label>
           <div id="sf-fb" role="status"></div>
           <div class="sf-grid" id="sf-grid"></div>
@@ -1823,18 +2645,21 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
 <!-- ÁREA DO DENTISTA -->
 <div id="view-dent" class="app" hidden>
   <header class="app-top"><div class="app-top-in">
-    <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413">
+    <button type="button" class="side-toggle" aria-label="Recolher menu" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></button>
+    <img class="lg-claro" src="assets/logo-vinho.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413"><img class="lg-escuro" src="assets/logo-dourado.webp?v=7" alt="" width="900" height="413">
     <span class="crumb"><span class="hide-xs">Área do dentista</span><span class="hide-xs" aria-hidden="true">›</span><b id="c-crumb">Início</b></span>
-    <div class="who"><span class="who-name" id="c-who"></span><span class="avatar" id="c-av"></span></div>
+    <button type="button" class="top-acao" data-ctab="nova"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Reservar horário</button>
+    <div class="who-wrap"><button type="button" class="who" aria-haspopup="true" aria-expanded="false" aria-label="Menu da conta"><span class="who-name" id="c-who"></span><span class="avatar" id="c-av"></span><svg class="who-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="who-menu" hidden><p class="who-papel">Área do dentista</p><button type="button" data-ctab="perfil">Meu perfil</button><a href="#admin" class="so-adm">Painel da administração</a><a href="#">Ver site</a><button type="button" class="who-sair" data-dlogout>Sair</button></div></div>
   </div></header>
 
   <div class="app-body">
     <nav class="side" aria-label="Seções da área do dentista">
-      <button type="button" data-ctab="inicio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.500L12 4l8 6.500V20H14.500v-5h-5v5H4z"/></svg>Início<span class="badge" id="c-badge" hidden>0</span></button>
+      <p class="side-gt" aria-hidden="true">Minha área</p><button type="button" data-ctab="inicio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.500L12 4l8 6.500V20H14.500v-5h-5v5H4z"/></svg>Início<span class="badge" id="c-badge" hidden>0</span></button>
       <button type="button" data-ctab="reservas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2"/><path d="M3.500 9.500h17M8 3v4M16 3v4M8 13.500h5M8 16.500h8"/></svg>Reservas</button>
       <button type="button" data-ctab="nova"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M12 8v8M8 12h8"/></svg>Reservar</button>
       <button type="button" data-ctab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
-      <button type="button" data-ctab="consultorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-2.500 0-4 1-5.500 1C4.500 4 3 5.500 3 8c0 3 1.500 4.500 2 7 .5 3 1 6 2.500 6 1.700 0 1.500-4 2.500-6 .4-.9 1-1.500 2-1.500s1.600.6 2 1.500c1 2 .8 6 2.500 6 1.500 0 2-3 2.500-6 .5-2.500 2-4 2-7 0-2.500-1.500-4-3.500-4C16 4 14.500 3 12 3z"/></svg>Consultório</button>
+      <p class="side-gt" aria-hidden="true">Consultório e conta</p><button type="button" data-ctab="consultorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-2.500 0-4 1-5.500 1C4.500 4 3 5.500 3 8c0 3 1.500 4.500 2 7 .5 3 1 6 2.500 6 1.700 0 1.500-4 2.500-6 .4-.9 1-1.500 2-1.500s1.600.6 2 1.500c1 2 .8 6 2.500 6 1.500 0 2-3 2.500-6 .5-2.500 2-4 2-7 0-2.500-1.500-4-3.500-4C16 4 14.500 3 12 3z"/></svg>Consultório</button>
       <button type="button" data-ctab="perfil"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Perfil</button>
       <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
       <div class="more-sheet" hidden><button type="button" data-ctab="consultorio">O consultório</button><button type="button" data-ctab="perfil">Meu perfil</button><a href="#admin" class="so-adm">Painel da administração</a><a href="#">Ver site</a><button type="button" data-dlogout>Sair</button></div>
@@ -1851,8 +2676,8 @@ body.rolou .top,body.rolou .app-top{box-shadow:0 10px 24px -16px rgba(40,6,16,.5
       <section id="c-wait" class="tab" hidden aria-label="Aguardando liberação"></section>
       <section id="c-inicio" class="tab" aria-label="Início">
         <div class="page-head greet"><svg class="gdeco" style="right:-30px;top:-46px;width:170px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span class="gdots" aria-hidden="true"></span>
-          <div><p class="eyebrow" id="ci-date"></p><h2 id="ci-hello">Olá!</h2></div>
-          <button class="primary" type="button" data-ctab="nova">Reservar horário</button>
+          <div><p class="eyebrow" id="ci-date"></p><h2 id="ci-hello">Olá!</h2><p class="greet-sub">Acompanhe suas reservas, pagamentos e avisos do consultório.</p></div>
+          <button class="primary" type="button" data-ctab="nova">Reservar horário <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
         <div class="stack" id="ci-alerts"></div>
         <div class="grid2">
@@ -2492,7 +3317,10 @@ function dueList() {
   return S.cache.all.filter(x => x.st === 'agendado' && !x.b.confAbertaEm && (new Date(`${x.b.date}T${pad(x.b.from)}:00`) - now) <= 2 * 3600 * 1000).sort(asc);
 }
 function kpis(el, items) {
-  el.innerHTML = items.map(k => `<div class="kpi"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k.ic]}</svg></span><div><b>${esc(k.v)}</b><span>${esc(k.l)}</span><small>${esc(k.s)}</small></div></div>`).join('');
+  // com "tab", o indicador vira atalho para a aba correspondente (seta no canto)
+  el.innerHTML = items.map(k => k.tab
+    ? `<button type="button" class="kpi kpi-go" data-tab="${k.tab}" aria-label="${esc(k.l)}: ${esc(k.v)}. Abrir ${esc(k.tab)}"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k.ic]}</svg></span><div><b>${esc(k.v)}</b><span>${esc(k.l)}</span><small>${esc(k.s)}</small></div><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>`
+    : `<div class="kpi"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k.ic]}</svg></span><div><b>${esc(k.v)}</b><span>${esc(k.l)}</span><small>${esc(k.s)}</small></div></div>`).join('');
 }
 function miniBooking({ b, st }) {
   const d = new Date(b.date + 'T12:00');
@@ -2543,7 +3371,8 @@ function renderDue() {
   }));
 }
 function renderResumo() {
-  $('r-app').innerHTML = pendHtml() + planPendHtml() + backupAviso() + appTipHtml('a');
+  { const dec = pendHtml() + planPendHtml() + backupAviso() + appTipHtml('a');
+    $('r-app').innerHTML = dec ? '<h3 class="r-dec">Para decidir</h3>' + dec : ''; }
   $('r-aval').innerHTML = avaliacoesHtml();
   $('r-pac').innerHTML = pacHojeHtml();
   const all = S.cache.all, now = new Date(), t = iso(now), ym = t.slice(0, 7);
@@ -2557,10 +3386,10 @@ function renderResumo() {
   const novos = dents.filter(d => d.primeira.startsWith(ym)).length;
   const p = prox[0];
   kpis($('r-kpis'), [
-    { ic: 'cal', v: hoje.length, l: 'Reservas hoje', s: `${sumH(hoje)}h reservadas` },
-    { ic: 'clock', v: prox.length, l: 'Próximas reservas', s: p ? `Próxima: ${br(p.b.date).slice(0, 5)} às ${hh(p.b.from)}` : 'Nenhuma marcada' },
-    { ic: 'chart', v: `${horasMes}h`, l: `Horas em ${MESES[now.getMonth()]}`, s: `${cap ? Math.round(horasMes / cap * 100) : 0}% de ocupação do mês` },
-    { ic: 'user', v: dents.length, l: 'Dentistas', s: `${plural(novos, 'novo', 'novos')} este mês` }
+    { ic: 'cal', v: hoje.length, l: 'Reservas hoje', s: `${sumH(hoje)}h reservadas`, tab: 'agenda' },
+    { ic: 'clock', v: prox.length, l: 'Próximas reservas', s: p ? `Próxima: ${br(p.b.date).slice(0, 5)} às ${hh(p.b.from)}` : 'Nenhuma marcada', tab: 'agenda' },
+    { ic: 'chart', v: `${horasMes}h`, l: `Horas em ${MESES[now.getMonth()]}`, s: `${cap ? Math.round(horasMes / cap * 100) : 0}% de ocupação do mês`, tab: 'financeiro' },
+    { ic: 'user', v: dents.length, l: 'Dentistas', s: `${plural(novos, 'novo', 'novos')} este mês`, tab: 'dentistas' }
   ]);
   renderDue();
 
@@ -2570,16 +3399,16 @@ function renderResumo() {
   $('r-week').textContent = `${br(iso(days[0])).slice(0, 5)} a ${br(iso(days[days.length - 1])).slice(0, 5)} · de ${hpd}h por dia`;
   $('r-bars').innerHTML = days.map(d => {
     const s = iso(d); const h = sumH(all.filter(x => isActive(x) && !['credito', 'taxa'].includes(x.st) && x.b.date === s));
-    return `<div class="bar${s === t ? ' today' : ''}"><span class="bar-v">${h}h</span><div class="bar-track" role="img" aria-label="${DIAS_LONGOS[d.getDay()]}: ${h} de ${hpd} horas"><i style="height:${Math.min(100, h / hpd * 100)}%"></i></div><span class="bar-l">${DIAS[d.getDay()]}</span></div>`;
+    return `<div class="bar${s === t ? ' today' : s < t ? ' past' : ''}"><span class="bar-v">${h}h</span><div class="bar-track" role="img" aria-label="${DIAS_LONGOS[d.getDay()]}: ${h} de ${hpd} horas"><i style="height:${Math.min(100, h / hpd * 100)}%"></i></div><span class="bar-l">${DIAS[d.getDay()]}</span></div>`;
   }).join('');
 
   const recMes = sumPrice(mes);
   $('r-fin').innerHTML = [
-    ['Receita prevista', recMes != null ? BRL(recMes) : 'A definir'],
-    ['Horas reservadas', `${horasMes}h`],
-    ['Já realizadas', `${sumH(mes.filter(x => x.st === 'concluido'))}h`],
-    ['Valor da hora', temPreco() ? precoTexto() : 'Ainda não configurado']
-  ].map(([a, b]) => `<div><span>${a}</span><span>${b}</span></div>`).join('');
+    ['Receita prevista', recMes != null ? BRL(recMes) : 'A definir', 'cal'],
+    ['Horas reservadas', `${horasMes}h`, 'clock'],
+    ['Já realizadas', `${sumH(mes.filter(x => x.st === 'concluido'))}h`, 'chart'],
+    ['Valor da hora', temPreco() ? precoTexto() : 'Ainda não configurado', 'money']
+  ].map(([a, b, ic], i) => `<div class="${i === 3 ? 'kv-dest' : ''}"><span><svg class="kv-ic" viewBox="0 0 24 24" aria-hidden="true">${ICON[ic]}</svg>${a}</span><span>${b}</span></div>`).join('');
 
   $('r-next').innerHTML = prox.length ? prox.slice(0, 5).map(miniBooking).join('') : emptyBox('Nenhuma reserva marcada por enquanto.');
   const rec = dents.filter(d => d.ultima).sort((a, b) => ultKey(b).localeCompare(ultKey(a))).slice(0, 5);
@@ -2735,11 +3564,12 @@ function renderAjustes() {
   if (!S.ajLoaded) { S.ajLoaded = true; ajLoad(); }
   renderConta9();
   ajSummaries(); ajSummaries7(); if (!S.v8Cfg) { S.v8Cfg = true; cfgAdm().then(() => ajSummaries8()); } ajSummaries8();
+  ajustesShell();
 }
 document.querySelectorAll('.theme-opt').forEach(b => b.addEventListener('click', () => setTema(b.dataset.tema, b.dataset.scope || 'painel')));
 
 /* Gaveta de detalhes */
-function openDrawer(d) { S.drawer = d; S.lastFocus = document.activeElement; renderDrawer(); try { $('dr-close').focus(); } catch (_) {} }
+function openDrawer(d) { S.drawer = d; S.lastFocus = document.activeElement; renderDrawer(); gavetaEntra($('drawer')); try { $('dr-close').focus(); } catch (_) {} }
 function closeDrawer() {
   fimEnvio();
   if (!S.drawer) return;
@@ -3017,6 +3847,7 @@ function renderDLogin() {
   $('dl-eyebrow').textContent = st === 'new' ? 'Nova senha' : 'Área do dentista';
   if (location.hash === '#admin' && st === 'login') { $('dl-eyebrow').textContent = 'Acesso'; $('dl-title').textContent = 'Entre na sua conta'; $('dl-lead').textContent = 'Use o e-mail e a senha da sua conta. Quem é administrador vai direto para o painel.'; }
   if (st === 'reg') renderTermosReg();
+  fotoDestaque();
 }
 document.querySelectorAll('#dl-seg [data-dl]').forEach(b => b.addEventListener('click', () => { S.dl.stage = b.dataset.dl; $('dl-fb').innerHTML = ''; renderDLogin(); }));
 $('dl-login').addEventListener('submit', async e => {
@@ -3103,7 +3934,7 @@ function payInfo(b) {
   const v = priceOf(b);
   if (b.status === 'cancelado') return { v, tag: 'cancelado', label: 'Cancelada' };
   if (b.pago) return { v, tag: 'pago', label: 'Pago' };
-  if (b.comprovanteEm) return { v, tag: 'pend', label: 'Comprovante enviado' };
+  if (b.comprovanteEm) return { v, tag: 'comp', label: 'Comprovante enviado' };
   return { v, tag: 'pend', label: 'Pendente' };
 }
 function countdown(b, st) {
@@ -3235,7 +4066,7 @@ function renderCReservas() {
 /* Gaveta da reserva */
 function openCDrawer(id) {
   if (!S.cdraft || S.cdraft.id !== id) S.cdraft = { id, pedido: null, checks: [], nota: 0, coment: '' };
-  S.cDrawer = id; S.lastFocus = document.activeElement; renderCDrawer(true);
+  S.cDrawer = id; S.lastFocus = document.activeElement; renderCDrawer(true); gavetaEntra($('c-drawer'));
   try { $('c-dr-close').focus(); } catch (_) {}
 }
 function closeCDrawer() {
@@ -3382,7 +4213,20 @@ function renderCNova() {
   let pr = $('cn-per'); if (!pr) { pr = document.createElement('div'); pr.id = 'cn-per'; pr.className = 'per-chips'; hb.before(pr); }
   const ops = c.date ? opcoesPeriodo().filter(o => o.de >= CFG.abre && o.ate <= CFG.fecha) : [];
   pr.innerHTML = ops.length ? '<p>Reservar período</p>' + ops.map(o => { let livre = true; for (let x = o.de; x < o.ate; x++) if (isBusy(c.date, x) || isPast(c.date, x)) livre = false; return `<button type="button" data-per="${o.de}|${o.ate}"${livre ? '' : ' disabled'} class="${c.start === o.de && c.end === o.ate - 1 ? 'on' : ''}">${o.nome}<small>${o.de}h às ${o.ate}h · ${BRL(o.v)}</small></button>`; }).join('') : '';
-  pr.querySelectorAll('[data-per]').forEach(btn => btn.addEventListener('click', () => { const [a, z] = btn.dataset.per.split('|').map(Number); Object.assign(c, { start: a, end: z - 1, want: null }); $('cn-fb').innerHTML = ''; renderCNova(); }));
+  pr.querySelectorAll('[data-per]').forEach(btn => btn.addEventListener('click', () => { const [a, z] = btn.dataset.per.split('|').map(Number); Object.assign(c, { start: a, end: z - 1, want: null, modo: 'periodo' }); $('cn-fb').innerHTML = ''; renderCNova(); }));
+  // Modalidade em segmentos: por hora (grade de horários) ou por período (manhã, tarde, noite, diária).
+  let md = $('cn-mode');
+  if (!md) {
+    md = document.createElement('div'); md.id = 'cn-mode'; md.className = 'seg cn-mode'; md.setAttribute('role', 'group'); md.setAttribute('aria-label', 'Modalidade da reserva');
+    md.innerHTML = '<button type="button" data-cnmodo="hora">Por hora</button><button type="button" data-cnmodo="periodo">Por período</button>';
+    md.addEventListener('click', e => { const b = e.target.closest('[data-cnmodo]'); if (!b) return; S.cn.modo = b.dataset.cnmodo; renderCNova(); });
+    $('cn-top').after(md);
+  }
+  const temPer = opcoesPeriodo().some(o => o.de >= CFG.abre && o.ate <= CFG.fecha);
+  md.hidden = !temPer;
+  const modo = temPer && c.modo === 'periodo' ? 'periodo' : 'hora';
+  $('cn-pick').dataset.modo = modo;
+  md.querySelectorAll('[data-cnmodo]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cnmodo === modo)));
   renderCNOpts();
 }
 function cnHour(h) {
@@ -4110,21 +4954,47 @@ document.addEventListener('click', async e => {
 /* ---------- Página inicial: perguntas, galeria e foto ampliada ---------- */
 function renderFAQ() {
   const fq = S.faq || [], sig = JSON.stringify(fq.map(x => [x.id, x.pergunta, x.resposta]));
-  $('perguntas').hidden = !fq.length;
   if (sig === S.faqSig) return; S.faqSig = sig;
-  $('faq-list').innerHTML = fq.map((x, i) => `<details class="faq-item"${i === 0 ? ' open' : ''}><summary>${esc(x.pergunta)}</summary><p>${esc(x.resposta)}</p></details>`).join('');
+  $('faq-list').innerHTML = fq.length ? fq.map((x, i) => `<details class="faq-item"${i === 0 ? ' open' : ''}><summary>${esc(x.pergunta)}</summary><p>${esc(x.resposta)}</p></details>`).join('')
+    : '<div class="faq-empty"><b>As perguntas frequentes serão publicadas em breve.</b><span>Enquanto isso, tire suas dúvidas direto com a Dra. Thalia pelo WhatsApp.</span></div>';
+}
+// Fotos do consultório que vêm com o site. As enviadas pela aba Site (Supabase) têm prioridade sobre elas.
+const FOTOS_PADRAO = [
+  { url: 'assets/consultorio/consultorio-panorama.webp', alt: 'Sala de atendimento com cadeira odontológica, bancada e armários' },
+  { url: 'assets/consultorio/consultorio-cadeira.webp', alt: 'Cadeira odontológica e refletor' },
+  { url: 'assets/consultorio/consultorio-bancada.webp', alt: 'Bancada com cuba e espelho dourado' },
+  { url: 'assets/consultorio/consultorio-mesa.webp', alt: 'Mesa de atendimento com duas cadeiras' },
+  { url: 'assets/consultorio/consultorio-autoclave.webp', alt: 'Bancada com pia e autoclave' }
+];
+const FOTO_TOPO = { url: 'assets/consultorio/consultorio-sala.webp', alt: 'Sala de atendimento do consultório' };
+const FOTO_LOGIN = 'assets/consultorio/consultorio-equipo.webp';
+const fotosSite = () => (S.fotos && S.fotos.length ? S.fotos : FOTOS_PADRAO);
+// Foto do topo da página e do login.
+function fotoDestaque() {
+  const proprias = !!(S.fotos && S.fotos.length), f = proprias ? S.fotos[0] : FOTO_TOPO, hp = $('hero-photo'), dl = $('dl-img');
+  const img = hp.querySelector('img');
+  if (!img || img.getAttribute('src') !== f.url) hp.innerHTML = `<img src="${esc(f.url)}" alt="${esc(f.alt || 'Foto do consultório')}" width="1086" height="1448" fetchpriority="high">`;
+  if (dl) dl.style.backgroundImage = `url("${encodeURI(proprias ? f.url : FOTO_LOGIN)}")`;
+}
+// Card "A partir de R$ … por hora": só aparece com valor configurado nos Ajustes.
+function renderPrecoTopo() {
+  const p = CFG.precos || {}, vs = [CFG.valorHora, ...Object.values(p.porDia || {}), ...(p.porHora || []).map(x => x && x.valor)].map(Number).filter(v => v > 0);
+  $('hero-price').hidden = !vs.length;
+  if (!vs.length) return;
+  $('hp-v').textContent = BRL(Math.min(...vs));
+  $('hp-t').textContent = CFG.pix ? ' por hora · Pix' : ' por hora';
 }
 function renderGallery() {
-  const fotos = S.fotos || [], sig = fotos.map(p => p.name).join('|');
-  $('fotos').hidden = !fotos.length;
+  const fotos = fotosSite(), sig = fotos.map(p => p.name || p.url).join('|');
   if (sig === S.galSig) return; S.galSig = sig;
+  fotoDestaque();
   $('gal').className = 'gal c' + Math.min(fotos.length, 3);
-  $('gal').innerHTML = fotos.slice(0, 9).map((p, i) => `<button type="button" class="gal-item${i === 0 ? ' big' : ''}" data-foto="${i}" aria-label="Ver foto ${i + 1} ampliada"><img src="${esc(p.url)}" alt="Foto do consultório ${i + 1}" loading="lazy"></button>`).join('');
+  $('gal').innerHTML = fotos.slice(0, 9).map((p, i) => `<button type="button" class="gal-item${i === 0 ? ' big' : ''}" data-foto="${i}" aria-label="Ver foto ${i + 1} ampliada"><img src="${esc(p.url)}" alt="${esc(p.alt || `Foto do consultório ${i + 1}`)}" loading="lazy"></button>`).join('');
 }
 function lbShow(i) {
-  const fotos = S.fotos || []; if (!fotos.length) return;
+  const fotos = fotosSite(); if (!fotos.length) return;
   S.lbI = (i + fotos.length) % fotos.length;
-  $('lb-img').src = fotos[S.lbI].url; $('lb').hidden = false;
+  $('lb-img').src = fotos[S.lbI].url; $('lb-img').alt = fotos[S.lbI].alt || 'Foto do consultório'; $('lb').hidden = false;
 }
 document.addEventListener('click', e => {
   const el = e.target.closest && e.target.closest('[data-foto]');
@@ -6288,14 +7158,13 @@ function renderEstrutura() {
   const e = CFG.espaco || {}, eq = e.equipamentos || [], inc = e.inclusos || [];
   const pl = CFG.planos || {}, per = (CFG.periodos || [])[0];
   const sig = JSON.stringify([eq, inc, CFG.valorHora, per && per.valor, CFG.diaria, pl]); if (el.dataset.sig === sig) return; el.dataset.sig = sig;
-  const preco = (t, v, s) => v == null || isNaN(v) ? '' : `<div class="pz"><span>${t}</span><b>${BRL(Number(v))}</b><small>${s}</small></div>`;
+  const preco = (t, v, u, s, dest) => v == null || isNaN(v) ? '' : `<div class="pz${dest ? ' dest' : ''}"><span>${t}</span><b>${BRL(Number(v))}<i>${u}</i></b><small>${s}</small></div>`;
   const lista = (t, l) => l.length ? `<div class="eq-col"><p class="eyebrow">${t}</p><ul class="eq">${l.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>` : '';
-  el.querySelector('.in').innerHTML = `<div class="sec-head"><div><p class="eyebrow">Estrutura e valores</p><h2>Tudo pronto para o seu atendimento</h2></div><p>Você traz os seus pacientes; o consultório já está equipado, limpo e organizado.</p></div>
-    <div class="est-grid">
-      <div class="est-eq">${lista('Equipamentos', eq) + lista('Incluso no aluguel', inc) || '<p class="hint">Sala odontológica completa no Centro de Ipatinga. Veja as fotos e fale com a Dra. Thalia para conhecer pessoalmente.</p>'}
-        <div class="est-cta"><button type="button" class="cta" data-start>Agendar horário</button><a class="cta line" data-href="wa" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}">Agendar uma visita</a></div></div>
-      <div class="est-pz">${preco('Hora', CFG.valorHora, `até ${CFG.limiteHoras || 3} horas`)}${per ? preco('Período', per.valor, 'manhã, tarde ou noite') : ''}${CFG.diaria ? preco('Diária', CFG.diaria.valor, `${CFG.diaria.de}h às ${CFG.diaria.ate}h`) : ''}${pl.periodo != null ? preco('Plano mensal', Math.min(Number(pl.periodo), Number(pl.diaria ?? Infinity)), 'a partir de, 1x por semana') : ''}</div>
-    </div>`;
+  const pzs = preco('Por hora', CFG.valorHora, '/hora', `Reservas de até ${CFG.limiteHoras || 3} horas`, true) + (per ? preco('Período', per.valor, '/período', 'Manhã, tarde ou noite') : '') + (CFG.diaria ? preco('Diária', CFG.diaria.valor, '/dia', `Das ${CFG.diaria.de}h às ${CFG.diaria.ate}h`) : '') + (pl.periodo != null ? preco('Plano mensal', Math.min(Number(pl.periodo), Number(pl.diaria ?? Infinity)), '/mês', 'A partir de, 1x por semana') : '');
+  el.querySelector('.in').innerHTML = `<div class="sec-head"><div><p class="eyebrow">Valores</p><h2>Pague só pelo <em>tempo que usar</em></h2></div><p>O valor de cada reserva aparece antes de você confirmar. Acima de ${CFG.limiteHoras || 3} horas, vale o preço do período ou da diária.</p></div>
+    <div class="est-pz">${pzs || '<p class="hint">Os valores estão sendo atualizados. Fale com a Dra. Thalia pelo WhatsApp para saber o preço.</p>'}</div>
+    ${eq.length || inc.length ? `<div class="est-eq">${lista('Equipamentos', eq) + lista('Incluso no aluguel', inc)}</div>` : ''}
+    <div class="est-cta"><button type="button" class="cta" data-start>Consultar horários <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><a class="cta line" data-href="wa" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}">Agendar uma visita</a></div>`;
   el.hidden = false;
 }
 
@@ -6807,9 +7676,16 @@ function marcarErro(el, text) {
   let alvo = campos.filter(i => (/e-mail/i.test(text) && i.type === 'email') || (/senha/i.test(text) && i.type === 'password') || (/nome/i.test(text) && i.id === 'dr-nome') || (/whatsapp/i.test(text) && i.id === 'dr-tel'));
   if (/^Informe o e-mail e a senha/.test(text)) alvo = alvo.filter(i => !i.value);
   alvo.forEach(i => { i.classList.remove('inv'); void i.offsetWidth; i.classList.add('inv'); i.setAttribute('aria-invalid', 'true'); });
-  if (alvo[0]) try { alvo[0].focus({ preventScroll: true }); } catch (_) {}
+  // a mensagem aparece embaixo do primeiro campo com erro (a de baixo do formulário fica só para leitores de tela)
+  document.querySelectorAll('#view-dlogin .f-err').forEach(x => x.remove());
+  if (alvo[0]) {
+    const s = document.createElement('small'); s.className = 'f-err'; s.id = 'ferr-' + alvo[0].id; s.textContent = text;
+    (alvo[0].closest('.pw') || alvo[0]).after(s); alvo[0].setAttribute('aria-describedby', s.id);
+    if (m) m.classList.add('sr');
+    try { alvo[0].focus({ preventScroll: true }); } catch (_) {}
+  }
 }
-document.addEventListener('input', e => { const i = e.target; if (i.classList && i.classList.contains('inv')) { i.classList.remove('inv'); i.removeAttribute('aria-invalid'); } });
+document.addEventListener('input', e => { const i = e.target; if (i.classList && i.classList.contains('inv')) { i.classList.remove('inv'); i.removeAttribute('aria-invalid'); const s = $('ferr-' + i.id); if (s) { s.remove(); i.removeAttribute('aria-describedby'); } } });
 function checkOk() {
   const d = document.createElement('div'); d.className = 'check-ok'; d.setAttribute('aria-hidden', 'true');
   d.innerHTML = '<svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M15 27l7 7 15-16"/></svg>';
@@ -6882,10 +7758,191 @@ function contar(b) {
 // Site: seções aparecem suavemente ao rolar.
 function revelar() {
   if (!MOV || !('IntersectionObserver' in window)) return;
-  S.io = S.io || new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('rv-in'); S.io.unobserve(x.target); } }), { rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('#site .sec-head, #site .step4, #site .feat > div, #site .faq-item, #site .band-grid > div, #site .loc-grid, #site .cta-band, #site .est-grid > *, #site .gal-item').forEach(el => {
-    if (el.dataset.rv) return; el.dataset.rv = '1'; el.classList.add('rv'); S.io.observe(el);
+  S.io = S.io || new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { const t = x.target; t.classList.add('rv-in'); S.io.unobserve(t); setTimeout(() => { t.style.transitionDelay = ''; }, 1100); } }), { rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('#site .sec-head, #site .step4, #site .feat > div, #site .sig-card, #site .faq-item, #site .faq-empty, #site .loc-grid, #site .cta-band, #site .pz, #site .est-eq, #site .est-cta, #site .gal-item, #site .gal-ph > *').forEach(el => {
+    if (el.dataset.rv) return; el.dataset.rv = '1'; el.classList.add('rv');
+    // escalonado: itens de uma mesma lista entram um depois do outro
+    const i = el.parentElement ? [...el.parentElement.children].indexOf(el) : 0;
+    if (i > 0) el.style.transitionDelay = Math.min(i, 5) * 80 + 'ms';
+    S.io.observe(el);
   });
+}
+// Menu do site no celular: abre e fecha pelo botão, pelo Esc e ao escolher uma seção.
+(() => {
+  const btn = $('menu-btn'), top = btn.closest('.top');
+  const abrir = on => { top.classList.toggle('menu-open', on); btn.setAttribute('aria-expanded', String(on)); btn.setAttribute('aria-label', on ? 'Fechar menu' : 'Abrir menu'); };
+  btn.addEventListener('click', () => abrir(!top.classList.contains('menu-open')));
+  $('mainnav').addEventListener('click', e => { if (e.target.closest('a')) abrir(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && top.classList.contains('menu-open')) { abrir(false); btn.focus(); } });
+  document.addEventListener('click', e => { if (top.classList.contains('menu-open') && !e.target.closest('.top')) abrir(false); });
+  window.addEventListener('resize', () => { if (innerWidth > 960) abrir(false); }, { passive: true });
+})();
+// Gaveta: o conteúdo entra em sequência só quando ela abre (não a cada atualização).
+function gavetaEntra(dr) {
+  if (!dr || !MOV) return;
+  dr.classList.remove('dr-entra'); void dr.offsetWidth; dr.classList.add('dr-entra');
+  clearTimeout(dr._de); dr._de = setTimeout(() => dr.classList.remove('dr-entra'), 800);
+}
+// Menu lateral: um destaque que desliza até a aba aberta (no celular, na barra de baixo).
+function moverIndicador(side) {
+  let ind = side.querySelector(':scope > .side-ind');
+  if (!ind) { ind = document.createElement('span'); ind.className = 'side-ind'; ind.setAttribute('aria-hidden', 'true'); side.prepend(ind); side.classList.add('tem-ind'); }
+  const at = [...side.querySelectorAll(':scope > [aria-current="page"]')].find(x => x.offsetParent !== null && x.offsetWidth);
+  if (!at || at.offsetParent === null || !at.offsetWidth) { ind.style.opacity = '0'; return; }
+  Object.assign(ind.style, { opacity: '1', width: at.offsetWidth + 'px', height: at.offsetHeight + 'px', transform: `translate(${at.offsetLeft}px, ${at.offsetTop}px)` });
+  if (!ind.classList.contains('pronto')) requestAnimationFrame(() => ind.classList.add('pronto'));
+}
+const indicadores = () => document.querySelectorAll('.app:not([hidden]) .side').forEach(moverIndicador);
+document.querySelectorAll('.app .side').forEach(side => {
+  new MutationObserver(() => requestAnimationFrame(() => moverIndicador(side))).observe(side, { attributes: true, subtree: true, attributeFilter: ['aria-current', 'hidden'] });
+});
+window.addEventListener('resize', indicadores, { passive: true });
+// Botões: onda suave a partir do ponto do toque.
+document.addEventListener('pointerdown', e => {
+  if (!MOV || e.button !== 0 || !e.target.closest) return;
+  const b = e.target.closest('.app .primary, .app .ghost, .app .danger, .app .chip-b, .app .side > button, .app .quick > *, .app .theme-opt, .aj-item, #view-dlogin .primary');
+  if (!b || b.disabled) return;
+  const r = b.getBoundingClientRect(), s = Math.max(r.width, r.height) * 2.2, w = document.createElement('span');
+  w.className = 'onda'; w.setAttribute('aria-hidden', 'true');
+  w.style.cssText = `width:${s}px;height:${s}px;left:${e.clientX - r.left - s / 2}px;top:${e.clientY - r.top - s / 2}px`;
+  b.appendChild(w); setTimeout(() => w.remove(), 650);
+}, { passive: true });
+
+/* Ajustes repaginado: menu por grupos com busca e um painel por vez (computador) ou lista de atalhos (celular). */
+const AJ_GRUPOS = [['Consultório', ['valores', 'func', 'fechadas', 'pag', 'planos', 'taxa']], ['Regras e documentos', ['regras', 'termos', 'prof']], ['Comunicação', ['email', 'app', 'rel']], ['Sistema e conta', ['backup', 'tema', 'admins', 'conta']]];
+const ajLargo = () => innerWidth > 900;
+const semAcento = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+function ajShell() {
+  const accs = document.querySelector('#t-ajustes .accs'); if (!accs) return null;
+  if (accs.parentElement.classList.contains('aj-shell')) return accs.parentElement;
+  const sh = document.createElement('div'); sh.className = 'aj-shell';
+  const nav = document.createElement('nav'); nav.className = 'aj-nav'; nav.setAttribute('aria-label', 'Seções dos ajustes');
+  nav.innerHTML = '<label class="aj-busca"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input type="search" placeholder="Buscar ajuste" aria-label="Buscar ajuste"></label>'
+    + AJ_GRUPOS.map(([g, ks]) => `<div class="aj-grp"><p class="aj-gt">${g}</p>${ks.map(k => {
+      const d = accs.querySelector(`[data-acc="${k}"]`); if (!d) return '';
+      return `<button type="button" class="aj-item${d.classList.contains('so-completo') ? ' so-completo' : ''}" data-ajgo="${k}">${d.querySelector('.acc-ic').outerHTML}<span class="aj-tx"><b>${esc(d.querySelector('.acc-t b').textContent)}</b><small></small></span><svg class="i aj-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;
+    }).join('')}</div>`).join('') + '<p class="hint aj-vazio" hidden>Nenhum ajuste encontrado.</p>';
+  const voltar = document.createElement('button'); voltar.type = 'button'; voltar.className = 'aj-voltar';
+  voltar.innerHTML = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Todos os ajustes';
+  accs.before(sh); sh.append(nav, accs); accs.prepend(voltar);
+  nav.addEventListener('click', e => { const b = e.target.closest('[data-ajgo]'); if (b) ajAbrir(b.dataset.ajgo); });
+  nav.querySelector('input').addEventListener('input', e => {
+    const q = semAcento(e.target.value.trim()); let n = 0;
+    nav.querySelectorAll('.aj-item').forEach(b => { const ok = !q || semAcento(b.textContent).includes(q); b.hidden = !ok; if (ok) n++; });
+    nav.querySelectorAll('.aj-grp').forEach(g => { g.hidden = ![...g.querySelectorAll('.aj-item')].some(b => !b.hidden); });
+    nav.querySelector('.aj-vazio').hidden = !!n;
+  });
+  voltar.addEventListener('click', () => { accs.querySelectorAll('.acc[open]').forEach(d => { d.open = false; }); try { $('t-ajustes').scrollIntoView({ block: 'start' }); } catch (_) {} });
+  // o painel aberto não fecha pelo título; troca-se pelo menu (ou "Todos os ajustes" no celular)
+  accs.addEventListener('click', e => { const s = e.target.closest('.acc > summary'); if (s && s.parentElement.open) e.preventDefault(); });
+  accs.addEventListener('toggle', e => {
+    const d = e.target; if (!d.matches || !d.matches('.acc')) return;
+    if (d.open) try { sessionStorage.setItem('ajAba', d.dataset.acc); } catch (_) {}
+    ajMarcar(sh, d.open ? d : null);
+  }, true);
+  return sh;
+}
+function ajMarcar(sh, novo) {
+  const ab = sh.querySelector('.acc[open]');
+  sh.classList.toggle('aj-aberto', !!ab);
+  sh.querySelectorAll('[data-ajgo]').forEach(b => b.setAttribute('aria-current', String(!!ab && b.dataset.ajgo === ab.dataset.acc)));
+  if (novo && MOV) { novo.classList.remove('aj-entra'); void novo.offsetWidth; novo.classList.add('aj-entra'); }
+}
+function ajResumos(sh) {
+  sh.querySelectorAll('[data-ajgo]').forEach(b => { const s = $('sum-' + b.dataset.ajgo), t = s ? s.textContent : '', sm = b.querySelector('small'); if (sm.textContent !== t) sm.textContent = t; });
+}
+function ajAbrir(k) {
+  const d = document.querySelector(`#t-ajustes .acc[data-acc="${k}"]`); if (!d) return;
+  // pelo menu fica um painel por vez
+  document.querySelectorAll('#t-ajustes .acc[open]').forEach(x => { if (x !== d) x.open = false; });
+  d.open = true;
+  if (!ajLargo()) try { $('t-ajustes').scrollIntoView({ block: 'start' }); } catch (_) {}
+}
+/* Ícones padronizados: título de cada card ganha um ícone pelo assunto e o título de cada aba, o ícone do menu. */
+const ICO2 = {
+  star: '<path d="M12 3.8l2.5 5.1 5.6.8-4 3.9 1 5.6-5.1-2.7-5 2.7.9-5.6-4-3.9 5.6-.8z"/>',
+  voz: '<path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.5 9a4 4 0 010 6"/>',
+  img: '<rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8"/>',
+  ajuda: '<circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.5a2.5 2.5 0 014.8 1c0 1.7-2.4 2-2.4 3.5M12 17h.01"/>',
+  cad: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/>',
+  doc: '<path d="M7 3.5h7l4 4V20a.5.5 0 01-.5.5h-10A1.5 1.5 0 016 19V5a1.5 1.5 0 011-1.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h6"/>',
+  alerta: '<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/>',
+  pin: '<path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  equipe: '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8M16 4.8a3 3 0 010 6M18 14.4c1.4.6 2.4 2 2.8 4.6"/>',
+  pix: '<rect x="3" y="6" width="18" height="12.5" rx="2"/><path d="M3 10h18M7 15h4"/>',
+  raio: '<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',
+  lua: '<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17A8.5 8.5 0 0012 3.5z" fill="currentColor"/>',
+  cel: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
+  plano: '<path d="M4 12a8 8 0 0113.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 01-13.7 5.6L4 15.5M4 20v-4.5h4.5"/>'
+};
+const CARD_IC = [[/ocupa|semana|relat/i, 'chart'], [/financ|valor|extrato|pagament|receita|or[cç]amento|pre[cç]o|pacote/i, 'money'], [/pix/i, 'pix'], [/avalia/i, 'star'],
+  [/paciente|ficha/i, 'user'], [/dentista|administrador/i, 'equipe'], [/reserva|consulta|agenda|hor[aá]rio|datas|bloque/i, 'cal'], [/mural|aviso|publicar|problema/i, 'voz'],
+  [/espera|chegada|sa[ií]da|funcionamento/i, 'clock'], [/foto/i, 'img'], [/pergunta/i, 'ajuda'], [/senha|acesso/i, 'cad'], [/regra|termo|documento|evolu|receit|atestado/i, 'doc'],
+  [/localiza|contato/i, 'pin'], [/plano/i, 'plano'], [/atalho|r[aá]pid/i, 'raio'], [/apar[eê]ncia|tema/i, 'lua'], [/app|celular|notifica/i, 'cel'], [/perfil|dados|conta|novo no|n[ií]vel|frequente/i, 'user']];
+function decorarCards(raiz) {
+  raiz.querySelectorAll('.card-head > h3, .block > h4').forEach(h => {
+    if (h.firstElementChild && h.firstElementChild.classList.contains('h-ic')) return;
+    const t = h.textContent, m = CARD_IC.find(([re]) => re.test(t)), k = m ? m[1] : 'tooth';
+    h.insertAdjacentHTML('afterbegin', `<svg class="h-ic" viewBox="0 0 24 24" aria-hidden="true">${ICON[k] || ICO2[k]}</svg>`);
+  });
+  raiz.querySelectorAll('.tab .page-head:not(.greet) h2').forEach(h => {
+    const tab = h.closest('.tab'); if (!tab || h.querySelector('.ph-icw')) return;
+    const k = tab.id.replace(/^[tc]-/, ''), b = document.querySelector(tab.id[0] === 't' ? `#view-admin .side > [data-tab="${k}"] svg` : `#view-dent .side > [data-ctab="${k}"] svg`);
+    if (!b) return;
+    const s = b.cloneNode(true); s.setAttribute('class', 'ph-ic'); s.setAttribute('aria-hidden', 'true');
+    const w = document.createElement('span'); w.className = 'ph-icw'; w.appendChild(s); h.prepend(w);
+  });
+}
+['view-admin', 'view-dent'].forEach(id => {
+  const raiz = $(id); let fila = false;
+  new MutationObserver(() => { if (fila) return; fila = true; requestAnimationFrame(() => { fila = false; decorarCards(raiz); }); }).observe(raiz, { childList: true, subtree: true });
+  decorarCards(raiz);
+});
+/* Estrutura do painel: menu da conta no topo, atalho "Nova reserva", menu lateral recolhível e "Mais" com ícones. */
+function menuConta(abrir, wrap) {
+  document.querySelectorAll('.who-wrap').forEach(w => {
+    const on = !!abrir && w === wrap, m = w.querySelector('.who-menu'), b = w.querySelector('.who');
+    m.hidden = !on; b.setAttribute('aria-expanded', String(on)); w.classList.toggle('aberto', on);
+  });
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest) return;
+  const b = e.target.closest('.who'), w = b && b.closest('.who-wrap');
+  if (w) { menuConta(w.querySelector('.who-menu').hidden, w); return; }
+  menuConta(false); // qualquer outro clique (inclusive numa opção do menu) fecha
+  if (e.target.closest('[data-novareserva]') && !$('view-admin').hidden) { setTab('agenda'); setTimeout(() => { const n = $('a-new'); if (n) n.click(); }, 0); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const w = document.querySelector('.who-wrap.aberto'); if (w) { menuConta(false); w.querySelector('.who').focus(); }
+});
+const menuRecolhido = v => { try { if (v === undefined) return localStorage.getItem('cots_menu') === '1'; localStorage.setItem('cots_menu', v ? '1' : '0'); } catch (_) {} return false; };
+function aplicarMenu(rec) {
+  document.body.classList.toggle('menu-recolhido', rec);
+  document.querySelectorAll('.side-toggle').forEach(b => { b.setAttribute('aria-pressed', String(rec)); b.setAttribute('aria-label', rec ? 'Expandir menu' : 'Recolher menu'); });
+  requestAnimationFrame(indicadores); setTimeout(indicadores, 420); // depois da transição da largura
+}
+document.querySelectorAll('.side-toggle').forEach(b => b.addEventListener('click', () => { const r = !document.body.classList.contains('menu-recolhido'); menuRecolhido(r); aplicarMenu(r); }));
+aplicarMenu(menuRecolhido());
+document.querySelectorAll('.app .side').forEach(side => {
+  // nome da aba como dica quando o menu está recolhido
+  side.querySelectorAll(':scope > button, .side-foot > a, .side-foot > button').forEach(x => { if (!x.title) x.title = [...x.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim(); });
+  // ícones no "Mais" do celular, os mesmos do menu
+  side.querySelectorAll('.more-sheet > *').forEach(it => {
+    const k = it.dataset.tab ? `[data-tab="${it.dataset.tab}"]` : it.dataset.ctab ? `[data-ctab="${it.dataset.ctab}"]` : it.hasAttribute('data-logout') ? '[data-logout]' : it.hasAttribute('data-dlogout') ? '[data-dlogout]' : `a[href="${it.getAttribute('href')}"]`;
+    const o = side.querySelector(`:scope > ${k} svg, .side-foot ${k} svg`); if (o && !it.querySelector('svg')) it.prepend(o.cloneNode(true));
+  });
+});
+function ajustesShell() {
+  const sh = ajShell(); if (!sh) return;
+  if (ajLargo() && !sh.querySelector('.acc[open]')) {
+    let k = null; try { k = sessionStorage.getItem('ajAba'); } catch (_) {}
+    const bs = [...sh.querySelectorAll('[data-ajgo]')].filter(b => b.offsetParent !== null);
+    const alvo = bs.find(b => b.dataset.ajgo === k) || bs[0];
+    if (alvo) { const d = sh.querySelector(`.acc[data-acc="${alvo.dataset.ajgo}"]`); if (d) d.open = true; }
+  }
+  ajMarcar(sh); ajResumos(sh);
+  clearTimeout(S.ajRes); S.ajRes = setTimeout(() => ajResumos(sh), 900);
 }
 function medirTopo() {
   const t = document.querySelector('.app:not([hidden]) .app-top'); if (!t) return;
@@ -6950,13 +8007,13 @@ function route() {
   if ((wantDent || wantAdmin) && !inDent && !inAdmin) renderDLogin();
   render(); fimEnvio();
   const vis = inAdmin ? 'admin' : inDent ? 'dent' : 'site';
-  if (vis !== S.lastVis) { S.lastVis = vis; medirTopo(); if (inAdmin) entrarAba($('t-' + S.tab)); else if (inDent) entrarAba($('c-' + S.ctab)); }
+  if (vis !== S.lastVis) { S.lastVis = vis; medirTopo(); requestAnimationFrame(indicadores); if (inAdmin) entrarAba($('t-' + S.tab)); else if (inDent) entrarAba($('c-' + S.ctab)); }
 }
 function render() {
   if (location.hash === '#dentista') { if (S.dent) renderDent(); }
   else if (location.hash === '#admin') { if (S.isAdmin) renderAdmin(); }
   else if (S.step === 'when') renderWhen();
-  else if (S.step === 'welcome') { renderFree(); renderFAQ(); renderGallery(); renderEstrutura(); revelar(); }
+  else if (S.step === 'welcome') { renderFree(); renderFAQ(); renderGallery(); renderEstrutura(); renderPrecoTopo(); revelar(); }
 }
 window.addEventListener('hashchange', route);
 document.addEventListener('click', e => {
@@ -6968,7 +8025,7 @@ document.addEventListener('click', e => {
   try { history.replaceState(null, '', location.pathname + location.search); } catch (_) {}
   S.step = 'welcome'; route();
   const target = href.length > 1 && document.getElementById(href.slice(1));
-  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (target) target.scrollIntoView({ behavior: MOV ? 'smooth' : 'auto', block: 'start' });
 });
 $('prev').addEventListener('click', () => { S.month = new Date(S.month.getFullYear(), S.month.getMonth() - 1, 1); renderCalendar(); });
 $('next').addEventListener('click', () => { S.month = new Date(S.month.getFullYear(), S.month.getMonth() + 1, 1); renderCalendar(); });
