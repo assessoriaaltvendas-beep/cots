@@ -1071,6 +1071,64 @@ body.tm-open{overflow:hidden}
 .pz b{font:600 1.5rem var(--font-display);color:var(--accent)}
 .pz small{color:var(--muted);font-size:.82rem}
 @media (max-width:760px){.est-grid{grid-template-columns:minmax(0,1fr)}.pz b{font-size:1.3rem}}
+/* ---------- v9 ---------- */
+#view-admin[data-nivel="agenda"] [data-tab="pacientes"],#view-admin[data-nivel="agenda"] .so-completo{display:none!important}
+body:not(.tem-dent) .so-dent,body:not(.tem-adm) .so-adm{display:none!important}
+.adm-niveis{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:6px 0 12px}
+.adm-niveis>div{border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:grid;gap:3px}
+.adm-niveis span{font-size:.85rem;color:var(--muted)}
+.adm-list{display:grid;gap:8px;margin-bottom:14px}
+.adm-row{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px 12px;flex-wrap:wrap}
+.adm-row .txt{display:grid;gap:2px;flex:1 1 180px;min-width:0}
+.adm-row .txt>span{font-size:.82rem;color:var(--muted);overflow-wrap:anywhere}
+.adm-row .tag{font-size:.7rem;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:1px 8px;font-weight:500;margin-left:4px}
+.adm-acts{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.adm-acts select{max-width:100%;min-width:235px}
+.danger-t{color:var(--danger)!important}
+.adm-add{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+.adm-add .primary{justify-self:start}
+.adm-log{margin-top:12px;font-size:.85rem}
+.adm-log summary{cursor:pointer;color:var(--accent);font-weight:500}
+.adm-log ul{margin:8px 0 0;padding-left:18px;display:grid;gap:4px;color:var(--muted)}
+.inline-f{display:grid;gap:8px;margin-top:10px}
+.inline-f .ghost{justify-self:start}
+.calc-aviso{border-left:4px solid var(--accent)}
+.calc-grid{display:grid;gap:16px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+@media (max-width:900px){.calc-grid{grid-template-columns:1fr}}
+.calc-f{display:grid;gap:12px}
+.calc-seg{display:flex;flex-wrap:wrap;justify-self:start;max-width:100%}
+.calc-seg button{flex:1 1 auto}
+.calc-pac{display:grid;gap:10px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.calc-pac label{min-width:0}
+.calc-sel{display:grid;gap:10px}
+.calc-conv{display:grid;gap:10px}
+.calc-out{display:grid;gap:10px;align-content:start}
+.calc-res{border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:6px;background:var(--accent-soft)}
+.calc-res.off{background:transparent;border-style:dashed}
+.calc-res p{margin:0}
+.calc-big{font-family:var(--font-display,inherit);font-size:1.6rem;line-height:1.2;color:var(--accent);font-weight:600}
+.calc-big2{font-size:1.15rem;font-weight:600}
+.calc-lim{font-size:.85rem;font-weight:500}
+.calc-obs{font-size:.88rem;margin:0}
+.calc-fonte{font-size:.8rem;color:var(--muted);margin:0}
+.calc-adm{display:grid;gap:10px}
+.calc-adm p{margin:0}
+.calc-itens summary{cursor:pointer;color:var(--accent);font-weight:500}
+.calc-it{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.calc-it .txt{display:grid;flex:1 1 180px;min-width:0}
+.calc-it .txt span{font-size:.82rem;color:var(--muted)}
+.calc-it.off b{text-decoration:line-through;opacity:.6}
+.calc-form{display:grid;gap:10px}
+.calc-form .ajrow{display:flex;flex-wrap:wrap;gap:8px;align-items:end;border:1px solid var(--line);border-radius:12px;padding:8px}
+.calc-form .ajrow label{flex:1 1 90px;min-width:0}
+@media (max-width:820px){
+  #view-admin .side>[data-tab="calc"],#view-dent .side>[data-ctab="calc"]{display:none}
+  .calc-pac{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .calc-big{font-size:1.35rem}
+}
+.tab>.tabin{display:grid;gap:inherit;min-width:0}
+@media (max-width:560px){.calc-seg{display:grid;grid-template-columns:1fr 1fr;border-radius:16px;width:100%;gap:2px}.calc-seg button{border-radius:12px}}
+.adm-acts{flex-wrap:nowrap}@media (max-width:560px){.adm-acts{flex-wrap:wrap}.adm-acts select{min-width:0;width:100%}}
 </style>
 </head>
 <body>
@@ -1098,8 +1156,7 @@ body.tm-open{overflow:hidden}
       <a class="t" href="#perguntas">Dúvidas</a>
     </nav>
     <div class="top-r">
-      <a class="t" href="#admin">Administrador</a>
-      <a class="pill" href="#dentista">Área do dentista</a>
+      <a class="pill" href="#dentista">Entrar</a>
     </div>
   </div></header>
   <div class="in"><h1 hidden id="clinic-name">Consultório Odontológico</h1><div class="mode" id="mode" hidden></div></div>
@@ -1314,21 +1371,6 @@ body.tm-open{overflow:hidden}
     </section>
   </div>
 
-  <!-- LOGIN -->
-  <section class="sheet login" id="view-login" hidden aria-label="Login do administrador">
-    <p class="eyebrow">Acesso restrito</p>
-    <h2>Área do administrador</h2>
-    <form id="login-form" novalidate>
-      <label>E-mail<input id="f-user" type="email" inputmode="email" autocomplete="username" autocapitalize="off" spellcheck="false" required></label>
-      <label>Senha<input id="f-pass" type="password" autocomplete="current-password" required></label>
-      <label class="check"><input type="checkbox" data-lembrar checked><span>Lembrar de mim neste aparelho</span></label>
-      <button class="primary" id="login-btn" type="submit">Entrar</button>
-      <button class="link" type="button" id="admin-forgot" style="justify-self:start">Esqueci minha senha</button>
-    </form>
-    <div id="login-feedback" role="status"></div>
-    <a class="link" href="#">Voltar ao início</a>
-  </section>
-
   <!-- ACESSO DO DENTISTA -->
   <section class="sheet login" id="view-dlogin" hidden aria-label="Acesso do dentista">
     <p class="eyebrow" id="dl-eyebrow">Área do dentista</p>
@@ -1373,7 +1415,7 @@ body.tm-open{overflow:hidden}
       <div><img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413"><p>Aluguel por hora de consultório odontológico no Centro de Ipatinga/MG.</p></div>
       <div><h4>Consultório</h4><ul><li data-fill="end"></li><li data-fill="cidade"></li><li data-fill="hor"></li></ul></div>
       <div><h4>Contato</h4><ul><li data-fill="tel"></li><li><a data-href="wa" target="_blank" rel="noopener">WhatsApp</a></li><li><a data-href="ig" target="_blank" rel="noopener">Instagram <span data-fill="igu"></span></a></li><li data-fill="dentista"></li></ul></div>
-      <div><h4>Acesso</h4><ul><li><button type="button" class="flink" data-start>Agendar horário</button></li><li><a href="#dentista">Área do dentista</a></li><li><a href="#admin">Administrador</a></li><li><button type="button" class="flink" data-termos>Termos de uso</button></li></ul></div>
+      <div><h4>Acesso</h4><ul><li><button type="button" class="flink" data-start>Agendar horário</button></li><li><a href="#dentista">Entrar</a></li><li><button type="button" class="flink" data-termos>Termos de uso</button></li></ul></div>
     </div>
     <div class="fbase"><span>© <span data-fill="ano"></span> Consultório Odontológico Thalia Santiago</span><span><span data-fill="end"></span> · <span data-fill="cidade"></span></span></div>
   </div></footer>
@@ -1386,7 +1428,7 @@ body.tm-open{overflow:hidden}
   <header class="app-top"><div class="app-top-in">
     <img src="assets/logo-dourado.webp?v=7" alt="Consultório Odontológico Thalia Santiago" width="900" height="413">
     <span class="crumb"><span class="hide-xs">Painel</span><span class="hide-xs" aria-hidden="true">›</span><b id="crumb">Resumo</b></span>
-    <div class="who"><span class="who-name">Dra. Thalia Santiago</span><span class="avatar">TS</span></div>
+    <div class="who"><span class="who-name"></span><span class="avatar"></span></div>
   </div></header>
 
   <div class="app-body">
@@ -1398,10 +1440,12 @@ body.tm-open{overflow:hidden}
       <button type="button" data-tab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
       <button type="button" data-tab="mural"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l6 4V6L7 10H4z"/><path d="M16.500 9a4 4 0 010 6M19 6.500a7.500 7.500 0 010 11"/></svg>Mural<span class="badge" id="mural-badge" hidden>0</span></button>
       <button type="button" data-tab="site"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8"/></svg>Site</button>
+      <button type="button" data-tab="calc"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8 7.5h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>Calculadora</button>
       <button type="button" data-tab="ajustes"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3.500v2.200M12 18.300v2.200M3.500 12h2.200M18.300 12h2.200M6 6l1.600 1.600M16.400 16.400L18 18M6 18l1.600-1.600M16.400 7.600L18 6"/></svg>Ajustes</button>
       <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
-      <div class="more-sheet" hidden><button type="button" data-tab="financeiro">Financeiro</button><button type="button" data-tab="mural">Mural</button><button type="button" data-tab="site">Site</button><button type="button" data-tab="ajustes">Ajustes</button><a href="#">Ver site</a><button type="button" data-logout>Sair</button></div>
+      <div class="more-sheet" hidden><button type="button" data-tab="financeiro">Financeiro</button><button type="button" data-tab="mural">Mural</button><button type="button" data-tab="site">Site</button><button type="button" data-tab="calc">Calculadora</button><button type="button" data-tab="ajustes">Ajustes</button><a href="#dentista" class="so-dent">Minha área de dentista</a><a href="#">Ver site</a><button type="button" data-logout>Sair</button></div>
       <div class="side-foot">
+        <a href="#dentista" class="so-dent"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg>Minha área de dentista</a>
         <a href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5.500H4.500V6H10"/></svg>Ver site</a>
         <button type="button" data-logout><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4.500h4.500v15H14M10 8l-4 4 4 4M6 12h9"/></svg>Sair</button>
       </div>
@@ -1411,7 +1455,7 @@ body.tm-open{overflow:hidden}
       <!-- RESUMO -->
       <section id="t-resumo" class="tab" aria-label="Resumo">
         <div class="page-head greet"><svg class="gdeco" style="right:-30px;top:-46px;width:170px;transform:rotate(12deg)" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg><span class="gdots" aria-hidden="true"></span>
-          <div><p class="eyebrow" id="r-date"></p><h2>Olá, Dra. Thalia</h2></div>
+          <div><p class="eyebrow" id="r-date"></p><h2 id="r-hello">Olá</h2></div>
           <button class="primary" type="button" data-tab="agenda">Abrir agenda</button>
         </div>
         <div class="kpis band-k" id="r-kpis"></div>
@@ -1546,6 +1590,9 @@ body.tm-open{overflow:hidden}
         </div>
       </section>
 
+      <!-- CALCULADORA -->
+      <section id="t-calc" class="tab" hidden aria-label="Calculadora"><div id="calc-a" class="tabin"></div></section>
+
       <!-- AJUSTES -->
       <section id="t-ajustes" class="tab" hidden aria-label="Ajustes">
         <div class="page-head"><div><p class="eyebrow">Configurações do consultório</p><h2>Ajustes</h2></div></div>
@@ -1559,7 +1606,7 @@ body.tm-open{overflow:hidden}
         <details class="acc" data-acc="planos"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M8 13.5h3M8 17h3M14 13.5h2"/></svg></span><span class="acc-t"><b>Planos mensais</b><small id="sum-planos"></small></span></summary><div class="acc-b" id="acc-planos"></div></details>
         <details class="acc" data-acc="termos"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 01-.5.5h-10A1.5 1.5 0 016 19V5a1.5 1.5 0 011-1.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h6"/></svg></span><span class="acc-t"><b>Termos de uso</b><small id="sum-termos"></small></span></summary><div class="acc-b" id="acc-termos"></div></details>
         <details class="acc" data-acc="taxa"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16h.01"/></svg></span><span class="acc-t"><b>Faltas e cancelamento fora do prazo</b><small id="sum-taxa"></small></span></summary><div class="acc-b" id="acc-taxa"></div></details>
-        <details class="acc" data-acc="prof"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 01-.5.5h-10A1.5 1.5 0 016 19V5a1.5 1.5 0 011-1.5z"/><path d="M9 13h6M12 10v6"/></svg></span><span class="acc-t"><b>Receitas e atestados</b><small id="sum-prof"></small></span></summary><div class="acc-b" id="acc-prof"></div></details>
+        <details class="acc so-completo" data-acc="prof"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 01-.5.5h-10A1.5 1.5 0 016 19V5a1.5 1.5 0 011-1.5z"/><path d="M9 13h6M12 10v6"/></svg></span><span class="acc-t"><b>Receitas e atestados</b><small id="sum-prof"></small></span></summary><div class="acc-b" id="acc-prof"></div></details>
         <details class="acc" data-acc="backup"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M4.5 16.5v3h15v-3"/></svg></span><span class="acc-t"><b>Backup</b><small id="sum-backup"></small></span></summary><div class="acc-b" id="acc-backup"></div></details>
         <details class="acc" data-acc="rel"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span class="acc-t"><b>Relatório mensal e Google Agenda</b><small id="sum-rel"></small></span></summary><div class="acc-b" id="acc-rel"></div></details>
         <details class="acc" data-acc="app"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span><span class="acc-t"><b>App no celular</b><small id="sum-app"></small></span></summary><div class="acc-b"><div id="app-a"></div></div></details>
@@ -1591,7 +1638,8 @@ body.tm-open{overflow:hidden}
             <button type="button" class="theme-opt" role="radio" aria-checked="false" data-tema="auto"><span class="pv auto"><u></u><i></i><em></em></span><b>Automático</b><small>Segue o tema do seu aparelho</small></button>
           </div>
         </div></details>
-        <details class="acc" data-acc="conta"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1-3.5 3.8-5 7-5s6 1.5 7 5"/></svg></span><span class="acc-t"><b>Conta</b><small id="sum-conta"></small></span></summary><div class="acc-b"><div class="kv"><div><span>Administradora</span><span>Thalia Santiago</span></div><div><span>Acesso</span><span>Login e senha</span></div></div>
+        <details class="acc so-completo" data-acc="admins"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8"/><path d="M16.5 6.5l1.2 1.2 2.6-2.6M15.5 13.5h5"/></svg></span><span class="acc-t"><b>Administradores</b><small id="sum-admins">Quem acessa o painel</small></span></summary><div class="acc-b" id="acc-admins"></div></details>
+        <details class="acc" data-acc="conta"><summary><span class="acc-ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5c1-3.5 3.8-5 7-5s6 1.5 7 5"/></svg></span><span class="acc-t"><b>Conta</b><small id="sum-conta"></small></span></summary><div class="acc-b"><div id="conta-kv"></div>
             <div class="dr-actions"><a class="ghost" href="#" style="text-decoration:none">Ver site</a><button class="danger" type="button" data-logout>Sair do painel</button></div></div></details>
         </div>
       </section>
@@ -1621,11 +1669,13 @@ body.tm-open{overflow:hidden}
       <button type="button" data-ctab="nova"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M12 8v8M8 12h8"/></svg>Reservar</button>
       <button type="button" data-ctab="financeiro"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M14.500 9.200c-.5-.8-1.400-1.200-2.500-1.200-1.400 0-2.500.8-2.500 1.900 0 2.600 5.200 1.400 5.200 4.200 0 1.100-1.200 1.900-2.700 1.900-1.200 0-2.200-.5-2.700-1.300M12 6.500V8M12 16v1.500"/></svg>Financeiro</button>
       <button type="button" data-ctab="consultorio"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-2.500 0-4 1-5.500 1C4.500 4 3 5.500 3 8c0 3 1.500 4.500 2 7 .5 3 1 6 2.500 6 1.700 0 1.500-4 2.500-6 .4-.9 1-1.500 2-1.500s1.600.6 2 1.500c1 2 .8 6 2.500 6 1.500 0 2-3 2.500-6 .5-2.500 2-4 2-7 0-2.500-1.500-4-3.500-4C16 4 14.500 3 12 3z"/></svg>Consultório</button>
+      <button type="button" data-ctab="calc"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8 7.5h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/></svg>Calculadora</button>
       <button type="button" data-ctab="perfil"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c1-3.500 3.800-5 7-5s6 1.500 7 5"/></svg>Perfil</button>
       <button type="button" class="more-btn" data-more aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>Mais</button>
-      <div class="more-sheet" hidden><button type="button" data-ctab="consultorio">O consultório</button><button type="button" data-ctab="perfil">Meu perfil</button><a href="#">Ver site</a><button type="button" data-dlogout>Sair</button></div>
+      <div class="more-sheet" hidden><button type="button" data-ctab="consultorio">O consultório</button><button type="button" data-ctab="calc">Calculadora</button><button type="button" data-ctab="perfil">Meu perfil</button><a href="#admin" class="so-adm">Painel da administração</a><a href="#">Ver site</a><button type="button" data-dlogout>Sair</button></div>
       <div class="side-foot">
         <a class="side-help" data-href="wa" target="_blank" rel="noopener"><span>Dúvidas sobre sua reserva?</span><b>Fale com a Dra. Thalia</b><span>Abrir WhatsApp →</span></a>
+        <a href="#admin" class="so-adm"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg>Painel da administração</a>
         <a href="#"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5.500H4.500V6H10"/></svg>Ver site</a>
         <button type="button" data-dlogout><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4.500h4.500v15H14M10 8l-4 4 4 4M6 12h9"/></svg>Sair</button>
       </div>
@@ -1747,6 +1797,9 @@ body.tm-open{overflow:hidden}
           <div class="card"><div class="card-head"><h3>Meus avisos</h3></div><div class="mini" id="cc-probs"></div></div>
         </div>
       </section>
+
+      <!-- CALCULADORA -->
+      <section id="c-calc" class="tab" hidden aria-label="Calculadora"><div id="calc-d" class="tabin"></div></section>
 
       <!-- PERFIL -->
       <section id="c-perfil" class="tab" hidden aria-label="Meu perfil">
@@ -2286,14 +2339,14 @@ function miniDent(d) {
 }
 
 /* Abas */
-const TABS = [['resumo', 'Resumo'], ['dentistas', 'Dentistas'], ['agenda', 'Agenda'], ['pacientes', 'Pacientes'], ['financeiro', 'Financeiro'], ['mural', 'Mural'], ['site', 'Site'], ['ajustes', 'Ajustes']];
+const TABS = [['resumo', 'Resumo'], ['dentistas', 'Dentistas'], ['agenda', 'Agenda'], ['pacientes', 'Pacientes'], ['financeiro', 'Financeiro'], ['mural', 'Mural'], ['site', 'Site'], ['calc', 'Calculadora'], ['ajustes', 'Ajustes']];
 function setTab(t) {
   S.tab = t; try { sessionStorage.setItem('aba', t); } catch (_) {}
   closeDrawer(); renderAdmin();
   try { window.scrollTo({ top: 0 }); } catch (_) {}
 }
 function renderAdmin() {
-  if (!TABS.some(t => t[0] === S.tab)) S.tab = 'resumo';
+  if (!TABS.some(t => t[0] === S.tab) || (S.tab === 'pacientes' && !adminCompleto())) S.tab = 'resumo';
   const L = live();
   S.cache = { all: L.filter(x => x.b.origem !== 'bloqueio'), blocks: L.filter(x => x.b.origem === 'bloqueio' && x.st !== 'cancelado'), dents: null };
   document.querySelectorAll('.side [data-tab]').forEach(b => b.setAttribute('aria-current', b.dataset.tab === S.tab ? 'page' : 'false'));
@@ -2306,7 +2359,7 @@ function renderAdmin() {
   badge.hidden = !due.length; badge.textContent = due.length;
   const ab = Object.values(S.cols.problemas || {}).filter(p => p.status !== 'resolvido').length;
   $('mural-badge').hidden = !ab; $('mural-badge').textContent = ab;
-  ({ resumo: renderResumo, dentistas: renderDentistas, agenda: renderAgenda, financeiro: renderFinanceiro, mural: renderMural, site: renderSite, ajustes: renderAjustes, pacientes: renderPacientes })[S.tab]();
+  ({ resumo: renderResumo, dentistas: renderDentistas, agenda: renderAgenda, financeiro: renderFinanceiro, mural: renderMural, site: renderSite, ajustes: renderAjustes, pacientes: renderPacientes, calc: () => renderCalc($('calc-a'), 'a') })[S.tab]();
   renderDrawer();
 }
 
@@ -2421,6 +2474,7 @@ function renderCal() {
       count++;
       h += `<button type="button" class="ev ${b.origem === 'bloqueio' ? 'bloqueio' : st}" data-bk="${esc(b.id)}" style="top:${(b.from - CFG.abre) * ROW + 2}px;height:${(b.to - b.from) * ROW - 4}px" aria-label="${esc(b.nome)}, ${hh(b.from)} às ${hh(b.to)}"><small>${hh(b.from)} – ${hh(b.to)}</small><b>${esc(b.nome)}</b></button>`;
     });
+    if (!adminCompleto()) horasConsultaOcultas(s).forEach(o => { count++; h += `<div class="ev paciente ocupado" style="top:${(o.a - CFG.abre) * ROW + 1}px;height:${(o.z - o.a) * ROW - 2}px" aria-label="Ocupado, ${hh(o.a)} às ${hh(o.z)}"><small>${hh(o.a)} – ${hh(o.z)}</small><b>Ocupado · consulta</b></div>`; });
     consultasDoDia(s).forEach(c => {
       count++;
       const a = tmin(c.inicio) / 60, z = tmin(c.fim) / 60, pn = (PAC()[c.paciente_id] || {}).nome || 'Paciente';
@@ -2514,6 +2568,7 @@ function renderAjustes() {
   const ah = appCardHtml('a', true); if (S.appAH !== ah) { $('app-a').innerHTML = ah; S.appAH = ah; }
   if (!S.pushLoaded) { S.pushLoaded = true; loadPushStatus(); }
   if (!S.ajLoaded) { S.ajLoaded = true; ajLoad(); }
+  renderConta9();
   ajSummaries(); ajSummaries7(); if (!S.v8Cfg) { S.v8Cfg = true; cfgAdm().then(() => ajSummaries8()); } ajSummaries8();
 }
 document.querySelectorAll('.theme-opt').forEach(b => b.addEventListener('click', () => setTema(b.dataset.tema, b.dataset.scope || 'painel')));
@@ -2762,10 +2817,13 @@ function errText(e, fallback) {
 async function syncAuth(session) {
   S.uid = (session && session.user && session.user.id) || null;
   S.email = (session && session.user && session.user.email) || '';
-  S.isAdmin = false; S.dent = null;
+  S.isAdmin = false; S.dent = null; S.nivel = null; S.admNome = '';
+  if (S.uid !== S.lastUid) { S.calcD = null; S.admLista = null; S.lastUid = S.uid; }
   if (S.uid && SB) {
-    try { const r = await SB.rpc('is_admin'); S.isAdmin = !!r.data; } catch (_) {}
-    if (!S.isAdmin) {
+    let v9 = false;
+    try { const r = await SB.rpc('meu_acesso'); if (!r.error && r.data) { v9 = true; S.isAdmin = !!r.data.admin; S.nivel = r.data.nivel || null; S.admNome = r.data.nome || ''; S.dent = r.data.dentista ? S.uid : null; } } catch (_) {}
+    if (!v9) {
+      try { const r = await SB.rpc('is_admin'); S.isAdmin = !!r.data; if (S.isAdmin) S.nivel = 'completo'; } catch (_) {}
       try { const r = await SB.from('dentists').select('id').eq('id', S.uid).maybeSingle(); S.dent = r.data ? S.uid : null; } catch (_) {}
     }
   }
@@ -2776,40 +2834,6 @@ async function syncAuth(session) {
   appSync();
 }
 const needSB = el => { if (SB) return false; msgIn(el, 'err', 'O login ainda não está ativo: preencha o arquivo config.js com os dados do Supabase.'); return true; };
-
-/* ---------- Login da administradora ---------- */
-let fails = 0, lockUntil = 0;
-function loginMsg(text) { msgIn($('login-feedback'), 'err', text); }
-$('login-form').addEventListener('submit', async e => {
-  e.preventDefault();
-  $('login-feedback').innerHTML = '';
-  if (needSB($('login-feedback'))) return;
-  const wait = Math.ceil((lockUntil - Date.now()) / 1000);
-  if (wait > 0) return loginMsg(`Muitas tentativas. Aguarde ${wait}s e tente de novo.`);
-  const email = $('f-user').value.trim(), password = $('f-pass').value;
-  if (!email || !password) return loginMsg('Informe o e-mail e a senha.');
-  $('login-btn').disabled = true;
-  try {
-    const r = await SB.auth.signInWithPassword({ email, password });
-    if (r.error) {
-      fails++;
-      if (fails >= 5) { fails = 0; lockUntil = Date.now() + 30000; return loginMsg('Muitas tentativas. Aguarde 30s e tente de novo.'); }
-      return loginMsg(errText(r.error, 'E-mail ou senha incorretos.'));
-    }
-    const adm = await SB.rpc('is_admin');
-    if (!adm.data) { await SB.auth.signOut(); return loginMsg('Esta conta não tem acesso de administradora.'); }
-    fails = 0; $('f-pass').value = '';
-    await syncAuth(r.data.session);
-  } catch (err) { loginMsg(errText(err)); }
-  finally { $('login-btn').disabled = false; }
-});
-$('admin-forgot').addEventListener('click', async () => {
-  if (needSB($('login-feedback'))) return;
-  const email = $('f-user').value.trim();
-  if (!email) return loginMsg('Digite seu e-mail no campo acima e toque de novo em “Esqueci minha senha”.');
-  await SB.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname + '?area=redefinir-admin' }).catch(() => {});
-  msgIn($('login-feedback'), 'ok', 'Se houver uma conta com este e-mail, enviamos um link para criar uma nova senha.');
-});
 
 /* ---------- Acesso do dentista ---------- */
 function renderDLogin() {
@@ -2824,6 +2848,7 @@ function renderDLogin() {
   }[st];
   $('dl-title').textContent = T[0]; $('dl-lead').textContent = T[1];
   $('dl-eyebrow').textContent = st === 'new' ? 'Nova senha' : 'Área do dentista';
+  if (location.hash === '#admin' && st === 'login') { $('dl-eyebrow').textContent = 'Acesso'; $('dl-title').textContent = 'Entre na sua conta'; $('dl-lead').textContent = 'Use o e-mail e a senha da sua conta. Quem é administrador vai direto para o painel.'; }
   if (st === 'reg') renderTermosReg();
 }
 document.querySelectorAll('#dl-seg [data-dl]').forEach(b => b.addEventListener('click', () => { S.dl.stage = b.dataset.dl; $('dl-fb').innerHTML = ''; renderDLogin(); }));
@@ -2837,7 +2862,8 @@ $('dl-login').addEventListener('submit', async e => {
     if (r.error) return msgIn($('dl-fb'), 'err', errText(r.error, 'E-mail ou senha incorretos.'));
     $('dl-pass').value = ''; $('dl-fb').innerHTML = '';
     await syncAuth(r.data.session);
-    if (!S.dent) msgIn($('dl-fb'), 'err', S.isAdmin ? 'Esta é a conta da administradora. Use a Área do administrador.' : 'Esta conta não tem cadastro de dentista.');
+    if (S.isAdmin && !(S.dlAviso && S.dent)) { S.dlAviso = false; try { location.hash = '#admin'; } catch (_) {} route(); try { window.scrollTo({ top: 0 }); } catch (_) {} }
+    else if (!S.dent) msgIn($('dl-fb'), 'err', 'Esta conta não tem cadastro de dentista.');
     else { S.ctab = S.dlAviso ? 'nova' : 'inicio'; S.dlAviso = false; route(); }
   } catch (err) { msgIn($('dl-fb'), 'err', errText(err)); }
 });
@@ -2891,7 +2917,7 @@ function dlogout() {
 }
 
 /* ---------- Área do dentista ---------- */
-const CTABS = [['inicio', 'Início'], ['reservas', 'Minhas reservas'], ['nova', 'Nova reserva'], ['financeiro', 'Financeiro'], ['consultorio', 'O consultório'], ['perfil', 'Meu perfil']];
+const CTABS = [['inicio', 'Início'], ['reservas', 'Minhas reservas'], ['nova', 'Nova reserva'], ['financeiro', 'Financeiro'], ['consultorio', 'O consultório'], ['calc', 'Calculadora'], ['perfil', 'Meu perfil']];
 const me = () => (S.cols.dentists || {})[S.dent] || null;
 const myName = () => (me() && me().nome) || (S.cc && S.cc.mine && S.cc.mine[0] && S.cc.mine[0].b.nome) || 'Dentista';
 const firstName = n => String(n || '').trim().split(/\s+/)[0] || '';
@@ -2975,7 +3001,7 @@ function renderDent() {
   $('c-crumb').textContent = CTABS.find(t => t[0] === S.ctab)[1];
   $('c-who').textContent = myName(); $('c-av').textContent = initials(myName());
   const al = cAlerts(); $('c-badge').hidden = !al.length; $('c-badge').textContent = al.length;
-  ({ inicio: () => renderCInicio(al), reservas: renderCReservas, nova: renderCNova, financeiro: renderCFin, consultorio: renderCCons, perfil: renderCPerfil })[S.ctab]();
+  ({ inicio: () => renderCInicio(al), reservas: renderCReservas, nova: renderCNova, financeiro: renderCFin, consultorio: renderCCons, calc: () => renderCalc($('calc-d'), 'd'), perfil: renderCPerfil })[S.ctab]();
   renderCDrawer();
 }
 
@@ -4678,8 +4704,8 @@ document.addEventListener('click', e => {
 }, true);
 function markMore() {
   const a = document.querySelector('#view-admin .more-btn'), d = document.querySelector('#view-dent .more-btn');
-  if (a) a.setAttribute('aria-current', ['financeiro', 'mural', 'site', 'ajustes'].includes(S.tab) ? 'page' : 'false');
-  if (d) d.setAttribute('aria-current', ['consultorio', 'perfil'].includes(S.ctab) ? 'page' : 'false');
+  if (a) a.setAttribute('aria-current', ['financeiro', 'mural', 'site', 'calc', 'ajustes'].includes(S.tab) ? 'page' : 'false');
+  if (d) d.setAttribute('aria-current', ['consultorio', 'calc', 'perfil'].includes(S.ctab) ? 'page' : 'false');
 }
 /* ---------- v6: preços por período, login, dentistas, pacientes ---------- */
 
@@ -5973,7 +5999,7 @@ function dadosBackup() {
   ];
 }
 function baixarBackup() {
-  const bytes = xlsx(dadosBackup());
+  const bytes = xlsx(dadosBackup().filter(sh => adminCompleto() || !PLANILHAS_PACIENTES.includes(sh[0])));
   downloadFile(`backup-consultorio-${iso(new Date())}.xlsx`, bytes, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
   try { localStorage.setItem('ultimoBackup', iso(new Date())); } catch (_) {}
 }
@@ -6102,19 +6128,499 @@ function renderEstrutura() {
   el.hidden = false;
 }
 
+/* ---------- v9: login único, níveis de administrador e calculadora ---------- */
+
+/* Níveis: "completo" vê tudo; "agenda" não vê pacientes nem gerencia administradores (também bloqueado no banco). */
+const adminCompleto = () => S.isAdmin && S.nivel !== 'agenda';
+const NIVEIS = { completo: 'Administrador completo', agenda: 'Administrador da agenda' };
+const admNome = () => S.admNome || (S.email ? S.email.split('@')[0] : 'Administrador');
+const iniciais = n => initials(String(n || '').replace(/^dra?\.?\s+/i, ''));
+const saudacao = n => { const p = String(n || '').trim().split(/\s+/); return /^dra?\.?$/i.test(p[0] || '') && p[1] ? `${p[0]} ${p[1]}` : (p[0] || ''); };
+const SO_COMPLETO_IDS = ['r-pac', 'f-pac', 'a-cons'];
+function aplicarNivel() {
+  const v = $('view-admin'); if (v) v.dataset.nivel = S.isAdmin ? (S.nivel || 'completo') : '';
+  SO_COMPLETO_IDS.forEach(id => { const el = $(id); if (el) el.classList.add('so-completo'); });
+  document.body.classList.toggle('tem-dent', !!S.dent);
+  document.body.classList.toggle('tem-adm', !!S.isAdmin);
+  const pill = document.querySelector('.top-r .pill');
+  if (pill) {
+    const [href, txt] = S.isAdmin ? ['#admin', 'Painel'] : S.dent ? ['#dentista', 'Minha área'] : ['#dentista', 'Entrar'];
+    if (pill.getAttribute('href') !== href) pill.setAttribute('href', href);
+    if (pill.textContent !== txt) pill.textContent = txt;
+  }
+  if (S.isAdmin) {
+    const n = admNome(), w = document.querySelector('#view-admin .who-name'), av = document.querySelector('#view-admin .who .avatar'), hi = $('r-hello');
+    if (w) w.textContent = n;
+    if (av) av.textContent = iniciais(n);
+    if (hi) hi.textContent = `Olá, ${saudacao(n)}`;
+  }
+}
+
+/* Painel → horas ocupadas por consultas, para quem não vê os pacientes (aparece só "Ocupado"). */
+function horasConsultaOcultas(d) {
+  const out = []; let cur = null;
+  for (let h = CFG.abre; h < CFG.fecha; h++) {
+    const s = S.slots[keyOf(d, h)], oc = !!s && !s.bookingId;
+    if (oc && cur && cur.z === h) cur.z = h + 1;
+    else if (oc) { cur = { a: h, z: h + 1 }; out.push(cur); }
+    else cur = null;
+  }
+  return out;
+}
+const PLANILHAS_PACIENTES = ['Pacientes', 'Consultas', 'Evoluções', 'Orçamentos', 'Pagamentos pacientes', 'Documentos'];
+
+/* Ajustes → Administradores (só administrador completo) */
+const ADM_ERR = {
+  CONTA_NAO_ENCONTRADA: 'Não há conta com este e-mail. Peça para a pessoa criar a conta no site (Entrar → Criar conta) e tente de novo.',
+  JA_ADMIN: 'Esta conta já é administradora.',
+  NAO_PODE_SI_MESMA: 'Você não pode mudar o seu próprio acesso. Peça para outro administrador completo.',
+  ULTIMO_COMPLETO: 'Precisa ficar pelo menos um administrador completo.',
+  SEM_PERMISSAO: 'Só o administrador completo pode fazer isso.',
+  DADOS_INVALIDOS: 'Confira os dados e tente de novo.'
+};
+const admErr = err => { const m = String((err && err.message) || err || ''); const k = Object.keys(ADM_ERR).find(k => m.includes(k)); return k ? ADM_ERR[k] : errText(err); };
+const dataHora = s => { const d = new Date(s); return isNaN(d) ? '' : `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} às ${pad(d.getHours())}h${pad(d.getMinutes())}`; };
+async function loadAdmins(force) {
+  if (!adminCompleto()) return;
+  const el = $('acc-admins'); if (!el) return;
+  if (!S.admLista || force) {
+    if (!S.admLista) el.innerHTML = '<p class="hint">Carregando…</p>';
+    try { S.admLista = await S.store.rpc('listar_admins'); } catch (err) { el.innerHTML = `<p class="hint">${esc(admErr(err))}</p>`; return; }
+  }
+  renderAdmins();
+}
+function renderAdmins() {
+  const el = $('acc-admins'); if (!el || !S.admLista) return;
+  const L = S.admLista, admins = L.admins || [], log = L.log || [];
+  const sel = (a) => `<select data-admnivel="${esc(a.id)}" aria-label="Nível de ${esc(a.nome || a.email)}"${a.eu ? ' disabled' : ''}>${Object.entries(NIVEIS).map(([k, t]) => `<option value="${k}"${a.nivel === k ? ' selected' : ''}>${t}</option>`).join('')}</select>`;
+  el.innerHTML = `<p class="hint">Quem é administrador entra pelo mesmo botão <b>Entrar</b> do site e vai direto para o painel.</p>
+    <div class="adm-niveis"><div><b>Administrador completo</b><span>Vê e altera tudo, inclusive pacientes, documentos, receitas, financeiro dos pacientes, e gerencia os administradores.</span></div>
+    <div><b>Administrador da agenda</b><span>Cuida de dentistas, reservas, agenda, planos, cobranças, mural e site. Não vê pacientes (as consultas aparecem só como “Ocupado”) e não gerencia administradores.</span></div></div>
+    <div class="adm-list">${admins.map(a => `<div class="adm-row"><span class="avatar">${esc(iniciais(a.nome || a.email))}</span><span class="txt"><b>${esc(a.nome || a.email)}${a.eu ? ' <small class="tag">você</small>' : ''}</b><span>${esc(a.email)}${a.por ? ` · adicionado por ${esc(a.por)} em ${esc(br(String(a.adicionado_em).slice(0, 10)))}` : ''}</span></span><span class="adm-acts">${sel(a)}${a.eu ? '' : `<button type="button" class="link danger-t" data-admdel="${esc(a.id)}">Remover</button>`}</span></div>`).join('')}</div>
+    <form class="adm-add" id="adm-add" novalidate><p class="eyebrow">Adicionar administrador</p>
+      <label>E-mail da conta<input type="email" id="adm-email" autocomplete="off" inputmode="email" placeholder="email@exemplo.com"></label>
+      <label>Nível<select id="adm-nivel"><option value="agenda">${NIVEIS.agenda}</option><option value="completo">${NIVEIS.completo}</option></select></label>
+      <button class="primary" type="submit">Adicionar</button>
+      <p class="hint">A pessoa precisa já ter conta no site. Normalmente é um dentista que já usa o consultório.</p>
+      <div id="adm-fb" role="status"></div></form>
+    ${log.length ? `<details class="adm-log"><summary>Histórico de alterações (${log.length})</summary><ul>${log.map(l => `<li><b>${esc(dataHora(l.quando))}</b> · ${esc(l.autor || 'alguém')} ${esc(l.acao)} ${esc(l.email || '')}${l.detalhe ? ` (${esc(l.detalhe)})` : ''}</li>`).join('')}</ul></details>` : ''}`;
+  const sum = $('sum-admins'); if (sum) sum.textContent = plural(admins.length, 'administrador', 'administradores');
+}
+document.addEventListener('toggle', e => { const d = e.target; if (d && d.matches && d.matches('details[data-acc="admins"]') && d.open) loadAdmins(true); }, true);
+document.addEventListener('submit', async e => {
+  if (!e.target || e.target.id !== 'adm-add') return;
+  e.preventDefault();
+  const fb = $('adm-fb'), email = $('adm-email').value.trim(), nivel = $('adm-nivel').value;
+  if (!/^\S+@\S+\.\S+$/.test(email)) return msgIn(fb, 'err', 'Informe o e-mail da conta.');
+  const btn = e.target.querySelector('button[type=submit]'); btn.disabled = true;
+  try {
+    await S.store.rpc('adicionar_admin', { p_email: email, p_nivel: nivel });
+    await loadAdmins(true); msgIn($('adm-fb'), 'ok', `${email} agora é ${NIVEIS[nivel].toLowerCase()}.`);
+  } catch (err) { msgIn(fb, 'err', admErr(err)); btn.disabled = false; }
+});
+document.addEventListener('change', async e => {
+  const s = e.target.closest && e.target.closest('[data-admnivel]'); if (!s) return;
+  const a = (S.admLista.admins || []).find(x => x.id === s.dataset.admnivel); const antes = a && a.nivel;
+  s.disabled = true;
+  try { await S.store.rpc('mudar_nivel_admin', { p_id: s.dataset.admnivel, p_nivel: s.value }); await loadAdmins(true); }
+  catch (err) { s.value = antes; s.disabled = false; const fb = $('adm-fb'); if (fb) msgIn(fb, 'err', admErr(err)); }
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-admdel]'); if (!b) return;
+  const a = (S.admLista.admins || []).find(x => x.id === b.dataset.admdel) || {};
+  if (b.dataset.sure !== '1') { b.dataset.sure = '1'; b.textContent = 'Confirmar remoção'; setTimeout(() => { if (b.isConnected) { b.dataset.sure = ''; b.textContent = 'Remover'; } }, 4000); return; }
+  b.disabled = true;
+  S.store.rpc('remover_admin', { p_id: b.dataset.admdel }).then(() => loadAdmins(true).then(() => msgIn($('adm-fb'), 'ok', `${a.nome || a.email || 'A conta'} não é mais administrador. Se tiver cadastro de dentista, continua usando a área do dentista.`)))
+    .catch(err => { b.disabled = false; const fb = $('adm-fb'); if (fb) msgIn(fb, 'err', admErr(err)); });
+});
+
+/* Ajustes → Conta: nome que aparece no painel e nível de acesso */
+function renderConta9() {
+  const el = $('conta-kv'); if (!el) return;
+  const sig = [admNome(), S.email, S.nivel].join('|'); if (el.dataset.sig === sig) return; el.dataset.sig = sig;
+  el.innerHTML = `<div class="kv"><div><span>Nome no painel</span><span>${esc(admNome())}</span></div><div><span>E-mail</span><span>${esc(S.email || '—')}</span></div><div><span>Acesso</span><span>${esc(NIVEIS[S.nivel || 'completo'])}</span></div></div>
+    <form id="conta-nome" class="inline-f" novalidate><label>Mudar o nome que aparece no painel<input id="conta-nome-i" maxlength="80" value="${esc(S.admNome || '')}" placeholder="Ex.: Dra. Thalia Santiago"></label><button class="ghost" type="submit">Salvar nome</button><div id="conta-fb" role="status"></div></form>`;
+  const sum = $('sum-conta'); if (sum) sum.textContent = `${admNome()} · ${NIVEIS[S.nivel || 'completo']}`;
+}
+document.addEventListener('submit', async e => {
+  if (!e.target || e.target.id !== 'conta-nome') return;
+  e.preventDefault();
+  const v = $('conta-nome-i').value.trim();
+  if (v.length < 2) return msgIn($('conta-fb'), 'err', 'Informe o nome.');
+  try { await S.store.rpc('salvar_meu_nome_admin', { p_nome: v }); S.admNome = v; aplicarNivel(); renderConta9(); msgIn($('conta-fb'), 'ok', 'Nome salvo.'); }
+  catch (err) { msgIn($('conta-fb'), 'err', admErr(err)); }
+});
+
+/* =====================================================================
+   Calculadora (apoio ao dentista). Valores da lista padrão conferidos nas
+   bulas e referências indicadas em cada item, em 21/10/2026. A Dra. revisa,
+   pode ajustar e só então libera para os dentistas.
+   ===================================================================== */
+const CALC_BASE = 1;
+const CALC_GRUPOS = { analg: 'Analgésicos e antitérmicos', aine: 'Anti-inflamatórios', atb: 'Antibióticos' };
+const CALC_PADRAO = [
+  { id: 'dipirona-gotas', tipo: 'faixa', grupo: 'analg', nome: 'Dipirona gotas 500 mg/mL', ativo: true,
+    apres: [{ rot: 'Gotas 500 mg/mL · 20 gotas = 1 mL · 1 gota = 25 mg', mgml: 500, gml: 20 }],
+    faixas: [{ de: 5, ate: 8, min: 2, max: 5, dia: 20 }, { de: 9, ate: 15, min: 3, max: 10, dia: 40 }, { de: 16, ate: 23, min: 5, max: 15, dia: 60 }, { de: 24, ate: 30, min: 8, max: 20, dia: 80 }, { de: 31, ate: 45, min: 10, max: 30, dia: 120 }, { de: 46, ate: 53, min: 15, max: 35, dia: 140 }],
+    intervalo: 'até 4 vezes ao dia',
+    adulto: { anos: 15, kg: null, txt: 'Adultos e adolescentes acima de 15 anos: 20 a 40 gotas (500 a 1.000 mg) por vez, até 4 vezes ao dia. Máximo de 40 gotas por vez.' },
+    bloq: { meses: 3, kg: 5, txt: 'A bula contraindica para menores de 3 meses ou com menos de 5 kg.' },
+    obs: 'Tabela de dose por peso da bula. Acima de 53 kg e com menos de 15 anos, a bula não traz faixa: avalie com a bula do produto.',
+    fonte: 'Bula da dipirona monoidratada 500 mg/mL, solução oral em gotas (Medley/Sanofi)', data: '2026-10-21' },
+  { id: 'paracetamol-gotas', tipo: 'kg', grupo: 'analg', nome: 'Paracetamol gotas 200 mg/mL', ativo: true,
+    apres: [{ rot: 'Gotas 200 mg/mL · cerca de 15 gotas = 1 mL · 1 gota ≈ 13,3 mg', mgml: 200, gml: 15 }],
+    kg: { min: 10, max: 15, porDia: false, vezes: 5, maxDose: null, maxGotas: 35, maxDia: null },
+    intervalo: 'a cada 4 a 6 horas, no máximo 5 vezes em 24 horas',
+    adulto: { anos: 12, kg: null, txt: 'Adultos e maiores de 12 anos: até 1.000 mg por vez, a cada 4 a 6 horas. Máximo de 4.000 mg por dia.' },
+    bloq: { meses: 24, kg: 11, txt: 'A bula orienta consultar o médico antes de usar em menores de 2 anos ou com menos de 11 kg.' },
+    obs: 'A bula indica 1 gota por kg (10 a 15 mg/kg) por vez, até 35 gotas por vez. O número de gotas por mL varia entre fabricantes: confira o frasco.',
+    fonte: 'Bula do paracetamol 200 mg/mL, solução oral em gotas (Cimed)', data: '2026-10-21' },
+  { id: 'ibuprofeno-50', tipo: 'kg', grupo: 'aine', nome: 'Ibuprofeno gotas 50 mg/mL', ativo: true,
+    apres: [{ rot: 'Gotas 50 mg/mL · 10 gotas = 1 mL · 1 gota = 5 mg', mgml: 50, gml: 10 }],
+    kg: { min: 5, max: 10, porDia: false, vezes: 4, maxDose: null, maxGotas: 40, maxDia: null },
+    intervalo: 'a cada 6 a 8 horas (3 a 4 vezes ao dia), no máximo 4 vezes em 24 horas',
+    adulto: { anos: 18, kg: null, txt: 'Adultos: 40 gotas (200 mg) por vez, até 4 vezes em 24 horas.' },
+    bloq: { meses: 24, kg: null, txt: 'A bula não indica para menores de 6 meses e, abaixo de 2 anos, só com orientação médica.' },
+    obs: 'A bula indica 1 a 2 gotas por kg por vez, até 40 gotas (200 mg) por vez, também para crianças acima de 30 kg.',
+    fonte: 'Bula do ibuprofeno 50 mg/mL e 100 mg/mL, suspensão oral em gotas (Medley)', data: '2026-10-21' },
+  { id: 'ibuprofeno-100', tipo: 'kg', grupo: 'aine', nome: 'Ibuprofeno gotas 100 mg/mL', ativo: true,
+    apres: [{ rot: 'Gotas 100 mg/mL · 10 gotas = 1 mL · 1 gota = 10 mg', mgml: 100, gml: 10 }],
+    kg: { min: 10, max: 10, porDia: false, vezes: 4, maxDose: null, maxGotas: 20, maxDia: null },
+    intervalo: 'a cada 6 a 8 horas (3 a 4 vezes ao dia), no máximo 4 vezes em 24 horas',
+    adulto: { anos: 18, kg: null, txt: 'Adultos: 200 a 800 mg (20 a 80 gotas) por vez. Máximo de 3.200 mg por dia.' },
+    bloq: { meses: 24, kg: null, txt: 'A bula não indica para menores de 6 meses e, abaixo de 2 anos, só com orientação médica.' },
+    obs: 'A bula indica 1 gota por kg por vez, até 20 gotas (200 mg) por vez, também para crianças acima de 30 kg.',
+    fonte: 'Bula do ibuprofeno 50 mg/mL e 100 mg/mL, suspensão oral em gotas (Medley)', data: '2026-10-21' },
+  { id: 'amoxicilina-susp', tipo: 'kg', grupo: 'atb', nome: 'Amoxicilina suspensão 250 mg/5 mL', ativo: true,
+    apres: [{ rot: 'Suspensão 250 mg/5 mL (50 mg/mL)', mgml: 50, gml: null }],
+    kg: { min: 20, max: 50, porDia: true, vezes: 3, maxDose: null, maxGotas: null, maxDia: null },
+    intervalo: 'de 8 em 8 horas',
+    adulto: { anos: null, kg: 40, txt: 'Adultos e crianças acima de 40 kg: 250 mg de 8 em 8 horas; nas infecções mais graves, 500 mg de 8 em 8 horas.' },
+    bloq: null,
+    obs: 'Faixa usual da bula para crianças abaixo de 40 kg: 20 a 50 mg/kg/dia, divididos de 8 em 8 horas. Para outra concentração, use o conversor mg → mL.',
+    fonte: 'Bula da amoxicilina 250 mg/5 mL, pó para suspensão oral (Cimed)', data: '2026-10-21' },
+  { id: 'azitromicina-susp', tipo: 'kg', grupo: 'atb', nome: 'Azitromicina suspensão 200 mg/5 mL', ativo: true,
+    apres: [{ rot: 'Suspensão 200 mg/5 mL (40 mg/mL)', mgml: 40, gml: null }],
+    kg: { min: 10, max: 10, porDia: false, vezes: 1, maxDose: 500, maxGotas: null, maxDia: 500 },
+    intervalo: '1 vez ao dia, por 3 dias',
+    adulto: { anos: null, kg: 45, txt: 'Acima de 45 kg: 500 mg 1 vez ao dia, por 3 dias (total de 1.500 mg).' },
+    bloq: null,
+    obs: 'Esquema de 3 dias da bula (10 mg/kg 1 vez ao dia). A bula traz outros esquemas para indicações específicas.',
+    fonte: 'Bula da azitromicina 200 mg/5 mL, pó para suspensão oral (Germed)', data: '2026-10-21' },
+  { id: 'lidocaina', tipo: 'anest', nome: 'Lidocaína 2%', ativo: true, mgkg: 4.4, maxmg: 300, idadeMin: null,
+    apres: [{ rot: '2% com epinefrina 1:100.000', mgml: 20, epi: 100000 }],
+    obs: '', fonte: 'Malamed, Handbook of Local Anesthesia (doses máximas recomendadas)', data: '2026-10-21' },
+  { id: 'mepivacaina', tipo: 'anest', nome: 'Mepivacaína', ativo: true, mgkg: 4.4, maxmg: 300, idadeMin: null,
+    apres: [{ rot: '2% com epinefrina 1:100.000', mgml: 20, epi: 100000 }, { rot: '3% sem vasoconstritor', mgml: 30, epi: 0 }],
+    obs: '', fonte: 'Malamed, Handbook of Local Anesthesia (doses máximas recomendadas)', data: '2026-10-21' },
+  { id: 'articaina', tipo: 'anest', nome: 'Articaína 4%', ativo: true, mgkg: 7, maxmg: 500, idadeMin: 4,
+    apres: [{ rot: '4% com epinefrina 1:100.000', mgml: 40, epi: 100000 }, { rot: '4% com epinefrina 1:200.000', mgml: 40, epi: 200000 }],
+    obs: 'A bula contraindica para menores de 4 anos.', fonte: 'Bula da articaína com epinefrina (Articaine) e Malamed, Handbook of Local Anesthesia', data: '2026-10-21' },
+  { id: 'prilocaina', tipo: 'anest', nome: 'Prilocaína 3%', ativo: true, mgkg: 6, maxmg: 400, idadeMin: null,
+    apres: [{ rot: '3% com felipressina', mgml: 30, epi: 0 }],
+    obs: '', fonte: 'Malamed, Handbook of Local Anesthesia (doses máximas recomendadas)', data: '2026-10-21' },
+  { id: 'bupivacaina', tipo: 'anest', nome: 'Bupivacaína 0,5%', ativo: true, mgkg: 1.3, maxmg: 90, idadeMin: null,
+    apres: [{ rot: '0,5% com epinefrina 1:200.000', mgml: 5, epi: 200000 }],
+    obs: 'Anestesia de longa duração: em crianças, avalie o risco de morder lábio e bochecha.', fonte: 'Malamed, Handbook of Local Anesthesia (doses máximas recomendadas)', data: '2026-10-21' },
+  { id: 'prof-amoxicilina', tipo: 'prof', alergia: false, nome: 'Amoxicilina', ativo: true, mgkg: 50, adulto: 2000, obs: '', fonte: 'AHA 2021, prevenção de endocardite infecciosa (tabela de esquemas para procedimento odontológico)', data: '2026-10-21' },
+  { id: 'prof-cefalexina', tipo: 'prof', alergia: true, nome: 'Cefalexina', ativo: true, mgkg: 50, adulto: 2000, obs: 'Não usar se o paciente já teve anafilaxia, angioedema ou urticária com penicilina ou ampicilina.', fonte: 'AHA 2021, prevenção de endocardite infecciosa (tabela de esquemas para procedimento odontológico)', data: '2026-10-21' },
+  { id: 'prof-azitromicina', tipo: 'prof', alergia: true, nome: 'Azitromicina', ativo: true, mgkg: 15, adulto: 500, obs: '', fonte: 'AHA 2021, prevenção de endocardite infecciosa (tabela de esquemas para procedimento odontológico)', data: '2026-10-21' },
+  { id: 'prof-claritromicina', tipo: 'prof', alergia: true, nome: 'Claritromicina', ativo: true, mgkg: 15, adulto: 500, obs: '', fonte: 'AHA 2021, prevenção de endocardite infecciosa (tabela de esquemas para procedimento odontológico)', data: '2026-10-21' },
+  { id: 'prof-doxiciclina', tipo: 'prof', alergia: true, nome: 'Doxiciclina', ativo: true, mgkg: 2.2, adulto: 100, obs: 'Abaixo de 45 kg: 2,2 mg/kg; a partir de 45 kg: 100 mg.', fonte: 'AHA 2021, prevenção de endocardite infecciosa (tabela de esquemas para procedimento odontológico)', data: '2026-10-21' }
+];
+const CALC_EPI_MAX = 0.04; // mg de epinefrina por sessão em cardiopatas / ASA III–IV (bula da articaína)
+const nf = (v, dec = 1) => Number(v).toLocaleString('pt-BR', { maximumFractionDigits: dec, minimumFractionDigits: 0 });
+const floorTo = (v, s) => Math.floor(v / s + 1e-9) * s, ceilTo = (v, s) => Math.ceil(v / s - 1e-9) * s;
+const faixaTxt = (a, b, f = x => x) => Math.abs(a - b) < 1e-9 ? f(a) : `${f(a)} a ${f(b)}`;
+S.calc = S.calc || { sec: 'med', peso: '', anos: '', meses: '', med: '', apres: 0, anest: 'lidocaina', apresA: 0, tubete: '1,8', cardio: false, aler: false, prof: '', cmg: '', cconc: '', cgml: '', d1: '', d2: '', dv: '' };
+const calcItens = () => {
+  const d = S.calcD || {}; const src = S.isAdmin ? (d.itens || CALC_PADRAO) : (d.itens || []);
+  return (Array.isArray(src) ? src : []).filter(i => i && i.ativo !== false);
+};
+async function loadCalc(force) {
+  if (S.calcLoading || (S.calcD && !force)) return;
+  S.calcLoading = true;
+  try { S.calcD = await S.store.rpc('calc_dados'); } catch (_) { S.calcD = S.calcD || { erro: true }; }
+  finally { S.calcLoading = false; }
+  if (location.hash === '#admin' || location.hash === '#dentista') render();
+}
+function lerPaciente() {
+  const c = S.calc, peso = parseFloat(String(c.peso).replace(',', '.')), anos = parseInt(c.anos, 10), meses = parseInt(c.meses || '0', 10);
+  const ok = isFinite(peso) && peso >= 1 && peso <= 250 && isFinite(anos) && anos >= 0 && anos <= 120 && isFinite(meses) && meses >= 0 && meses <= 11;
+  return { ok, peso, idadeM: ok ? anos * 12 + meses : null, anos };
+}
+const resBox = (tit, linhas, extra = '') => `<div class="calc-res"><p class="eyebrow">${tit}</p>${linhas}${extra}</div>`;
+const semNumero = txt => `<div class="calc-res off"><p><b>Sem cálculo.</b> ${esc(txt)}</p></div>`;
+const fonteHtml = i => i.fonte ? `<p class="calc-fonte">Fonte: ${esc(i.fonte)}${i.data ? `, conferida em ${esc(br(i.data))}` : ''}.</p>` : '';
+function calcMed(i, p) {
+  if (!p.ok) return semNumero('Informe o peso e a idade do paciente.');
+  const a = (i.apres || [])[Math.min(S.calc.apres, (i.apres || []).length - 1)] || {};
+  if (i.bloq && ((i.bloq.meses != null && p.idadeM < i.bloq.meses) || (i.bloq.kg != null && p.peso < i.bloq.kg))) return semNumero(i.bloq.txt || 'Fora da faixa de idade ou peso da bula.');
+  const ad = i.adulto;
+  if (ad && ((ad.anos != null && p.idadeM >= ad.anos * 12) || (ad.kg != null && p.peso > ad.kg))) return resBox('Dose de adulto (bula)', `<p class="calc-big">${esc(ad.txt)}</p>`);
+  const mgml = Number(a.mgml) || 0, gml = Number(a.gml) || 0;
+  const vol = mg => mgml ? mg / mgml : null;
+  if (i.tipo === 'faixa') {
+    const f = (i.faixas || []).find(f => p.peso >= f.de && p.peso < Number(f.ate) + 1);
+    if (!f) return semNumero(`A tabela da bula vai de ${(i.faixas[0] || {}).de} a ${(i.faixas[i.faixas.length - 1] || {}).ate} kg. Fora dessa faixa, a calculadora não dá número.`);
+    const mg = g => gml ? g * mgml / gml : 0;
+    return resBox(`Dose por vez · faixa de ${f.de} a ${f.ate} kg`,
+      `<p class="calc-big">${faixaTxt(f.min, f.max)} gotas</p><p>${faixaTxt(mg(f.min), mg(f.max), v => nf(v, 0))} mg por vez · ${esc(i.intervalo || '')}</p><p>Máximo de <b>${f.dia} gotas por dia</b> (${nf(mg(f.dia), 0)} mg).</p>`);
+  }
+  const k = i.kg || {}; let lim = '';
+  let dMin, dMax, porDia = '';
+  if (k.porDia) {
+    let tMin = p.peso * k.min, tMax = p.peso * k.max;
+    if (k.maxDia) { if (tMax > k.maxDia) { tMax = k.maxDia; lim = 'limitada à dose máxima diária da bula'; } tMin = Math.min(tMin, tMax); }
+    dMin = tMin / (k.vezes || 1); dMax = tMax / (k.vezes || 1);
+    porDia = `<p>Total por dia: ${faixaTxt(tMin, tMax, v => nf(v, 0))} mg (${nf(k.min, 1)} a ${nf(k.max, 1)} mg/kg/dia), dividido em ${k.vezes} ${k.vezes === 1 ? 'dose' : 'doses'}.</p>`;
+  } else {
+    dMin = p.peso * k.min; dMax = p.peso * k.max;
+    let cap = k.maxDose || Infinity; if (k.maxGotas && gml) cap = Math.min(cap, k.maxGotas * mgml / gml);
+    if (dMax > cap) { dMax = cap; lim = 'limitada à dose máxima por vez da bula'; }
+    dMin = Math.min(dMin, dMax);
+  }
+  let linhas = `<p class="calc-big">${faixaTxt(dMin, dMax, v => nf(v, 0))} mg por vez</p>`;
+  if (mgml) {
+    if (gml) { const g1 = Math.max(1, Math.ceil(vol(dMin) * gml - 1e-9)), g2 = Math.max(1, Math.floor(vol(dMax) * gml + 1e-9)); linhas += `<p class="calc-big2">${g1 > g2 ? g2 : faixaTxt(g1, g2)} gotas por vez</p>`; }
+    else { const v1 = ceilTo(vol(dMin), 0.1), v2 = Math.max(0.1, floorTo(vol(dMax), 0.1)); linhas += `<p class="calc-big2">${v1 > v2 ? nf(v2) : faixaTxt(v1, v2, x => nf(x))} mL por vez</p>`; }
+  }
+  linhas += `<p>${esc(i.intervalo || '')}</p>${porDia}`;
+  if (!k.porDia && k.maxDia) linhas += `<p>Máximo por dia: ${nf(k.maxDia, 0)} mg.</p>`;
+  if (lim) linhas += `<p class="calc-lim">Dose ${lim}.</p>`;
+  return resBox(`Para ${nf(p.peso)} kg`, linhas);
+}
+function calcAnest(i, p) {
+  if (!p.ok) return semNumero('Informe o peso e a idade do paciente.');
+  if (i.idadeMin && p.idadeM < i.idadeMin * 12) return semNumero(`Não indicado para menores de ${i.idadeMin} anos.`);
+  const a = (i.apres || [])[Math.min(S.calc.apresA, (i.apres || []).length - 1)] || {};
+  const tub = parseFloat(String(S.calc.tubete).replace(',', '.'));
+  if (!(tub >= 0.5 && tub <= 5)) return semNumero('Informe o volume do tubete em mL (o padrão é 1,8 mL).');
+  let maxmg = p.peso * i.mgkg, lim = '';
+  if (i.maxmg && maxmg > i.maxmg) { maxmg = i.maxmg; lim = `limitada ao máximo absoluto de ${nf(i.maxmg, 0)} mg`; }
+  const mgTub = a.mgml * tub, tubs = floorTo(maxmg / mgTub, 0.1);
+  let linhas = `<p class="calc-big">${nf(maxmg, 0)} mg no máximo</p><p class="calc-big2">${nf(tubs)} tubetes de ${nf(tub)} mL</p><p>${esc(a.rot || '')} · ${nf(mgTub, 1)} mg por tubete · ${nf(i.mgkg, 1)} mg/kg${i.maxmg ? `, máximo absoluto ${nf(i.maxmg, 0)} mg` : ''}.</p>`;
+  if (lim) linhas += `<p class="calc-lim">Dose ${lim}.</p>`;
+  if (S.calc.cardio && a.epi) {
+    const epiTub = tub / a.epi * 1000, tE = floorTo(CALC_EPI_MAX / epiTub, 0.1);
+    linhas += `<div class="notice gold"><p><b>Cardiopata / ASA III–IV:</b> limite de ${nf(CALC_EPI_MAX, 2)} mg de epinefrina por sessão = <b>${nf(Math.min(tE, tubs))} tubetes</b> deste anestésico (${nf(epiTub, 3)} mg de epinefrina por tubete).</p></div>`;
+  } else if (S.calc.cardio && !a.epi) linhas += '<p class="hint">Sem epinefrina: vale o limite do anestésico acima.</p>';
+  linhas += '<p class="hint">Se usar mais de um anestésico na mesma sessão, as doses se somam.</p>';
+  return resBox(`Dose máxima para ${nf(p.peso)} kg`, linhas);
+}
+function calcProf(i, p) {
+  if (!p.ok) return semNumero('Informe o peso e a idade do paciente.');
+  const dose = Math.min(p.peso * i.mgkg, i.adulto), adulto = p.peso * i.mgkg >= i.adulto;
+  return resBox(`${esc(i.nome)} · dose única`, `<p class="calc-big">${nf(dose, 0)} mg</p><p>${adulto ? 'Dose de adulto' : `${nf(i.mgkg, 1)} mg/kg (não passa da dose de adulto, ${nf(i.adulto, 0)} mg)`} · tomar de 30 a 60 minutos antes do procedimento.</p>${i.obs ? `<p class="calc-lim">${esc(i.obs)}</p>` : ''}`);
+}
+const CALC_SECS = [['med', 'Medicamentos'], ['anest', 'Anestésico'], ['prof', 'Profilaxia'], ['conv', 'Conversões']];
+function calcFormHtml(itens) {
+  const c = S.calc, meds = itens.filter(i => i.tipo === 'kg' || i.tipo === 'faixa'), an = itens.filter(i => i.tipo === 'anest'), pr = itens.filter(i => i.tipo === 'prof');
+  if (!meds.some(i => i.id === c.med)) c.med = (meds[0] || {}).id || '';
+  if (!an.some(i => i.id === c.anest)) c.anest = (an[0] || {}).id || '';
+  const med = meds.find(i => i.id === c.med), ane = an.find(i => i.id === c.anest);
+  const optsMed = Object.entries(CALC_GRUPOS).map(([g, t]) => { const l = meds.filter(i => i.grupo === g); return l.length ? `<optgroup label="${esc(t)}">${l.map(i => `<option value="${esc(i.id)}"${i.id === c.med ? ' selected' : ''}>${esc(i.nome)}</option>`).join('')}</optgroup>` : ''; }).join('')
+    + meds.filter(i => !CALC_GRUPOS[i.grupo]).map(i => `<option value="${esc(i.id)}"${i.id === c.med ? ' selected' : ''}>${esc(i.nome)}</option>`).join('');
+  const seg = `<div class="seg calc-seg" role="tablist">${CALC_SECS.map(([k, t]) => `<button type="button" data-csec="${k}" aria-pressed="${c.sec === k}">${t}</button>`).join('')}</div>`;
+  const pac = `<div class="calc-pac"><label>Peso (kg)<input data-cin="peso" inputmode="decimal" value="${esc(c.peso)}" placeholder="Ex.: 18"></label><label>Idade (anos)<input data-cin="anos" inputmode="numeric" value="${esc(c.anos)}" placeholder="Ex.: 5"></label><label>e meses<input data-cin="meses" inputmode="numeric" value="${esc(c.meses)}" placeholder="0"></label></div>`;
+  let corpo = '';
+  if (c.sec === 'med') corpo = meds.length ? `<label>Medicamento<select data-cin="med">${optsMed}</select></label>${med && med.apres && med.apres.length > 1 ? `<label>Apresentação<select data-cin="apres">${med.apres.map((a, k) => `<option value="${k}"${+c.apres === k ? ' selected' : ''}>${esc(a.rot)}</option>`).join('')}</select></label>` : med && med.apres && med.apres[0] ? `<p class="hint">${esc(med.apres[0].rot)}</p>` : ''}` : '<p class="hint">Nenhum medicamento ativo.</p>';
+  if (c.sec === 'anest') corpo = an.length ? `<label>Anestésico<select data-cin="anest">${an.map(i => `<option value="${esc(i.id)}"${i.id === c.anest ? ' selected' : ''}>${esc(i.nome)}</option>`).join('')}</select></label>${ane && ane.apres ? `<label>Apresentação<select data-cin="apresA">${ane.apres.map((a, k) => `<option value="${k}"${+c.apresA === k ? ' selected' : ''}>${esc(a.rot)}</option>`).join('')}</select></label>` : ''}<label>Volume do tubete (mL)<input data-cin="tubete" inputmode="decimal" value="${esc(c.tubete)}"></label><label class="check"><input type="checkbox" data-cin="cardio"${c.cardio ? ' checked' : ''}><span>Paciente cardiopata ou ASA III–IV (limite de epinefrina)</span></label>` : '<p class="hint">Nenhum anestésico ativo.</p>';
+  if (c.sec === 'prof') corpo = `<p class="hint">Profilaxia de endocardite: só para pacientes de alto risco, conforme o cardiologista do paciente. Dose única, de 30 a 60 minutos antes.</p><label class="check"><input type="checkbox" data-cin="aler"${c.aler ? ' checked' : ''}><span>Paciente alérgico à penicilina</span></label>`;
+  if (c.sec === 'conv') corpo = `<div class="calc-conv"><p class="eyebrow">Dose em mg → volume</p><div class="calc-pac"><label>Dose (mg)<input data-cin="cmg" inputmode="decimal" value="${esc(c.cmg)}"></label><label>Concentração (mg/mL)<input data-cin="cconc" inputmode="decimal" value="${esc(c.cconc)}" placeholder="Ex.: 50"></label><label>Gotas por mL<input data-cin="cgml" inputmode="decimal" value="${esc(c.cgml)}" placeholder="opcional"></label></div><p class="hint">Suspensão “250 mg/5 mL” = 50 mg/mL. Confira as gotas por mL na bula do produto.</p>
+    <p class="eyebrow">Diluição (ex.: hipoclorito)</p><div class="calc-pac"><label>Produto (%)<input data-cin="d1" inputmode="decimal" value="${esc(c.d1)}" placeholder="Ex.: 5,25"></label><label>Quero (%)<input data-cin="d2" inputmode="decimal" value="${esc(c.d2)}" placeholder="Ex.: 2,5"></label><label>Volume final (mL)<input data-cin="dv" inputmode="decimal" value="${esc(c.dv)}" placeholder="Ex.: 100"></label></div></div>`;
+  return `${seg}${c.sec === 'conv' ? '' : pac}<div class="calc-sel">${corpo}</div>`;
+}
+function calcResHtml(itens) {
+  const c = S.calc, p = lerPaciente();
+  if (c.sec === 'med') { const i = itens.find(i => i.id === c.med); return i ? calcMed(i, p) + (i.obs ? `<p class="calc-obs">${esc(i.obs)}</p>` : '') + fonteHtml(i) : ''; }
+  if (c.sec === 'anest') { const i = itens.find(i => i.id === c.anest); return i ? calcAnest(i, p) + (i.obs ? `<p class="calc-obs">${esc(i.obs)}</p>` : '') + fonteHtml(i) : ''; }
+  if (c.sec === 'prof') {
+    const l = itens.filter(i => i.tipo === 'prof' && !!i.alergia === !!c.aler);
+    if (!l.length) return semNumero('Nenhum medicamento ativo para esta situação.');
+    if (!p.ok) return semNumero('Informe o peso e a idade do paciente.');
+    return l.map(i => calcProf(i, p)).join('') + (l[0] ? fonteHtml(l[0]) : '');
+  }
+  const n = v => parseFloat(String(v).replace(',', '.'));
+  let out = '';
+  const mg = n(c.cmg), conc = n(c.cconc), gml = n(c.cgml);
+  if (mg > 0 && conc > 0) { const ml = mg / conc; out += resBox('Volume', `<p class="calc-big">${nf(ml, 2)} mL</p>${gml > 0 ? `<p class="calc-big2">${nf(Math.round(ml * gml), 0)} gotas</p>` : ''}<p>${nf(mg, 1)} mg ÷ ${nf(conc, 2)} mg/mL.</p>`); }
+  else if (c.cmg || c.cconc) out += semNumero('Informe a dose e a concentração.');
+  const d1 = n(c.d1), d2 = n(c.d2), dv = n(c.dv);
+  if (d1 > 0 && d2 > 0 && dv > 0) {
+    if (d2 >= d1) out += semNumero('A concentração desejada precisa ser menor que a do produto.');
+    else { const v1 = d2 * dv / d1; out += resBox('Diluição', `<p class="calc-big">${nf(v1, 1)} mL do produto</p><p class="calc-big2">+ ${nf(dv - v1, 1)} mL de água</p><p>Para ${nf(dv, 0)} mL a ${nf(d2, 2)}% (C1 × V1 = C2 × V2).</p>`); }
+  } else if (c.d1 || c.d2 || c.dv) out += semNumero('Informe as duas concentrações e o volume final.');
+  return out || '<p class="hint">Preencha os campos para ver o resultado.</p>';
+}
+const CALC_AVISO = '<div class="notice calc-aviso"><p><b>Ferramenta de apoio.</b> Os valores vêm das bulas e referências indicadas em cada item. Confira a bula do produto que vai prescrever: a decisão e a prescrição são do profissional.</p></div>';
+function calcAdminHtml() {
+  if (!adminCompleto()) return S.calcD && S.calcD.liberada ? '' : '<div class="notice"><p>A calculadora ainda não foi liberada para os dentistas. Quem libera é o administrador completo.</p></div>';
+  const d = S.calcD || {}, propria = Array.isArray(d.itens), lista = propria ? d.itens : CALC_PADRAO;
+  const st = d.liberada ? `<b>Liberada para os dentistas.</b>${d.atualizadaEm ? ` Última alteração em ${esc(dataHora(d.atualizadaEm))}${d.atualizadaPor ? ` por ${esc(d.atualizadaPor)}` : ''}.` : ''}` : '<b>Ainda não liberada:</b> só os administradores veem a calculadora. Revise os itens e toque em “Revisei, liberar”.';
+  const novo = propria && (d.base || 0) < CALC_BASE ? '<div class="notice gold"><p>Há uma lista padrão mais nova. Toque em “Restaurar lista padrão” para usar.</p></div>' : '';
+  const tipoTxt = { kg: 'Dose por peso', faixa: 'Tabela por peso', anest: 'Anestésico', prof: 'Profilaxia' };
+  return `<div class="card calc-adm"><div class="card-head"><h3>Revisão da calculadora</h3><span class="hint">${propria ? 'Lista revisada' : 'Lista padrão (conferida nas bulas em 21/10/2026)'}</span></div>
+    <p>${st}</p>${novo}
+    <div class="dr-actions">${d.liberada ? '<button class="ghost" type="button" data-calcadm="ocultar">Ocultar dos dentistas</button>' : '<button class="primary" type="button" data-calcadm="liberar">Revisei, liberar para os dentistas</button>'}<button class="ghost" type="button" data-calcadm="novo">Adicionar medicamento</button>${propria ? '<button class="link" type="button" data-calcadm="padrao">Restaurar lista padrão</button>' : ''}</div>
+    <details class="calc-itens"><summary>Itens da lista (${lista.length})</summary><div class="mini">${lista.map(i => `<div class="calc-it${i.ativo === false ? ' off' : ''}"><span class="txt"><b>${esc(i.nome)}</b><span>${tipoTxt[i.tipo] || ''}${i.tipo === 'prof' ? (i.alergia ? ' · alérgicos à penicilina' : ' · sem alergia') : ''}${i.ativo === false ? ' · desativado' : ''}</span></span><button type="button" class="ghost sm" data-calced="${esc(i.id)}">Editar</button><button type="button" class="link" data-calcon="${esc(i.id)}">${i.ativo === false ? 'Ativar' : 'Desativar'}</button></div>`).join('')}</div></details>
+    ${(d.log || []).length ? `<details class="adm-log"><summary>Histórico de alterações (${d.log.length})</summary><ul>${d.log.map(l => `<li><b>${esc(dataHora(l.quando))}</b> · ${esc(l.autor || '')} ${esc(l.acao)}</li>`).join('')}</ul></details>` : ''}
+    <div id="calc-fb" role="status"></div></div>`;
+}
+function renderCalc(el, modo) {
+  if (!el) return;
+  if (!S.calcD) { loadCalc(); if (!el.dataset.sig) el.innerHTML = '<div class="page-head"><div><p class="eyebrow">Apoio clínico</p><h2>Calculadora</h2></div></div><p class="hint">Carregando…</p>'; return; }
+  const d = S.calcD;
+  if (modo === 'd' && !S.isAdmin && (!d.liberada || !Array.isArray(d.itens))) {
+    const h = `<div class="page-head"><div><p class="eyebrow">Apoio clínico</p><h2>Calculadora</h2></div></div>${emptyBox(d.erro ? 'Não foi possível abrir a calculadora agora. Verifique a internet e tente de novo.' : 'A calculadora está em revisão pela Dra. Thalia e aparece aqui assim que for liberada.')}`;
+    if (el.dataset.sig !== h) { el.innerHTML = h; el.dataset.sig = h; }
+    return;
+  }
+  const itens = calcItens();
+  const sig = JSON.stringify([modo, d.liberada, d.atualizadaEm, d.itens ? d.itens.length : -1, (d.log || []).length, S.calc.sec, S.calc.med, S.calc.anest, S.calc.aler, adminCompleto(), itens.map(i => i.id + i.nome + (i.ativo !== false))]);
+  if (el.dataset.sig !== sig) {
+    el.innerHTML = `<div class="page-head"><div><p class="eyebrow">Apoio clínico</p><h2>Calculadora</h2></div></div>${modo === 'a' ? calcAdminHtml() : ''}${CALC_AVISO}<div class="calc-grid"><div class="card calc-f">${calcFormHtml(itens)}</div><div class="card calc-out" aria-live="polite"></div></div>`;
+    el.dataset.sig = sig;
+  }
+  const out = el.querySelector('.calc-out'); if (out) { const h = calcResHtml(itens); if (out.dataset.h !== h) { out.innerHTML = h; out.dataset.h = h; } }
+}
+function calcRoot(t) { return t.closest && t.closest('#calc-a, #calc-d'); }
+document.addEventListener('input', e => {
+  const t = e.target; if (!t.dataset || !t.dataset.cin || !calcRoot(t)) return;
+  const k = t.dataset.cin; S.calc[k] = t.type === 'checkbox' ? t.checked : t.value;
+  if (k === 'med') S.calc.apres = 0; if (k === 'anest') S.calc.apresA = 0;
+  const root = calcRoot(t); renderCalc(root, root.id === 'calc-a' ? 'a' : 'd');
+});
+document.addEventListener('change', e => { const t = e.target; if (t.dataset && t.dataset.cin && calcRoot(t) && (t.tagName === 'SELECT' || t.type === 'checkbox')) t.dispatchEvent(new Event('input', { bubbles: true })); });
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-csec]'); if (!b || !calcRoot(b)) return;
+  S.calc.sec = b.dataset.csec; const root = calcRoot(b); renderCalc(root, root.id === 'calc-a' ? 'a' : 'd');
+});
+
+/* Administração da lista (administrador completo) */
+const calcListaAtual = () => JSON.parse(JSON.stringify(Array.isArray((S.calcD || {}).itens) ? S.calcD.itens : CALC_PADRAO));
+async function salvarCalc(itens, liberada, acao, base) {
+  await S.store.rpc('salvar_calc', { p_itens: itens, p_liberada: liberada, p_base: base == null ? null : base, p_acao: acao });
+  await loadCalc(true);
+}
+document.addEventListener('click', async e => {
+  const t = e.target; if (!t.closest || $('view-admin').hidden) return;
+  const a = t.closest('[data-calcadm]'), ed = t.closest('[data-calced]'), on = t.closest('[data-calcon]');
+  if (!a && !ed && !on) return;
+  const fb = $('calc-fb');
+  try {
+    if (a) {
+      const k = a.dataset.calcadm;
+      if (k === 'liberar') { a.disabled = true; await salvarCalc(Array.isArray(S.calcD.itens) ? null : calcListaAtual(), true, 'revisou e liberou a calculadora para os dentistas', Array.isArray(S.calcD.itens) ? null : CALC_BASE); }
+      else if (k === 'ocultar') { a.disabled = true; await salvarCalc(null, false, 'ocultou a calculadora dos dentistas'); }
+      else if (k === 'padrao') {
+        if (a.dataset.sure !== '1') { a.dataset.sure = '1'; a.textContent = 'Confirmar: voltar à lista padrão'; return; }
+        a.disabled = true; await salvarCalc(JSON.parse(JSON.stringify(CALC_PADRAO)), null, 'restaurou a lista padrão (versão ' + CALC_BASE + ')', CALC_BASE);
+      } else if (k === 'novo') openForm('Calculadora', () => calcItemForm(null));
+      return;
+    }
+    if (ed) { openForm('Calculadora', () => calcItemForm(ed.dataset.calced)); return; }
+    if (on) {
+      const l = calcListaAtual(), i = l.find(x => x.id === on.dataset.calcon); if (!i) return;
+      i.ativo = i.ativo === false; on.disabled = true;
+      await salvarCalc(l, null, `${i.ativo ? 'ativou' : 'desativou'} ${i.nome}`, Array.isArray(S.calcD.itens) ? null : CALC_BASE);
+    }
+  } catch (err) { if (fb) msgIn(fb, 'err', admErr(err)); }
+});
+const numOuNulo = v => { const s = String(v ?? '').trim().replace(',', '.'); if (!s) return null; const n = Number(s); return isFinite(n) ? n : NaN; };
+function calcItemForm(id) {
+  const l = calcListaAtual(), i0 = id ? l.find(x => x.id === id) : null;
+  const i = i0 || { id: 'item-' + Date.now().toString(36), tipo: 'kg', grupo: 'analg', nome: '', ativo: true, apres: [{ rot: '', mgml: '', gml: '' }], kg: { min: '', max: '', porDia: false, vezes: 3, maxDose: '', maxGotas: '', maxDia: '' }, intervalo: '', adulto: { anos: '', kg: '', txt: '' }, bloq: { meses: '', kg: '', txt: '' }, obs: '', fonte: '', data: iso(new Date()) };
+  const w = document.createElement('form'); w.className = 'calc-form'; w.noValidate = true;
+  const v = x => esc(x == null ? '' : String(x).replace('.', ','));
+  const inp = (k, lab, val, extra = '') => `<label>${lab}<input data-f="${k}" value="${v(val)}" ${extra}></label>`;
+  const inpT = (k, lab, val, extra = '') => `<label>${lab}<input data-f="${k}" value="${esc(val == null ? '' : val)}" ${extra}></label>`;
+  const apresRow = (a, t) => `<div class="ajrow" data-row="apres"><label>Apresentação<input data-k="rot" value="${esc(a.rot || '')}"></label><label>mg por mL<input data-k="mgml" inputmode="decimal" value="${v(a.mgml)}"></label>${t === 'anest' ? `<label>Epinefrina 1:<input data-k="epi" inputmode="numeric" value="${v(a.epi)}" placeholder="0 = sem"></label>` : `<label>Gotas por mL<input data-k="gml" inputmode="decimal" value="${v(a.gml)}" placeholder="—"></label>`}<button type="button" class="icon-btn" data-crow="del" aria-label="Remover">×</button></div>`;
+  const faixaRow = f => `<div class="ajrow" data-row="faixa"><label>De (kg)<input data-k="de" inputmode="decimal" value="${v(f.de)}"></label><label>Até (kg)<input data-k="ate" inputmode="decimal" value="${v(f.ate)}"></label><label>Gotas mín.<input data-k="min" inputmode="numeric" value="${v(f.min)}"></label><label>Gotas máx.<input data-k="max" inputmode="numeric" value="${v(f.max)}"></label><label>Máx./dia<input data-k="dia" inputmode="numeric" value="${v(f.dia)}"></label><button type="button" class="icon-btn" data-crow="del" aria-label="Remover">×</button></div>`;
+  let h = `<p class="hint">${i0 ? 'Alterações ficam registradas no histórico.' : 'Novo item de dose por peso.'} Use só valores da bula ou de referência oficial e informe a fonte.</p>${inpT('nome', 'Nome', i.nome, 'maxlength="80"')}`;
+  if (i.tipo === 'kg' || i.tipo === 'faixa') {
+    h += `<label>Grupo<select data-f="grupo">${Object.entries(CALC_GRUPOS).map(([g, t]) => `<option value="${g}"${i.grupo === g ? ' selected' : ''}>${t}</option>`).join('')}</select></label>`;
+    h += `<p class="eyebrow">Apresentações</p><div data-rows="apres">${(i.apres || []).map(a => apresRow(a, i.tipo)).join('')}</div><button type="button" class="link" data-crow="add-apres">+ Apresentação</button>`;
+    if (i.tipo === 'kg') {
+      const k = i.kg || {};
+      h += `<p class="eyebrow">Dose para crianças (por kg)</p><div class="calc-pac">${inp('kg.min', 'mg/kg mín.', k.min, 'inputmode="decimal"')}${inp('kg.max', 'mg/kg máx.', k.max, 'inputmode="decimal"')}${inp('kg.vezes', 'Vezes ao dia', k.vezes, 'inputmode="numeric"')}</div>
+        <label class="check"><input type="checkbox" data-f="kg.porDia"${k.porDia ? ' checked' : ''}><span>Os mg/kg são por dia (divididos pelas vezes ao dia)</span></label>
+        <div class="calc-pac">${inp('kg.maxDose', 'Máx. por vez (mg)', k.maxDose, 'inputmode="decimal"')}${inp('kg.maxGotas', 'Máx. por vez (gotas)', k.maxGotas, 'inputmode="numeric"')}${inp('kg.maxDia', 'Máx. por dia (mg)', k.maxDia, 'inputmode="decimal"')}</div>`;
+    } else h += `<p class="eyebrow">Tabela por peso (em gotas)</p><div data-rows="faixa">${(i.faixas || []).map(faixaRow).join('')}</div><button type="button" class="link" data-crow="add-faixa">+ Faixa</button>`;
+    const ad = i.adulto || {}, bq = i.bloq || {};
+    h += `${inpT('intervalo', 'Intervalo (texto)', i.intervalo, 'maxlength="160"')}
+      <p class="eyebrow">Dose de adulto</p><div class="calc-pac">${inp('adulto.anos', 'A partir de (anos)', ad.anos, 'inputmode="numeric"')}${inp('adulto.kg', 'ou acima de (kg)', ad.kg, 'inputmode="decimal"')}</div><label>Texto da dose de adulto<textarea data-f="adulto.txt" rows="2" maxlength="400">${esc(ad.txt || '')}</textarea></label>
+      <p class="eyebrow">Não calcular abaixo de</p><div class="calc-pac">${inp('bloq.meses', 'Idade (meses)', bq.meses, 'inputmode="numeric"')}${inp('bloq.kg', 'Peso (kg)', bq.kg, 'inputmode="decimal"')}</div><label>Motivo (aparece no lugar da dose)<input data-f="bloq.txt" maxlength="300" value="${esc(bq.txt || '')}"></label>`;
+  } else if (i.tipo === 'anest') {
+    h += `<div class="calc-pac">${inp('mgkg', 'mg/kg máx.', i.mgkg, 'inputmode="decimal"')}${inp('maxmg', 'Máx. absoluto (mg)', i.maxmg, 'inputmode="decimal"')}${inp('idadeMin', 'Idade mínima (anos)', i.idadeMin, 'inputmode="numeric"')}</div>
+      <p class="eyebrow">Apresentações</p><div data-rows="apres">${(i.apres || []).map(a => apresRow(a, 'anest')).join('')}</div><button type="button" class="link" data-crow="add-apres">+ Apresentação</button>`;
+  } else if (i.tipo === 'prof') {
+    h += `<div class="calc-pac">${inp('mgkg', 'Criança (mg/kg)', i.mgkg, 'inputmode="decimal"')}${inp('adulto', 'Adulto (mg)', i.adulto, 'inputmode="decimal"')}</div><label class="check"><input type="checkbox" data-f="alergia"${i.alergia ? ' checked' : ''}><span>Opção para alérgicos à penicilina</span></label>`;
+  }
+  h += `<label>Observação<textarea data-f="obs" rows="2" maxlength="600">${esc(i.obs || '')}</textarea></label>${inpT('fonte', 'Fonte (bula/referência)', i.fonte, 'maxlength="200"')}
+    <div class="dr-actions"><button class="primary" type="submit">Salvar</button>${i0 && !CALC_PADRAO.some(x => x.id === i0.id) ? '<button class="link danger-t" type="button" data-crow="excluir">Excluir item</button>' : ''}</div><div class="cf-fb" role="status"></div>`;
+  w.innerHTML = h;
+  w.addEventListener('click', e => {
+    const b = e.target.closest('[data-crow]'); if (!b) return;
+    const k = b.dataset.crow;
+    if (k === 'del') b.closest('.ajrow').remove();
+    if (k === 'add-apres') w.querySelector('[data-rows="apres"]').insertAdjacentHTML('beforeend', apresRow({}, i.tipo));
+    if (k === 'add-faixa') w.querySelector('[data-rows="faixa"]').insertAdjacentHTML('beforeend', faixaRow({}));
+    if (k === 'excluir') {
+      if (b.dataset.sure !== '1') { b.dataset.sure = '1'; b.textContent = 'Confirmar exclusão'; return; }
+      const l2 = calcListaAtual().filter(x => x.id !== i.id);
+      salvarCalc(l2, null, `excluiu ${i.nome}`, Array.isArray(S.calcD.itens) ? null : CALC_BASE).then(closeDrawer).catch(err => msgIn(w.querySelector('.cf-fb'), 'err', admErr(err)));
+    }
+  });
+  w.addEventListener('submit', async e => {
+    e.preventDefault();
+    const fb = w.querySelector('.cf-fb'), n = JSON.parse(JSON.stringify(i)); let erro = '';
+    const setP = (path, val) => { const ks = path.split('.'); let o = n; ks.slice(0, -1).forEach(k => { o[k] = o[k] || {}; o = o[k]; }); o[ks[ks.length - 1]] = val; };
+    const NUM = /^(kg\.(min|max|vezes|maxDose|maxGotas|maxDia)|adulto\.(anos|kg)|bloq\.(meses|kg)|mgkg|maxmg|idadeMin)$/;
+    w.querySelectorAll('[data-f]').forEach(f => {
+      const k = f.dataset.f;
+      if (f.type === 'checkbox') return setP(k, f.checked);
+      if (NUM.test(k) || (k === 'adulto' && i.tipo === 'prof')) { const x = numOuNulo(f.value); if (Number.isNaN(x) || (x != null && x < 0)) erro = 'Confira os números (use só algarismos e vírgula).'; setP(k, x); }
+      else setP(k, f.value.trim());
+    });
+    const rows = (sel, keys) => [...w.querySelectorAll(`[data-row="${sel}"]`)].map(r => { const o = {}; r.querySelectorAll('[data-k]').forEach(x => { const kk = x.dataset.k; if (keys.includes(kk)) { const y = numOuNulo(x.value); if (Number.isNaN(y)) erro = 'Confira os números das linhas.'; o[kk] = y; } else o[kk] = x.value.trim(); }); return o; });
+    if (w.querySelector('[data-rows="apres"]')) n.apres = rows('apres', ['mgml', 'gml', 'epi']).filter(a => a.rot || a.mgml);
+    if (w.querySelector('[data-rows="faixa"]')) n.faixas = rows('faixa', ['de', 'ate', 'min', 'max', 'dia']).filter(f => f.de != null);
+    if (n.nome.length < 2) erro = 'Informe o nome.';
+    else if (!n.fonte) erro = 'Informe a fonte (bula ou referência).';
+    else if ((n.tipo === 'kg' || n.tipo === 'faixa' || n.tipo === 'anest') && !(n.apres || []).some(a => a.mgml > 0)) erro = 'Informe pelo menos uma apresentação com mg por mL.';
+    else if (n.tipo === 'kg' && !(n.kg.min > 0 && n.kg.max >= n.kg.min && n.kg.vezes >= 1)) erro = 'Informe os mg/kg (mínimo e máximo) e as vezes ao dia.';
+    else if (n.tipo === 'faixa' && !(n.faixas || []).every(f => f.ate >= f.de && f.max >= f.min && f.dia > 0)) erro = 'Confira as faixas de peso.';
+    else if (n.tipo === 'anest' && !(n.mgkg > 0)) erro = 'Informe os mg/kg.';
+    else if (n.tipo === 'prof' && !(n.mgkg > 0 && n.adulto > 0)) erro = 'Informe a dose por kg e a de adulto.';
+    if (erro) return msgIn(fb, 'err', erro);
+    n.data = iso(new Date());
+    const l2 = calcListaAtual(), pos = l2.findIndex(x => x.id === n.id);
+    if (pos >= 0) l2[pos] = n; else l2.push(n);
+    const btn = w.querySelector('button[type=submit]'); btn.disabled = true;
+    try { await salvarCalc(l2, null, `${pos >= 0 ? 'editou' : 'adicionou'} ${n.nome}`, Array.isArray(S.calcD.itens) ? null : CALC_BASE); closeDrawer(); }
+    catch (err) { btn.disabled = false; msgIn(fb, 'err', admErr(err)); }
+  });
+  return w;
+}
+
 /* ---------- Rotas e render ---------- */
 function route() {
   const h = location.hash, wantAdmin = h === '#admin', wantDent = h === '#dentista';
-  const inAdmin = wantAdmin && S.isAdmin, inDent = wantDent && !!S.dent && !S.recovery;
+  aplicarNivel();
+  if (S.uid && !S.recovery && ((wantAdmin && !S.isAdmin && S.dent) || (wantDent && !S.dent && S.isAdmin))) {
+    try { history.replaceState(null, '', location.pathname + location.search + (wantAdmin ? '#dentista' : '#admin')); } catch (_) {}
+    if (location.hash !== h) return route();
+  }
+  const inAdmin = wantAdmin && S.isAdmin && !S.recovery, inDent = wantDent && !!S.dent && !S.recovery;
   $('site').hidden = inAdmin || inDent;
   $('view-public').hidden = wantAdmin || wantDent;
-  $('view-login').hidden = !(wantAdmin && !S.isAdmin);
-  $('view-dlogin').hidden = !(wantDent && !inDent);
+  $('view-dlogin').hidden = !((wantDent || wantAdmin) && !inDent && !inAdmin);
   $('view-admin').hidden = !inAdmin;
   $('view-dent').hidden = !inDent;
   applyTheme();
   if (!wantAdmin && !wantDent) go(S.step);
-  if (wantDent && !inDent) renderDLogin();
+  if ((wantDent || wantAdmin) && !inDent && !inAdmin) renderDLogin();
   render();
 }
 function render() {

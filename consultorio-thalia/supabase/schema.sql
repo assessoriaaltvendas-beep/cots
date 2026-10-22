@@ -1,5 +1,5 @@
 -- =====================================================================
--- Consultório Odontológico Thalia Santiago · banco de dados (Supabase) · versão 8
+-- Consultório Odontológico Thalia Santiago · banco de dados (Supabase) · versão 9
 -- Cole este arquivo inteiro em: Supabase > SQL Editor > New query > Run
 -- Pode rodar de novo sem problema: ele recria funções e regras.
 -- =====================================================================
@@ -2282,6 +2282,250 @@ end $$;
 revoke execute on function public.rotina_diaria() from public, anon, authenticated;
 
 
+-- =====================================================================
+-- v9 (out/2026): login único, administradores com dois níveis e calculadora
+-- =====================================================================
+
+-- ---------- Administradores: nível, nome e histórico ----------
+alter table public.admins add column if not exists nivel text not null default 'completo';
+alter table public.admins add column if not exists nome text;
+alter table public.admins add column if not exists adicionado_em timestamptz not null default now();
+alter table public.admins add column if not exists adicionado_por uuid;
+alter table public.admins drop constraint if exists admins_nivel_check;
+alter table public.admins add constraint admins_nivel_check check (nivel in ('completo', 'agenda'));
+-- A administradora que já existia (criada pelo SQL, sem dentista) ganha o nome que aparece no painel.
+update public.admins set nome = 'Dra. Thalia Santiago'
+  where nome is null and adicionado_por is null and not exists (select 1 from public.dentists d where d.id = admins.user_id);
+
+create table if not exists public.admins_log (
+  id uuid primary key default gen_random_uuid(),
+  quando timestamptz not null default now(),
+  autor uuid,
+  autor_nome text,
+  alvo_email text,
+  acao text not null,
+  detalhe text
+);
+alter table public.admins_log enable row level security;
+
+-- Administrador completo: vê pacientes, documentos, financeiro dos pacientes e gerencia os administradores.
+create or replace function public.is_admin_completo() returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (select 1 from public.admins where user_id = auth.uid() and nivel = 'completo')
+$$;
+grant execute on function public.is_admin_completo() to anon, authenticated;
+
+drop policy if exists "admins_log: completo" on public.admins_log;
+create policy "admins_log: completo" on public.admins_log for select using (public.is_admin_completo());
+
+-- Quem entrou: administrador (e nível), dentista, nome.
+create or replace function public.meu_acesso() returns jsonb
+language sql stable security definer set search_path = public as $$
+  select jsonb_build_object(
+    'admin', a.user_id is not null,
+    'nivel', a.nivel,
+    'dentista', d.id is not null,
+    'nome', coalesce(nullif(trim(a.nome), ''), d.nome))
+  from (select auth.uid() as uid) u
+  left join public.admins a on a.user_id = u.uid
+  left join public.dentists d on d.id = u.uid
+$$;
+revoke execute on function public.meu_acesso() from public, anon;
+grant execute on function public.meu_acesso() to authenticated;
+
+create or replace function public.admin_nome(p_id uuid) returns text
+language sql stable security definer set search_path = public as $$
+  select coalesce(nullif(trim(a.nome), ''), d.nome, u.email)
+  from auth.users u left join public.admins a on a.user_id = u.id left join public.dentists d on d.id = u.id
+  where u.id = p_id
+$$;
+revoke execute on function public.admin_nome(uuid) from public, anon, authenticated;
+
+create or replace function public.admins_log_add(p_email text, p_acao text, p_detalhe text) returns void
+language sql security definer set search_path = public as $$
+  insert into public.admins_log (autor, autor_nome, alvo_email, acao, detalhe)
+  values (auth.uid(), public.admin_nome(auth.uid()), p_email, p_acao, p_detalhe)
+$$;
+revoke execute on function public.admins_log_add(text, text, text) from public, anon, authenticated;
+
+create or replace function public.listar_admins() returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+begin
+  if not public.is_admin_completo() then raise exception 'SEM_PERMISSAO'; end if;
+  return jsonb_build_object(
+    'admins', coalesce((select jsonb_agg(jsonb_build_object(
+        'id', a.user_id, 'email', u.email, 'nome', coalesce(nullif(trim(a.nome), ''), d.nome), 'nivel', a.nivel,
+        'adicionado_em', a.adicionado_em, 'por', case when a.adicionado_por is null then null else public.admin_nome(a.adicionado_por) end,
+        'eu', a.user_id = auth.uid(), 'dentista', d.id is not null) order by (a.nivel = 'completo') desc, a.adicionado_em)
+      from public.admins a join auth.users u on u.id = a.user_id left join public.dentists d on d.id = a.user_id), '[]'::jsonb),
+    'log', coalesce((select jsonb_agg(x order by x ->> 'quando' desc) from (
+        select jsonb_build_object('quando', l.quando, 'autor', l.autor_nome, 'email', l.alvo_email, 'acao', l.acao, 'detalhe', l.detalhe) x
+        from public.admins_log l order by l.quando desc limit 40) t), '[]'::jsonb));
+end $$;
+revoke execute on function public.listar_admins() from public, anon;
+grant execute on function public.listar_admins() to authenticated;
+
+create or replace function public.nivel_txt(n text) returns text language sql immutable as $$
+  select case n when 'completo' then 'administrador completo' when 'agenda' then 'administrador da agenda' else coalesce(n, '') end
+$$;
+
+create or replace function public.adicionar_admin(p_email text, p_nivel text) returns uuid
+language plpgsql security definer set search_path = public as $$
+declare uid uuid; em text := lower(trim(coalesce(p_email, '')));
+begin
+  if not public.is_admin_completo() then raise exception 'SEM_PERMISSAO'; end if;
+  if p_nivel not in ('completo', 'agenda') then raise exception 'DADOS_INVALIDOS'; end if;
+  select id into uid from auth.users where lower(email) = em limit 1;
+  if uid is null then raise exception 'CONTA_NAO_ENCONTRADA'; end if;
+  if exists (select 1 from public.admins where user_id = uid) then raise exception 'JA_ADMIN'; end if;
+  insert into public.admins (user_id, nivel, adicionado_por) values (uid, p_nivel, auth.uid());
+  perform public.admins_log_add(em, 'adicionou', public.nivel_txt(p_nivel));
+  begin
+    perform public.push_para(array[uid], 'Você agora é administrador', 'Acesso de ' || public.nivel_txt(p_nivel) || ' ao painel do consultório.', './#admin', 'admin');
+  exception when others then null; end;
+  return uid;
+end $$;
+revoke execute on function public.adicionar_admin(text, text) from public, anon;
+grant execute on function public.adicionar_admin(text, text) to authenticated;
+
+create or replace function public.mudar_nivel_admin(p_id uuid, p_nivel text) returns void
+language plpgsql security definer set search_path = public as $$
+declare a public.admins;
+begin
+  if not public.is_admin_completo() then raise exception 'SEM_PERMISSAO'; end if;
+  if p_nivel not in ('completo', 'agenda') then raise exception 'DADOS_INVALIDOS'; end if;
+  if p_id = auth.uid() then raise exception 'NAO_PODE_SI_MESMA'; end if;
+  select * into a from public.admins where user_id = p_id for update;
+  if not found then raise exception 'ADMIN_NAO_ENCONTRADO'; end if;
+  if a.nivel = p_nivel then return; end if;
+  if a.nivel = 'completo' and (select count(*) from public.admins where nivel = 'completo') <= 1 then raise exception 'ULTIMO_COMPLETO'; end if;
+  update public.admins set nivel = p_nivel where user_id = p_id;
+  perform public.admins_log_add((select email from auth.users where id = p_id), 'mudou o nível', public.nivel_txt(a.nivel) || ' → ' || public.nivel_txt(p_nivel));
+end $$;
+revoke execute on function public.mudar_nivel_admin(uuid, text) from public, anon;
+grant execute on function public.mudar_nivel_admin(uuid, text) to authenticated;
+
+create or replace function public.remover_admin(p_id uuid) returns void
+language plpgsql security definer set search_path = public as $$
+declare a public.admins;
+begin
+  if not public.is_admin_completo() then raise exception 'SEM_PERMISSAO'; end if;
+  if p_id = auth.uid() then raise exception 'NAO_PODE_SI_MESMA'; end if;
+  select * into a from public.admins where user_id = p_id for update;
+  if not found then raise exception 'ADMIN_NAO_ENCONTRADO'; end if;
+  if a.nivel = 'completo' and (select count(*) from public.admins where nivel = 'completo') <= 1 then raise exception 'ULTIMO_COMPLETO'; end if;
+  delete from public.admins where user_id = p_id;
+  perform public.admins_log_add((select email from auth.users where id = p_id), 'removeu', public.nivel_txt(a.nivel));
+end $$;
+revoke execute on function public.remover_admin(uuid) from public, anon;
+grant execute on function public.remover_admin(uuid) to authenticated;
+
+-- Nome que aparece no painel ("Olá, ...") de cada administrador.
+create or replace function public.salvar_meu_nome_admin(p_nome text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  if length(trim(coalesce(p_nome, ''))) not between 2 and 80 then raise exception 'DADOS_INVALIDOS'; end if;
+  update public.admins set nome = trim(p_nome) where user_id = auth.uid();
+end $$;
+revoke execute on function public.salvar_meu_nome_admin(text) from public, anon;
+grant execute on function public.salvar_meu_nome_admin(text) to authenticated;
+
+-- ---------- Dados dos pacientes: só o administrador completo ----------
+do $$
+declare t text;
+begin
+  foreach t in array array['pacientes', 'consultas', 'evolucoes', 'paciente_docs', 'pac_orcamentos', 'pac_pagamentos'] loop
+    execute format('drop policy if exists "%s: administradora" on public.%I', t, t);
+    execute format('drop policy if exists "%s: admin completo" on public.%I', t, t);
+    execute format('create policy "%s: admin completo" on public.%I for all using (public.is_admin_completo()) with check (public.is_admin_completo())', t, t);
+  end loop;
+end $$;
+do $$
+begin
+  if exists (select 1 from pg_namespace where nspname = 'storage') then
+    drop policy if exists "pacientes: ver" on storage.objects;
+    create policy "pacientes: ver" on storage.objects for select using (bucket_id = 'pacientes' and public.is_admin_completo());
+    drop policy if exists "pacientes: enviar" on storage.objects;
+    create policy "pacientes: enviar" on storage.objects for insert with check (bucket_id = 'pacientes' and public.is_admin_completo());
+    drop policy if exists "pacientes: excluir" on storage.objects;
+    create policy "pacientes: excluir" on storage.objects for delete using (bucket_id = 'pacientes' and public.is_admin_completo());
+  end if;
+end $$;
+
+-- Receitas e atestados (nome e CRO na assinatura): só o administrador completo altera.
+create or replace function public.salvar_cfg_v8(p jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+declare c public.app_config; comp boolean := public.is_admin_completo();
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  if jsonb_typeof(p) <> 'object' then raise exception 'DADOS_INVALIDOS'; end if;
+  if not comp and (p ? 'profNome' or p ? 'profCro' or p ? 'profEspecialidade') then raise exception 'SEM_PERMISSAO'; end if;
+  select * into c from public.app_config where id = 1;
+  if p ? 'taxaCancelPct' then c.taxa_cancel_pct := (p ->> 'taxaCancelPct')::int; end if;
+  if p ? 'profNome' then c.prof_nome := nullif(trim(p ->> 'profNome'), ''); end if;
+  if p ? 'profCro' then c.prof_cro := nullif(trim(p ->> 'profCro'), ''); end if;
+  if p ? 'profEspecialidade' then c.prof_especialidade := nullif(trim(p ->> 'profEspecialidade'), ''); end if;
+  update public.app_config set taxa_cancel_pct = c.taxa_cancel_pct, prof_nome = c.prof_nome, prof_cro = c.prof_cro,
+    prof_especialidade = c.prof_especialidade, atualizado_em = now() where id = 1;
+exception
+  when invalid_text_representation or numeric_value_out_of_range or check_violation then raise exception 'DADOS_INVALIDOS';
+end $$;
+revoke execute on function public.salvar_cfg_v8(jsonb) from public, anon;
+grant execute on function public.salvar_cfg_v8(jsonb) to authenticated;
+
+-- ---------- Calculadora ----------
+alter table public.app_config add column if not exists calc_itens jsonb;
+alter table public.app_config add column if not exists calc_liberada boolean not null default false;
+alter table public.app_config add column if not exists calc_base int;
+alter table public.app_config add column if not exists calc_atualizada_em timestamptz;
+alter table public.app_config add column if not exists calc_atualizada_por text;
+
+create table if not exists public.calc_log (
+  id uuid primary key default gen_random_uuid(),
+  quando timestamptz not null default now(),
+  autor uuid,
+  autor_nome text,
+  acao text not null check (length(acao) <= 300)
+);
+alter table public.calc_log enable row level security;
+drop policy if exists "calc_log: admin" on public.calc_log;
+create policy "calc_log: admin" on public.calc_log for select using (public.is_admin());
+
+-- Dentista liberado vê a lista só depois que a administradora revisou e liberou; administradores sempre veem.
+create or replace function public.calc_dados() returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare c public.app_config; adm boolean := public.is_admin();
+begin
+  if auth.uid() is null then raise exception 'SEM_PERMISSAO'; end if;
+  select * into c from public.app_config where id = 1;
+  if not adm and not public.dentista_liberado() then raise exception 'SEM_PERMISSAO'; end if;
+  return jsonb_build_object('liberada', coalesce(c.calc_liberada, false), 'base', c.calc_base,
+    'atualizadaEm', c.calc_atualizada_em, 'atualizadaPor', c.calc_atualizada_por,
+    'itens', case when adm or coalesce(c.calc_liberada, false) then c.calc_itens end,
+    'log', case when adm then coalesce((select jsonb_agg(jsonb_build_object('quando', l.quando, 'autor', l.autor_nome, 'acao', l.acao) order by l.quando desc)
+                 from (select * from public.calc_log order by quando desc limit 30) l), '[]'::jsonb) end);
+end $$;
+revoke execute on function public.calc_dados() from public, anon;
+grant execute on function public.calc_dados() to authenticated;
+
+create or replace function public.salvar_calc(p_itens jsonb, p_liberada boolean, p_base int, p_acao text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not public.is_admin_completo() then raise exception 'SEM_PERMISSAO'; end if;
+  if p_itens is not null and (jsonb_typeof(p_itens) <> 'array' or jsonb_array_length(p_itens) > 200 or length(p_itens::text) > 200000) then raise exception 'DADOS_INVALIDOS'; end if;
+  if p_liberada and p_itens is null and (select calc_itens from public.app_config where id = 1) is null then raise exception 'DADOS_INVALIDOS'; end if;
+  update public.app_config set
+    calc_itens = coalesce(p_itens, calc_itens),
+    calc_liberada = coalesce(p_liberada, calc_liberada),
+    calc_base = coalesce(p_base, calc_base),
+    calc_atualizada_em = now(), calc_atualizada_por = public.admin_nome(auth.uid())
+  where id = 1;
+  insert into public.calc_log (autor, autor_nome, acao) values (auth.uid(), public.admin_nome(auth.uid()), left(coalesce(nullif(trim(p_acao), ''), 'alterou a calculadora'), 300));
+end $$;
+revoke execute on function public.salvar_calc(jsonb, boolean, int, text) from public, anon;
+grant execute on function public.salvar_calc(jsonb, boolean, int, text) to authenticated;
+
 -- ---------- Arquivos: fotos do consultório (públicas) e comprovantes (privados) ----------
 do $$
 begin
@@ -2316,5 +2560,7 @@ end $$;
 -- DEPOIS de criar o usuário da Dra. Thalia em Authentication > Users,
 -- rode só a linha abaixo trocando o e-mail:
 --
--- insert into public.admins (user_id) select id from auth.users where email = 'EMAIL_DA_THALIA@exemplo.com';
+-- insert into public.admins (user_id, nivel, nome) select id, 'completo', 'Dra. Thalia Santiago' from auth.users where email = 'EMAIL_DA_THALIA@exemplo.com';
+--
+-- Os outros administradores são adicionados pelo próprio painel: Ajustes → Administradores.
 -- =====================================================================

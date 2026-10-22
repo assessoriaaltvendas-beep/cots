@@ -1,6 +1,6 @@
 # Consultório Thalia Santiago · site de reservas
 
-Site de aluguel por hora do consultório, com área do dentista e painel da administradora.
+Site de aluguel por hora do consultório, com área do dentista, painel da administração e calculadora clínica.
 
 - `index.html`: o site inteiro
 - `config.js`: onde entram os dados do Supabase (passo 6)
@@ -46,8 +46,10 @@ O servidor de e-mail que vem com o Supabase só envia **2 e-mails por hora**. Po
 3. Volte ao **SQL Editor → New query**, cole a linha abaixo trocando o e-mail e clique em **Run**:
 
 ```sql
-insert into public.admins (user_id) select id from auth.users where email = 'EMAIL_DA_THALIA@exemplo.com';
+insert into public.admins (user_id, nivel, nome) select id, 'completo', 'Dra. Thalia Santiago' from auth.users where email = 'EMAIL_DA_THALIA@exemplo.com';
 ```
+
+Isso só é feito uma vez. Os outros administradores a Dra. Thalia adiciona pelo próprio painel (veja **Administradores**, abaixo).
 
 ### 6. Ligar o site ao Supabase
 1. No Supabase, vá em **Project Settings → API Keys**. Copie a **Publishable key** (começa com `sb_publishable_`). Se o projeto mostrar a chave antiga **anon public**, ela também funciona.
@@ -71,8 +73,8 @@ insert into public.admins (user_id) select id from auth.users where email = 'EMA
 Sem este passo, os links de recuperação de senha não voltam para o site.
 
 ### 9. Testar
-1. Abra o site e entre em **Administrador** com o e-mail e a senha da Dra. Thalia.
-2. Numa janela anônima, crie uma conta em **Área do dentista** e faça uma reserva.
+1. Abra o site, toque em **Entrar** e use o e-mail e a senha da Dra. Thalia: ela vai direto para o painel.
+2. Numa janela anônima, toque em **Entrar → Criar conta**, crie uma conta de dentista e faça uma reserva.
 3. Confira se a reserva aparece no painel da Dra. Thalia.
 
 ---
@@ -110,8 +112,26 @@ No painel, aba **Ajustes**:
 
 O recibo do mês em PDF fica em Financeiro (dentista) e nos detalhes de cada dentista (painel).
 
+## Entrar e administradores
+- O site tem um só botão **Entrar**. Depois do login, quem é administrador vai para o painel; quem é dentista vai para a área do dentista.
+- Em **Ajustes → Administradores**, a Dra. Thalia adiciona administradores pelo e-mail de uma conta que já existe no site (normalmente um dentista), muda o nível ou remove. Ninguém muda o próprio acesso, e sempre fica pelo menos um administrador completo. Cada alteração fica no histórico (quem fez e quando).
+- **Administrador completo:** vê e altera tudo, inclusive pacientes, documentos, receitas, financeiro dos pacientes e a lista de administradores.
+- **Administrador da agenda:** cuida de dentistas, reservas, agenda, planos, cobranças, mural e site. Não vê pacientes: as consultas aparecem só como "Ocupado". O backup dele sai sem as planilhas de pacientes. Essa trava também está no banco de dados, não só na tela.
+- Quem é administrador e também dentista tem o atalho **Minha área de dentista** no painel (e **Painel da administração** na área do dentista).
+- As notificações do painel (cadastro novo, pedido de plano, reserva, problema) chegam para todos os administradores. Os e-mails continuam indo para o e-mail de Ajustes → E-mails.
+- Em **Ajustes → Conta**, cada administrador pode mudar o nome que aparece no painel.
+
+## Calculadora
+Aba **Calculadora** no painel e na área do dentista:
+- **Medicamentos:** dose por peso e idade (dipirona, paracetamol, ibuprofeno, amoxicilina, azitromicina), em mg, mL e gotas, com intervalo e máximo por dia.
+- **Anestésico:** dose máxima em mg e em tubetes (lidocaína, mepivacaína, articaína, prilocaína, bupivacaína), com o limite de epinefrina para cardiopatas.
+- **Profilaxia** de endocardite (esquema da AHA 2021) e **Conversões** (mg → mL/gotas e diluição, como a do hipoclorito).
+- Cada item mostra a fonte (bula ou referência) e a data da conferência. Sem peso e idade, abaixo da idade/peso da bula ou fora da tabela, a calculadora não mostra número.
+- A lista começa **oculta para os dentistas**: a Dra. Thalia revisa no painel e toca em **Revisei, liberar**. Ela pode editar, desativar ou incluir itens; tudo fica no histórico.
+- É uma ferramenta de apoio: a decisão e a prescrição são do profissional.
+
 ## Pacientes da Dra. Thalia
-No painel, aba **Pacientes** (só a Dra. Thalia vê):
+No painel, aba **Pacientes** (só administrador completo vê):
 - **Cadastro** do paciente: nome, telefone, CPF, nascimento, e-mail, endereço e observações de saúde.
 - **Consultas** de 15 em 15 minutos. O horário fica ocupado na agenda dos dentistas (sem nenhum dado do paciente). Botões de lembrete no WhatsApp, realizada, faltou, remarcar e cancelar.
 - **Evolução:** o que foi feito em cada consulta, com data.
@@ -123,7 +143,7 @@ No painel, aba **Pacientes** (só a Dra. Thalia vê):
 - **Receita e atestado em PDF** com a logo, direto da ficha (botões Receita e Atestado). O PDF é baixado e fica salvo nos documentos do paciente. Nome e CRO da assinatura em Ajustes → Receitas e atestados.
 - **Financeiro do paciente:** orçamentos (em aberto, aprovado, recusado), parcelas com vencimento, pagamentos recebidos e recibo em PDF. O total a receber aparece na aba Pacientes e no Financeiro do painel.
 
-Dados de saúde são sensíveis (LGPD): mantenha a senha do painel só com a Dra. Thalia. Para o prontuário digital substituir o papel com validade legal, confira as regras do CRO (normalmente exigem assinatura com certificado digital).
+Dados de saúde são sensíveis (LGPD): só dê o nível **administrador completo** para quem pode ver dados de pacientes. Para o prontuário digital substituir o papel com validade legal, confira as regras do CRO (normalmente exigem assinatura com certificado digital).
 
 ## Termos de uso
 No cadastro, o dentista lê os **termos e condições de uso** numa caixa com rolagem: o aceite só libera depois de rolar até o final, e a conta só é criada com o aceite marcado. Dentistas que já tinham conta aceitam no próximo acesso.
@@ -174,3 +194,4 @@ No painel, aba **Site**: envie fotos do consultório (aparecem na galeria da pá
 - Duas pessoas não conseguem reservar a mesma hora: o banco recusa a segunda reserva.
 - Dentistas não conseguem marcar reservas como pagas, mudar o valor, nem cancelar depois do prazo; só a administradora.
 - Contas novas só reservam depois de liberadas pela administradora; o dentista não consegue se liberar sozinho.
+- Dados de pacientes (cadastro, consultas, evolução, documentos e financeiro) só são entregues pelo banco ao administrador completo.
