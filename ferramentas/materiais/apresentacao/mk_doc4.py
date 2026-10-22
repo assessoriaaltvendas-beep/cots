@@ -1,5 +1,5 @@
 import re
-D = '/tmp/claude-0/-home-claude/dcc176e0-b17e-526f-b4d8-21aa4df71887/scratchpad/pdf/'
+import os; D = os.path.dirname(os.path.abspath(__file__)) + '/'
 head = open(D + 'doc2.html').read().split('</style>')[0]
 head = re.sub(r'box-shadow:[^;}]*;?', '', head)
 head = head.replace('.phone{border:2mm solid #1f1416;', '.phone{border:2mm solid #1f1416;outline:0.4mm solid #b8953f;')

@@ -66,7 +66,9 @@ cd ferramentas/testes-navegador && python3 e2e9.py     # deve terminar com "FALH
 ```
 - `mock-supabase.js` simula o supabase-js (tabelas, RLS, RPCs). Se criar tabela ou função nova, implemente no mock também.
 - Os `r9_e2e*.py` são testes de regressão das versões anteriores.
-- **Os scripts têm caminhos absolutos da sessão antiga** (`/tmp/claude-0/.../scratchpad/...`). Ajuste a variável `S`/`O` no topo de cada script para as pastas daqui antes de rodar. Eles leem o mock como `mock9r.js` (= `mock-supabase.js` com `window.MOCK_TERMOS_OK=1;` na primeira linha).
+- Os scripts acham os arquivos sozinhos a partir da própria pasta (mock em `testes-navegador/mock-supabase.js`, termos no `schema.sql`). Prints e PDFs dos testes vão para `/tmp/cots-testes` (troque com a variável `COTS_SAIDA`).
+- Preparar o ambiente: `pip install playwright==1.56.0 opencv-python-headless` (essa versão usa o Chromium já instalado em `/opt/pw-browsers`; não rode `playwright install`).
+- `rodar.sh` mostra só as últimas linhas; para comparar com `out9.txt`, rode o `test9.sql` com `psql` num banco novo (schema + pre9) e compare as linhas `N…` e `ERROR`. `test7.sql`/`test8.sql` dependem de dados de preparo que não estão no repositório.
 - Teste sempre no celular (390 px) e no computador, sem rolagem lateral.
 
 ## Materiais (PDF)

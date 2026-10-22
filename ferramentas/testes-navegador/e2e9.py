@@ -1,8 +1,9 @@
 import json, datetime as dt, re, os, sys
 from playwright.sync_api import sync_playwright
-S = '/tmp/claude-0/-home-claude/dcc176e0-b17e-526f-b4d8-21aa4df71887/scratchpad'
+import os; AQUI = os.path.dirname(os.path.abspath(__file__)); RAIZ = os.path.abspath(AQUI + '/../..')
+S = os.environ.get('COTS_SAIDA', '/tmp/cots-testes')  # pasta de saída (prints, PDFs)
 O = S + '/app/s9/'; os.makedirs(O, exist_ok=True)
-mock = open(S + '/app/mock9r.js').read()
+mock = 'window.MOCK_TERMOS_OK=1;\n' + open(AQUI + '/mock-supabase.js').read()
 V8 = len(sys.argv) > 1 and sys.argv[1] == 'v8'
 if V8: mock = 'window.MOCK_V8=1;\n' + mock
 cfg = "window.APP_CONFIG={supabaseUrl:'https://abcdefghijkl.supabase.co',supabaseAnonKey:'" + 'x' * 60 + "'};"

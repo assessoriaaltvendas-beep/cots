@@ -1,5 +1,5 @@
 import re,subprocess
-D='/tmp/claude-0/-home-claude/dcc176e0-b17e-526f-b4d8-21aa4df71887/scratchpad/manual/'
+import os; D = os.path.dirname(os.path.abspath(__file__)) + '/'
 q=lambda f: open(D+f).read().replace('width="400" height="400"','width="100%" height="100%" style="display:block"')
 for s in ('manual','cartaz'):
     h=open(D+s+'.html').read()
