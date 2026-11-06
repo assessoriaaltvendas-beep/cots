@@ -2838,7 +2838,7 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
   </aside>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.1"></script>
+<script src="assets/vendor/supabase-js@2.110.1.js"></script><!-- cópia do pacote oficial no npm (sha384-cP+QrKcaFzs7aIG1IzHGLKC5cjjlA05fYF2E7C0hqeDvsLKzwgYAS1cYhsDQB+L1), servida pelo próprio site -->
 <script src="config.js"></script>
 <script>
 /* ---------- Configuração (ajuste aqui) ---------- */
@@ -3849,15 +3849,32 @@ function renderDLogin() {
   if (st === 'reg') renderTermosReg();
   fotoDestaque();
 }
+// Limite de tentativas: a partir da 5ª senha errada seguida neste aparelho, espera de 1, 2, 5 e depois 15 minutos.
+// (O Supabase também limita tentativas por endereço de internet, no servidor.)
+const LOGIN_ESPERAS = [1, 2, 5, 15];
+const loginTrava = v => { try { if (v === undefined) return JSON.parse(localStorage.getItem('cots_login') || '{}') || {}; localStorage.setItem('cots_login', JSON.stringify(v)); } catch (_) {} return {}; };
+function loginErrou() {
+  const t = loginTrava(); t.n = (t.n || 0) + 1;
+  if (t.n >= 5) t.ate = Date.now() + LOGIN_ESPERAS[Math.min(t.n - 5, LOGIN_ESPERAS.length - 1)] * 60000;
+  loginTrava(t);
+}
+const loginAcertou = () => loginTrava({});
+function loginEspera() {
+  const t = loginTrava(), ms = (t.ate || 0) - Date.now(); if (ms <= 0) return '';
+  const min = Math.ceil(ms / 60000); return min > 1 ? `${min} minutos` : '1 minuto';
+}
 document.querySelectorAll('#dl-seg [data-dl]').forEach(b => b.addEventListener('click', () => { S.dl.stage = b.dataset.dl; $('dl-fb').innerHTML = ''; renderDLogin(); }));
 $('dl-login').addEventListener('submit', async e => {
   e.preventDefault();
   if (needSB($('dl-fb'))) return;
   const email = $('dl-email').value.trim(), password = $('dl-pass').value;
   if (!email || !password) return msgIn($('dl-fb'), 'err', 'Informe o e-mail e a senha.');
+  const espera = loginEspera();
+  if (espera) return msgIn($('dl-fb'), 'err', `Muitas tentativas com senha errada. Tente de novo em ${espera}, ou use “Esqueci minha senha”.`);
   try {
     const r = await SB.auth.signInWithPassword({ email, password });
-    if (r.error) return msgIn($('dl-fb'), 'err', errText(r.error, 'E-mail ou senha incorretos.'));
+    if (r.error) { if (/invalid|credential|senha/i.test(String(r.error.message || r.error.code || ''))) loginErrou(); return msgIn($('dl-fb'), 'err', errText(r.error, 'E-mail ou senha incorretos.')); }
+    loginAcertou();
     $('dl-pass').value = ''; $('dl-fb').innerHTML = ''; ultimoEmail(email);
     await syncAuth(r.data.session);
     if (S.isAdmin || S.dent) checkOk();
@@ -4337,7 +4354,12 @@ function renderCCons() {
   $('cc-loc').innerHTML = kvHtml([['Endereço', `${CFG.endereco}, ${CFG.cidade}`], ['Responsável', CFG.dentista], ['WhatsApp', CFG.telefone], ['Funcionamento', funcText()]]);
   $('cc-map').href = mapUrl(); $('cc-wa').href = `https://wa.me/${CFG.whatsapp}`;
   const e = CFG.espaco;
-  $('cc-rot').innerHTML = kvHtml([['Chegada', e.chegada || 'A informar'], ['Saída', e.saida || 'A informar'], ['Wi-Fi', e.wifi || 'A informar']]);
+  // O Wi-Fi não vem na configuração pública: o banco só entrega a dentista liberado (busca uma vez por login).
+  if (S.wifiUid !== S.uid) {
+    S.wifiUid = S.uid; S.wifi = null;
+    S.store.rpc('wifi_consultorio').then(w => { S.wifi = w || ''; if (S.wifiUid === S.uid && S.ctab === 'consultorio') renderCCons(); }).catch(() => { S.wifi = ''; });
+  }
+  $('cc-rot').innerHTML = kvHtml([['Chegada', e.chegada || 'A informar'], ['Saída', e.saida || 'A informar'], ['Wi-Fi', S.wifi || e.wifi || 'A informar']]);
   const has = e.equipamentos.length || e.inclusos.length || e.levar.length;
   $('cc-espaco').innerHTML = `<div class="card-head"><h3>O espaço</h3></div>` + (has
     ? `<div class="lists3">${[['Equipamentos', e.equipamentos], ['Materiais inclusos', e.inclusos], ['O que levar', e.levar]].map(([t, l]) => `<div><p class="eyebrow">${t}</p>${l.length ? `<ul>${l.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : '<p class="hint">A informar</p>'}</div>`).join('')}</div>`

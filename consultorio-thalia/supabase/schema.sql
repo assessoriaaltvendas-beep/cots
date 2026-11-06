@@ -2569,6 +2569,45 @@ grant execute on function public.salvar_calc(jsonb, boolean, int, text) to authe
 
 update public.app_config set calc_liberada = false where id = 1 and calc_liberada;
 
+-- =====================================================================
+-- v11 (nov/2026): segurança. A senha do Wi-Fi sai da configuração pública
+-- (que qualquer visitante lê) e passa a ser entregue só a dentistas liberados e à administração.
+-- =====================================================================
+create or replace function public.config_publica() returns jsonb
+language sql stable security definer set search_path = public as $$
+  select jsonb_build_object('valorHora', c.valor_hora, 'precos', c.precos, 'pacotes', c.pacotes, 'abre', c.abre, 'fecha', c.fecha,
+    'diasAbertos', to_jsonb(c.dias), 'prazoCancelamentoH', c.prazo_cancel_h, 'pix', c.pix_chave, 'pixNome', c.pix_nome, 'pixCidade', c.pix_cidade,
+    'regras', c.regras, 'checklist', c.checklist, 'espaco', coalesce(c.espaco, '{}'::jsonb) - 'wifi', 'limiteAtrasoDias', c.limite_atraso_dias,
+    'limiteHoras', c.limite_horas, 'periodos', c.periodos, 'diaria', c.diaria, 'endereco', c.endereco, 'whatsapp', c.whatsapp,
+    'planos', c.planos, 'planoAvisoDias', c.plano_aviso_dias)
+  from public.app_config c where c.id = 1
+$$;
+grant execute on function public.config_publica() to anon, authenticated;
+
+-- A configuração da administração continua com o Wi-Fi (o formulário de Ajustes precisa dele para não apagá-lo ao salvar).
+create or replace function public.config_admin() returns jsonb
+language plpgsql stable security definer set search_path = public as $$
+declare c public.app_config;
+begin
+  if not public.is_admin() then raise exception 'SEM_PERMISSAO'; end if;
+  select * into c from public.app_config where id = 1;
+  return public.config_publica() || jsonb_build_object('lembretePagamento', c.lembrete_pagamento, 'relatorioMensal', c.relatorio_mensal,
+    'agendaToken', c.agenda_token, 'pushUrl', c.push_url, 'emailAdmin', c.email_admin,
+    'taxaCancelPct', c.taxa_cancel_pct, 'profNome', c.prof_nome, 'profCro', c.prof_cro, 'profEspecialidade', c.prof_especialidade,
+    'espaco', coalesce(c.espaco, '{}'::jsonb));
+end $$;
+revoke execute on function public.config_admin() from public, anon;
+grant execute on function public.config_admin() to authenticated;
+
+-- Wi-Fi do consultório: só para dentista com cadastro liberado ou administração.
+create or replace function public.wifi_consultorio() returns text
+language sql stable security definer set search_path = public as $$
+  select case when public.is_admin() or public.dentista_liberado() then nullif(trim(coalesce(c.espaco ->> 'wifi', '')), '') end
+  from public.app_config c where c.id = 1
+$$;
+revoke execute on function public.wifi_consultorio() from public, anon;
+grant execute on function public.wifi_consultorio() to authenticated;
+
 -- ---------- Arquivos: fotos do consultório (públicas) e comprovantes (privados) ----------
 do $$
 begin
