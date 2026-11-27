@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modelo: interativos · Dra. Thalia</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#faf6f3;--soft:#f5eeea;--surface:#fff;--ink:#24161a;--muted:#7a6a6e;--line:#ece2dc;--accent:#590117;--accent-h:#6d0d26;--accent-soft:#f6ebee;--hi:#e8cf98;--gold-ink:#806226;--ok:#1f6b45;--ok-soft:#e5f2ea;--fd:"Lora",Georgia,serif;--fb:"Inter",system-ui,sans-serif;--sh:0 1px 2px rgba(36,22,26,.05),0 18px 40px -24px rgba(89,1,23,.25)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--fb)}
+h1,h2,h3{font-family:var(--fd);font-weight:500;line-height:1.15;margin:0}
+h1 em,h2 em{color:var(--accent);font-style:italic}
+.in{max-width:1120px;margin:0 auto;padding:0 16px}
+header.top{background:var(--accent);color:#fff;padding:28px 0 32px}
+header.top h1{font-size:clamp(1.6rem,4vw,2.3rem);color:#fff}
+header.top h1 em{color:var(--hi)}
+header.top p{color:#ecd7da;margin:10px 0 0;max-width:46em}
+.eyebrow{font:600 .72rem var(--fb);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);margin:0 0 8px}
+header.top .eyebrow{color:var(--hi)}
+.liga{position:sticky;top:0;z-index:5;background:rgba(250,246,243,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.liga .in{display:flex;flex-wrap:wrap;gap:8px 18px;padding-block:12px;align-items:center}
+.liga b{font-size:.85rem}
+.liga label{display:inline-flex;gap:6px;align-items:center;font-size:.9rem;cursor:pointer}
+.liga input{accent-color:var(--accent);width:18px;height:18px}
+main{padding:28px 0 64px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3vw,32px);box-shadow:var(--sh);margin-bottom:28px}
+.card[hidden]{display:none}
+.card>.head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;margin-bottom:18px}
+.card>.head h2{font-size:clamp(1.35rem,3vw,1.8rem)}
+.card>.head>.btn{align-self:start}
+.card>.head p{margin:6px 0 0;color:var(--muted);max-width:40em}
+.nota{font-size:.82rem;color:var(--gold-ink);background:#faf3e3;border:1px solid #efe0bd;border-radius:12px;padding:8px 12px;margin-top:16px}
+.btn{font:600 .92rem var(--fb);border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:10px 16px;cursor:pointer;min-height:44px}
+.btn:hover{border-color:var(--accent)}
+.btn[aria-pressed="true"],.btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.lbl{font-size:.8rem;font-weight:600;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.08em}
+
+/* Palavras */
+.prev{font:500 clamp(1.5rem,4vw,2.4rem)/1.15 var(--fd);margin:6px 0 16px}
+.prev em{color:var(--accent);font-style:italic;display:block;transition:opacity .45s,transform .45s}
+.prev em.sai{opacity:0;transform:translateY(10px)}
+.ops{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.ops label{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer;font-size:.95rem}
+.ops input{accent-color:var(--accent);width:18px;height:18px}
+
+/* Simulador */
+.sim{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px}
+.res{background:var(--accent);color:#fff;border-radius:20px;padding:22px;display:grid;align-content:start;gap:6px}
+.res small{color:#ecd7da}
+.res .v{font:500 clamp(2rem,5vw,2.8rem)/1.1 var(--fd);color:#fff}
+.res .v.fale{font-size:1.4rem}
+.res p{margin:6px 0 0;color:#ecd7da;font-size:.92rem}
+.res .plano{margin-top:10px;background:rgba(255,255,255,.08);border:1px solid rgba(232,207,152,.35);border-radius:14px;padding:12px;font-size:.9rem;color:#fff}
+.res .plano b{color:var(--hi)}
+.res a{color:var(--hi)}
+.atalhos{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.atalhos .btn{padding:6px 12px;min-height:36px;font-size:.82rem}
+@media (max-width:760px){.sim{grid-template-columns:minmax(0,1fr)}}
+
+/* Tour */
+.tour{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+.foto{position:relative;border-radius:18px;overflow:hidden;background:#eee}
+.foto img{display:block;width:100%;height:auto}
+.pt{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0}
+.pt::before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.pt::after{content:"";position:absolute;inset:4px;border-radius:50%;border:2px solid #fff}
+.pt.on::before{background:var(--hi)}
+.pt:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+.mov .pt:not(.on)::after{animation:pulso 2.4s ease-out infinite}
+.mov .pt:nth-of-type(even)::after{animation-delay:1.2s}
+@keyframes pulso{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.8);opacity:0}}
+.det{border:1px solid var(--line);border-radius:18px;padding:16px;background:var(--bg)}
+.det img{width:100%;border-radius:12px;display:block;aspect-ratio:4/3;object-fit:cover;background:#eee}
+.det h3{font-size:1.3rem;margin:12px 0 4px}
+.det p{margin:0;color:var(--muted);font-size:.92rem}
+@media (max-width:760px){.tour{grid-template-columns:minmax(0,1fr)}}
+
+/* Checklist */
+.barra{height:10px;border-radius:10px;background:var(--soft);overflow:hidden;margin:4px 0 16px}
+.barra i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s}
+.ck{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ck label{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;transition:background .2s,border-color .2s}
+.ck input{accent-color:var(--ok);width:22px;height:22px;flex:none}
+.ck label:has(input:checked){background:var(--ok-soft);border-color:#b9dcc7}
+.ck label:has(input:checked) span{text-decoration:line-through;color:var(--muted)}
+.fim{margin-top:14px;padding:14px;border-radius:14px;background:var(--ok-soft);color:var(--ok);font-weight:600}
+
+/* Faixa de dias */
+.dias{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scroll-snap-type:x mandatory}
+.dia{flex:none;width:68px;scroll-snap-align:start;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:10px 0;text-align:center;cursor:pointer;font:500 .8rem var(--fb);color:var(--muted)}
+.dia b{display:block;font:500 1.35rem var(--fd);color:var(--ink)}
+.dia[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#ecd7da}
+.dia[aria-pressed="true"] b{color:#fff}
+.horas{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px}
+.horas .btn{padding:8px 0;min-height:40px}
+.horas .btn.meio{background:var(--accent-soft);border-color:#e3c9cf;color:var(--accent)}
+.resumo{margin-top:14px;font-size:.95rem}
+.resumo b{color:var(--accent)}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:0 16px 40px}
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <p class="eyebrow">Modelo local · não está no site</p>
+  <h1>Ideias de partes <em>interativas</em> para o site da Dra. Thalia</h1>
+  <p>Teste à vontade: nada aqui é salvo nem enviado. Use as caixinhas para ligar e desligar cada ideia e diga quais quer no site. Os preços são os mesmos que estão no site hoje.</p>
+</div></header>
+
+<div class="liga"><div class="in">
+  <b>Mostrar:</b>
+  <label><input type="checkbox" data-liga="c-pal" checked> Palavras do título</label>
+  <label><input type="checkbox" data-liga="c-sim" checked> Simulador de preço</label>
+  <label><input type="checkbox" data-liga="c-tour" checked> Tour da sala</label>
+  <label><input type="checkbox" data-liga="c-ck" checked> Checklist de saída</label>
+  <label><input type="checkbox" data-liga="c-dias" checked> Faixa de dias</label>
+  <label><input type="checkbox" id="mov" checked> Movimento</label>
+</div></div>
+
+<main><div class="in">
+
+<!-- 0. Palavras que trocam -->
+<section class="card" id="c-pal">
+  <div class="head"><div><p class="eyebrow">Já no site (aguardando o "pode subir")</p><h2>Palavra que troca no <em>título</em></h2><p>No topo do site, o final do título troca a cada 3,5 segundos. Marque as frases que você quer. As 4 primeiras já estão no site novo.</p></div></div>
+  <div class="prev">Sua agenda,<em id="pal-prev">do seu jeito.</em></div>
+  <div class="ops" id="pal-ops"></div>
+  <p class="nota" id="pal-sel"></p>
+</section>
+
+<!-- 1. Simulador -->
+<section class="card" id="c-sim">
+  <div class="head"><div><p class="eyebrow">Ideia 1</p><h2>Quanto custa <em>minha reserva?</em></h2><p>O dentista escolhe o horário de início e de fim e vê o valor na hora, com a mesma regra do site (até 3 horas por hora; acima disso, período ou diária).</p></div></div>
+  <div class="sim">
+    <div>
+      <p class="lbl">Começa às</p><div class="chips" id="s-de"></div>
+      <p class="lbl">Termina às</p><div class="chips" id="s-ate"></div>
+      <p class="lbl">Atalhos</p><div class="atalhos" id="s-at"></div>
+    </div>
+    <div class="res" id="s-res" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 2. Tour -->
+<section class="card" id="c-tour">
+  <div class="head"><div><p class="eyebrow">Ideia 2</p><h2>Tour da sala com <em>pontos clicáveis</em></h2><p>Os pontos pulsam na foto. Ao tocar, aparece a foto de perto e uma frase curta. Aqui os pontos pulsantes fazem papel de "botão", como no mapa do corpo do site da Bruna.</p></div></div>
+  <div class="tour">
+    <div class="foto" id="t-foto"><img src="../../consultorio-thalia/assets/consultorio/consultorio-panorama.webp" alt="Sala do consultório" width="1600" height="900"></div>
+    <div class="det" id="t-det" aria-live="polite"></div>
+  </div>
+  <p class="nota">Os textos de cada ponto são de exemplo. Antes de ir ao site, a Dra. Thalia confere o nome certo de cada equipamento.</p>
+</section>
+
+<!-- 3. Checklist -->
+<section class="card" id="c-ck">
+  <div class="head"><div><p class="eyebrow">Ideia 3</p><h2>Checklist de <em>saída</em></h2><p>Na área do dentista, ao fim do horário, ele vai marcando cada item. Os itens abaixo são os que já estão cadastrados no site (Ajustes → checklist).</p></div><button class="btn" type="button" id="ck-zera">Começar de novo</button></div>
+  <div class="barra"><i id="ck-bar"></i></div>
+  <ul class="ck" id="ck"></ul>
+  <div class="fim" id="ck-fim" hidden>Tudo pronto! Obrigada por deixar o consultório organizado.</div>
+  <p class="nota">Ainda não existe uma lista de <b>chegada</b> no site. Se a Dra. quiser, ela pode mandar os itens (ex.: o que conferir ao entrar) e a lista ganha uma segunda aba.</p>
+</section>
+
+<!-- 4. Faixa de dias -->
+<section class="card" id="c-dias">
+  <div class="head"><div><p class="eyebrow">Ideia 4</p><h2>Escolher o dia numa <em>faixa deslizante</em></h2><p>Os próximos dias abertos (segunda a sábado) numa fita que desliza com o dedo. Toque no dia, depois no primeiro e no último horário.</p></div></div>
+  <div class="dias" id="d-dias"></div>
+  <p class="lbl">Horários (toque no início e depois no fim)</p>
+  <div class="horas" id="d-horas"></div>
+  <div class="resumo" id="d-res"></div>
+  <p class="nota">Aqui todos os horários aparecem livres, só para testar. No site, os ocupados viriam da agenda real, riscados como já são hoje.</p>
+</section>
+
+</div></main>
+<footer>Modelo local para testes · Consultório Odontológico Thalia Santiago</footer>
+
+<script>
+/* ---------- Dados reais do site (CFG no index.html e valores do banco) ---------- */
+const CFG = {
+  abre: 8, fecha: 22, dias: [1, 2, 3, 4, 5, 6], valorHora: 50, limiteHoras: 3,
+  periodos: [{ de: 8, ate: 13, valor: 180 }, { de: 13, ate: 18, valor: 180 }, { de: 18, ate: 22, valor: 180 }],
+  diaria: { de: 8, ate: 18, valor: 350 },
+  planos: { diaria: 1000, periodo: 600 },
+  checklist: ['Instrumentais esterilizados ou recolhidos', 'Bancada, cadeira e refletor higienizados', 'Resíduos descartados corretamente', 'Equipamentos desligados', 'Sala organizada e luzes apagadas']
+};
+const BRL = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const $ = id => document.getElementById(id);
+const quieto = () => !$('mov').checked || matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Mesma regra do site (precoPeriodos) */
+function precoPeriodos(h1, h2) {
+  const P = CFG.periodos, D = CFG.diaria;
+  const NP = { 8: 'manhã', 13: 'tarde', 18: 'noite' };
+  for (const p of P) if (h1 >= p.de && h2 <= p.ate) return { v: p.valor, nome: 'período da ' + NP[p.de], tipo: 'periodo' };
+  let acc = 0, cur = h1, nome = [];
+  if (h1 === D.de && h2 >= D.ate) { acc = D.valor; cur = D.ate; nome.push('diária'); }
+  while (cur < h2) { const p = P.find(x => x.de === cur && x.ate <= h2); if (!p) return null; acc += p.valor; cur = p.ate; nome.push(NP[p.de]); }
+  const n = nome.join(' + ');
+  return { v: acc, nome: n === 'diária + noite' ? 'dia todo (diária + noite)' : n === 'diária' ? 'diária' : 'períodos (' + n + ')', tipo: n === 'diária' ? 'diaria' : 'outro' };
+}
+function preco(h1, h2) {
+  const h = h2 - h1;
+  if (h <= CFG.limiteHoras) return { v: h * CFG.valorHora, txt: `${h} hora${h > 1 ? 's' : ''} × ${BRL(CFG.valorHora)}` };
+  const p = precoPeriodos(h1, h2);
+  if (!p) return null;
+  return { v: p.v, txt: `Acima de ${CFG.limiteHoras} horas vale o preço por período. Aqui: ${p.nome}`, tipo: p.tipo };
+}
+
+/* ---------- Ligar e desligar ---------- */
+document.querySelectorAll('[data-liga]').forEach(c => {
+  const aplica = () => { $(c.dataset.liga).hidden = !c.checked; };
+  c.addEventListener('change', aplica); aplica();
+});
+const movAplica = () => document.body.classList.toggle('mov', !quieto());
+$('mov').addEventListener('change', movAplica); movAplica();
+
+/* ---------- 0. Palavras ---------- */
+const PAL = [['do seu jeito.', 1], ['no seu horário.', 1], ['sem custo fixo.', 1], ['na palma da mão.', 1], ['no seu ritmo.', 0], ['sem burocracia.', 0], ['quando precisar.', 0], ['com praticidade.', 0], ['por hora.', 0]];
+$('pal-ops').innerHTML = PAL.map(([w, on], i) => `<label><input type="checkbox" value="${i}"${on ? ' checked' : ''}> ${w}</label>`).join('');
+let pi = 0;
+const escolhidas = () => [...$('pal-ops').querySelectorAll('input:checked')].map(i => PAL[i.value][0]);
+function palSel() { const e = escolhidas(); $('pal-sel').textContent = e.length ? `Escolhidas (${e.length}): ${e.join(' · ')}` : 'Marque pelo menos uma frase.'; }
+$('pal-ops').addEventListener('change', palSel); palSel();
+setInterval(() => {
+  const e = escolhidas(), el = $('pal-prev'); if (!e.length || $('c-pal').hidden) return;
+  if (quieto()) { el.textContent = e[0]; return; }
+  el.classList.add('sai');
+  setTimeout(() => { pi = (pi + 1) % e.length; el.textContent = e[pi]; el.classList.remove('sai'); }, 450);
+}, 3500);
+
+/* ---------- 1. Simulador ---------- */
+const sim = { de: 8, ate: 10 };
+function simRender() {
+  $('s-de').innerHTML = Array.from({ length: CFG.fecha - CFG.abre }, (_, i) => CFG.abre + i).map(h => `<button type="button" class="btn" data-h="${h}" aria-pressed="${h === sim.de}">${h}h</button>`).join('');
+  $('s-ate').innerHTML = Array.from({ length: CFG.fecha - CFG.abre }, (_, i) => CFG.abre + 1 + i).map(h => `<button type="button" class="btn" data-h="${h}" aria-pressed="${h === sim.ate}" ${h <= sim.de ? 'disabled' : ''}>${h}h</button>`).join('');
+  const p = preco(sim.de, sim.ate);
+  let html = `<small>Das ${sim.de}h às ${sim.ate}h (${sim.ate - sim.de}h)</small>`;
+  if (p) {
+    html += `<div class="v">${BRL(p.v)}</div><p>${p.txt}.</p>`;
+    if (p.tipo === 'periodo') html += `<div class="plano">Vem <b>toda semana</b> nesse período? 4 reservas avulsas = ${BRL(4 * p.v)}. No <b>plano mensal de meio período</b>: ${BRL(CFG.planos.periodo)}/mês.</div>`;
+    if (p.tipo === 'diaria') html += `<div class="plano">Vem <b>toda semana</b>? 4 diárias avulsas = ${BRL(4 * p.v)}. No <b>plano mensal de diária</b>: ${BRL(CFG.planos.diaria)}/mês.</div>`;
+  } else html += `<div class="v fale">Combine com a Dra. Thalia</div><p>Acima de ${CFG.limiteHoras} horas, a reserva é por período (manhã 8h–13h, tarde 13h–18h, noite 18h–22h), diária (8h–18h) ou dia todo (8h–22h). Para outro intervalo, <a href="#" onclick="return false">fale pelo WhatsApp</a>.</p>`;
+  $('s-res').innerHTML = html;
+}
+$('s-de').addEventListener('click', e => { const b = e.target.closest('[data-h]'); if (!b) return; sim.de = +b.dataset.h; if (sim.ate <= sim.de) sim.ate = Math.min(CFG.fecha, sim.de + 1); simRender(); });
+$('s-ate').addEventListener('click', e => { const b = e.target.closest('[data-h]'); if (!b || b.disabled) return; sim.ate = +b.dataset.h; simRender(); });
+const AT = [['Manhã', 8, 13], ['Tarde', 13, 18], ['Noite', 18, 22], ['Diária', 8, 18], ['Dia todo', 8, 22]];
+$('s-at').innerHTML = AT.map(([n, a, b]) => `<button type="button" class="btn" data-a="${a}" data-b="${b}">${n} (${a}h–${b}h)</button>`).join('');
+$('s-at').addEventListener('click', e => { const b = e.target.closest('[data-a]'); if (!b) return; sim.de = +b.dataset.a; sim.ate = +b.dataset.b; simRender(); });
+simRender();
+
+/* ---------- 2. Tour ---------- */
+const F = '../../consultorio-thalia/assets/consultorio/';
+const PONTOS = [
+  { x: 19, y: 62, nome: 'Cadeira odontológica', foto: 'consultorio-cadeira.webp', txt: 'Cadeira com refletor e equipo, pronta para o atendimento.' },
+  { x: 24, y: 45, nome: 'Equipo', foto: 'consultorio-equipo.webp', txt: 'Equipo junto à cadeira.' },
+  { x: 66, y: 50, nome: 'Bancada com pia', foto: 'consultorio-bancada.webp', txt: 'Bancada ampla com gavetas e pia.' },
+  { x: 91, y: 45, nome: 'Autoclave', foto: 'consultorio-autoclave.webp', txt: 'Autoclave na bancada para esterilização.' },
+  { x: 55, y: 9, nome: 'Ar-condicionado', foto: 'consultorio-sala.webp', txt: 'Sala climatizada.' }
+];
+$('t-foto').insertAdjacentHTML('beforeend', PONTOS.map((p, i) => `<button type="button" class="pt" style="left:${p.x}%;top:${p.y}%" data-i="${i}" aria-label="${p.nome}"></button>`).join(''));
+function tourMostra(i) {
+  const p = PONTOS[i];
+  document.querySelectorAll('.pt').forEach(b => b.classList.toggle('on', +b.dataset.i === i));
+  $('t-det').innerHTML = `<img src="${F + p.foto}" alt="${p.nome}" loading="lazy"><h3>${p.nome}</h3><p>${p.txt}</p>`;
+}
+$('t-foto').addEventListener('click', e => { const b = e.target.closest('.pt'); if (b) tourMostra(+b.dataset.i); });
+tourMostra(0);
+
+/* ---------- 3. Checklist ---------- */
+function ckRender() {
+  $('ck').innerHTML = CFG.checklist.map((t, i) => `<li><label><input type="checkbox" data-i="${i}"><span>${t}</span></label></li>`).join('');
+  ckConta();
+}
+function ckConta() {
+  const all = $('ck').querySelectorAll('input'), ok = [...all].filter(i => i.checked).length;
+  $('ck-bar').style.width = (ok / all.length * 100) + '%';
+  $('ck-fim').hidden = ok !== all.length;
+  if (ok === all.length && navigator.vibrate && !quieto()) try { navigator.vibrate(40); } catch (_) {}
+}
+$('ck').addEventListener('change', ckConta); $('ck-zera').addEventListener('click', ckRender); ckRender();
+
+/* ---------- 4. Faixa de dias ---------- */
+const SEM = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+const dias = []; for (let d = new Date(), n = 0; dias.length < 18 && n < 40; n++) { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); if (CFG.dias.includes(x.getDay())) dias.push(x); }
+const fx = { dia: 0, de: null, ate: null };
+$('d-dias').innerHTML = dias.map((d, i) => `<button type="button" class="dia" data-i="${i}" aria-pressed="${i === 0}">${i === 0 && d.toDateString() === new Date().toDateString() ? 'hoje' : SEM[d.getDay()]}<b>${d.getDate()}</b>${d.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '')}</button>`).join('');
+$('d-dias').addEventListener('click', e => { const b = e.target.closest('.dia'); if (!b) return; fx.dia = +b.dataset.i; fx.de = fx.ate = null; document.querySelectorAll('.dia').forEach(x => x.setAttribute('aria-pressed', x === b)); fxRender(); });
+function fxRender() {
+  $('d-horas').innerHTML = Array.from({ length: CFG.fecha - CFG.abre }, (_, i) => CFG.abre + i).map(h => {
+    const on = fx.de != null && (h === fx.de || (fx.ate != null && h >= fx.de && h < fx.ate));
+    const ponta = h === fx.de || (fx.ate != null && h === fx.ate - 1);
+    return `<button type="button" class="btn${on && !ponta ? ' meio' : ''}" data-h="${h}" aria-pressed="${on && ponta}">${String(h).padStart(2, '0')}:00</button>`;
+  }).join('');
+  const d = dias[fx.dia], dt = d.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit' });
+  if (fx.de == null) { $('d-res').innerHTML = `<b>${dt}</b>: toque no primeiro horário.`; return; }
+  if (fx.ate == null) { $('d-res').innerHTML = `<b>${dt}</b>, a partir das ${fx.de}h. Toque no último horário (ou no mesmo, para 1 hora).`; return; }
+  const p = preco(fx.de, fx.ate);
+  $('d-res').innerHTML = `<b>${dt}</b>, das ${fx.de}h às ${fx.ate}h: ${p ? `<b>${BRL(p.v)}</b>` : 'combine com a Dra. Thalia'}. <span style="color:var(--muted)">(No site, aqui viria o botão "Reservar".)</span>`;
+}
+$('d-horas').addEventListener('click', e => {
+  const b = e.target.closest('[data-h]'); if (!b) return; const h = +b.dataset.h;
+  if (fx.de == null || fx.ate != null) { fx.de = h; fx.ate = null; }
+  else if (h < fx.de) fx.de = h;
+  else fx.ate = h + 1;
+  fxRender();
+});
+fxRender();
+</script>
+</body>
+</html>

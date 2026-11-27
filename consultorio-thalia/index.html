@@ -2113,6 +2113,45 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
   .side .more-sheet:not([hidden]){animation:rdSheet .3s var(--ease)}
   .side .more-sheet > *{transition:background-color .2s}
 }
+
+/* ===================== v12 · efeitos (leves; parados para quem pede "reduzir movimento") ===================== */
+.hero2{isolation:isolate}
+.t-blobs{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.t-blobs i{position:absolute;width:42vmax;height:42vmax;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
+.t-blobs i:nth-child(1){background:#efd3d9;left:-12%;top:-22%}
+.t-blobs i:nth-child(2){background:#f1e0b4;right:-14%;top:4%}
+.t-blobs i:nth-child(3){background:#f6e7ea;left:28%;bottom:-30%}
+body.tema-escuro .t-blobs i{opacity:.22}
+body.tema-escuro .t-blobs i:nth-child(1){background:#590117}
+body.tema-escuro .t-blobs i:nth-child(2){background:#6b5220}
+body.tema-escuro .t-blobs i:nth-child(3){background:#3a1a25}
+.t-troca{display:inline-block;transition:opacity .5s,transform .5s}
+.hero2 h1 .t-troca{display:block;width:max-content;max-width:100%}
+.t-troca.sai{opacity:0;transform:translateY(12px)}
+.cta.t-brilho{position:relative;overflow:hidden}
+.steps4::after{content:"";position:absolute;left:60px;top:51px;height:2px;border-radius:2px;background:var(--accent);width:calc((100% - 120px) * var(--p,1));transition:width .15s linear;z-index:0}
+.step4{z-index:1}
+.step4 .n{transition:background-color .4s,color .4s,transform .4s}
+.step4.ok .n{background:var(--accent);color:var(--accent-ink)}
+
+.step4,.feat > div,.pz{position:relative;overflow:hidden}
+.step4::before,.feat > div::before,.pz::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--x,50%) var(--y,-40%),rgba(201,162,77,.22),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none;z-index:0}
+.step4 > *,.feat > div > *,.pz > *{position:relative;z-index:1}
+@media (hover:hover){.step4:hover::before,.feat > div:hover::before,.pz:hover::before{opacity:1}}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){.step4,.feat > div{transition:transform .25s}.step4:hover,.feat > div:hover,.pz:hover{transform:translateY(-4px)}}
+.live{position:relative}
+@media (prefers-reduced-motion:no-preference){
+  .t-blobs i:nth-child(1){animation:tFlutua1 26s ease-in-out infinite alternate}
+  .t-blobs i:nth-child(2){animation:tFlutua2 32s ease-in-out infinite alternate}
+  .t-blobs i:nth-child(3){animation:tFlutua1 38s ease-in-out infinite alternate-reverse}
+  .cta.t-brilho::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:tBrilho 4.5s ease-in-out infinite;pointer-events:none}
+  .live::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--ok);animation:tPulso 2.4s ease-out infinite}
+}
+@keyframes tFlutua1{to{transform:translate(12vmax,8vmax) scale(1.15)}}
+@keyframes tFlutua2{to{transform:translate(-10vmax,12vmax) scale(.9)}}
+@keyframes tBrilho{0%,60%{left:-60%}85%,100%{left:130%}}
+@keyframes tPulso{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+@media (max-width:960px){.steps4::after{display:none}}
 </style>
 </head>
 <body>
@@ -2150,14 +2189,14 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
 
     <!-- 0. INÍCIO -->
     <div id="v-welcome">
-      <section class="hero2" aria-label="Apresentação">
+      <section class="hero2" aria-label="Apresentação"><div class="t-blobs" aria-hidden="true"><i></i><i></i><i></i></div>
         <div class="in hero-grid">
           <div class="hero-text">
             <p class="eyebrow">Locação de consultório odontológico · Ipatinga/MG</p>
-            <h1 class="hero-title">Seu consultório pronto. <span class="br">Sua agenda, <em>do seu jeito.</em></span></h1>
+            <h1 class="hero-title">Seu consultório pronto. <span class="br" id="t-troca-l">Sua agenda, <em class="t-troca" id="t-troca">do seu jeito.</em></span></h1>
             <p class="lead">Atenda seus pacientes em um consultório odontológico equipado no Centro de Ipatinga. Reserve por hora, com praticidade e flexibilidade para a sua rotina profissional.</p>
             <div class="btns">
-              <button class="cta" id="start" type="button">Consultar horários e valores <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <button class="cta t-brilho" id="start" type="button">Consultar horários e valores <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
               <a class="cta line" href="#sobre">Conhecer o consultório</a>
             </div>
           </div>
@@ -2182,7 +2221,7 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
 
       <section class="sec" id="como" aria-label="Como funciona"><div class="in">
         <div class="sec-head"><div><p class="eyebrow">Como funciona</p><h2>Do cadastro à reserva em <em>quatro passos</em></h2></div><p>Tudo pelo site, sem ligação. Os horários ocupados aparecem riscados e voltam a ficar livres quando uma reserva é cancelada.</p></div>
-        <div class="steps4">
+        <div class="steps4" id="t-passos">
           <div class="step4"><span class="n">1</span><h3>Crie sua conta</h3><p>Nome, CRO, WhatsApp e e-mail.</p><span class="tag4">1 minuto</span></div>
           <div class="step4"><span class="n">2</span><h3>Liberação</h3><p>A Dra. Thalia confere o cadastro e libera seu acesso.</p><span class="tag4">Aviso por e-mail</span></div>
           <div class="step4"><span class="n">3</span><h3>Data e horário</h3><p>Veja só os horários livres e marque o intervalo.</p><span class="tag4">Agenda ao vivo</span></div>
@@ -2240,7 +2279,7 @@ body.rolou .app-top{box-shadow:0 14px 30px -18px rgba(61,0,15,.65)}
 
       <div class="in"><div class="cta-band">
         <div class="cta-t"><p class="eyebrow">Agenda ao vivo</p><h2>Pronto para reservar <em>o seu horário?</em></h2><p>Veja os horários livres e reserve em poucos passos.</p></div>
-        <div class="cta-b"><button class="cta gold" type="button" data-start>Consultar horários <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><a class="cta ghostw" href="#dentista">Área do dentista</a></div>
+        <div class="cta-b"><button class="cta gold t-brilho" type="button" data-start>Consultar horários <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><a class="cta ghostw" href="#dentista">Área do dentista</a></div>
       </div></div>
     </div>
 
@@ -8106,6 +8145,42 @@ setInterval(render, 60000); // atualiza status e horas que passaram
   });
   try { S.store.subscribe(); } catch (_) {}
   setInterval(() => S.store.loadAll().catch(() => {}), 60000);
+})();
+
+/* ===================== v12 · efeitos da página inicial ===================== */
+(function () {
+  const ligado = () => MOV && !document.hidden && $('v-welcome') && $('v-welcome').offsetParent !== null;
+  // 2. palavra que troca no título (a cada 3,5 s). A linha guarda a altura da frase mais longa, para a página não pular.
+  const PAL = ['do seu jeito.', 'no seu horário.', 'sem custo fixo.', 'na palma da mão.']; let pi = 0;
+  function altura() {
+    const l = $('t-troca-l'), el = $('t-troca'); if (!l || !el || !MOV) return;
+    const atual = el.textContent; l.style.minHeight = ''; let m = 0;
+    PAL.forEach(w => { el.textContent = w; m = Math.max(m, l.offsetHeight); });
+    el.textContent = atual; l.style.minHeight = m + 'px';
+  }
+  if (MOV) { addEventListener('resize', altura); setTimeout(altura, 200); if (document.fonts) document.fonts.ready.then(altura).catch(() => {}); }
+  setInterval(() => {
+    const el = $('t-troca'); if (!el || !ligado()) return;
+    el.classList.add('sai');
+    setTimeout(() => { pi = (pi + 1) % PAL.length; el.textContent = PAL[pi]; el.classList.remove('sai'); }, 500);
+  }, 3500);
+  // 3. linha dos 4 passos que se desenha ao rolar (no celular, cada número se acende ao aparecer)
+  function linha() {
+    const f = $('t-passos'); if (!f) return;
+    const passos = f.querySelectorAll('.step4'), h = innerHeight;
+    if (!MOV) { f.style.setProperty('--p', 1); passos.forEach(x => x.classList.add('ok')); return; }
+    if (innerWidth > 960) {
+      const r = f.getBoundingClientRect(), p = Math.min(1, Math.max(0, (h * .85 - r.top) / (h * .5)));
+      f.style.setProperty('--p', p);
+      passos.forEach((x, i) => x.classList.toggle('ok', p >= i / 3 - .01));
+    } else passos.forEach(x => x.classList.toggle('ok', x.getBoundingClientRect().top < h * .8));
+  }
+  addEventListener('scroll', linha, { passive: true }); addEventListener('resize', linha); setTimeout(linha, 300);
+  // 4. luz que segue o mouse nos cartões (passos, recursos e valores)
+  document.addEventListener('pointermove', e => {
+    const c = e.target.closest && e.target.closest('.step4,.feat > div,.pz'); if (!c || e.pointerType !== 'mouse') return;
+    const r = c.getBoundingClientRect(); c.style.setProperty('--x', (e.clientX - r.left) + 'px'); c.style.setProperty('--y', (e.clientY - r.top) + 'px');
+  }, { passive: true });
 })();
 </script>
 </body>
