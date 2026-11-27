@@ -3,7 +3,7 @@
 ## 📋 Próximo patch (acumulando)
 Quando a usuária disser **"Vamos subir o patch note"**: implementar tudo desta lista de uma vez, testar, entregar e passar o passo a passo de publicação (SQL no Supabase → GitHub → Vercel).
 
-Base atual: **v12** (27/11/2026).
+Base atual: **v13** (27/11/2026).
 
 ### Pedidos anotados
 (nenhum pendente)
@@ -14,7 +14,6 @@ Base atual: **v12** (27/11/2026).
 - Receitas/atestados: o CRO da Dra. Thalia precisa ser cadastrado em Ajustes → Receitas e atestados (ainda não informado).
 
 ### Ideias para depois (sugerir quando fizer sentido; só implementar com aprovação)
-- Partes interativas (modelo local em `docs/modelos/interativos.html`, 27/11/2026): simulador "quanto custa minha reserva" com os preços do site; tour da sala com pontos clicáveis na foto (nomes dos equipamentos a conferir com a Dra.); checklist de saída com barra de progresso; escolha do dia numa faixa deslizante. Lista de chegada depende de a Dra. mandar os itens.
 - Assinatura digital automática de receita/atestado (certificado ICP-Brasil A1 importado no aparelho, PAdES no navegador). Aguardando a Dra. decidir o tipo de certificado (A1, nuvem ou token).
 - Calculadora: mais itens (ex.: dexametasona, nimesulida, cefalexina para tratamento), sempre conferidos na bula.
 - Mensagens de push/e-mail ainda dizem "a Dra. Thalia cancelou/confirmou" mesmo quando outro administrador fez a ação; trocar por texto neutro.
@@ -23,6 +22,13 @@ Base atual: **v12** (27/11/2026).
 - Versão do manual otimizada para celular (páginas estreitas, letra maior).
 
 ## Histórico
+### v13 (27/11/2026)
+- Simulador "Quanto custa o meu horário?" na seção Valores: escolhe início e fim (ou atalho manhã/tarde/noite/diária/dia todo) e mostra o valor com a mesma regra das reservas (priceOf). Em período ou diária exatos, compara com o plano mensal. Some se o preço não estiver definido.
+- Tour da sala em "O consultório": pontos que pulsam na foto panorâmica (cadeira, equipo, bancada, autoclave, ar-condicionado); ao tocar, mostra a foto de perto. Nomes dos equipamentos a confirmar com a Dra.
+- Checklist de saída (área do dentista): barra de progresso, contagem de itens e item marcado riscado em verde.
+- Nova reserva (área do dentista): faixa deslizante com os próximos 14 dias abertos e quantas horas livres cada um tem, acima do calendário.
+- Cache `thalia-v10`. Testes e2e10, e2e11_seguranca e e2e10_visual: 0 falhas. Telas mudaram (página inicial, nova reserva e checklist).
+
 ### v12 (27/11/2026)
 - Efeitos da página inicial, os mesmos 6 aprovados no site da Bruna, nas cores da Dra.: manchas suaves se movendo no fundo do topo; final do título trocando a cada 3,5 s ("do seu jeito." / "no seu horário." / "sem custo fixo." / "na palma da mão.", sempre na 2ª linha para a página não pular); linha que se desenha nos 4 passos de "Como funciona" (no celular os números se acendem ao aparecer); luz que segue o mouse nos cartões (passos, recursos e valores); brilho passando nos botões "Consultar horários"; ponto verde de "Agenda ao vivo" pulsando. Tudo parado com "reduzir movimento". Cache `thalia-v9`. Testes e2e10, e2e11_seguranca e e2e10_visual: 0 falhas. Tela inicial mudou (título em 3 linhas no computador).
 

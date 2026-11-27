@@ -2152,6 +2152,66 @@ body.tema-escuro .t-blobs i:nth-child(3){background:#3a1a25}
 @keyframes tBrilho{0%,60%{left:-60%}85%,100%{left:130%}}
 @keyframes tPulso{0%{transform:scale(.6);opacity:.7}100%{transform:scale(2.2);opacity:0}}
 @media (max-width:960px){.steps4::after{display:none}}
+
+/* ===================== v13 · interativos (simulador, tour, checklist e faixa de dias) ===================== */
+.sim12{margin-top:28px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,3vw,28px);box-shadow:var(--shadow)}
+.sim12[hidden]{display:none}
+.sim12 h3{font-size:clamp(1.3rem,2.6vw,1.6rem);margin:0 0 4px}
+.sim12 .lbl12{font:600 .74rem var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.sim12-h{display:flex;flex-wrap:wrap;gap:6px}
+.sim12-h button{min-width:52px;min-height:40px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 .88rem var(--font-body);cursor:pointer;padding:0 10px}
+.sim12-h button:hover:not(:disabled){border-color:var(--accent)}
+.sim12-h button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.sim12-h button:disabled{opacity:.35;cursor:not-allowed}
+.sim12-at{display:flex;flex-wrap:wrap;gap:6px}
+.sim12-at button{min-height:36px;border-radius:999px;border:1px dashed var(--outline,var(--line));background:transparent;color:var(--ink);font:500 .82rem var(--font-body);cursor:pointer;padding:0 12px}
+.sim12-at button:hover{border-color:var(--accent);color:var(--accent)}
+.sim12-res{background:var(--accent);color:#fff;border-radius:20px;padding:22px;display:grid;align-content:start;gap:6px}
+body.tema-escuro .sim12-res{background:#3a1a25}
+.sim12-res small{color:#ecd7da}
+.sim12-res .v{font:500 clamp(2rem,4.6vw,2.7rem)/1.1 var(--font-display);color:#fff}
+.sim12-res .v.fale{font-size:1.35rem}
+.sim12-res p{margin:4px 0 0;color:#ecd7da;font-size:.9rem}
+.sim12-res .plano{margin-top:8px;background:rgba(255,255,255,.08);border:1px solid rgba(232,207,152,.35);border-radius:14px;padding:12px;font-size:.88rem;color:#fff}
+.sim12-res .plano b{color:#e8cf98}
+.sim12-res .cta{margin-top:12px;justify-self:start}
+@media (max-width:760px){.sim12{grid-template-columns:minmax(0,1fr)}}
+.tour12{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start;margin-bottom:28px}
+.tour12-foto{position:relative;border-radius:22px;overflow:hidden;background:var(--soft)}
+.tour12-foto img{display:block;width:100%;height:auto}
+.tour12-pt{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0}
+.tour12-pt::before{content:"";position:absolute;inset:11px;border-radius:50%;background:#590117;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.tour12-pt::after{content:"";position:absolute;inset:6px;border-radius:50%;border:2px solid #fff}
+.tour12-pt[aria-pressed="true"]::before{background:#d9bb6f}
+.tour12-pt:focus-visible{outline:3px solid #d9bb6f;outline-offset:2px}
+.tour12-det{border:1px solid var(--line);border-radius:22px;padding:16px;background:var(--surface)}
+.tour12-det img{width:100%;height:clamp(180px,22vw,260px);border-radius:14px;display:block;object-fit:cover;background:var(--soft)}
+.tour12-det h3{font-size:1.3rem;margin:12px 0 4px}
+.tour12-det p{margin:0;color:var(--muted);font-size:.92rem}
+.tour12-det .eyebrow{margin:12px 0 0}
+@media (max-width:760px){.tour12{grid-template-columns:minmax(0,1fr)}}
+.ck12-barra{height:10px;border-radius:10px;background:var(--soft);overflow:hidden;margin:6px 0 4px}
+.ck12-barra i{display:block;height:100%;background:var(--ok);border-radius:10px}
+.ck12-conta{font-size:.85rem;color:var(--muted);margin:0 0 10px}
+.ck12 .check{border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;transition:background-color .2s,border-color .2s}
+.ck12 .check:has(input:checked){background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
+.ck12 .check:has(input:checked) span{text-decoration:line-through;color:var(--muted)}
+.ck12 .check input{accent-color:var(--ok)}
+.dstrip{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin:0 0 8px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.dstrip:empty{display:none}
+.ds{flex:none;width:72px;scroll-snap-align:start;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:8px 0;text-align:center;cursor:pointer;font:500 .76rem var(--font-body);color:var(--muted);display:grid;gap:1px}
+.ds b{font:500 1.35rem/1.1 var(--font-display);color:var(--ink)}
+.ds small{font-size:.68rem;color:var(--ok)}
+.ds.cheio small{color:var(--busy)}
+.ds:hover{border-color:var(--accent)}
+.ds[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ds[aria-pressed="true"] b,.ds[aria-pressed="true"] small{color:var(--accent-ink)}
+@media (prefers-reduced-motion:no-preference){
+  .tour12-pt:not([aria-pressed="true"])::after{animation:tPulso12 2.4s ease-out infinite}
+  .tour12-pt:nth-of-type(even)::after{animation-delay:1.2s}
+  .ck12-barra i{transition:width .35s}
+}
+@keyframes tPulso12{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.8);opacity:0}}
 </style>
 </head>
 <body>
@@ -2231,6 +2291,10 @@ body.tema-escuro .t-blobs i:nth-child(3){background:#3a1a25}
 
       <section class="sec about" id="sobre" aria-label="O consultório"><div class="in">
         <div class="sec-head"><div><p class="eyebrow">O consultório</p><h2>Estrutura pronta para você <em>atender com tranquilidade</em></h2></div><p>Um espaço odontológico no Centro de Ipatinga para profissionais que querem atender sem o custo de manter um consultório próprio.</p></div>
+        <div class="tour12" id="tour12">
+          <div class="tour12-foto" id="tour12-foto"><img src="assets/consultorio/consultorio-panorama.webp" alt="Sala do consultório vista de ponta a ponta" width="1600" height="900" loading="lazy"></div>
+          <div class="tour12-det" id="tour12-det" aria-live="polite"></div>
+        </div>
         <div id="fotos">
           <div class="gal-wrap">
             <div class="gal" id="gal"></div>
@@ -2745,6 +2809,7 @@ body.tema-escuro .t-blobs i:nth-child(3){background:#3a1a25}
         <div class="card" id="cn-plano" hidden></div>
         <div class="card" id="cn-pick">
           <div class="stack" id="cn-top"></div>
+          <div class="dstrip" id="cn-strip" role="group" aria-label="Próximos dias"></div>
           <div class="cols">
             <div class="col" aria-label="Calendário">
               <div class="cal-head">
@@ -4170,7 +4235,8 @@ function cBookingDetail({ b, st }) {
       h += `<div class="block"><h4>Checklist de saída</h4><p class="hint">Feito em ${fmtDT(b.checklist.feitoEm)}</p><ul class="rules">${(b.checklist.itens || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>`;
     } else {
       const all = CFG.checklist.every((_, i) => dr.checks.includes(i));
-      h += `<div class="block"><h4>Checklist de saída</h4><p class="hint">Marque cada item antes de deixar o consultório.</p><div class="checks">${CFG.checklist.map((t, i) => `<label class="check"><input type="checkbox" data-chk="${i}"${dr.checks.includes(i) ? ' checked' : ''}><span>${esc(t)}</span></label>`).join('')}</div>
+      const feitos = CFG.checklist.filter((_, i) => dr.checks.includes(i)).length;
+      h += `<div class="block"><h4>Checklist de saída</h4><p class="hint">Marque cada item antes de deixar o consultório.</p><div class="ck12-barra" role="progressbar" aria-label="Itens marcados" aria-valuemin="0" aria-valuemax="${CFG.checklist.length}" aria-valuenow="${feitos}"><i style="width:${Math.round(feitos / CFG.checklist.length * 100)}%"></i></div><p class="ck12-conta">${feitos === CFG.checklist.length ? 'Tudo pronto! Agora é só concluir.' : `${feitos} de ${CFG.checklist.length} itens`}</p><div class="checks ck12">${CFG.checklist.map((t, i) => `<label class="check"><input type="checkbox" data-chk="${i}"${dr.checks.includes(i) ? ' checked' : ''}><span>${esc(t)}</span></label>`).join('')}</div>
         <div class="dr-actions"><button class="primary" type="button" data-act="checklist"${all ? '' : ' disabled'}>Concluir checklist</button></div></div>`;
     }
   }
@@ -4252,6 +4318,7 @@ function renderCNova() {
     btn.addEventListener('click', () => { Object.assign(c, { date: s, start: null, end: null, want: null }); $('cn-fb').innerHTML = ''; renderCNova(); });
     box.appendChild(btn);
   }
+  renderStrip(c);
   $('cn-day').textContent = c.date ? `${DIAS_LONGOS[new Date(c.date + 'T12:00').getDay()]}, ${br(c.date)}` : 'Escolha um dia';
   $('cn-hint').hidden = !c.date;
   const hb = $('cn-hours'); hb.innerHTML = '';
@@ -7224,9 +7291,11 @@ function renderEstrutura() {
   const pzs = preco('Por hora', CFG.valorHora, '/hora', `Reservas de até ${CFG.limiteHoras || 3} horas`, true) + (per ? preco('Período', per.valor, '/período', 'Manhã, tarde ou noite') : '') + (CFG.diaria ? preco('Diária', CFG.diaria.valor, '/dia', `Das ${CFG.diaria.de}h às ${CFG.diaria.ate}h`) : '') + (pl.periodo != null ? preco('Plano mensal', Math.min(Number(pl.periodo), Number(pl.diaria ?? Infinity)), '/mês', 'A partir de, 1x por semana') : '');
   el.querySelector('.in').innerHTML = `<div class="sec-head"><div><p class="eyebrow">Valores</p><h2>Pague só pelo <em>tempo que usar</em></h2></div><p>O valor de cada reserva aparece antes de você confirmar. Acima de ${CFG.limiteHoras || 3} horas, vale o preço do período ou da diária.</p></div>
     <div class="est-pz">${pzs || '<p class="hint">Os valores estão sendo atualizados. Fale com a Dra. Thalia pelo WhatsApp para saber o preço.</p>'}</div>
+    <div class="sim12" id="sim12" hidden></div>
     ${eq.length || inc.length ? `<div class="est-eq">${lista('Equipamentos', eq) + lista('Incluso no aluguel', inc)}</div>` : ''}
     <div class="est-cta"><button type="button" class="cta" data-start>Consultar horários <svg class="i arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><a class="cta line" data-href="wa" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}">Agendar uma visita</a></div>`;
   el.hidden = false;
+  renderSim();
 }
 
 /* ---------- v9: login único, níveis de administrador e calculadora ---------- */
@@ -8182,6 +8251,88 @@ setInterval(render, 60000); // atualiza status e horas que passaram
     const r = c.getBoundingClientRect(); c.style.setProperty('--x', (e.clientX - r.left) + 'px'); c.style.setProperty('--y', (e.clientY - r.top) + 'px');
   }, { passive: true });
 })();
+
+/* ===================== v13 · interativos ===================== */
+// 1. Simulador de preço na seção "Valores" (mesma regra das reservas: priceOf).
+
+function simDataRef() { for (let n = 0; n < 14; n++) { const d = addDays(new Date(today), n); if (dayOpen(d)) return iso(d); } return iso(today); }
+function renderSim() {
+  const el = $('sim12'); if (!el) return;
+  if (!temPreco()) { el.hidden = true; return; }
+  const s = S.sim || (S.sim = { de: CFG.abre, ate: CFG.abre + 2 }), A = CFG.abre, Z = CFG.fecha;
+  s.de = Math.min(Math.max(s.de, A), Z - 1); s.ate = Math.min(Math.max(s.ate, s.de + 1), Z);
+  const hrs = (a, z, sel, dis) => Array.from({ length: z - a + 1 }, (_, i) => a + i).map(h => `<button type="button" data-h="${h}" aria-pressed="${h === sel}"${dis && dis(h) ? ' disabled' : ''}>${h}h</button>`).join('');
+  const at = opcoesPeriodo().filter(o => o.de >= A && o.ate <= Z).map(o => `<button type="button" data-a="${o.de}" data-z="${o.ate}">${esc(o.nome)} (${o.de}h–${o.ate}h)</button>`).join('');
+  const v = priceOf({ date: simDataRef(), from: s.de, to: s.ate }), n = s.ate - s.de, lim = CFG.limiteHoras || 3;
+  let res = `<small>Das ${s.de}h às ${s.ate}h (${n}h)</small>`;
+  if (v != null) {
+    const per = (CFG.periodos || []).find(p => p.de === s.de && p.ate === s.ate), dia = CFG.diaria && CFG.diaria.de === s.de && CFG.diaria.ate === s.ate, pl = CFG.planos || {};
+    res += `<div class="v">${BRL(Number(v))}</div><p>${n <= lim ? `${n} ${n > 1 ? 'horas' : 'hora'} avulsa${n > 1 ? 's' : ''}` : `Acima de ${lim} horas vale o preço por período`}.</p>`;
+    if (per && pl.periodo != null) res += `<div class="plano">Vem <b>toda semana</b> nesse período? 4 reservas avulsas: ${BRL(4 * Number(v))}. No <b>plano mensal de meio período</b>: ${BRL(Number(pl.periodo))}/mês.</div>`;
+    if (dia && pl.diaria != null) res += `<div class="plano">Vem <b>toda semana</b>? 4 diárias avulsas: ${BRL(4 * Number(v))}. No <b>plano mensal de diária</b>: ${BRL(Number(pl.diaria))}/mês.</div>`;
+    res += `<button type="button" class="cta gold sm" data-start>Ver horários livres</button>`;
+  } else {
+    res += `<div class="v fale">Combine com a Dra. Thalia</div><p>Acima de ${lim} horas, a reserva é por período: ${opcoesPeriodo().map(o => `${o.nome.toLowerCase()} (${o.de}h às ${o.ate}h)`).join(', ')}.</p><a class="cta gold sm" target="_blank" rel="noopener" href="https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Olá Dra. Thalia! Gostaria de reservar o consultório das ${s.de}h às ${s.ate}h. Podemos combinar?`)}">Falar pelo WhatsApp</a>`;
+  }
+  el.innerHTML = `<div><p class="eyebrow">Simule sua reserva</p><h3>Quanto custa o <em>meu horário?</em></h3>
+    <p class="lbl12">Começa às</p><div class="sim12-h" data-sim="de">${hrs(A, Z - 1, s.de)}</div>
+    <p class="lbl12">Termina às</p><div class="sim12-h" data-sim="ate">${hrs(A + 1, Z, s.ate, h => h <= s.de)}</div>
+    ${at ? `<p class="lbl12">Atalhos</p><div class="sim12-at">${at}</div>` : ''}</div>
+    <div class="sim12-res" aria-live="polite">${res}</div>`;
+  el.hidden = false;
+}
+document.addEventListener('click', e => {
+  const box = e.target.closest && e.target.closest('#sim12'); if (!box) return;
+  const b = e.target.closest('button'); if (!b || b.disabled || b.hasAttribute('data-start')) return;
+  const grp = b.closest('[data-sim]');
+  if (grp && grp.dataset.sim === 'de') { S.sim.de = +b.dataset.h; if (S.sim.ate <= S.sim.de) S.sim.ate = S.sim.de + 1; }
+  else if (grp) S.sim.ate = +b.dataset.h;
+  else if (b.dataset.a) { S.sim.de = +b.dataset.a; S.sim.ate = +b.dataset.z; }
+  else return;
+  renderSim();
+});
+
+// 2. Tour da sala: pontos que pulsam na foto; ao tocar, mostra a foto de perto.
+const TOUR12 = [
+  { x: 19, y: 62, nome: 'Cadeira odontológica', foto: 'consultorio-cadeira.webp', txt: 'Cadeira com refletor e equipo, pronta para o atendimento.' },
+  { x: 24, y: 45, nome: 'Equipo', foto: 'consultorio-equipo.webp', txt: 'Equipo junto à cadeira.' },
+  { x: 66, y: 50, nome: 'Bancada com pia', foto: 'consultorio-bancada.webp', txt: 'Bancada ampla com gavetas e pia.' },
+  { x: 91, y: 45, nome: 'Autoclave', foto: 'consultorio-autoclave.webp', txt: 'Autoclave na bancada para esterilização.' },
+  { x: 55, y: 9, nome: 'Ar-condicionado', foto: 'consultorio-sala.webp', txt: 'Sala climatizada.' }
+];
+function tourMostra(i) {
+  const p = TOUR12[i], det = $('tour12-det'); if (!p || !det) return;
+  document.querySelectorAll('.tour12-pt').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === i)));
+  det.innerHTML = `<img src="assets/consultorio/${p.foto}" alt="${esc(p.nome)}" loading="lazy" width="800" height="600"><p class="eyebrow">Toque nos pontos da foto</p><h3>${esc(p.nome)}</h3><p>${esc(p.txt)}</p>`;
+}
+(function () {
+  const f = $('tour12-foto'); if (!f) return;
+  f.insertAdjacentHTML('beforeend', TOUR12.map((p, i) => `<button type="button" class="tour12-pt" style="left:${p.x}%;top:${p.y}%" data-i="${i}" aria-label="${esc(p.nome)}" aria-pressed="false"></button>`).join(''));
+  f.addEventListener('click', e => { const b = e.target.closest('.tour12-pt'); if (b) tourMostra(+b.dataset.i); });
+  tourMostra(0);
+})();
+
+// 4. Faixa com os próximos dias abertos na nova reserva (mostra quantas horas estão livres).
+function renderStrip(c) {
+  const box = $('cn-strip'); if (!box) return;
+  const lim = addDays(new Date(today.getFullYear(), today.getMonth() + CFG.mesesAFrente + 1, 1), -1), out = [];
+  for (let n = 0; out.length < 14 && n < 60; n++) {
+    const d = addDays(new Date(today), n); if (d > lim) break; if (!dayOpen(d)) continue;
+    const s = iso(d); let livres = 0;
+    for (let h = CFG.abre; h < CFG.fecha; h++) if (!isBusy(s, h) && !isPast(s, h)) livres++;
+    out.push(`<button type="button" class="ds${livres ? '' : ' cheio'}" data-ds="${s}" aria-pressed="${s === c.date}" aria-label="${DIAS_LONGOS[d.getDay()]}, ${br(s)}: ${livres ? livres + (livres > 1 ? ' horas livres' : ' hora livre') : 'sem horas livres'}">${n === 0 ? 'hoje' : DIAS[d.getDay()]}<b>${d.getDate()}</b><small>${livres ? livres + ' livre' + (livres > 1 ? 's' : '') : 'lotado'}</small></button>`);
+  }
+  box.innerHTML = out.join('');
+  const sel = box.querySelector('[aria-pressed="true"]');
+  if (sel) { const l = sel.offsetLeft - box.offsetLeft; if (l < box.scrollLeft || l + sel.offsetWidth > box.scrollLeft + box.clientWidth) box.scrollLeft = l - 8; }
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('#cn-strip [data-ds]'); if (!b || !S.cn) return;
+  const s = b.dataset.ds;
+  Object.assign(S.cn, { date: s, start: null, end: null, want: null, month: new Date(+s.slice(0, 4), +s.slice(5, 7) - 1, 1) });
+  const fb = $('cn-fb'); if (fb) fb.innerHTML = '';
+  renderCNova();
+});
 </script>
 </body>
 </html>
