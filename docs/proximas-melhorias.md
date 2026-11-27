@@ -22,6 +22,9 @@ Base atual: **v13** (27/11/2026).
 - Versão do manual otimizada para celular (páginas estreitas, letra maior).
 
 ## Histórico
+### v13.1 (27/11/2026)
+- Fundo do topo sem o tom amarelo (pedido da usuária): a mancha dourada virou rosé (vinho no tema escuro). Cache `thalia-v11`.
+
 ### v13 (27/11/2026)
 - Simulador "Quanto custa o meu horário?" na seção Valores: escolhe início e fim (ou atalho manhã/tarde/noite/diária/dia todo) e mostra o valor com a mesma regra das reservas (priceOf). Em período ou diária exatos, compara com o plano mensal. Some se o preço não estiver definido.
 - Tour da sala em "O consultório": pontos que pulsam na foto panorâmica (cadeira, equipo, bancada, autoclave, ar-condicionado); ao tocar, mostra a foto de perto. Nomes dos equipamentos a confirmar com a Dra.
