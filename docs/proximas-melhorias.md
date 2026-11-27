@@ -3,7 +3,7 @@
 ## 📋 Próximo patch (acumulando)
 Quando a usuária disser **"Vamos subir o patch note"**: implementar tudo desta lista de uma vez, testar, entregar e passar o passo a passo de publicação (SQL no Supabase → GitHub → Vercel).
 
-Base atual: **v13** (27/11/2026).
+Base atual: **v14** (27/11/2026).
 
 ### Pedidos anotados
 (nenhum pendente)
@@ -22,6 +22,16 @@ Base atual: **v13** (27/11/2026).
 - Versão do manual otimizada para celular (páginas estreitas, letra maior).
 
 ## Histórico
+### v14 (27/11/2026)
+- Efeitos na área interna (a usuária escolheu 2 a 6 do modelo `docs/modelos/interno.html`, ideias do 21st.dev; o "ingresso" ficou de fora):
+  - Borda dourada girando no cartão "Sua próxima reserva" quando é hoje, amanhã ou está em andamento.
+  - Anel dourado de ocupação no indicador "Horas no mês" do Resumo (no celular vira uma barrinha).
+  - Dente que se desenha ao carregar e nas mensagens de lista vazia.
+  - Linha dourada no aviso "Desfazer" mostrando o tempo acabando.
+  - Bolinha pulsando na linha do "agora" da Agenda.
+- Correção: botão "Próximas / Histórico" de Minhas reservas estava empilhado no celular.
+- Cache `thalia-v12`. Testes e2e10, e2e11_seguranca e e2e10_visual: 0 falhas. Telas mudaram pouco (Início do dentista, Resumo).
+
 ### v13.1 (27/11/2026)
 - Fundo do topo sem o tom amarelo (pedido da usuária): a mancha dourada virou rosé (vinho no tema escuro). Cache `thalia-v11`.
 

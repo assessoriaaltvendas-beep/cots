@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Efeitos da área interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* MODELO LOCAL (não vai para o site). Ideias para o painel e a área do dentista, inspiradas em categorias do 21st.dev. Dados de exemplo, sem preços. */
+:root{--bg:#faf6f3;--card:#fff;--ink:#22151a;--muted:#6f5a60;--line:#eadfdc;--vinho:#590117;--vinho2:#7a0a26;--gold:#b48d48;--gold-soft:#f5ecdc;--rose:#f6e7ea;--font-t:'DM Serif Display',Georgia,serif;--font-b:Inter,system-ui,sans-serif}
+:root[data-theme="dark"]{--bg:#170a0f;--card:#221218;--ink:#f3e9eb;--muted:#c4aeb3;--line:#3a242c;--vinho:#8c1733;--vinho2:#a5203f;--gold:#d9bb6f;--gold-soft:#33261a;--rose:#2c161d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--font-b)}
+header{background:var(--vinho);color:#fff;padding:20px 16px}
+header .in,main{max-width:980px;margin:0 auto}
+header h1{font:400 1.7rem var(--font-t);margin:0}
+header p{margin:4px 0 0;opacity:.85}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.bar button,.rep{border:1px solid rgba(255,255,255,.4);background:none;color:inherit;border-radius:999px;padding:6px 14px;font:500 .85rem var(--font-b);cursor:pointer}
+main{padding:20px 16px 60px;display:grid;gap:20px}
+.idea{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;display:grid;gap:14px}
+.idea h2{font:400 1.35rem var(--font-t);margin:0;color:var(--vinho)}
+:root[data-theme="dark"] .idea h2{color:var(--gold)}
+.meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.8rem}
+.meta span{background:var(--gold-soft);color:var(--ink);border-radius:999px;padding:2px 10px}
+.idea p.d{margin:0;color:var(--muted)}
+.stage{background:var(--bg);border-radius:16px;padding:22px 16px;display:grid;place-items:center;min-height:170px;position:relative;overflow:hidden}
+.rep{border-color:var(--line);color:var(--ink);justify-self:start}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--vinho);color:#fff;font:600 .85rem var(--font-b);margin-right:8px;vertical-align:3px}
+
+/* 1. Ingresso */
+.tk{display:grid;grid-template-columns:1fr auto;width:min(560px,100%);border-radius:18px;background:var(--vinho);color:#fff;position:relative;filter:drop-shadow(0 14px 22px rgba(89,1,23,.25))}
+.tk .a{padding:20px 22px}
+.tk .b{padding:20px 18px;border-left:2px dashed rgba(255,255,255,.35);display:grid;place-items:center;text-align:center;min-width:118px}
+.tk::before,.tk::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:var(--bg);right:107px}
+.tk::before{top:-11px}.tk::after{bottom:-11px}
+.tk .ey{font:600 .72rem var(--font-b);letter-spacing:.12em;color:var(--gold)}
+.tk h3{font:400 1.5rem/1.15 var(--font-t);margin:6px 0 4px}
+.tk .h{opacity:.9}
+.tk .end{font-size:.8rem;opacity:.75;margin-top:8px}
+.tk .big{font:400 2.6rem/1 var(--font-t);color:var(--gold)}
+.tk .lb{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.tk.go{animation:tkIn .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes tkIn{from{opacity:0;transform:translateY(14px) rotate(-1.5deg)}to{opacity:1;transform:none}}
+@media (max-width:520px){.tk{grid-template-columns:1fr}.tk .b{border-left:0;border-top:2px dashed rgba(255,255,255,.35);grid-auto-flow:column;gap:10px;justify-content:start;align-items:center;height:80px;padding:0 18px}.tk::before,.tk::after{right:auto;top:auto;bottom:69px}.tk::before{left:-11px}.tk::after{right:-11px}}
+
+/* 2. Borda dourada */
+.beam{position:relative;width:min(420px,100%);border-radius:18px;padding:20px;background:var(--card);overflow:hidden;isolation:isolate}
+.beam::before{content:"";position:absolute;inset:-60%;background:conic-gradient(from 0deg,transparent 0 70%,var(--gold) 82%,#f3dfa8 86%,transparent 92%);animation:gira 4s linear infinite;z-index:-2}
+.beam::after{content:"";position:absolute;inset:2px;border-radius:16px;background:var(--card);z-index:-1}
+@keyframes gira{to{transform:rotate(1turn)}}
+.beam .ey{font:600 .72rem var(--font-b);letter-spacing:.12em;color:var(--gold)}
+.beam h3{font:400 1.4rem var(--font-t);margin:4px 0;color:var(--vinho)}
+:root[data-theme="dark"] .beam h3{color:var(--ink)}
+
+/* 3. Anel */
+.ring{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,var(--vinho),#3d0010);color:#fff;border-radius:18px;padding:18px 22px;width:min(420px,100%)}
+.ring svg{width:96px;height:96px;transform:rotate(-90deg);flex:none}
+.ring circle{fill:none;stroke-width:9}
+.ring .bgc{stroke:rgba(255,255,255,.14)}
+.ring .fg{stroke:var(--gold);stroke-linecap:round;stroke-dasharray:251.3;stroke-dashoffset:251.3;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)}
+.ring .v{font:400 2rem/1 var(--font-t)}
+.ring .s{font-size:.82rem;opacity:.8}
+.ring .wrap{position:relative}
+.ring .pc{position:absolute;inset:0;display:grid;place-items:center;font:600 1rem var(--font-b);color:var(--gold)}
+
+/* 4. Dente */
+.td{display:grid;justify-items:center;gap:8px;color:var(--muted);text-align:center}
+.td svg{width:84px;height:84px;overflow:visible}
+.td path{fill:none;stroke:var(--gold);stroke-width:.9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:80;stroke-dashoffset:80}
+.td.load path{animation:desenha 2.2s ease-in-out infinite}
+.td.vazio path{animation:desenha1 1.6s ease-out forwards}
+@keyframes desenha{0%{stroke-dashoffset:80}55%{stroke-dashoffset:0}100%{stroke-dashoffset:-80}}
+@keyframes desenha1{to{stroke-dashoffset:0}}
+.td .t{font:400 1.1rem var(--font-t);color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px;width:100%}
+@media (max-width:520px){.two{grid-template-columns:1fr}}
+
+/* 5. Toast */
+.toast{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;gap:12px;background:#2a1a1f;color:#fff;border-radius:16px;padding:14px 16px;width:min(440px,100%);box-shadow:0 20px 40px -18px rgba(34,21,26,.55)}
+.toast button{background:none;border:0;color:#e9c98a;font:600 .9rem var(--font-b);cursor:pointer}
+.toast i{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);width:100%;transform-origin:left}
+.toast.go i{animation:encolhe 5s linear forwards}
+@keyframes encolhe{to{transform:scaleX(0)}}
+
+/* 6. Linha do agora */
+.ag{width:min(460px,100%);border:1px solid var(--line);border-radius:14px;background:var(--card);position:relative;height:150px;background-image:repeating-linear-gradient(to bottom,transparent 0 49px,var(--line) 49px 50px)}
+.ag .now{position:absolute;left:58px;right:12px;top:92px;height:2px;background:var(--gold)}
+.ag .now::before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.ag .now::after{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--gold);animation:pulso 2s ease-out infinite}
+@keyframes pulso{from{transform:scale(1);opacity:.7}to{transform:scale(3.2);opacity:0}}
+.ag .hh{position:absolute;left:12px;font-size:.75rem;color:var(--muted)}
+.ag .tag{position:absolute;right:16px;top:70px;font:600 .7rem var(--font-b);color:var(--gold);letter-spacing:.1em}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.td path{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <h1>Efeitos para a área interna</h1>
+  <p>Modelo local, não vai para o site. Painel da Dra. e área do dentista. Dados de exemplo.</p>
+  <div class="bar"><button type="button" id="tema">Ver no modo escuro</button><button type="button" id="tudo">Ver todos de novo</button></div>
+</div></header>
+<main>
+
+<section class="idea">
+  <h2><span class="num">1</span>Ingresso da próxima reserva</h2>
+  <div class="meta"><span>Área do dentista → Início</span><span>Inspirado em: Ticket</span></div>
+  <p class="d">O cartão "Sua próxima reserva" vira um ingresso, com recorte e linha picotada. Do lado fica a contagem de dias. Ele entra deslizando ao abrir a tela.</p>
+  <div class="stage"><div class="tk go" id="tk">
+    <div class="a"><div class="ey">SUA PRÓXIMA RESERVA</div><h3>Quarta-feira, 2 de dezembro</h3><div class="h">09:00 às 11:00 · 2h</div><div class="end">Rua Juiz de Fora, 52, Galeria Êxito, sala 208</div></div>
+    <div class="b"><div class="big">5</div><div class="lb">dias</div></div>
+  </div></div>
+  <button class="rep" type="button" data-rep="tk">Ver de novo</button>
+</section>
+
+<section class="idea">
+  <h2><span class="num">2</span>Borda dourada quando é hoje ou amanhã</h2>
+  <div class="meta"><span>Área do dentista → Início</span><span>Inspirado em: Border Beam</span></div>
+  <p class="d">Um fio dourado contorna o cartão da reserva devagar. Só aparece quando a reserva é hoje ou amanhã, para o dentista não esquecer.</p>
+  <div class="stage"><div class="beam"><div class="ey">É AMANHÃ</div><h3>Quinta-feira, 28 de novembro</h3><div>14:00 às 16:00 · 2h</div></div></div>
+</section>
+
+<section class="idea">
+  <h2><span class="num">3</span>Anel de ocupação</h2>
+  <div class="meta"><span>Painel → Resumo</span><span>Inspirado em: Progress / Stats &amp; KPIs</span></div>
+  <p class="d">O quadro "Horas no mês" ganha um anel dourado que se enche até a porcentagem de ocupação. O número vem do próprio sistema.</p>
+  <div class="stage"><div class="ring">
+    <div class="wrap"><svg viewBox="0 0 100 100"><circle class="bgc" cx="50" cy="50" r="40"/><circle class="fg" id="anel" cx="50" cy="50" r="40"/></svg><div class="pc" id="pc">0%</div></div>
+    <div><div class="v">42h</div><div class="s">Horas em novembro</div><div class="s">exemplo: 38% de ocupação</div></div>
+  </div></div>
+  <button class="rep" type="button" data-rep="anel">Ver de novo</button>
+</section>
+
+<section class="idea">
+  <h2><span class="num">4</span>Dente que se desenha</h2>
+  <div class="meta"><span>Painel e área do dentista</span><span>Inspirado em: Spinner Loaders / Empty States</span></div>
+  <p class="d">Enquanto carrega, o contorno do dente (o mesmo do logo) vai sendo desenhado em dourado. Nas listas vazias ele se desenha uma vez, com a frase de sempre.</p>
+  <div class="stage"><div class="two">
+    <div class="td load"><svg viewBox="0 0 24 24"><path d="M12 3c-2.5 0-4 1-5.5 1C4.5 4 3 5.5 3 8c0 3 1.5 4.5 2 7 .5 3 1 6 2.5 6 1.7 0 1.5-4 2.5-6 .4-.9 1-1.5 2-1.5s1.6.6 2 1.5c1 2 .8 6 2.5 6 1.5 0 2-3 2.5-6 .5-2.5 2-4 2-7 0-2.5-1.5-4-3.5-4C16 4 14.5 3 12 3z"/></svg><div>Carregando…</div></div>
+    <div class="td vazio" id="vazio"><svg viewBox="0 0 24 24"><path d="M12 3c-2.5 0-4 1-5.5 1C4.5 4 3 5.5 3 8c0 3 1.5 4.5 2 7 .5 3 1 6 2.5 6 1.7 0 1.5-4 2.5-6 .4-.9 1-1.5 2-1.5s1.6.6 2 1.5c1 2 .8 6 2.5 6 1.5 0 2-3 2.5-6 .5-2.5 2-4 2-7 0-2.5-1.5-4-3.5-4C16 4 14.5 3 12 3z"/></svg><div class="t">Nenhuma reserva ainda</div><div>Quando você reservar, ela aparece aqui.</div></div>
+  </div></div>
+  <button class="rep" type="button" data-rep="vazio">Ver de novo</button>
+</section>
+
+<section class="idea">
+  <h2><span class="num">5</span>Tempo visível no "Desfazer"</h2>
+  <div class="meta"><span>Avisos de cancelar e excluir</span><span>Inspirado em: Toasts</span></div>
+  <p class="d">O aviso de "Desfazer" já espera 5 segundos. Uma linha dourada embaixo mostra esse tempo acabando, então dá para ver quanto falta para desfazer.</p>
+  <div class="stage"><div class="toast go" id="toast"><span>Reserva cancelada.</span><button type="button">Desfazer</button><i></i></div></div>
+  <button class="rep" type="button" data-rep="toast">Ver de novo</button>
+</section>
+
+<section class="idea">
+  <h2><span class="num">6</span>Pulso na linha do "agora"</h2>
+  <div class="meta"><span>Painel → Agenda</span><span>Inspirado em: Timelines</span></div>
+  <p class="d">A linha dourada que marca a hora atual na agenda já existe. A bolinha passa a pulsar de leve, como um sinal de "ao vivo".</p>
+  <div class="stage"><div class="ag"><span class="hh" style="top:6px">15h00</span><span class="hh" style="top:56px">16h00</span><span class="hh" style="top:106px">17h00</span><span class="tag">AGORA</span><div class="now"></div></div></div>
+</section>
+
+</main>
+<script>
+const $ = id => document.getElementById(id);
+function anel(){ const pct = 38, el = $('anel'); el.style.transition = 'none'; el.style.strokeDashoffset = 251.3; el.getBoundingClientRect(); el.style.transition = ''; el.style.strokeDashoffset = 251.3 * (1 - pct / 100);
+  let n = 0; const t0 = performance.now(); (function f(t){ n = Math.min(1, (t - t0) / 1400); $('pc').textContent = Math.round(pct * (1 - Math.pow(1 - n, 3))) + '%'; if (n < 1) requestAnimationFrame(f); })(t0); }
+function rep(id){ if (id === 'anel') return anel(); const el = $(id); const k = id === 'vazio' ? null : 'go';
+  if (k){ el.classList.remove(k); void el.offsetWidth; el.classList.add(k); }
+  else { const p = el.querySelector('path'); p.style.animation = 'none'; void p.offsetWidth; p.style.animation = ''; } }
+document.addEventListener('click', e => { const b = e.target.closest('[data-rep]'); if (b) rep(b.dataset.rep); });
+$('tudo').onclick = () => ['tk', 'anel', 'vazio', 'toast'].forEach(rep);
+$('tema').onclick = () => { const d = document.documentElement, esc = d.dataset.theme === 'dark'; d.dataset.theme = esc ? 'light' : 'dark'; $('tema').textContent = esc ? 'Ver no modo escuro' : 'Ver no modo claro'; };
+setTimeout(anel, 300);
+</script>
+</body>
+</html>
